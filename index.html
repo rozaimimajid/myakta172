@@ -341,39 +341,94 @@ updateBookmarkBtn();
 
 /* Analisis Kes Padanan Dalaman: rules + hubungan seksyen; tiada AI */
 const CASE_RULES=[
- {issue:'Kebenaran Merancang',keys:['kebenaran merancang','tanpa kebenaran','belum mendapat kebenaran','km','planning permission'],primary:['19','21'],related:['21A','21B','21C','22']},
- {issue:'Pemajuan bercanggah dengan kebenaran',keys:['berlawanan dengan kebenaran','bercanggah dengan kebenaran','langgar syarat','melanggar syarat','tidak ikut kelulusan'],primary:['20'],related:['28','29','25']},
- {issue:'Permohonan Kebenaran Merancang',keys:['permohonan','memohon','mohon kebenaran','permohonan km'],primary:['21'],related:['21A','21B','21C','22','23']},
- {issue:'Laporan Cadangan Pemajuan',keys:['laporan cadangan pemajuan','lcp','impak sosial','sia'],primary:['21A'],related:['21B','21C','22']},
- {issue:'Pelan Susun Atur',keys:['pelan susun atur','layout','susun atur','tanah lapang','kerja tanah'],primary:['21B'],related:['21A','21C','22']},
- {issue:'Rayuan Perancangan',keys:['rayuan','merayu','ditolak','penolakan','syarat dikenakan'],primary:['23','36'],related:['22']},
- {issue:'Kebenaran Merancang Luput / Diubah',keys:['luput','tamat tempoh','pembatalan kebenaran','ubah kebenaran','pengubahsuaian kebenaran'],primary:['24','25'],related:['23']},
- {issue:'Pemajuan Tidak Dibenarkan / Penguatkuasaan',keys:['pemajuan tanpa kebenaran','pemajuan haram','penguatkuasaan','notis penguatkuasaan','kesalahan pemajuan','henti pemajuan'],primary:['26','27'],related:['19','28','29','30','31']},
- {issue:'Notis Rekuisisi',keys:['notis rekuisisi','rekuisisi','hentikan penggunaan','ubah penggunaan','pindahkan bangunan'],primary:['30'],related:['31']},
- {issue:'Caj Pemajuan',keys:['caj pemajuan','caj pembangunan','kenaikan nilai tanah','bayaran caj'],primary:['32'],related:['33','34','35']},
- {issue:'Pemeliharaan Pokok',keys:['pemeliharaan pokok','tebang pokok','menebang pokok','pokok 0.8','pokok 0 8','lilitan pokok','tpo'],primary:['35A','35H'],related:['35B','35C','35D','35E','35F','35G']},
- {issue:'Notis Pembelian Tanah',keys:['notis pembelian','pembelian tanah','tanah terjejas','pengambilan tanah'],primary:['37'],related:[]},
+ {issue:'Pemakaian, kuat kuasa dan tafsiran Akta',keys:['pemakaian akta','kuat kuasa akta','tafsiran','maksud istilah','definisi'],primary:['1','2'],related:[]},
+ {issue:'Majlis Perancang Fizikal Negara',keys:['majlis perancang fizikal negara','mpfn','majlis perancang','dasar perancangan negara'],primary:['2A'],related:['2B','3','4']},
+ {issue:'Pentadbiran dan dasar perancangan',keys:['ketua pengarah perancangan bandar dan desa','ketua pengarah','dasar perancangan am','jawatankuasa perancang negeri','jpn','pihak berkuasa perancang tempatan','pbpt','fungsi pbpt'],primary:['2B','3','4','5','6'],related:['2A']},
+ {issue:'Perancangan wilayah',keys:['jawatankuasa perancang wilayah','perancangan wilayah','wilayah dua negeri','dua atau lebih negeri'],primary:['6A'],related:['4','6']},
+ {issue:'Rancangan Fizikal Negara',keys:['rancangan fizikal negara','rfn'],primary:['6B'],related:['2A','3']},
+ {issue:'Tinjauan kawasan perancangan',keys:['tinjauan kawasan','kaji kawasan perancangan','maklumat kawasan perancangan','survey kawasan'],primary:['7'],related:['8','12']},
+ {issue:'Rancangan Struktur',keys:['rancangan struktur','draf rancangan struktur'],primary:['8'],related:['7','9','10','11','11A','11B']},
+ {issue:'Publisiti rancangan struktur',keys:['publisiti rancangan struktur','representasi rancangan struktur','bantahan rancangan struktur'],primary:['9'],related:['8','10']},
+ {issue:'Kelulusan rancangan struktur',keys:['kelulusan rancangan struktur','penolakan rancangan struktur','lulus rancangan struktur'],primary:['10'],related:['8','9','11']},
+ {issue:'Kajian semula / pengubahan rancangan struktur',keys:['kajian semula rancangan struktur','ubah rancangan struktur','pengubahan rancangan struktur'],primary:['11','11A','11B'],related:['8','9','10']},
+ {issue:'Rancangan Tempatan',keys:['rancangan tempatan','draf rancangan tempatan'],primary:['12'],related:['12A','13','14','15','16','16A']},
+ {issue:'Publisiti / bantahan rancangan tempatan',keys:['publisiti rancangan tempatan','bantahan rancangan tempatan','representasi rancangan tempatan','pendengaran rancangan tempatan','siasatan rancangan tempatan'],primary:['12A','13','14'],related:['12','15']},
+ {issue:'Kelulusan / perubahan rancangan tempatan',keys:['kelulusan rancangan tempatan','penolakan rancangan tempatan','ubah rancangan tempatan','batalkan rancangan tempatan','ganti rancangan tempatan','pengarah negeri rancangan tempatan'],primary:['15','16','16A'],related:['12','13','14']},
+ {issue:'Rancangan Kawasan Khas',keys:['rancangan kawasan khas','kawasan khas'],primary:['16B'],related:['12','15']},
+ {issue:'Kaedah rancangan pemajuan',keys:['kaedah rancangan pemajuan','kaedah bahagian iii'],primary:['17'],related:['8','12','16B']},
+ {issue:'Penggunaan Tanah dan Bangunan',keys:['penggunaan tanah','guna tanah','penggunaan bangunan','ubah guna','tukar guna tanah','tukar kegunaan bangunan'],primary:['18'],related:['19','21']},
+ {issue:'Kebenaran Merancang',keys:['kebenaran merancang','tanpa kebenaran','belum mendapat kebenaran','planning permission'],primary:['19','21'],related:['20','21A','21B','21C','22']},
+ {issue:'Pemajuan bercanggah dengan kebenaran',keys:['berlawanan dengan kebenaran','bercanggah dengan kebenaran','langgar syarat','melanggar syarat','tidak ikut kelulusan'],primary:['20'],related:['25','28','29']},
+ {issue:'Rundingan / nasihat bagi pemajuan kerajaan',keys:['kewajipan berunding','agensi kerajaan','jabatan kerajaan','nasihat majlis','pemajuan kerajaan'],primary:['20A','20B'],related:['2A','4']},
+ {issue:'Permohonan Kebenaran Merancang',keys:['permohonan kebenaran','mohon kebenaran','permohonan pembangunan','permohonan pemajuan'],primary:['21'],related:['21A','21B','21C','22','23']},
+ {issue:'Laporan Cadangan Pemajuan',keys:['laporan cadangan pemajuan','impak sosial','penilaian impak sosial'],primary:['21A'],related:['21B','21C','22']},
+ {issue:'Pelan Susun Atur',keys:['pelan susun atur','layout plan','susun atur','tanah lapang','kerja tanah'],primary:['21B'],related:['21A','21C','22']},
+ {issue:'Orang berkelayakan / penyedia pelan',keys:['orang berkelayakan','penyedia pelan','perunding berkelayakan','pelan oleh orang berkelayakan'],primary:['21C'],related:['21','21A','21B']},
+ {issue:'Keputusan permohonan',keys:['layanan permohonan','keputusan permohonan','lulus permohonan','tolak permohonan','syarat kebenaran'],primary:['22'],related:['21','23']},
+ {issue:'Rayuan Perancangan',keys:['rayuan','merayu','lembaga rayuan','keputusan pbpt'],primary:['23','36'],related:['22','35C']},
+ {issue:'Kebenaran Merancang luput / diubah',keys:['luput','tamat tempoh kebenaran','pembatalan kebenaran','ubah kebenaran','pengubahsuaian kebenaran','pelan bangunan diubah'],primary:['24','25'],related:['23']},
+ {issue:'Kesalahan pemajuan tidak dibenarkan',keys:['kesalahan pemajuan','pemajuan tanpa kebenaran','pemajuan haram','penalti pemajuan'],primary:['26'],related:['19','20','27','28']},
+ {issue:'Penguatkuasaan pemajuan',keys:['penguatkuasaan','notis penguatkuasaan','henti pemajuan','pelanggaran seksyen 19','pelanggaran seksyen 20'],primary:['27','28'],related:['19','20','26','29','31']},
+ {issue:'Pemajuan tidak selaras selepas perubahan kelulusan',keys:['pemajuan tidak selaras','kelulusan pelan bangunan diubah suai','pelan bangunan diubah suai'],primary:['29'],related:['25','28']},
+ {issue:'Notis Rekuisisi',keys:['notis rekuisisi','rekuisisi','hentikan penggunaan','pindahkan bangunan','ubah bangunan'],primary:['30'],related:['31']},
+ {issue:'Pelaksanaan notis oleh orang diberi kuasa',keys:['orang diberi kuasa','pelaksanaan notis','masuk tanah laksana notis','gagal patuh notis'],primary:['31'],related:['27','28','30','45']},
+ {issue:'Ketidakselarasan undang-undang kecil bangunan',keys:['undang-undang kecil bangunan','ketidakselarasan bangunan','bercanggah rancangan pemajuan'],primary:['31A'],related:['18']},
+ {issue:'Caj Pemajuan',keys:['caj pemajuan','caj pembangunan','kenaikan nilai tanah','tanggungan caj'],primary:['32'],related:['33','34','35']},
+ {issue:'Penentuan / pembayaran caj pemajuan',keys:['penentuan caj','amaun caj pemajuan','bayar caj pemajuan','ansuran caj','ingkar caj pemajuan'],primary:['33','34'],related:['32','35']},
+ {issue:'Kaedah caj pemajuan',keys:['kaedah caj pemajuan','peraturan caj pemajuan'],primary:['35'],related:['32','33','34']},
+ {issue:'Perintah Pemeliharaan Pokok',keys:['pemeliharaan pokok','perintah pemeliharaan pokok','tebang pokok','menebang pokok','potong pokok'],primary:['35A'],related:['35B','35C','35D','35E','35F','35G','35H']},
+ {issue:'Pokok tertakluk syarat',keys:['pokok tertakluk syarat','syarat pokok','perintah pokok tidak boleh dibuat'],primary:['35B'],related:['35A']},
+ {issue:'Rayuan / pampasan perintah pokok',keys:['rayuan perintah pokok','pampasan pokok','pampasan perintah pemeliharaan'],primary:['35C','35D'],related:['35A','36']},
+ {issue:'Penggantian pokok',keys:['penggantian pokok','ganti pokok','tanam semula pokok','gagal menggantikan pokok'],primary:['35E','35F'],related:['35A']},
+ {issue:'Pembatalan perintah pemeliharaan pokok',keys:['batal perintah pokok','pembatalan perintah pemeliharaan'],primary:['35G'],related:['35A']},
+ {issue:'Pokok lilitan melebihi 0.8 meter',keys:['pokok 0.8','pokok 0 8','lilitan pokok','pokok besar'],primary:['35H'],related:['35A','35E']},
+ {issue:'Lembaga Rayuan',keys:['lembaga rayuan','keanggotaan lembaga rayuan','bidang kuasa lembaga rayuan'],primary:['36'],related:['23','35C']},
+ {issue:'Notis Pembelian Tanah',keys:['notis pembelian','pembelian tanah','tanah terjejas','menghendaki pembelian tanah'],primary:['37'],related:[]},
  {issue:'Kawasan Pemajuan',keys:['kawasan pemajuan','perisytiharan kawasan','isytihar kawasan pemajuan'],primary:['38'],related:['39','40','41','42','43','44']},
- {issue:'Rancangan Tempatan',keys:['rancangan tempatan','rt','draf rancangan tempatan'],primary:['12'],related:['12A','13','14','15','16','16A']},
- {issue:'Rancangan Struktur',keys:['rancangan struktur','rs','draf rancangan struktur'],primary:['8'],related:['9','10','11','11A','11B']},
- {issue:'Rancangan Kawasan Khas',keys:['rancangan kawasan khas','rkk','kawasan khas'],primary:['16B'],related:[]},
- {issue:'Rancangan Fizikal Negara',keys:['rancangan fizikal negara','rfn'],primary:['6B'],related:[]},
- {issue:'Penggunaan Tanah dan Bangunan',keys:['penggunaan tanah','guna tanah','penggunaan bangunan','ubah guna'],primary:['18'],related:['19','21']},
- {issue:'Nasihat / Rundingan Kerajaan',keys:['kewajipan berunding','agensi kerajaan','jabatan kerajaan','nasihat majlis','mpfn'],primary:['20A','20B'],related:['2A','4']}
+ {issue:'Kuat kuasa perisytiharan kawasan pemajuan',keys:['kuat kuasa perisytiharan','kesan perisytiharan kawasan'],primary:['39'],related:['38','40']},
+ {issue:'Pampasan kawasan pemajuan',keys:['pampasan kawasan pemajuan','pampasan tanah kawasan pemajuan'],primary:['40'],related:['38','39']},
+ {issue:'Pelaksanaan pembangunan kawasan',keys:['gaji ejen','menggaji ejen','usaha sama','perkiraan pemajuan','tubuh perbadanan','menubuhkan perbadanan'],primary:['41'],related:['38','42','43']},
+ {issue:'Pembiayaan kawasan pemajuan',keys:['pinjam wang','meminjam wang','pembiayaan kawasan pemajuan'],primary:['42'],related:['38','41']},
+ {issue:'Pelupusan tanah dan harta',keys:['lupus tanah','pelupusan tanah','jual tanah','sewa tanah','pelupusan harta'],primary:['43'],related:['38','41']},
+ {issue:'Kaedah kawasan pemajuan',keys:['kaedah kawasan pemajuan','peraturan kawasan pemajuan'],primary:['44'],related:['38']},
+ {issue:'Kuasa memasuki',keys:['kuasa memasuki','masuk tanah','memasuki tanah','masuk bangunan','kad kuasa'],primary:['45'],related:['31']},
+ {issue:'Penyampaian dokumen',keys:['penyampaian dokumen','serah dokumen','pos berdaftar','sampaikan notis'],primary:['46'],related:[]},
+ {issue:'Pengesahan dan bukti dokumen',keys:['pengesahan dokumen','sahkan dokumen','bukti dokumentar','salinan diperakui','dokumen sebagai bukti'],primary:['47','48'],related:['46']},
+ {issue:'Keistimewaan dokumen / saksi',keys:['pengemukaan dokumen','hadir sebagai saksi','kehadiran saksi','keistimewaan dokumen'],primary:['49'],related:['48']},
+ {issue:'Pendakwaan dan bidang kuasa mahkamah',keys:['pendakwaan','mendakwa','mahkamah','bidang kuasa mahkamah','majistret'],primary:['50','51'],related:['26','52','52A']},
+ {issue:'Mengganggu tanda',keys:['ganggu tanda','mengganggu tanda','alih tanda','rosakkan tanda'],primary:['52'],related:['50','51']},
+ {issue:'Kesalahan pertubuhan perbadanan',keys:['pertubuhan perbadanan','kesalahan syarikat','pengarah syarikat','pengurus syarikat','pegawai syarikat'],primary:['52A'],related:['50','51']},
+ {issue:'Pekhidmat awam',keys:['pekhidmat awam','penjawat awam'],primary:['53'],related:[]},
+ {issue:'Perlindungan pihak berkuasa awam',keys:['perlindungan pihak berkuasa awam','akta perlindungan pihak berkuasa awam','tindakan terhadap pihak berkuasa'],primary:['54'],related:['55']},
+ {issue:'Tanggung rugi',keys:['tanggung rugi','menanggung rugi','kerosakan atau kerugian','tuntutan kerosakan'],primary:['55'],related:['54']},
+ {issue:'Siasatan / pendengaran tempatan',keys:['siasatan tempatan','pendengaran tempatan','suruhanjaya siasatan'],primary:['56'],related:['14']},
+ {issue:'Pengecualian fi dan caj',keys:['pengecualian fi','pengecualian caj','dikecualikan fi','agama pendidikan rekreasi sosial kebajikan khairat'],primary:['57'],related:['32']},
+ {issue:'Kuasa membuat kaedah-kaedah',keys:['kuasa membuat kaedah','buat kaedah','kaedah-kaedah akta','peraturan akta'],primary:['58'],related:['17','35','44']},
+ {issue:'Pemansuhan undang-undang perancangan terdahulu',keys:['pemansuhan undang-undang','undang-undang perancangan terdahulu','undang-undang sedia ada','peruntukan peralihan'],primary:['59'],related:['1']}
 ];
 const CASE_SHORT={
-'6B':'Rancangan Fizikal Negara','8':'Penyediaan draf rancangan struktur','9':'Publisiti draf rancangan struktur','10':'Kelulusan draf rancangan struktur','11':'Kajian semula rancangan struktur','11A':'Tatacara kajian semula rancangan struktur','11B':'Pengubahan rancangan struktur',
-'12':'Penyediaan draf rancangan tempatan','12A':'Publisiti awal rancangan tempatan','13':'Publisiti draf rancangan tempatan','14':'Siasatan dan pendengaran','15':'Kelulusan rancangan tempatan','16':'Pengubahan / pembatalan rancangan tempatan','16A':'Rancangan tempatan oleh Pengarah Negeri','16B':'Rancangan Kawasan Khas',
-'18':'Penggunaan tanah dan bangunan','19':'Larangan pemajuan tanpa kebenaran merancang','20':'Pemajuan berlawanan dengan kebenaran merancang','20A':'Kewajipan berunding','20B':'Kewajipan mendapatkan nasihat','21':'Permohonan kebenaran merancang','21A':'Laporan Cadangan Pemajuan','21B':'Pelan susun atur','21C':'Pelan oleh orang berkelayakan','22':'Layanan terhadap permohonan','23':'Rayuan keputusan PBPT','24':'Luput kebenaran merancang','25':'Pembatalan / pengubahsuaian kebenaran','26':'Kesalahan pemajuan tidak dibenarkan','27':'Penguatkuasaan pelanggaran Seksyen 19','28':'Penguatkuasaan pelanggaran Seksyen 20','29':'Penguatkuasaan pemajuan tidak selaras','30':'Notis rekuisisi','31':'Pelaksanaan oleh orang diberi kuasa',
-'32':'Caj pemajuan','33':'Penentuan caj pemajuan','34':'Pembayaran caj pemajuan','35':'Kaedah caj pemajuan','35A':'Perintah pemeliharaan pokok','35B':'Kesan perintah pemeliharaan pokok','35C':'Rayuan perintah pemeliharaan pokok','35D':'Pampasan pemeliharaan pokok','35E':'Penggantian pokok','35F':'PBPT menggantikan pokok','35G':'Pembatalan perintah pemeliharaan pokok','35H':'Pokok melebihi lilitan 0.8 meter','36':'Lembaga Rayuan','37':'Notis pembelian tanah','38':'Perisytiharan kawasan pemajuan','39':'Kuat kuasa perisytiharan','40':'Pampasan kawasan pemajuan','41':'Ejen / perkiraan / perbadanan','42':'Kuasa meminjam wang','43':'Pelupusan tanah dan harta','44':'Kaedah kawasan pemajuan','2A':'Majlis Perancang Fizikal Negara','4':'Jawatankuasa Perancang Negeri'
+'1':'Tajuk ringkas, pemakaian dan permulaan kuat kuasa','2':'Tafsiran','2A':'Majlis Perancang Fizikal Negara','2B':'Ketua Pengarah Perancangan Bandar dan Desa','3':'Dasar perancangan am','4':'Jawatankuasa Perancang Negeri dan fungsinya','5':'Pihak berkuasa perancang tempatan','6':'Fungsi pihak berkuasa perancang tempatan','6A':'Jawatankuasa perancang wilayah','6B':'Rancangan fizikal negara','7':'Tinjauan kawasan perancangan','8':'Penyediaan draf rancangan struktur','9':'Publisiti draf rancangan struktur','10':'Kelulusan / penolakan draf rancangan struktur','11':'Kajian semula / pengubahan rancangan struktur','11A':'Tatacara kajian semula rancangan struktur','11B':'Tatacara pengubahan rancangan struktur','12':'Penyediaan draf rancangan tempatan','12A':'Publisiti penyediaan draf rancangan tempatan','13':'Publisiti draf rancangan tempatan','14':'Siasatan dan pendengaran','15':'Kelulusan / penolakan draf rancangan tempatan','16':'Pengubahan, pembatalan dan penggantian rancangan tempatan','16A':'Rancangan tempatan oleh Pengarah Negeri','16B':'Rancangan kawasan khas','17':'Kuasa membuat kaedah-kaedah','18':'Penggunaan tanah dan bangunan','19':'Larangan pemajuan tanpa kebenaran merancang','20':'Pemajuan berlawanan dengan kebenaran merancang','20A':'Kewajipan untuk berunding','20B':'Kewajipan untuk mendapatkan nasihat','21':'Permohonan kebenaran merancang','21A':'Laporan cadangan pemajuan','21B':'Pelan susun atur','21C':'Pelan oleh orang berkelayakan','22':'Layanan terhadap permohonan','23':'Rayuan keputusan PBPT','24':'Luput kebenaran merancang','25':'Pembatalan / pengubahsuaian kebenaran','26':'Kesalahan pemajuan tidak dibenarkan','27':'Penguatkuasaan pelanggaran Seksyen 19','28':'Penguatkuasaan pelanggaran Seksyen 20','29':'Pemajuan tidak selaras dengan kelulusan diubah suai','30':'Notis rekuisisi','31':'Pelaksanaan oleh orang diberi kuasa','31A':'Ketidakselarasan undang-undang kecil bangunan','32':'Caj pemajuan dan tanggungan','33':'Penentuan caj pemajuan','34':'Pembayaran caj pemajuan','35':'Kuasa membuat kaedah caj pemajuan','35A':'Perintah pemeliharaan pokok','35B':'Pokok tertakluk pada syarat','35C':'Rayuan perintah pemeliharaan pokok','35D':'Pampasan perintah pemeliharaan pokok','35E':'Penggantian pokok','35F':'PBPT menggantikan pokok','35G':'Pembatalan perintah pemeliharaan pokok','35H':'Pokok melebihi lilitan 0.8 meter','36':'Lembaga Rayuan','37':'Notis menghendaki pembelian tanah','38':'Perisytiharan kawasan pemajuan','39':'Kuat kuasa perisytiharan','40':'Peruntukan khas bagi pampasan','41':'Ejen, perkiraan dan perbadanan','42':'Kuasa meminjam wang','43':'Pelupusan tanah dan harta','44':'Kaedah kawasan pemajuan','45':'Kuasa memasuki','46':'Penyampaian dokumen','47':'Pengesahan dokumen','48':'Bukti dokumentar','49':'Keistimewaan dokumen dan saksi','50':'Pendakwaan','51':'Bidang kuasa mahkamah','52':'Penalti kerana mengganggu tanda','52A':'Kesalahan pertubuhan perbadanan','53':'Pekhidmat awam','54':'Akta Perlindungan Pihak Berkuasa Awam','55':'Tanggung rugi bagi kerosakan atau kerugian','56':'Siasatan atau pendengaran tempatan','57':'Pengecualian daripada fi dan caj','58':'Kuasa membuat kaedah-kaedah','59':'Pemansuhan undang-undang perancangan sedia ada'
 };
+const CASE_ABBR={
+ 'km':['kebenaran merancang'],'lcp':['laporan cadangan pemajuan'],'rt':['rancangan tempatan'],'rs':['rancangan struktur'],'rkk':['rancangan kawasan khas'],'rfn':['rancangan fizikal negara'],'pbpt':['pihak berkuasa perancang tempatan'],'mpfn':['majlis perancang fizikal negara'],'jpn':['jawatankuasa perancang negeri'],'sia':['penilaian impak sosial'],'tpo':['perintah pemeliharaan pokok']
+};
+function caseHas(q,key){
+ const n=normSearch(key);
+ if(n.length<=4 && /^[a-z0-9]+$/.test(n)) return new RegExp('(^|\\s)'+n.replace(/[.*+?^$()|[\\]\\]/g,'\\$&')+'(?=\\s|$)').test(q);
+ return q.includes(n);
+}
+function expandCaseAbbr(q){
+ let x=' '+q+' ';
+ Object.entries(CASE_ABBR).forEach(([a,terms])=>{if(new RegExp('(^|\\s)'+a+'(?=\\s|$)').test(q)) x+=' '+terms.join(' ')});
+ return normSearch(x);
+}
 function openCaseView(){document.getElementById('actView').style.display='none';document.getElementById('caseView').classList.add('open');window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.getElementById('caseInput').focus(),150)}
 function closeCaseView(){document.getElementById('caseView').classList.remove('open');document.getElementById('actView').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
 function analyseCase(){
  const raw=document.getElementById('caseInput').value.trim(), out=document.getElementById('caseResults');
  if(!raw){out.innerHTML='<div class="case-issue">Sila masukkan situasi atau kes terlebih dahulu.</div>';return}
- const q=normSearch(raw), matches=CASE_RULES.map(r=>{let score=0;r.keys.forEach(k=>{const n=normSearch(k);if(q.includes(n))score+=n.length>8?4:2});return {r,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
- if(!matches.length){out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-issue">Tiada padanan dalaman yang cukup jelas ditemui. Cuba gunakan istilah Akta seperti “kebenaran merancang”, “LCP”, “rayuan”, “caj pemajuan”, “penguatkuasaan” atau “pemeliharaan pokok”.</div><div class="case-note">Analisis Kes ini menggunakan peraturan padanan dalaman sahaja dan tidak menggunakan AI.</div>';return}
+ const q=expandCaseAbbr(normSearch(raw)), matches=CASE_RULES.map(r=>{let score=0;r.keys.forEach(k=>{const n=normSearch(k);if(caseHas(q,k))score+=n.length>8?4:2});return {r,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+ if(!matches.length){out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-issue">Tiada padanan dalaman yang cukup jelas ditemui. Cuba gunakan istilah Akta seperti “kebenaran merancang”, “LCP”, “rancangan tempatan”, “rayuan”, “caj pemajuan”, “penguatkuasaan”, “pemeliharaan pokok”, “pendakwaan” atau “penyampaian dokumen”.</div><div class="case-note">Analisis Kes ini menggunakan peraturan padanan dalaman sahaja dan tidak menggunakan AI.</div>';return}
  const issues=matches.slice(0,4).map(x=>x.r.issue);
  let ordered=[], primary=new Set();
  matches.slice(0,4).forEach(x=>{x.r.primary.forEach(n=>{primary.add(n);if(!ordered.includes(n))ordered.push(n)});x.r.related.forEach(n=>{if(!ordered.includes(n))ordered.push(n)})});
