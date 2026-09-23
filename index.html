@@ -164,11 +164,19 @@ body.dark .voicebar{background:#13233c;border-color:#34577f}.speaking-indicator{
  .tools #small,.tools #large,.tools #theme,.tools button[onclick]{display:none !important}
 }
 
+
+/* Menu carian lama dibuang; Carian Kata Kunci & Analisis Kes menjadi fungsi utama */
+.tools{margin-left:auto}
+.case-btn{min-width:285px}
+@media(max-width:900px){
+ .tools #caseOpen{min-width:250px !important;font-size:13px;padding:10px 14px}
+}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="searchbar"><span class="mag">⌕</span><input id="search" placeholder="Cari seksyen, perkataan, frasa..." autocomplete="off"><span class="kbd">Ctrl + K</span><div id="results" class="results"></div></div><div class="tools"><button id="caseOpen" class="case-btn">⚖ Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div></header>
-<div class="app"><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><div id="caseView" class="case-view"><div class="case-title"><h2>⚖ ANALISIS KES</h2><p>Padanan Dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan situasi / kes</label><textarea id="caseInput" placeholder="Contoh: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Analisis Kes</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
+<header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div></header>
+<div class="app"><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
 <div class="library-tools"><button class="library-btn" id="bookmarkBtn" type="button">☆ Simpan Kegemaran</button><button class="library-btn" id="savedBtn" type="button">🔖 Kegemaran & Sejarah</button></div></div></div><div class="saved-panel" id="savedPanel">
 <div class="saved-head"><span>SEKSYEN SAYA</span><button class="saved-remove" id="closeSaved" type="button">✕ Tutup</button></div>
 <div class="saved-head"><div class="saved-tabs"><button id="favTab" class="active" type="button">★ Kegemaran</button><button id="historyTab" type="button">◷ Sejarah Bacaan</button></div><button class="saved-remove" id="clearHistory" type="button">Kosongkan sejarah</button></div>
@@ -313,12 +321,16 @@ function voiceSearch(term){
  let hits=sections.filter(s=>('seksyen '+s.num+' '+s.title+' '+s.text+' '+(DATA.explain[s.num]||'')).toLowerCase().includes(q));
  // rank title matches first
  hits.sort((a,b)=>{const at=a.title.toLowerCase().includes(q)?0:1,bt=b.title.toLowerCase().includes(q)?0:1;return at-bt;});
- const input=document.getElementById('search');input.value=term;doSearch(term);
  if(!hits.length){speakCustom('Carian '+term+'. Tiada padanan ditemui dalam kandungan MyAKTA172.','Carian');return;}
  const top=hits.slice(0,5);
  const desc=top.map(s=>'Bahagian '+romanToSpeech(s.part)+', Seksyen '+sectionSpeechName(s.num)+', '+s.title).join('; ');
  if(hits.length===1){show(hits[0].num);speakCustom('Carian '+term+'. Ditemui di '+desc+'. Seksyen ini telah dibuka.','Carian');}
- else {speakCustom('Carian '+term+'. Ditemui '+hits.length+' padanan. Antara yang berkaitan ialah '+desc+'. Hasil carian dipaparkan pada skrin.','Carian');}
+ else {
+   openCaseView();
+   document.getElementById('caseInput').value=term;
+   analyseCase();
+   speakCustom('Carian '+term+'. Ditemui '+hits.length+' padanan. Antara yang berkaitan ialah '+desc+'. Hasil berkaitan dipaparkan dalam Carian Kata Kunci dan Analisis Kes.','Carian');
+ }
 }
 function processVoiceCommand(raw){
  const t=normalizeCommand(raw);setCommandStatus('Didengar: “'+raw+'”',true);
@@ -379,7 +391,7 @@ function initRecognition(){
 }
 initRecognition();
 
-document.getElementById('search').addEventListener('input',e=>doSearch(e.target.value)); document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();document.getElementById('search').focus()}}); document.addEventListener('click',e=>{if(!e.target.closest('.searchbar'))document.getElementById('results').style.display='none'});
+
 document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText('Seksyen '+current+' — '+byNum[current].title+'\n\n'+byNum[current].text); document.getElementById('printBtn').onclick=()=>window.print(); document.getElementById('large').onclick=()=>document.body.classList.add('large'); document.getElementById('small').onclick=()=>document.body.classList.remove('large'); document.getElementById('theme').onclick=()=>document.body.classList.toggle('dark');
 makeNav(); makeJump(); const h=decodeURIComponent(location.hash.replace('#seksyen-','')); const INITIAL_SECTION=byNum[h]?h:'1';
 
