@@ -156,6 +156,14 @@ body.dark .voicebar{background:#13233c;border-color:#34577f}.speaking-indicator{
  .lawbox{font-size:17px !important;padding:16px 18px !important}
 }
 
+
+/* Telefon/tablet: kekalkan butang Analisis Kes kelihatan */
+@media(max-width:900px){
+ .tools{display:flex !important;position:absolute;right:12px;top:12px;z-index:60}
+ .tools #caseOpen{display:inline-flex !important;align-items:center;justify-content:center;min-width:180px}
+ .tools #small,.tools #large,.tools #theme,.tools button[onclick]{display:none !important}
+}
+
 </style>
 </head>
 <body>
