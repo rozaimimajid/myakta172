@@ -328,13 +328,46 @@ function processVoiceCommand(raw){
  speakCustom('Arahan tidak dikenal pasti. Cuba sebut buka bahagian, buka seksyen, dengar seksyen, dengar penerangan ringkas, atau cari diikuti kata kunci.','Arahan Suara');
 }
 function initRecognition(){
- if(!SpeechRecognition){micBtn.disabled=true;micBtn.textContent='🎙 Tidak Disokong';setCommandStatus('Arahan suara tidak disokong oleh pelayar ini. Cuba Chrome atau Edge yang menyokong Web Speech API.');return;}
- recognition=new SpeechRecognition();recognition.lang='ms-MY';recognition.interimResults=false;recognition.continuous=false;recognition.maxAlternatives=3;
+ if(!micBtn||!commandStatus)return;
+ if(!window.isSecureContext){micBtn.disabled=true;micBtn.textContent='🎙 Mikrofon Tidak Tersedia';setCommandStatus('Arahan suara memerlukan sambungan HTTPS yang selamat.');return;}
+ if(!SpeechRecognition){micBtn.disabled=true;micBtn.textContent='🎙 Tidak Disokong';setCommandStatus('Pelayar ini tidak menyediakan pengecaman suara. Pada telefon Android, buka MyAKTA172 terus dalam Google Chrome dan benarkan mikrofon.');return;}
+ recognition=new SpeechRecognition();
+ recognition.lang='ms-MY';recognition.interimResults=false;recognition.continuous=false;recognition.maxAlternatives=3;
  recognition.onstart=()=>{listening=true;micBtn.classList.add('listening');micBtn.textContent='● Mendengar…';setCommandStatus('Mendengar arahan Bahasa Melayu…');};
- recognition.onresult=e=>{const text=e.results[0][0].transcript;processVoiceCommand(text);};
- recognition.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed')setCommandStatus('Kebenaran mikrofon diperlukan untuk menggunakan arahan suara.');else if(e.error!=='no-speech')setCommandStatus('Arahan suara tidak dapat diproses: '+e.error);};
- recognition.onend=()=>{listening=false;micBtn.classList.remove('listening');micBtn.textContent='🎙 Mula Mendengar';};
- micBtn.onclick=()=>{if(listening){recognition.stop();return;}try{recognition.start();}catch(e){}};
+ recognition.onresult=e=>{
+   let best=e.results[0][0]?.transcript||'';
+   // Try alternatives when the first transcript is empty.
+   if(!best&&e.results[0].length>1)best=e.results[0][1]?.transcript||'';
+   if(best)processVoiceCommand(best); else setCommandStatus('Suara tidak dapat dikenal pasti. Cuba sebut sekali lagi.');
+ };
+ recognition.onerror=e=>{
+   listening=false;micBtn.classList.remove('listening');micBtn.textContent='🎙 Cuba Lagi';
+   const msg={
+    'not-allowed':'Akses mikrofon ditolak. Tekan ikon kunci/Settings pada pelayar → Permissions → Microphone → Allow, kemudian cuba lagi.',
+    'service-not-allowed':'Perkhidmatan pengecaman suara tidak dibenarkan pada pelayar/peranti ini.',
+    'audio-capture':'Mikrofon tidak dapat diakses. Pastikan mikrofon tidak sedang digunakan aplikasi lain dan kebenaran mikrofon telah diberi.',
+    'no-speech':'Tiada suara dikesan. Tekan “Cuba Lagi” dan sebut arahan dengan jelas.',
+    'network':'Pengecaman suara memerlukan sambungan rangkaian pada sesetengah peranti. Semak Internet dan cuba lagi.',
+    'aborted':'Pendengaran dihentikan. Tekan “Cuba Lagi”.'
+   };
+   setCommandStatus(msg[e.error]||('Arahan suara tidak dapat diproses ('+e.error+'). Cuba sekali lagi.'));
+ };
+ recognition.onend=()=>{listening=false;micBtn.classList.remove('listening');if(!micBtn.disabled&&micBtn.textContent==='● Mendengar…')micBtn.textContent='🎙 Mula Mendengar';};
+ micBtn.onclick=async()=>{
+   if(listening){recognition.stop();return;}
+   // Explicit permission request improves reliability on mobile browsers.
+   try{
+     if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+       const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+       stream.getTracks().forEach(t=>t.stop());
+     }
+     setCommandStatus('Mikrofon dibenarkan. Mendengar arahan…');
+     recognition.start();
+   }catch(e){
+     micBtn.classList.remove('listening');micBtn.textContent='🎙 Cuba Lagi';
+     setCommandStatus('Mikrofon belum dibenarkan. Benarkan akses mikrofon untuk laman MyAKTA172 dalam tetapan pelayar, kemudian tekan “Cuba Lagi”.');
+   }
+ };
 }
 initRecognition();
 
