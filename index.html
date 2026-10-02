@@ -172,11 +172,75 @@ body.dark .voicebar{background:#13233c;border-color:#34577f}.speaking-indicator{
  .tools #caseOpen{min-width:250px !important;font-size:13px;padding:10px 14px}
 }
 
+
+
+/* v2.0 — Dua mod paparan: Desktop & Mobile */
+.mode-switch{display:flex;align-items:center;gap:5px;padding:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;white-space:nowrap}
+.mode-switch span{font-size:11px;font-weight:800;opacity:.9;padding-left:4px}
+.mode-switch button{padding:8px 10px!important;border:0!important;background:transparent!important}
+.mode-switch button.active{background:#fff!important;color:var(--blue)!important}
+.mobile-home,.mobile-bottom-nav{display:none}
+body.mode-mobile{background:#eef4fb}
+body.mode-mobile .top{position:sticky!important;min-width:0!important;width:100%!important;height:auto!important;transform:none!important;flex-wrap:wrap;padding:10px 14px}
+body.mode-mobile .brand{min-width:0;flex:1}body.mode-mobile .brand h1{font-size:27px}body.mode-mobile .brand p{font-size:11px}
+body.mode-mobile .tools{position:static!important;display:flex!important;margin-left:auto}
+body.mode-mobile .tools #small,body.mode-mobile .tools #large,body.mode-mobile .tools #theme,body.mode-mobile .tools button[onclick]{display:none!important}
+body.mode-mobile .tools #caseOpen{min-width:0!important;padding:9px 11px;font-size:12px}
+body.mode-mobile .mode-switch{order:3;margin-left:auto}
+body.mode-mobile .app{display:block!important;width:100%!important;max-width:760px!important;margin:0 auto!important;padding:12px 12px 86px!important;min-height:calc(100vh - 74px)!important;transform:none!important}
+body.mode-mobile .mobile-home{display:block}
+body.mode-mobile .sidebar{display:none!important;position:relative!important;top:0!important;width:100%!important;height:auto!important;max-height:none!important;margin:0!important;border-radius:14px}
+body.mode-mobile .sidebar.mobile-open{display:flex!important}
+body.mode-mobile .sidebar .nav{max-height:none!important;padding-bottom:58px}
+body.mode-mobile .main{display:none;width:100%!important;min-width:0!important;border-radius:14px}
+body.mode-mobile .main.mobile-open{display:block}
+body.mode-mobile .content{padding:18px 14px 0!important}
+body.mode-mobile .crumb{padding:10px 12px;flex-wrap:wrap}
+body.mode-mobile .section-head{display:block}body.mode-mobile .section-head h2{font-size:30px}body.mode-mobile .section-head h3{font-size:20px}
+body.mode-mobile .nextprev-top{margin-top:14px;width:100%;gap:8px}body.mode-mobile .navbtn{min-width:0;flex:1;padding:10px 8px}
+body.mode-mobile .lawbox{font-size:17px!important;line-height:1.68;padding:16px!important}
+body.mode-mobile .lawbox .indent{padding-left:20px}body.mode-mobile .lawbox .subindent{padding-left:36px}
+body.mode-mobile .voicebar,body.mode-mobile .commandbar{padding:10px}
+body.mode-mobile .bottom-nav{flex-wrap:wrap}body.mode-mobile select{width:100%;min-width:0}
+body.mode-mobile .mobile-bottom-nav{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,760px);z-index:9998;background:#fff;border-top:1px solid var(--line);box-shadow:0 -5px 20px rgba(16,44,84,.12);padding:6px 5px calc(6px + env(safe-area-inset-bottom))}
+body.mode-mobile .mobile-bottom-nav button{border:0;background:transparent;color:#526277;padding:7px 2px;font-size:11px;font-weight:800;cursor:pointer}
+body.mode-mobile .mobile-bottom-nav button b{display:block;font-size:20px;line-height:1.1;margin-bottom:2px}
+body.mode-mobile .mobile-bottom-nav button.active{color:var(--blue2)}
+.mobile-hero{background:linear-gradient(135deg,#062b65,#0057c8);color:#fff;border-radius:18px;padding:22px 20px;margin-bottom:12px;box-shadow:var(--shadow)}
+.mobile-hero h2{margin:0 0 6px;font-size:28px}.mobile-hero p{margin:0;opacity:.92;line-height:1.45}
+.mobile-quick{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.mobile-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 4px 16px rgba(16,44,84,.07);cursor:pointer}
+.mobile-card b{display:block;color:var(--blue2);font-size:16px;margin:5px 0}.mobile-card small{color:#64748b;line-height:1.35}
+.mobile-section{background:#fff;border:1px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden}
+.mobile-section h3{margin:0;padding:13px 15px;border-bottom:1px solid var(--line);font-size:16px;color:var(--blue)}
+.mobile-list-item{padding:11px 15px;border-bottom:1px solid #edf1f7;cursor:pointer}.mobile-list-item:last-child{border-bottom:0}.mobile-list-item b{color:var(--blue2)}.mobile-list-item small{display:block;color:#64748b;margin-top:3px}
+.mobile-empty{padding:14px 15px;color:#64748b;font-size:13px}
+body.mode-desktop .mobile-home,body.mode-desktop .mobile-bottom-nav{display:none!important}
+body.mode-desktop .app{transform:none!important;margin-top:0!important}
+@media(max-width:900px){
+ body.mode-desktop{overflow-x:auto}
+ body.mode-desktop .top{transform:none!important;min-width:980px!important}
+ body.mode-desktop .app{display:grid!important;grid-template-columns:320px minmax(640px,1fr)!important;width:1180px!important;transform:none!important}
+ body.mode-desktop .tools{position:static!important}
+ .mode-switch span{display:none}
+}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div></header>
-<div class="app"><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
+<header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
+<div class="app"><section id="mobileHome" class="mobile-home">
+<div class="mobile-hero"><h2>MyAKTA172</h2><p>Rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
+<div class="mobile-quick">
+ <div class="mobile-card" data-mobile-go="akta"><span>📖</span><b>Baca Akta</b><small>Bahagian I–IX dan semua seksyen</small></div>
+ <div class="mobile-card" data-mobile-go="case"><span>⌕</span><b>Cari & Analisis</b><small>Kata kunci dan padanan dalaman Akta 172</small></div>
+ <div class="mobile-card" data-mobile-go="fav"><span>★</span><b>Kegemaran</b><small>Seksyen yang anda simpan</small></div>
+ <div class="mobile-card" data-mobile-go="recent"><span>◷</span><b>Terbaharu Dibaca</b><small>Sambung rujukan terakhir</small></div>
+</div>
+<div class="mobile-section"><h3>★ Kegemaran</h3><div id="mobileFav"></div></div>
+<div class="mobile-section"><h3>🔥 Sering Dibuka</h3><div id="mobileFrequent"></div></div>
+<div class="mobile-section"><h3>◷ Terbaharu Dibaca</h3><div id="mobileRecent"></div></div>
+</section><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
 <div class="library-tools"><button class="library-btn" id="bookmarkBtn" type="button">☆ Simpan Kegemaran</button><button class="library-btn" id="savedBtn" type="button">🔖 Kegemaran & Sejarah</button></div></div></div><div class="saved-panel" id="savedPanel">
 <div class="saved-head"><span>SEKSYEN SAYA</span><button class="saved-remove" id="closeSaved" type="button">✕ Tutup</button></div>
 <div class="saved-head"><div class="saved-tabs"><button id="favTab" class="active" type="button">★ Kegemaran</button><button id="historyTab" type="button">◷ Sejarah Bacaan</button></div><button class="saved-remove" id="clearHistory" type="button">Kosongkan sejarah</button></div>
@@ -580,4 +644,87 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
 })();
 </script>
 
+<nav id="mobileBottomNav" class="mobile-bottom-nav" aria-label="Navigasi Mobile">
+<button data-mobile-nav="home" class="active"><b>⌂</b>Utama</button>
+<button data-mobile-nav="akta"><b>📖</b>Akta</button>
+<button data-mobile-nav="case"><b>⌕</b>Cari & Analisis</button>
+<button data-mobile-nav="fav"><b>★</b>Kegemaran</button>
+</nav>
+<script>
+/* v2.0 Paparan pilihan pengguna + dashboard mobile */
+(function(){
+ const MODE_KEY='myakta172_display_mode_v2', FREQ_KEY='myakta172_frequent_v1';
+ const $=id=>document.getElementById(id);
+ function defaultMode(){return window.innerWidth<=700?'mobile':'desktop'}
+ function selectedMode(){return localStorage.getItem(MODE_KEY)||defaultMode()}
+ function setMode(mode,save){
+   document.body.classList.remove('mode-desktop','mode-mobile');
+   document.body.classList.add('mode-'+mode);
+   document.querySelector('.top')?.style.removeProperty('transform');
+   document.querySelector('.app')?.style.removeProperty('transform');
+   document.querySelector('.app')?.style.removeProperty('margin-top');
+   if(save)localStorage.setItem(MODE_KEY,mode);
+   $('modeDesktop')?.classList.toggle('active',mode==='desktop');
+   $('modeMobile')?.classList.toggle('active',mode==='mobile');
+   if(mode==='mobile') mobileNavigate('home'); else {
+     document.querySelector('.sidebar')?.classList.remove('mobile-open');
+     document.querySelector('.main')?.classList.remove('mobile-open');
+   }
+ }
+ function arr(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
+ function freq(){try{return JSON.parse(localStorage.getItem(FREQ_KEY)||'{}')}catch(e){return {}}}
+ function recordFrequent(num){
+   const f=freq(), n=String(num); f[n]=(f[n]||0)+1;
+   try{localStorage.setItem(FREQ_KEY,JSON.stringify(f))}catch(e){}
+   if(document.body.classList.contains('mode-mobile')) renderMobileLists();
+ }
+ function titleFor(n){return (window.byNum&&byNum[n])?byNum[n].title:(typeof CASE_SHORT!=='undefined'&&CASE_SHORT[n]?CASE_SHORT[n]:'')}
+ function row(n,extra){
+   return '<div class="mobile-list-item" data-mobile-sec="'+n+'"><b>Seksyen '+n+'</b> — '+titleFor(n)+(extra?'<small>'+extra+'</small>':'')+'</div>';
+ }
+ function renderMobileLists(){
+   const fav=arr('myakta172_favourites_v1');
+   const hist=arr('myakta172_history_v1');
+   const f=freq();
+   const frequent=Object.keys(f).sort((a,b)=>f[b]-f[a]).slice(0,5);
+   if($('mobileFav')) $('mobileFav').innerHTML=fav.length?fav.slice(0,5).map(n=>row(n)).join(''):'<div class="mobile-empty">Belum ada seksyen kegemaran.</div>';
+   if($('mobileFrequent')) $('mobileFrequent').innerHTML=frequent.length?frequent.map(n=>row(n,'Dibuka '+f[n]+' kali')).join(''):'<div class="mobile-empty">Belum ada rekod seksyen sering dibuka.</div>';
+   if($('mobileRecent')){
+     const seen=new Set(), recent=[];
+     hist.forEach(x=>{const n=String(x.num||x.section||x);if(n&& !seen.has(n)){seen.add(n);recent.push(n)}});
+     $('mobileRecent').innerHTML=recent.length?recent.slice(0,5).map(n=>row(n)).join(''):'<div class="mobile-empty">Belum ada sejarah bacaan.</div>';
+   }
+   document.querySelectorAll('[data-mobile-sec]').forEach(el=>el.onclick=()=>{mobileNavigate('section'); if(typeof show==='function')show(el.dataset.mobileSec)});
+ }
+ function mobileNavigate(where){
+   if(!document.body.classList.contains('mode-mobile'))return;
+   const home=$('mobileHome'), side=document.querySelector('.sidebar'), main=document.querySelector('.main');
+   home.style.display=where==='home'?'block':'none';
+   side.classList.toggle('mobile-open',where==='akta');
+   main.classList.toggle('mobile-open',!['home','akta'].includes(where));
+   if(where==='case' && typeof openCaseView==='function')openCaseView();
+   if(where==='fav'){
+     if(typeof closeCaseView==='function')closeCaseView();
+     setTimeout(()=>{const p=$('savedPanel');if(p)p.classList.add('open');if(typeof renderSaved==='function'){savedMode='fav';renderSaved()}},0);
+   }
+   if(where==='recent'){
+     if(typeof closeCaseView==='function')closeCaseView();
+     setTimeout(()=>{const p=$('savedPanel');if(p)p.classList.add('open');if(typeof renderSaved==='function'){savedMode='history';renderSaved()}},0);
+   }
+   if(where==='section' && typeof closeCaseView==='function')closeCaseView();
+   document.querySelectorAll('[data-mobile-nav]').forEach(b=>b.classList.toggle('active',b.dataset.mobileNav===(where==='section'?'akta':where)));
+   renderMobileLists();
+   window.scrollTo({top:0,behavior:'smooth'});
+ }
+ const oldShow=typeof show==='function'?show:null;
+ if(oldShow){show=function(num){oldShow(num);recordFrequent(num);if(document.body.classList.contains('mode-mobile')){document.querySelector('.sidebar')?.classList.remove('mobile-open');document.querySelector('.main')?.classList.add('mobile-open');$('mobileHome').style.display='none';}}}
+ $('modeDesktop')?.addEventListener('click',()=>setMode('desktop',true));
+ $('modeMobile')?.addEventListener('click',()=>setMode('mobile',true));
+ document.querySelectorAll('[data-mobile-nav]').forEach(b=>b.addEventListener('click',()=>mobileNavigate(b.dataset.mobileNav)));
+ document.querySelectorAll('[data-mobile-go]').forEach(b=>b.addEventListener('click',()=>mobileNavigate(b.dataset.mobileGo)));
+ const oldCase=$('caseOpen'); if(oldCase)oldCase.addEventListener('click',()=>{if(document.body.classList.contains('mode-mobile'))mobileNavigate('case')});
+ window.addEventListener('resize',()=>{document.querySelector('.top')?.style.removeProperty('transform');document.querySelector('.app')?.style.removeProperty('transform')});
+ setMode(selectedMode(),false); renderMobileLists();
+})();
+</script>
 </body></html>
