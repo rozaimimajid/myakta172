@@ -1,0 +1,20 @@
+{
+  "name": "MyAKTA172",
+  "short_name": "MyAKTA172",
+  "description": "Akta Perancangan Bandar dan Desa 1976 [Akta 172]",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#003b88",
+  "lang": "ms",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
