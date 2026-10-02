@@ -250,21 +250,50 @@ body.dark .mobile-list-item,body.dark .settings-row{border-color:#243349}
 body.dark .mobile-card b,body.dark .mobile-section h3,body.dark .settings-row strong{color:#79b5ff}
 body.dark .mobile-bottom-nav button{color:#afbdd1}body.dark .mobile-bottom-nav button.active{color:#79b5ff}
 
+
+
+/* v2.2 — Mobile Digital Akta Reader */
+body.mode-mobile .top{display:none!important}
+body.mode-mobile .app{padding-top:10px!important}
+.reader-brand{background:linear-gradient(135deg,#062b65,#0057c8);color:#fff;border-radius:0 0 24px 24px;padding:22px 18px 24px;margin:-10px -12px 14px;position:relative;overflow:hidden}
+.reader-brand:after{content:"§";position:absolute;right:18px;bottom:-26px;font-family:Georgia,serif;font-size:118px;color:rgba(255,255,255,.07);font-weight:bold}
+.reader-brand h2{margin:0;font-size:34px;line-height:1;font-weight:900;letter-spacing:-1px}.reader-brand h2 .akta-word{color:var(--gold)}
+.reader-brand p{margin:7px 0 0;font-size:13px;line-height:1.35;max-width:330px;opacity:.95}
+.continue-card{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px 15px;box-shadow:0 4px 16px rgba(16,44,84,.08);cursor:pointer;margin-bottom:11px}
+.continue-icon{width:42px;height:42px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:20px;color:var(--blue2);flex:0 0 42px}
+.continue-card .meta{flex:1;min-width:0}.continue-card small{display:block;color:#64748b;font-weight:700;margin-bottom:3px}.continue-card b{display:block;color:var(--blue);font-size:16px}.continue-card em{display:block;font-style:normal;color:#64748b;font-size:12px;margin-top:2px}
+.continue-arrow{font-size:24px;color:var(--blue2)}
+.open-act-primary{width:100%;display:flex;align-items:center;gap:13px;border:0;border-radius:15px;padding:16px;background:linear-gradient(135deg,#003b88,#0866d7);color:#fff;cursor:pointer;box-shadow:0 7px 18px rgba(0,71,171,.2);text-align:left}
+.open-act-primary .book{font-size:31px}.open-act-primary strong{display:block;font-size:18px}.open-act-primary small{display:block;opacity:.88;margin-top:2px}.open-act-primary .go{margin-left:auto;font-size:24px}
+.reader-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:11px 0 17px}
+.reader-stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 7px;text-align:center;cursor:pointer}.reader-stat span{display:block;font-size:20px}.reader-stat b{display:block;color:var(--blue);font-size:12px;margin-top:4px}.reader-stat small{display:block;color:#64748b;font-size:11px;margin-top:3px}
+.reader-list{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;margin-bottom:12px}
+.reader-list-head{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1px solid var(--line)}.reader-list-head h3{margin:0;color:var(--blue);font-size:17px}.reader-list-head button{border:0;background:transparent;color:var(--blue2);font-weight:800;cursor:pointer}
+.reader-row{display:grid;grid-template-columns:54px 1fr 20px;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid #edf1f7;cursor:pointer}.reader-row:last-child{border-bottom:0}
+.reader-num{font-size:24px;font-weight:900;color:var(--blue2);line-height:1}.reader-row strong{font-size:14px}.reader-row small{display:block;color:#64748b;margin-top:3px}.reader-row .chev{color:#7a8ba3;font-size:20px}
+.reader-empty{padding:15px;color:#64748b;font-size:13px}
+body.dark .reader-brand{background:linear-gradient(135deg,#061d42,#003b88)}
+body.dark .continue-card,body.dark .reader-stat,body.dark .reader-list{background:#101927;border-color:#243349;color:#eaf2ff}
+body.dark .continue-card b,body.dark .reader-stat b,body.dark .reader-list-head h3{color:#79b5ff}
+body.dark .continue-card small,body.dark .continue-card em,body.dark .reader-stat small,body.dark .reader-row small,body.dark .reader-empty{color:#afbdd1}
+body.dark .reader-row,body.dark .reader-list-head{border-color:#243349}
+
 </style>
 </head>
 <body>
 <header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
 <div class="app"><section id="mobileHome" class="mobile-home">
-<div class="mobile-hero"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
-<div class="mobile-quick">
- <div class="mobile-card" data-mobile-go="akta"><span>📖</span><b>Buka Akta</b><small>Bahagian I–IX dan semua seksyen</small></div>
- <div class="mobile-card" data-mobile-go="case"><span>⌕</span><b>Cari & Analisis</b><small>Kata kunci dan padanan dalaman Akta 172</small></div>
- <div class="mobile-card" data-mobile-go="fav"><span>★</span><b>Kegemaran</b><small>Seksyen yang anda simpan</small></div>
- <div class="mobile-card" data-mobile-go="recent"><span>◷</span><b>Terbaharu Dibaca</b><small>Sambung rujukan terakhir</small></div>
+<div class="reader-brand"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
+<div id="continueReading" class="continue-card" data-mobile-go="continue"><div class="continue-icon">◷</div><div class="meta"><small>SAMBUNG BACAAN</small><b id="continueSection">Belum ada bacaan</b><em id="continueTitle">Buka Akta untuk memulakan rujukan</em></div><span class="continue-arrow">›</span></div>
+<button class="open-act-primary" data-mobile-go="akta" type="button"><span class="book">▣</span><span><strong>Buka Akta 172</strong><small>Indeks Bahagian dan semua seksyen</small></span><span class="go">›</span></button>
+<div class="reader-stats">
+ <div class="reader-stat" data-mobile-go="fav"><span>★</span><b>Kegemaran</b><small id="favCount">0 seksyen</small></div>
+ <div class="reader-stat" data-mobile-go="frequent"><span>↻</span><b>Sering Dibuka</b><small id="freqCount">Belum ada</small></div>
+ <div class="reader-stat" data-mobile-go="recent"><span>◷</span><b>Terbaharu</b><small id="recentCount">Belum ada</small></div>
 </div>
-<div class="mobile-section"><h3>★ Kegemaran</h3><div id="mobileFav"></div></div>
-<div class="mobile-section"><h3>🔥 Sering Dibuka</h3><div id="mobileFrequent"></div></div>
-<div class="mobile-section"><h3>◷ Terbaharu Dibaca</h3><div id="mobileRecent"></div></div>
+<div class="reader-list"><div class="reader-list-head"><h3>Sering Dibuka</h3><button type="button" data-mobile-go="frequent">Lihat semua ›</button></div><div id="mobileFrequent"></div></div>
+<div class="reader-list"><div class="reader-list-head"><h3>Terbaharu Dibaca</h3><button type="button" data-mobile-go="recent">Lihat semua ›</button></div><div id="mobileRecent"></div></div>
+<div id="mobileFav" style="display:none"></div>
 </section><section id="mobileSettings" class="mobile-settings">
 <div class="settings-head"><h2>⚙️ Tetapan</h2><p>Sesuaikan paparan MyAKTA172 mengikut keselesaan anda.</p></div>
 <div class="settings-card">
@@ -691,20 +720,26 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }
  function titleFor(n){return (window.byNum&&byNum[n])?byNum[n].title:(typeof CASE_SHORT!=='undefined'&&CASE_SHORT[n]?CASE_SHORT[n]:'')}
  function row(n,extra){
-   return '<div class="mobile-list-item" data-mobile-sec="'+n+'"><b>Seksyen '+n+'</b> — '+titleFor(n)+(extra?'<small>'+extra+'</small>':'')+'</div>';
+   return '<div class="reader-row" data-mobile-sec="'+n+'"><div class="reader-num">'+n+'</div><div><strong>'+titleFor(n)+'</strong>'+(extra?'<small>'+extra+'</small>':'')+'</div><div class="chev">›</div></div>';
  }
  function renderMobileLists(){
    const fav=arr('myakta172_favourites_v1');
    const hist=arr('myakta172_history_v1');
    const f=freq();
    const frequent=Object.keys(f).sort((a,b)=>f[b]-f[a]).slice(0,5);
-   if($('mobileFav')) $('mobileFav').innerHTML=fav.length?fav.slice(0,5).map(n=>row(n)).join(''):'<div class="mobile-empty">Belum ada seksyen kegemaran.</div>';
-   if($('mobileFrequent')) $('mobileFrequent').innerHTML=frequent.length?frequent.map(n=>row(n,'Dibuka '+f[n]+' kali')).join(''):'<div class="mobile-empty">Belum ada rekod seksyen sering dibuka.</div>';
+   if($('mobileFav')) $('mobileFav').innerHTML=fav.length?fav.map(n=>row(n)).join(''):'<div class="reader-empty">Belum ada seksyen kegemaran.</div>';
+   if($('mobileFrequent')) $('mobileFrequent').innerHTML=frequent.length?frequent.map(n=>row(n,'Dibuka '+f[n]+' kali')).join(''):'<div class="reader-empty">Belum ada rekod seksyen sering dibuka.</div>';
+   let recent=[];
    if($('mobileRecent')){
-     const seen=new Set(), recent=[];
+     const seen=new Set();
      hist.forEach(x=>{const n=String(x.num||x.section||x);if(n&& !seen.has(n)){seen.add(n);recent.push(n)}});
-     $('mobileRecent').innerHTML=recent.length?recent.slice(0,5).map(n=>row(n)).join(''):'<div class="mobile-empty">Belum ada sejarah bacaan.</div>';
+     $('mobileRecent').innerHTML=recent.length?recent.slice(0,5).map(n=>row(n)).join(''):'<div class="reader-empty">Belum ada sejarah bacaan.</div>';
    }
+   if($('favCount')) $('favCount').textContent=fav.length+' seksyen';
+   if($('freqCount')) $('freqCount').textContent=frequent.length?(frequent.length+' seksyen'):'Belum ada';
+   if($('recentCount')) $('recentCount').textContent=recent.length?(recent.length+' seksyen'):'Belum ada';
+   const last=recent[0];
+   if(last){if($('continueSection'))$('continueSection').textContent='Seksyen '+last;if($('continueTitle'))$('continueTitle').textContent=titleFor(last);$('continueReading').dataset.sec=last;}
    document.querySelectorAll('[data-mobile-sec]').forEach(el=>el.onclick=()=>{mobileNavigate('section'); if(typeof show==='function')show(el.dataset.mobileSec)});
  }
  function mobileNavigate(where){
@@ -723,6 +758,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      if(typeof closeCaseView==='function')closeCaseView();
      setTimeout(()=>{const p=$('savedPanel');if(p)p.classList.add('open');if(typeof renderSaved==='function'){savedMode='history';renderSaved()}},0);
    }
+   if(where==='frequent'){ home.style.display='block'; settings?.classList.remove('open'); side.classList.remove('mobile-open'); main.classList.remove('mobile-open'); setTimeout(()=>document.querySelector('.reader-list')?.scrollIntoView({behavior:'smooth',block:'start'}),50); }
+   if(where==='continue'){ const n=$('continueReading')?.dataset.sec; if(n){mobileNavigate('section'); if(typeof show==='function')show(n)} else mobileNavigate('akta'); }
    if(where==='section' && typeof closeCaseView==='function')closeCaseView();
    document.querySelectorAll('[data-mobile-nav]').forEach(b=>b.classList.toggle('active',b.dataset.mobileNav===(where==='section'?'akta':where)));
    renderMobileLists();
