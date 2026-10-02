@@ -278,7 +278,18 @@ body.dark .continue-card b,body.dark .reader-stat b,body.dark .reader-list-head 
 body.dark .continue-card small,body.dark .continue-card em,body.dark .reader-stat small,body.dark .reader-row small,body.dark .reader-empty{color:#afbdd1}
 body.dark .reader-row,body.dark .reader-list-head{border-color:#243349}
 
+
+.install-pwa{display:none;position:fixed;right:16px;bottom:82px;z-index:9997;border:0;border-radius:999px;background:var(--blue2);color:#fff;padding:11px 15px;font-weight:800;box-shadow:0 6px 20px rgba(0,71,171,.28);cursor:pointer}
+.install-pwa.show{display:block}
+@media(min-width:901px){.install-pwa{bottom:22px}}
 </style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#003b88">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MyAKTA172">
+<link rel="apple-touch-icon" href="./icon.svg">
 </head>
 <body>
 <header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
@@ -798,6 +809,16 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  const oldCase=$('caseOpen'); if(oldCase)oldCase.addEventListener('click',()=>{if(document.body.classList.contains('mode-mobile'))mobileNavigate('case')});
  window.addEventListener('resize',()=>{document.querySelector('.top')?.style.removeProperty('transform');document.querySelector('.app')?.style.removeProperty('transform')});
  setMode(selectedMode(),false); renderMobileLists();
+})();
+</script>
+<button id="installPwa" class="install-pwa" type="button">＋ Pasang MyAKTA172</button>
+<script>
+(function(){
+ let deferredPrompt=null; const btn=document.getElementById('installPwa');
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;btn?.classList.add('show')});
+ btn?.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn.classList.remove('show')});
+ window.addEventListener('appinstalled',()=>btn?.classList.remove('show'));
+ if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
 </script>
 </body></html>
