@@ -617,32 +617,7 @@ document.getElementById('caseAnalyse').addEventListener('click',analyseCase);
 document.getElementById('caseClear').addEventListener('click',()=>{document.getElementById('caseInput').value='';document.getElementById('caseResults').innerHTML='';document.getElementById('caseInput').focus()});
 
 </script>
-<script>
-(function(){
- function fitTwoPanels(){
-   if(window.innerWidth>900){
-     document.documentElement.style.setProperty('--mobileFit','1');
-     document.querySelector('.top')?.style.removeProperty('transform');
-     document.querySelector('.app')?.style.removeProperty('transform');
-     document.body.style.removeProperty('min-height');
-     return;
-   }
-   const base=760, s=Math.min(1,window.innerWidth/base);
-   const top=document.querySelector('.top'), app=document.querySelector('.app');
-   if(top) top.style.transform='scale('+s+')';
-   if(app){
-     app.style.transform='scale('+s+')';
-     const th=top?top.getBoundingClientRect().height:0;
-     document.body.style.minHeight=(th+app.scrollHeight*s)+'px';
-     app.style.marginTop=top ? -(top.offsetHeight*(1-s))+'px' : '0';
-   }
- }
- window.addEventListener('resize',fitTwoPanels);
- window.addEventListener('orientationchange',()=>setTimeout(fitTwoPanels,120));
- window.addEventListener('DOMContentLoaded',fitTwoPanels);
- setTimeout(fitTwoPanels,0);
-})();
-</script>
+
 
 <nav id="mobileBottomNav" class="mobile-bottom-nav" aria-label="Navigasi Mobile">
 <button data-mobile-nav="home" class="active"><b>⌂</b>Utama</button>
