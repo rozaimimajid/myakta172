@@ -312,6 +312,7 @@ body.dark .reader-row,body.dark .reader-list-head{border-color:#243349}
  <div class="settings-row"><div><strong>🔤 Saiz Teks</strong><small>Laraskan saiz teks untuk bacaan Akta.</small></div><div class="settings-actions"><button id="mobileTextSmall" type="button">A−</button><button id="mobileTextNormal" type="button">A</button><button id="mobileTextLarge" type="button">A+</button></div></div>
  <div class="settings-row"><div><strong>🖥️📱 Mod Paparan</strong><small>Pilih Mod Desktop atau Mod Mobile.</small></div><div class="settings-actions"><button id="settingsDesktop" type="button">Desktop</button><button id="settingsMobile" type="button">Mobile</button></div></div>
  <div class="settings-row"><div><strong>🔊 Suara</strong><small>Kawalan bacaan suara tersedia apabila seksyen dibuka.</small></div><div class="settings-actions"><button id="settingsOpenAct" type="button">Buka Akta</button></div></div>
+ <div class="settings-row"><div><strong>📲 Pasang Aplikasi</strong><small>Pasang MyAKTA172 pada skrin utama telefon untuk akses seperti aplikasi.</small></div><div class="settings-actions"><button id="settingsInstallPwa" type="button">Pasang</button></div></div>
  <div class="settings-row"><div><strong>ⓘ Tentang MyAKTA172</strong><small>Aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.</small></div></div>
 </div></section><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
 <div class="library-tools"><button class="library-btn" id="bookmarkBtn" type="button">☆ Simpan Kegemaran</button><button class="library-btn" id="savedBtn" type="button">🔖 Kegemaran & Sejarah</button></div></div></div><div class="saved-panel" id="savedPanel">
@@ -815,7 +816,14 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
 <script>
 (function(){
  let deferredPrompt=null; const btn=document.getElementById('installPwa');
- window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;btn?.classList.add('show')});
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;btn?.classList.add('show');document.getElementById('settingsInstallPwa')?.classList.add('active')});
+ async function installMyAkta(){
+   if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn?.classList.remove('show');return}
+   const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+   if(standalone){alert('MyAKTA172 sudah dipasang pada peranti ini.');return}
+   alert('Untuk memasang MyAKTA172: buka menu pelayar (⋮ atau Kongsi), kemudian pilih “Install app” atau “Tambah ke Skrin Utama”.');
+ }
+ document.getElementById('settingsInstallPwa')?.addEventListener('click',installMyAkta);
  btn?.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn.classList.remove('show')});
  window.addEventListener('appinstalled',()=>btn?.classList.remove('show'));
  if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
