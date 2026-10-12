@@ -952,7 +952,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   const rows=getHistory().slice(0,5);let count=0;
   for(const item of rows){
    const n=String(typeof item==='string'?item:(item.num||item.sec||item.section||''));
-   if(!n||!/^\\d+[A-H]?$/.test(n))continue;
+   if(!n||!/^\d+[A-H]?$/.test(n))continue;
    const b=document.createElement('button');b.type='button';b.textContent='Seksyen '+n+'  ›';
    b.addEventListener('click',()=>openSection(n));box.appendChild(b);count++;
   }
