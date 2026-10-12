@@ -282,6 +282,55 @@ body.dark .reader-row,body.dark .reader-list-head{border-color:#243349}
 .install-pwa{display:none;position:fixed;right:16px;bottom:82px;z-index:9997;border:0;border-radius:999px;background:var(--blue2);color:#fff;padding:11px 15px;font-weight:800;box-shadow:0 6px 20px rgba(0,71,171,.28);cursor:pointer}
 .install-pwa.show{display:block}
 @media(min-width:901px){.install-pwa{bottom:22px}}
+
+/* MyAKTA172 V2.0 — tema desktop Biru Moden / Gelap Moden.
+   Mod Mobile mengekalkan struktur Digital Akta Reader. */
+body{--blue:#073c86;--blue2:#0759bc;--blue3:#1471db;--gold:#ffc400;--bg:#f0f5fb;--line:#d9e5f3;--soft:#eaf3ff;--shadow:0 10px 30px rgba(8,41,87,.10)}
+body.dark{--blue:#78b5ff;--blue2:#80baff;--blue3:#9ccaff;--gold:#ffc400;--bg:#091522;--card:#111e2d;--line:#293e55;--text:#edf5ff;--muted:#b4c6da;--soft:#182c43;--shadow:0 10px 30px rgba(0,0,0,.28)}
+body.dark .part-head,body.dark .sec-link{color:#e9f3ff}
+body.dark .part-head.active{background:#175aa6;color:white}
+body.dark .sec-link:hover,body.dark .sec-link.active{background:#193756;color:#a9d4ff}
+body.dark .crumb,body.dark .section-head h3,body.dark .action button,body.dark .block-title{color:#eaf3ff}
+body.dark .section-head h2,body.dark .crumb b,body.dark .block-title{color:#91c4ff}
+body.dark .reader-brand{background:linear-gradient(130deg,#071a32,#103f78)}
+body.dark .open-act-primary,body.dark .reader-stat,body.dark .continue-card,body.dark .reader-list{background:#111e2d;border-color:#293e55}
+body.dark .open-act-primary small,body.dark .reader-row small{color:#b4c6da}
+@media(min-width:901px){
+ body.mode-desktop{background:var(--bg)}
+ body.mode-desktop .top{height:86px;padding:12px 25px;background:linear-gradient(110deg,#06295b 0%,#06458f 56%,#07336b 100%);border-bottom:3px solid rgba(255,196,0,.72)}
+ body.mode-desktop.dark .top{background:linear-gradient(110deg,#07111e,#102641 65%,#071421);border-bottom-color:#bd9128}
+ body.mode-desktop .brand h1{font-size:31px}
+ body.mode-desktop .brand p{font-size:12px}
+ body.mode-desktop .tools button{transition:background .18s,transform .18s;border-radius:9px}
+ body.mode-desktop .tools button:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+ body.mode-desktop .app{grid-template-columns:minmax(260px,310px) minmax(0,1fr);gap:18px;padding:20px;min-height:calc(100vh - 86px)}
+ body.mode-desktop .sidebar{height:calc(100vh - 126px);top:106px;background:linear-gradient(180deg,#083d82 0%,#062b60 100%);border:1px solid #1a5496;border-radius:15px}
+ body.mode-desktop .side-title{background:rgba(255,255,255,.08);color:#fff;border-bottom-color:rgba(255,255,255,.18)}
+ body.mode-desktop .sidebar .part{border-bottom-color:rgba(255,255,255,.13)}
+ body.mode-desktop .sidebar .part-head{color:#eef6ff}
+ body.mode-desktop .sidebar .part-head.active{background:#0e6bd1;color:#fff}
+ body.mode-desktop .sidebar .part-head:hover{background:rgba(255,255,255,.12)}
+ body.mode-desktop .sidebar .sec-link{color:#e5f1ff}
+ body.mode-desktop .sidebar .sec-link:hover,body.mode-desktop .sidebar .sec-link.active{background:#eaf3ff;color:#06458f}
+ body.mode-desktop .side-foot{background:#062b60;border-top-color:rgba(255,255,255,.2)}
+ body.mode-desktop .side-foot button{background:#eaf3ff;color:#073c86}
+ body.mode-desktop .main{border-radius:15px;background:var(--card);border-color:var(--line)}
+ body.mode-desktop .crumb{background:var(--soft);padding:15px 22px}
+ body.mode-desktop .content{padding:27px 32px 0}
+ body.mode-desktop .section-head{border-bottom-color:#d6a300}
+ body.mode-desktop .section-head h2{font-size:34px}
+ body.mode-desktop .lawbox{background:#fbfdff;border-color:#d7e4f4;line-height:1.8;border-radius:12px}
+ body.mode-desktop .explain{background:#f1f7ff;border-color:#d3e4f7;border-radius:12px}
+ body.mode-desktop.dark .sidebar{background:linear-gradient(180deg,#101e30,#0a1421);border-color:#2a4059}
+ body.mode-desktop.dark .side-foot{background:#0a1421}
+ body.mode-desktop.dark .sidebar .part-head.active{background:#244b7b}
+ body.mode-desktop.dark .sidebar .sec-link.active,body.mode-desktop.dark .sidebar .sec-link:hover{background:#203b59;color:#d5eaff}
+ body.mode-desktop.dark .lawbox{background:#0d1a2a;color:#f3f6fc;border-color:#30465e}
+ body.mode-desktop.dark .explain{background:#15263a;color:#e9f3ff;border-color:#30465e}
+ body.mode-desktop.dark .crumb{background:#14283e;color:#d2e3f8}
+ body.mode-desktop.dark .action button{background:#1b3047;color:#e9f3ff;border-color:#35516e}
+ body.mode-desktop.dark .section-head{border-bottom-color:#c59a2e}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -530,7 +579,7 @@ function initRecognition(){
 initRecognition();
 
 
-document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText('Seksyen '+current+' — '+byNum[current].title+'\n\n'+byNum[current].text); document.getElementById('printBtn').onclick=()=>window.print(); document.getElementById('large').onclick=()=>document.body.classList.add('large'); document.getElementById('small').onclick=()=>document.body.classList.remove('large'); document.getElementById('theme').onclick=()=>document.body.classList.toggle('dark');
+document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText('Seksyen '+current+' — '+byNum[current].title+'\n\n'+byNum[current].text); document.getElementById('printBtn').onclick=()=>window.print(); document.getElementById('large').onclick=()=>document.body.classList.add('large'); document.getElementById('small').onclick=()=>document.body.classList.remove('large'); document.getElementById('theme').onclick=()=>{const dark=!document.body.classList.contains('dark');document.body.classList.toggle('dark',dark);localStorage.setItem('myakta172_theme_v1',dark?'dark':'light');document.getElementById('theme').textContent=dark?'☀ Siang':'☾ Malam';};
 makeNav(); makeJump(); const h=decodeURIComponent(location.hash.replace('#seksyen-','')); const INITIAL_SECTION=byNum[h]?h:'1';
 
 const backToTop=document.getElementById('backToTop');
@@ -785,6 +834,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  document.querySelectorAll('[data-mobile-go]').forEach(b=>b.addEventListener('click',()=>mobileNavigate(b.dataset.mobileGo)));
  function applyTheme(dark,save){
    document.body.classList.toggle('dark',dark);
+   const desktopThemeButton=document.getElementById('theme');if(desktopThemeButton)desktopThemeButton.textContent=dark?'☀ Siang':'☾ Malam';
    if(save)localStorage.setItem(THEME_KEY,dark?'dark':'light');
    $('mobileThemeToggle')?.classList.toggle('on',dark);
  }
