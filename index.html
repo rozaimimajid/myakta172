@@ -352,7 +352,7 @@ body.mode-desktop .main:has(.desktop-home.open) #caseView{display:none!important
 .dh-columns h3{margin:0;padding:15px 17px;background:var(--soft);color:var(--blue);font-size:17px}
 .dh-columns button{width:100%;border:0;border-top:1px solid var(--line);background:transparent;color:var(--text);display:flex;justify-content:space-between;gap:12px;text-align:left;padding:15px 17px;cursor:pointer;font-size:14px}
 .dh-columns button:hover{background:var(--soft)}.dh-columns button span{color:var(--muted);font-size:12px}
-.dh-note{font-size:12px;color:var(--muted);margin-top:18px}
+.dh-empty{padding:16px 18px;color:var(--muted);font-size:13px;line-height:1.5}.dh-note{font-size:12px;color:var(--muted);margin-top:18px}
 body.dark .desktop-home{background:#111e2d}
 body.dark .dh-hero{background:linear-gradient(110deg,#07111e,#132d4b)}
 body.dark .dh-tiles button{background:#1a3552;color:#dcecff;border-color:#314963}
@@ -383,6 +383,24 @@ body.mode-desktop .top .tools{flex-wrap:wrap}
 body.mode-desktop .app{grid-template-columns:250px minmax(0,1fr)!important}
 body.mode-desktop .dh-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
 body.mode-desktop .dh-columns{grid-template-columns:1fr}
+}
+
+/* V2.2 desktop enhancements in both day and night themes */
+@media(min-width:901px){
+body.mode-desktop .dh-secondary{margin-top:20px}
+body.mode-desktop .dh-columns button{align-items:center;min-height:57px;font-size:15px;font-weight:700}
+body.mode-desktop .dh-columns button span{font-size:13px;text-align:right;max-width:64%;line-height:1.4}
+body.mode-desktop .part-num{font-size:16px}
+body.mode-desktop .part-title{font-size:13px;line-height:1.25;opacity:.92}
+body.mode-desktop .part-head{min-height:62px}
+body.mode-desktop .sidebar-owner{font-size:12px!important;color:#f1f7ff!important;text-align:center;line-height:1.5}
+body.mode-desktop .sidebar-owner strong{color:#ffe28c!important}
+body.mode-desktop.dark .dh-columns button{color:#f1f7ff}
+body.mode-desktop.dark .dh-columns button span,body.mode-desktop.dark .dh-note{color:#c2d3e7}
+body.mode-desktop.dark .dh-columns h3{color:#a9d3ff}
+body.mode-desktop.dark .dh-tiles small{opacity:.95}
+body.mode-desktop.dark .part-title{color:#d1dfef;opacity:1}
+body.mode-desktop .dh-columns section{min-width:0}
 }
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
@@ -416,7 +434,7 @@ body.mode-desktop .dh-columns{grid-template-columns:1fr}
  <div class="settings-row"><div><strong>🔊 Suara</strong><small>Kawalan bacaan suara tersedia apabila seksyen dibuka.</small></div><div class="settings-actions"><button id="settingsOpenAct" type="button">Buka Akta</button></div></div>
  <div class="settings-row"><div><strong>📲 Pasang Aplikasi</strong><small>Pasang MyAKTA172 pada skrin utama telefon untuk akses seperti aplikasi.</small></div><div class="settings-actions"><button id="settingsInstallPwa" type="button">Pasang</button></div></div>
  <div class="settings-row"><div><strong>ⓘ Tentang MyAKTA172</strong><small>Aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.</small></div></div>
-</div></section><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><section id="desktopHome" class="desktop-home" aria-label="Laman Utama MyAKTA172"><div class="dh-hero"><div class="dh-kicker">RUJUKAN PERUNDANGAN DIGITAL</div><h2>My<span>AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><small>Carian • Bacaan Akta • Analisis Kes • Rujukan Peribadi</small></div><div class="dh-tiles"><button type="button" data-dh="akta"><b>▣</b><strong>Buka Akta 172</strong><small>Teroka bahagian dan seksyen</small></button><button type="button" data-dh="search"><b>⌕</b><strong>Carian Kata Kunci</strong><small>Carian pantas dan padanan</small></button><button type="button" data-dh="analysis"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></button><button type="button" data-dh="favorites"><b>★</b><strong>Kegemaran</strong><small>Seksyen yang disimpan</small></button></div><div class="dh-columns"><section><h3>Akses Pantas</h3><button data-dh-sec="1">Bahagian I <span>Permulaan ›</span></button><button data-dh-sec="3">Bahagian II <span>Perancangan Pemajuan ›</span></button><button data-dh-sec="19">Seksyen 19 <span>Kebenaran Merancang ›</span></button></section><section><h3>Terbaharu Dibaca</h3><div id="desktopHomeRecent">Belum ada sejarah bacaan.</div></section></div><div class="dh-note">Sumber teks: cetakan semula Akta 172 sebagaimana pada 1 Jun 2021. Gunakan teks peruntukan bagi rujukan utama.</div></section><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
+</div></section><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><section id="desktopHome" class="desktop-home" aria-label="Laman Utama MyAKTA172"><div class="dh-hero"><div class="dh-kicker">RUJUKAN PERUNDANGAN DIGITAL</div><h2>My<span>AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><small>Carian • Bacaan Akta • Analisis Kes • Rujukan Peribadi</small></div><div class="dh-tiles"><button type="button" data-dh="akta"><b>▣</b><strong>Buka Akta 172</strong><small>Teroka bahagian dan seksyen</small></button><button type="button" data-dh="search"><b>⌕</b><strong>Carian Kata Kunci</strong><small>Carian pantas dan padanan</small></button><button type="button" data-dh="analysis"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></button><button type="button" data-dh="favorites"><b>★</b><strong>Kegemaran</strong><small>Seksyen yang disimpan</small></button></div><div class="dh-columns"><section><h3>Akses Pantas</h3><button data-dh-sec="1">Bahagian I <span>Permulaan ›</span></button><button data-dh-sec="3">Bahagian II <span>Perancangan Pemajuan ›</span></button><button data-dh-sec="19">Seksyen 19 <span>Kebenaran Merancang ›</span></button></section><section><h3>Terbaharu Dibaca</h3><div id="desktopHomeRecent">Belum ada sejarah bacaan.</div></section></div><div class="dh-columns dh-secondary"><section><h3>Sering Dibuka</h3><div id="desktopHomeFrequent"></div></section><section><h3>Seksyen Kegemaran</h3><div id="desktopHomeFavorites"></div></section></div><div class="dh-note">Sumber teks: cetakan semula Akta 172 sebagaimana pada 1 Jun 2021. Gunakan teks peruntukan bagi rujukan utama.</div></section><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
 <div class="library-tools"><button class="library-btn" id="bookmarkBtn" type="button">☆ Simpan Kegemaran</button><button class="library-btn" id="savedBtn" type="button">🔖 Kegemaran & Sejarah</button></div></div></div><div class="saved-panel" id="savedPanel">
 <div class="saved-head"><span>SEKSYEN SAYA</span><button class="saved-remove" id="closeSaved" type="button">✕ Tutup</button></div>
 <div class="saved-head"><div class="saved-tabs"><button id="favTab" class="active" type="button">★ Kegemaran</button><button id="historyTab" type="button">◷ Sejarah Bacaan</button></div><button class="saved-remove" id="clearHistory" type="button">Kosongkan sejarah</button></div>
@@ -947,16 +965,31 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   }catch(e){}
   return [];
  }
- function refreshRecent(){
-  const box=$('desktopHomeRecent');if(!box)return;box.replaceChildren();
-  const rows=getHistory().slice(0,5);let count=0;
-  for(const item of rows){
-   const n=String(typeof item==='string'?item:(item.num||item.sec||item.section||''));
-   if(!n||!/^\d+[A-H]?$/.test(n))continue;
-   const b=document.createElement('button');b.type='button';b.textContent='Seksyen '+n+'  ›';
-   b.addEventListener('click',()=>openSection(n));box.appendChild(b);count++;
+ function titleFor(n){
+  try{
+   const obj=(typeof byNum!=='undefined')?byNum[n]:null;
+   return obj&&obj.title?String(obj.title):'';
+  }catch(e){return ''}
+ }
+ function renderRows(id,nums,empty,kind){
+  const box=$(id);if(!box)return;box.replaceChildren();
+  const unique=[...new Set(nums.map(String))].filter(n=>/^\\d+[A-H]?$/.test(n)).slice(0,5);
+  if(!unique.length){const p=document.createElement('p');p.textContent=empty;p.className='dh-empty';box.appendChild(p);return}
+  for(const n of unique){
+   const b=document.createElement('button');b.type='button';
+   const label=document.createElement('strong');label.textContent='Seksyen '+n;
+   const subtitle=document.createElement('span');subtitle.textContent=(titleFor(n)||'Buka teks Akta')+' ›';
+   b.append(label,subtitle);b.addEventListener('click',()=>openSection(n));box.appendChild(b);
   }
-  if(!count){const p=document.createElement('p');p.textContent='Belum ada sejarah bacaan. Mulakan dengan Buka Akta 172.';p.style.padding='0 17px';box.appendChild(p)}
+ }
+ function refreshRecent(){
+  const history=getHistory().map(x=>String(typeof x==='string'?x:(x.num||x.sec||x.section||'')));
+  renderRows('desktopHomeRecent',history,'Belum ada sejarah bacaan. Mulakan dengan Buka Akta 172.');
+  let freq={};try{freq=JSON.parse(localStorage.getItem('myakta172_frequent_v1')||'{}')||{}}catch(e){}
+  const ordered=Object.keys(freq).sort((a,b)=>(Number(freq[b])||0)-(Number(freq[a])||0));
+  renderRows('desktopHomeFrequent',ordered,'Belum ada seksyen yang kerap dibuka.');
+  let fav=[];try{fav=JSON.parse(localStorage.getItem('myakta172_favourites_v1')||'[]');if(!Array.isArray(fav))fav=[]}catch(e){}
+  renderRows('desktopHomeFavorites',fav.map(x=>typeof x==='string'?x:(x.num||x.sec||'')),'Belum ada seksyen kegemaran.');
  }
  function isDesktop(){return document.body.classList.contains('mode-desktop')}
  function openHome(){
