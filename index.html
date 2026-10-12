@@ -362,6 +362,28 @@ body.dark .dh-tiles button:nth-child(4){background:#302947;color:#e0d1ff}
 body.dark .dh-columns section{background:#111e2d}
 @media(max-width:1100px){.dh-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.desktop-home{display:none!important}}
+
+/* V2.1 desktop full-width dashboard, override legacy 1180px layout */
+@media(min-width:901px){
+body.mode-desktop .app{width:100%!important;max-width:1760px!important;margin:0 auto!important;grid-template-columns:minmax(255px,292px) minmax(0,1fr)!important;gap:22px!important;padding:24px clamp(16px,2.4vw,42px)!important;transform:none!important}
+body.mode-desktop .main{min-width:0!important}
+body.mode-desktop .desktop-home{padding:clamp(20px,2.5vw,38px)!important}
+body.mode-desktop .dh-hero{min-height:285px;display:flex;flex-direction:column;justify-content:center;padding:45px 48px;background:radial-gradient(circle at 87% 20%,rgba(255,196,0,.18),transparent 27%),linear-gradient(120deg,#062e6c,#0963bd 72%,#0b4283)}
+body.mode-desktop.dark .dh-hero{background:radial-gradient(circle at 87% 20%,rgba(255,196,0,.11),transparent 28%),linear-gradient(120deg,#071422,#163859 70%,#0a1c32)}
+body.mode-desktop .dh-tiles{gap:16px;margin-top:24px}
+body.mode-desktop .dh-tiles button{min-height:148px;padding:22px}
+body.mode-desktop .dh-tiles b{font-size:32px}
+body.mode-desktop .dh-tiles strong{font-size:17px}
+body.mode-desktop .dh-columns{gap:20px}
+body.mode-desktop .dh-columns h3{font-size:18px;padding:19px}
+body.mode-desktop .dh-columns button{padding:18px}
+body.mode-desktop .top .tools{flex-wrap:wrap}
+}
+@media(min-width:901px) and (max-width:1180px){
+body.mode-desktop .app{grid-template-columns:250px minmax(0,1fr)!important}
+body.mode-desktop .dh-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.mode-desktop .dh-columns{grid-template-columns:1fr}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -912,35 +934,62 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
 </script>
 
 <script>
-/* Desktop home routing: isolated from existing mobile navigation and section data */
+/* V2.1 Desktop home — independent of the mobile reader and old section hash */
 (function(){
- const home=document.getElementById('desktopHome'),act=document.getElementById('actView');
- if(!home||!act)return;
- function recent(){
-  const box=document.getElementById('desktopHomeRecent');if(!box)return;
-  let rows=[];try{const h=JSON.parse(localStorage.getItem('myakta172_history_v1')||'[]');if(Array.isArray(h))rows=h;}catch(e){}
-  box.textContent='';
-  if(!rows.length){box.textContent='Buka mana-mana seksyen untuk memulakan sejarah bacaan.';box.style.padding='15px';return}
-  rows.slice(0,4).forEach(item=>{const n=String(item.num||item.sec||item.section||'');if(!n)return;const b=document.createElement('button');b.textContent='Seksyen '+n+' ›';b.addEventListener('click',()=>openSection(n));box.appendChild(b)})
+ const home=document.getElementById('desktopHome'),act=document.getElementById('actView'),cv=document.getElementById('caseView');
+ if(!home||!act||!cv)return;
+ const $=id=>document.getElementById(id);
+ function getHistory(){
+  try{
+   for(const key of ['myakta172_history_v1','myakta172_read_history_v1']){
+    const v=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(v)&&v.length)return v;
+   }
+  }catch(e){}
+  return [];
  }
- function openHome(){if(!document.body.classList.contains('mode-desktop'))return;home.classList.add('open');recent();window.scrollTo({top:0,behavior:'smooth'})}
- function leaveHome(){home.classList.remove('open')}
- function openSection(n){leaveHome();if(typeof show==='function')show(n)}
- document.getElementById('desktopHomeButton')?.addEventListener('click',openHome);
+ function refreshRecent(){
+  const box=$('desktopHomeRecent');if(!box)return;box.replaceChildren();
+  const rows=getHistory().slice(0,5);let count=0;
+  for(const item of rows){
+   const n=String(typeof item==='string'?item:(item.num||item.sec||item.section||''));
+   if(!n||!/^\\d+[A-H]?$/.test(n))continue;
+   const b=document.createElement('button');b.type='button';b.textContent='Seksyen '+n+'  ›';
+   b.addEventListener('click',()=>openSection(n));box.appendChild(b);count++;
+  }
+  if(!count){const p=document.createElement('p');p.textContent='Belum ada sejarah bacaan. Mulakan dengan Buka Akta 172.';p.style.padding='0 17px';box.appendChild(p)}
+ }
+ function isDesktop(){return document.body.classList.contains('mode-desktop')}
+ function openHome(){
+  if(!isDesktop())return;
+  home.classList.add('open');act.style.display='none';cv.style.display='none';
+  refreshRecent();window.scrollTo({top:0,behavior:'smooth'});
+ }
+ function leaveHome(){
+  home.classList.remove('open');act.style.removeProperty('display');cv.style.removeProperty('display');
+ }
+ function openSection(n){
+  leaveHome();
+  if(typeof window.show==='function')window.show(n);
+  act.style.display='block';cv.style.display='none';
+ }
+ $('desktopHomeButton')?.addEventListener('click',openHome);
  document.querySelectorAll('[data-dh-sec]').forEach(b=>b.addEventListener('click',()=>openSection(b.dataset.dhSec)));
  document.querySelectorAll('[data-dh]').forEach(b=>b.addEventListener('click',()=>{
-  const v=b.dataset.dh;leaveHome();
-  if(v==='akta')openSection('1');
-  if(v==='search'||v==='analysis')document.getElementById('caseOpen')?.click();
-  if(v==='favorites'){document.getElementById('savedBtn')?.click();}
+  const v=b.dataset.dh;
+  if(v==='akta'){openSection('1');return}
+  leaveHome();
+  if(v==='search'||v==='analysis'){$('caseOpen')?.click();return}
+  if(v==='favorites'){act.style.display='block';cv.style.display='none';$('savedBtn')?.click()}
  }));
- document.getElementById('caseOpen')?.addEventListener('click',leaveHome,true);
- document.getElementById('nav')?.addEventListener('click',e=>{if(e.target.closest('.sec-link'))leaveHome()},true);
- const previousShow=window.show;
- if(typeof previousShow==='function'){window.show=function(n){leaveHome();return previousShow(n)}}
- const modeDesktop=document.getElementById('modeDesktop');
- modeDesktop?.addEventListener('click',()=>{if(!location.hash.startsWith('#seksyen-'))openHome()});
- if(!location.hash.startsWith('#seksyen-'))setTimeout(openHome,100);
+ $('caseOpen')?.addEventListener('click',leaveHome,true);
+ $('nav')?.addEventListener('click',e=>{if(e.target.closest('.sec-link'))leaveHome()},true);
+ $('modeDesktop')?.addEventListener('click',()=>setTimeout(openHome,0));
+ $('settingsDesktop')?.addEventListener('click',()=>setTimeout(openHome,0));
+ $('modeMobile')?.addEventListener('click',leaveHome);
+ $('settingsMobile')?.addEventListener('click',leaveHome);
+ // Show the new desktop landing page on every fresh opening of the app.
+ // In-app navigation still opens sections normally.
+ setTimeout(()=>{if(isDesktop())openHome()},250);
 })();
 </script>
 </body></html>
