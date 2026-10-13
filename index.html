@@ -1017,6 +1017,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function openHome(){
   if(!isDesktop())return;
   home.classList.add('open');act.style.display='none';cv.style.display='none';
+  document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));
+  document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));
   refreshRecent();window.scrollTo({top:0,behavior:'smooth'});
  }
  function leaveHome(){
