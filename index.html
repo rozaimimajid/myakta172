@@ -456,6 +456,25 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 #myaktaWelcome .wl-foot{position:relative;z-index:1;background:rgba(1,17,43,.8);border-top:1px solid rgba(255,255,255,.2);padding:17px 25px;display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:12px;color:#d6e6fa}
 #myaktaWelcome .wl-foot strong{color:#ffd35b;white-space:nowrap}
 @media(max-width:700px){#myaktaWelcome .wl-inner{padding:35px 18px 25px}#myaktaWelcome h1{letter-spacing:-2px}#myaktaWelcome .wl-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#myaktaWelcome .wl-card{padding:14px 9px}#myaktaWelcome .wl-card strong{font-size:13px}#myaktaWelcome .wl-enter{font-size:18px;padding:14px 20px}#myaktaWelcome .wl-foot{flex-direction:column;text-align:center;gap:8px}#myaktaWelcome .wl-city{width:100%;height:45%}}
+
+/* Welcome visual V2: book-and-city image, matching approved reference without crest */
+#myaktaWelcome{background:#082b61 url('./welcome-background.svg') center center/cover no-repeat!important}
+#myaktaWelcome:before{display:none!important}
+#myaktaWelcome .wl-city,#myaktaWelcome .wl-seal{display:none!important}
+#myaktaWelcome .wl-inner{max-width:1220px;padding-top:90px;padding-bottom:45px}
+#myaktaWelcome h1{font-size:clamp(55px,7.6vw,112px);text-shadow:0 5px 14px #00142e}
+#myaktaWelcome .wl-sub{font-weight:800;text-shadow:0 3px 8px #00142e}
+#myaktaWelcome .wl-enter{width:min(100%,510px);min-height:98px;background:linear-gradient(130deg,#1375ed,#063d9c);border-color:#5fa9ff;box-shadow:0 15px 28px rgba(0,17,48,.42)}
+#myaktaWelcome .wl-card{min-height:152px;border-width:1.5px;background:rgba(10,46,95,.76);box-shadow:0 5px 17px rgba(0,0,0,.17)}
+#myaktaWelcome .wl-card:nth-child(2){background:rgba(5,65,83,.77);border-color:#43a98f}
+#myaktaWelcome .wl-card:nth-child(3){background:rgba(62,61,57,.77);border-color:#d3ac52}
+#myaktaWelcome .wl-card:nth-child(4){background:rgba(45,40,96,.8);border-color:#9a83f0}
+#myaktaWelcome .wl-card:nth-child(1) b{color:#b6d8ff}
+#myaktaWelcome .wl-card:nth-child(2) b{color:#69e0ad}
+#myaktaWelcome .wl-card:nth-child(3) b{color:#ffd46b}
+#myaktaWelcome .wl-card:nth-child(4) b{color:#d3a5ff}
+#myaktaWelcome .wl-foot{background:rgba(1,24,57,.89)}
+@media(max-width:700px){#myaktaWelcome{background-position:52% center!important}#myaktaWelcome .wl-inner{padding-top:45px}#myaktaWelcome .wl-enter{min-height:74px}#myaktaWelcome .wl-card{min-height:124px}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -466,7 +485,7 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 <link rel="apple-touch-icon" href="./icon-v2.svg">
 </head>
 <body>
-<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-city" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="wl-inner"><div class="wl-seal" aria-hidden="true">§</div><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> Mula Menggunakan</button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
+<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-city" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Buka MyAKTA172</small></span></button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
 <header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="desktopHomeButton" type="button">⌂ Utama</button><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
 <div class="app"><section id="mobileHome" class="mobile-home">
 <div class="reader-brand"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
