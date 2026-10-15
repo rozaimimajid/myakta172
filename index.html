@@ -587,6 +587,18 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 #myaktaWelcome .wl-plan{width:85%;opacity:.13}
 #myaktaWelcome .wl-foot{flex-direction:column!important;gap:8px!important;text-align:center!important;font-size:11px!important}
 }
+
+/* Welcome V5: use the user's selected GitHub image (welcome-hero-2.png).
+   The source image already contains the book and planning drawings. */
+#myaktaWelcome{background:#07346c url("./welcome-hero-2.png") center center/cover no-repeat!important}
+#myaktaWelcome:before{display:none!important;content:none!important}
+#myaktaWelcome .wl-visual,#myaktaWelcome .wl-plan,#myaktaWelcome .wl-city,#myaktaWelcome .wl-artwork{display:none!important}
+#myaktaWelcome .wl-inner{z-index:2!important}
+#myaktaWelcome .wl-enter{cursor:pointer!important;pointer-events:auto!important}
+@media(max-width:750px){
+ #myaktaWelcome{background-position:42% center!important;background-size:cover!important}
+ #myaktaWelcome .wl-inner{background:linear-gradient(180deg,rgba(0,25,64,.12),rgba(0,25,64,.30));border-radius:16px}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
