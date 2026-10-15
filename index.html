@@ -599,6 +599,20 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
  #myaktaWelcome{background-position:42% center!important;background-size:cover!important}
  #myaktaWelcome .wl-inner{background:linear-gradient(180deg,rgba(0,25,64,.12),rgba(0,25,64,.30));border-radius:16px}
 }
+
+/* Welcome V8 — force the specifically selected GitHub asset, with no former skyline overlays */
+#myaktaWelcome{
+ background-image:url("./welcome-hero-2.png?asset=20261015-2305")!important;
+ background-color:#07346c!important;
+ background-repeat:no-repeat!important;
+ background-position:center center!important;
+ background-size:cover!important;
+}
+#myaktaWelcome::before,#myaktaWelcome::after{display:none!important;content:none!important}
+#myaktaWelcome .wl-visual,#myaktaWelcome .wl-plan,#myaktaWelcome .wl-city,#myaktaWelcome .wl-artwork,#myaktaWelcome .wl-photo-credit{display:none!important}
+@media(max-width:750px){
+ #myaktaWelcome{background-image:url("./welcome-hero-2.png?asset=20261015-2305")!important;background-position:40% center!important}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -1236,6 +1250,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  // Show once per page opening (link or installed PWA), not on internal navigation.
  const close=()=>{screen.hidden=true;document.body.style.removeProperty('overflow');};
  document.body.style.overflow='hidden';
+ // Explicitly set the selected new image to defeat stale earlier background rules.
+ screen.style.setProperty('background-image','url("./welcome-hero-2.png?asset=20261015-2305")','important');
  enter.addEventListener('click',close);
  document.getElementById('myaktaArtworkEnter')?.addEventListener('click',close);
  document.getElementById('myaktaMobileEnter')?.addEventListener('click',close);
