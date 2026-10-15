@@ -429,6 +429,33 @@ body.mode-desktop.dark .dh-continue-arrow{color:#a9d5ff}
 /* Sidebar section headings: improved contrast and bold weight */
 .sidebar .sec-link{font-weight:700!important;letter-spacing:.01em}
 body.mode-desktop .sidebar .sec-link{font-weight:700!important}
+
+/* MyAKTA172 opening screen — shared by desktop and mobile */
+#myaktaWelcome{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;overflow:auto;background:radial-gradient(circle at 82% 30%,rgba(39,132,205,.38),transparent 38%),linear-gradient(115deg,#031a3e,#063d7e 58%,#082954);color:#fff;font-family:Arial,Helvetica,sans-serif}
+#myaktaWelcome[hidden]{display:none!important}
+#myaktaWelcome:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(0deg,transparent 0 45px,rgba(140,195,241,.2) 46px,transparent 47px),repeating-linear-gradient(90deg,transparent 0 60px,rgba(140,195,241,.18) 61px,transparent 62px);mask-image:linear-gradient(90deg,#000,transparent 68%)}
+#myaktaWelcome .wl-city{position:absolute;bottom:10%;right:0;width:52%;height:58%;opacity:.22;pointer-events:none;background:linear-gradient(to top,#0b82ca,#0b82ca) bottom/100% 7% no-repeat}
+#myaktaWelcome .wl-city i{position:absolute;bottom:6%;width:8%;background:linear-gradient(90deg,#76c4ff,#0d579a);border:1px solid #88c8fa;border-bottom:0}
+#myaktaWelcome .wl-city i:before{content:"";position:absolute;inset:9px 8px;background:repeating-linear-gradient(0deg,transparent 0 15px,#d2e9ff 16px 19px,transparent 20px 28px)}
+#myaktaWelcome .wl-city i:nth-child(1){left:5%;height:40%}#myaktaWelcome .wl-city i:nth-child(2){left:17%;height:75%}#myaktaWelcome .wl-city i:nth-child(3){left:31%;height:54%}#myaktaWelcome .wl-city i:nth-child(4){left:44%;height:92%}#myaktaWelcome .wl-city i:nth-child(5){left:57%;height:66%}#myaktaWelcome .wl-city i:nth-child(6){left:72%;height:84%}#myaktaWelcome .wl-city i:nth-child(7){left:86%;height:48%}
+#myaktaWelcome .wl-inner{position:relative;z-index:1;max-width:1250px;width:100%;margin:auto;padding:48px 28px 35px;text-align:center}
+#myaktaWelcome .wl-seal{width:76px;height:76px;border:2px solid #d9b656;border-radius:50%;display:grid;place-items:center;margin:0 auto 18px;font:52px Georgia,serif;color:#ffd36b;background:rgba(5,26,61,.72);box-shadow:0 0 0 7px rgba(255,205,76,.07)}
+#myaktaWelcome h1{font-size:clamp(50px,7vw,100px);line-height:1.05;margin:0 0 14px;letter-spacing:-3px;font-weight:900;text-shadow:0 5px 18px rgba(0,0,0,.35)}
+#myaktaWelcome h1 span{color:#ffc400}
+#myaktaWelcome .wl-sub{font-size:clamp(17px,2.3vw,26px);font-weight:750;margin:0}
+#myaktaWelcome .wl-rule{width:230px;max-width:60%;height:3px;background:#ffc400;margin:23px auto}
+#myaktaWelcome .wl-tag{font-size:clamp(13px,1.5vw,19px);color:#e1ecfa;margin:0 0 26px}
+#myaktaWelcome .wl-enter{display:flex;gap:16px;align-items:center;justify-content:center;margin:0 auto 25px;min-width:min(100%,470px);border:2px solid #69b3ff;border-radius:19px;padding:19px 30px;background:linear-gradient(130deg,#116cdd,#0641a4);color:white;cursor:pointer;box-shadow:0 14px 28px rgba(0,0,0,.24);font-size:24px;font-weight:800}
+#myaktaWelcome .wl-enter:hover,#myaktaWelcome .wl-enter:focus-visible{background:linear-gradient(130deg,#2387f4,#0755c6);outline:3px solid #ffc400;outline-offset:3px}
+#myaktaWelcome .wl-enter span{display:grid;place-items:center;width:46px;height:46px;background:#fff;color:#0954b6;border-radius:50%;font-size:31px}
+#myaktaWelcome .wl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:1020px;margin:0 auto}
+#myaktaWelcome .wl-card{padding:20px 12px;background:rgba(8,38,78,.72);border:1px solid rgba(130,194,255,.43);border-radius:15px;backdrop-filter:blur(5px)}
+#myaktaWelcome .wl-card b{display:block;font-size:31px;color:#ffd15e;margin-bottom:10px}
+#myaktaWelcome .wl-card strong{display:block;font-size:16px;margin-bottom:7px}
+#myaktaWelcome .wl-card small{display:block;font-size:12px;color:#c8def5;line-height:1.5}
+#myaktaWelcome .wl-foot{position:relative;z-index:1;background:rgba(1,17,43,.8);border-top:1px solid rgba(255,255,255,.2);padding:17px 25px;display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:12px;color:#d6e6fa}
+#myaktaWelcome .wl-foot strong{color:#ffd35b;white-space:nowrap}
+@media(max-width:700px){#myaktaWelcome .wl-inner{padding:35px 18px 25px}#myaktaWelcome h1{letter-spacing:-2px}#myaktaWelcome .wl-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#myaktaWelcome .wl-card{padding:14px 9px}#myaktaWelcome .wl-card strong{font-size:13px}#myaktaWelcome .wl-enter{font-size:18px;padding:14px 20px}#myaktaWelcome .wl-foot{flex-direction:column;text-align:center;gap:8px}#myaktaWelcome .wl-city{width:100%;height:45%}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -439,6 +466,7 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 <link rel="apple-touch-icon" href="./icon-v2.svg">
 </head>
 <body>
+<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-city" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="wl-inner"><div class="wl-seal" aria-hidden="true">§</div><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> Mula Menggunakan</button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
 <header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="desktopHomeButton" type="button">⌂ Utama</button><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
 <div class="app"><section id="mobileHome" class="mobile-home">
 <div class="reader-brand"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
@@ -1055,6 +1083,18 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  // Show the new desktop landing page on every fresh opening of the app.
  // In-app navigation still opens sections normally.
  setTimeout(()=>{if(isDesktop()){document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));openHome()}},250);
+})();
+</script>
+<script>
+(function(){
+ const screen=document.getElementById('myaktaWelcome');
+ const enter=document.getElementById('myaktaWelcomeEnter');
+ if(!screen||!enter)return;
+ // Show once per page opening (link or installed PWA), not on internal navigation.
+ const close=()=>{screen.hidden=true;document.body.style.removeProperty('overflow');};
+ document.body.style.overflow='hidden';
+ enter.addEventListener('click',close);
+ enter.focus({preventScroll:true});
 })();
 </script>
 </body></html>
