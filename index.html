@@ -546,6 +546,47 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
  #myaktaWelcome.wl-artwork-ready .wl-artwork-action{display:none!important}
  #myaktaWelcome.wl-artwork-ready .wl-mobile-action{display:block!important;margin:14px auto 24px!important;padding:15px 26px!important;width:calc(100% - 40px)!important;max-width:420px!important;border-radius:14px!important;border:2px solid #82bcff!important;background:linear-gradient(120deg,#1472df,#0644a7)!important;color:#fff!important;font-size:18px!important;font-weight:800!important;box-shadow:0 5px 18px #001d48!important;cursor:pointer!important}
 }
+
+/* V4: rebuilt responsive welcome using uploaded source photographs; true HTML controls */
+#myaktaWelcome{display:flex!important;flex-direction:column!important;position:fixed!important;inset:0!important;overflow-y:auto!important;overflow-x:hidden!important;background:#0b3366!important;color:white!important;isolation:isolate}
+#myaktaWelcome[hidden]{display:none!important}
+#myaktaWelcome:before{content:""!important;display:block!important;position:fixed!important;inset:0!important;z-index:-1!important;opacity:1!important;pointer-events:none!important;mask-image:none!important;background:linear-gradient(90deg,rgba(1,19,47,.82) 0%,rgba(2,32,72,.63) 46%,rgba(2,36,78,.46) 100%),linear-gradient(0deg,rgba(2,19,49,.65),transparent 72%),url("./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_55_06%20PM.png") center 46%/cover no-repeat!important}
+#myaktaWelcome .wl-artwork,#myaktaWelcome .wl-city,#myaktaWelcome .wl-photo-credit{display:none!important}
+#myaktaWelcome .wl-inner{display:block!important;position:relative!important;z-index:2!important;width:min(100%,1220px)!important;max-width:1220px!important;margin:auto!important;padding:58px 24px 45px!important;text-align:center!important}
+#myaktaWelcome h1{font-size:clamp(58px,7.4vw,106px)!important;line-height:1.05!important;margin:0 0 12px!important;letter-spacing:-2px!important;font-weight:900!important;text-shadow:0 4px 18px rgba(0,12,37,.9)!important}
+#myaktaWelcome h1 span{color:#ffc400!important}
+#myaktaWelcome .wl-sub{font-size:clamp(17px,2vw,26px)!important;color:#fff!important;text-shadow:0 2px 8px #06162d!important}
+#myaktaWelcome .wl-rule{margin:20px auto!important}
+#myaktaWelcome .wl-tag{font-size:clamp(14px,1.6vw,20px)!important;color:#f0f7ff!important;text-shadow:0 2px 6px #051a38!important;margin-bottom:26px!important}
+#myaktaWelcome .wl-enter{position:relative!important;z-index:3!important;display:flex!important;width:min(100%,520px)!important;min-width:0!important;min-height:100px!important;margin:0 auto 27px!important;border:2px solid #77c4ff!important;border-radius:19px!important;background:linear-gradient(125deg,#1386f5,#0644a8)!important;box-shadow:0 10px 30px #001c44!important;color:#fff!important;cursor:pointer!important}
+#myaktaWelcome .wl-enter:hover{filter:brightness(1.14)!important;transform:translateY(-2px)}
+#myaktaWelcome .wl-enter:focus-visible{outline:3px solid #ffce39!important;outline-offset:4px!important}
+#myaktaWelcome .wl-enter>.wl-enter-label{background:transparent!important;color:white!important;width:auto!important;height:auto!important;font-size:clamp(19px,2vw,26px)!important;font-weight:800!important;line-height:1.2!important;text-align:left!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;border-radius:0!important}
+#myaktaWelcome .wl-enter>.wl-enter-label small{color:#e6f3ff!important}
+#myaktaWelcome .wl-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:15px!important;width:min(100%,1060px)!important;max-width:1060px!important;margin:auto!important}
+#myaktaWelcome .wl-card{border-radius:15px!important;padding:20px 12px!important;min-height:157px!important;background:rgba(4,35,77,.84)!important;backdrop-filter:blur(8px)!important;box-shadow:0 7px 24px rgba(0,12,38,.38)!important}
+#myaktaWelcome .wl-card:nth-child(2){background:rgba(1,67,79,.84)!important}
+#myaktaWelcome .wl-card:nth-child(3){background:rgba(54,56,61,.85)!important}
+#myaktaWelcome .wl-card:nth-child(4){background:rgba(42,36,89,.86)!important}
+#myaktaWelcome .wl-card strong{font-size:17px!important;color:#fff!important}
+#myaktaWelcome .wl-card small{font-size:13px!important;color:#edf4ff!important}
+#myaktaWelcome .wl-foot{display:flex!important;flex-shrink:0!important;position:relative!important;z-index:2!important;width:100%!important;margin-top:auto!important;background:rgba(0,20,52,.91)!important;padding:17px 24px!important;font-size:12px!important}
+#myaktaWelcome .wl-visual{position:absolute;z-index:0;pointer-events:none;left:-6%;bottom:7%;width:min(31vw,450px);opacity:.55;filter:drop-shadow(0 12px 20px #001734)}
+#myaktaWelcome .wl-visual img{display:block;width:100%;height:auto;transform:rotate(-10deg);border-radius:14px;mix-blend-mode:multiply}
+#myaktaWelcome .wl-plan{position:absolute;z-index:0;pointer-events:none;bottom:0;left:0;width:37%;height:33%;opacity:.25;background:url("./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_56_52%20PM.png") center/cover no-repeat;mask-image:linear-gradient(90deg,#000,transparent 100%)}
+@media(max-width:750px){
+#myaktaWelcome:before{background:linear-gradient(90deg,rgba(1,20,50,.86),rgba(3,34,76,.67)),url("./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_55_06%20PM.png") center/cover no-repeat!important}
+#myaktaWelcome .wl-inner{padding:35px 16px 30px!important}
+#myaktaWelcome h1{font-size:clamp(44px,11vw,75px)!important;letter-spacing:-1px!important}
+#myaktaWelcome .wl-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}
+#myaktaWelcome .wl-card{min-height:134px!important;padding:14px 8px!important}
+#myaktaWelcome .wl-card strong{font-size:14px!important}
+#myaktaWelcome .wl-card small{font-size:12px!important}
+#myaktaWelcome .wl-enter{min-height:79px!important;margin-bottom:22px!important}
+#myaktaWelcome .wl-visual{width:50%;left:-18%;bottom:14%;opacity:.28}
+#myaktaWelcome .wl-plan{width:85%;opacity:.13}
+#myaktaWelcome .wl-foot{flex-direction:column!important;gap:8px!important;text-align:center!important;font-size:11px!important}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -556,7 +597,7 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 <link rel="apple-touch-icon" href="./icon-v2.svg">
 </head>
 <body>
-<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-artwork" id="myaktaArtwork"><img class="wl-artwork-image" id="myaktaArtworkImage" alt="Halaman pembukaan MyAKTA172 dengan panorama bandar, buku Akta 172 dan empat fungsi utama" decoding="async"><button type="button" class="wl-artwork-action" id="myaktaArtworkEnter" aria-label="Mula Menggunakan MyAKTA172">Mula Menggunakan</button><button type="button" class="wl-mobile-action" id="myaktaMobileEnter">➜ Mula Menggunakan</button></div><div class="wl-city" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Buka MyAKTA172</small></span></button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><div class="wl-photo-credit">Foto bandar: <a href="https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_from_KL_Tower.jpg" target="_blank" rel="noopener noreferrer">Sławomir Gajowniczek / Wikimedia Commons</a> · CC BY-SA 4.0 · diwarnakan semula</div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
+<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-artwork" id="myaktaArtwork"><img class="wl-artwork-image" id="myaktaArtworkImage" alt="Halaman pembukaan MyAKTA172 dengan panorama bandar, buku Akta 172 dan empat fungsi utama" decoding="async"><button type="button" class="wl-artwork-action" id="myaktaArtworkEnter" aria-label="Mula Menggunakan MyAKTA172">Mula Menggunakan</button><button type="button" class="wl-mobile-action" id="myaktaMobileEnter">➜ Mula Menggunakan</button></div><div class="wl-city" aria-hidden="true"></div><div class="wl-visual" aria-hidden="true"><img src="./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_57_03%20PM.png" alt="" loading="eager"></div><div class="wl-plan" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Buka MyAKTA172</small></span></button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
 <header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="desktopHomeButton" type="button">⌂ Utama</button><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
 <div class="app"><section id="mobileHome" class="mobile-home">
 <div class="reader-brand"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
@@ -1186,11 +1227,6 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  enter.addEventListener('click',close);
  document.getElementById('myaktaArtworkEnter')?.addEventListener('click',close);
  document.getElementById('myaktaMobileEnter')?.addEventListener('click',close);
- // Avoid broken-image display if the user-provided artwork has not yet been uploaded.
- const art=new Image();
- art.onload=()=>{document.getElementById('myaktaArtworkImage').src=art.src;screen.classList.add('wl-artwork-ready');};
- art.onerror=()=>{};
- art.src='./welcome-hero.png';
  enter.focus({preventScroll:true});
 })();
 </script>
