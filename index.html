@@ -507,6 +507,31 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 #myaktaWelcome .wl-city:after{font-size:15px}
 #myaktaWelcome .wl-photo-credit{bottom:88px;left:12px;font-size:9px}
 }
+
+/* Exact-artwork welcome: activates automatically when welcome-hero.png is uploaded.
+   Until then retain the existing functioning photographic welcome as fallback. */
+#myaktaWelcome.wl-artwork-ready{background:#062855!important;display:flex!important;align-items:stretch!important;justify-content:center!important}
+#myaktaWelcome.wl-artwork-ready:before{display:none!important}
+#myaktaWelcome.wl-artwork-ready .wl-inner,
+#myaktaWelcome.wl-artwork-ready .wl-city,
+#myaktaWelcome.wl-artwork-ready .wl-photo-credit,
+#myaktaWelcome.wl-artwork-ready .wl-foot{display:none!important}
+#myaktaWelcome .wl-artwork{display:none}
+#myaktaWelcome.wl-artwork-ready .wl-artwork{display:block;position:relative;flex:1 0 auto;width:100%;min-height:100%;margin:auto;overflow:hidden}
+#myaktaWelcome.wl-artwork-ready .wl-artwork-image{display:block;width:100%;height:auto;max-height:none;object-fit:contain;margin:auto}
+#myaktaWelcome.wl-artwork-ready .wl-artwork-action{position:absolute;left:32.4%;top:50.7%;width:35.1%;height:12.3%;background:transparent;border:0;border-radius:16px;cursor:pointer;color:transparent;font-size:0}
+#myaktaWelcome.wl-artwork-ready .wl-artwork-action:focus-visible{outline:4px solid #ffd236;outline-offset:3px}
+@media(max-aspect-ratio:16/10){
+ #myaktaWelcome.wl-artwork-ready{justify-content:flex-start;overflow-y:auto}
+ #myaktaWelcome.wl-artwork-ready .wl-artwork{flex:0 0 auto;min-height:0}
+ #myaktaWelcome.wl-artwork-ready .wl-artwork-image{width:100%;height:auto}
+ #myaktaWelcome.wl-artwork-ready .wl-artwork-action{min-height:38px}
+}
+@media(max-width:650px){
+ #myaktaWelcome.wl-artwork-ready .wl-artwork{width:max(100%,640px);margin-left:0}
+ #myaktaWelcome.wl-artwork-ready{overflow:auto}
+ #myaktaWelcome.wl-artwork-ready .wl-artwork-action{min-height:48px}
+}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -517,7 +542,7 @@ body.mode-desktop .sidebar .sec-link{font-weight:700!important}
 <link rel="apple-touch-icon" href="./icon-v2.svg">
 </head>
 <body>
-<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-city" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Buka MyAKTA172</small></span></button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><div class="wl-photo-credit">Foto bandar: <a href="https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_from_KL_Tower.jpg" target="_blank" rel="noopener noreferrer">Sławomir Gajowniczek / Wikimedia Commons</a> · CC BY-SA 4.0 · diwarnakan semula</div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
+<section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-artwork" id="myaktaArtwork"><img class="wl-artwork-image" id="myaktaArtworkImage" alt="Halaman pembukaan MyAKTA172 dengan panorama bandar, buku Akta 172 dan empat fungsi utama" decoding="async"><button type="button" class="wl-artwork-action" id="myaktaArtworkEnter" aria-label="Mula Menggunakan MyAKTA172">Mula Menggunakan</button></div><div class="wl-city" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-tag">Rujukan Digital · Bacaan Akta · Analisis Kes · Rujukan Peribadi</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Buka MyAKTA172</small></span></button><div class="wl-grid"><div class="wl-card"><b>▣</b><strong>Baca Akta 172</strong><small>Teks Akta dan semua seksyen</small></div><div class="wl-card"><b>⌕</b><strong>Cari Kata Kunci</strong><small>Carian pantas dan padanan</small></div><div class="wl-card"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></div><div class="wl-card"><b>★</b><strong>Simpan Kegemaran</strong><small>Seksyen dan rujukan peribadi</small></div></div></div><div class="wl-photo-credit">Foto bandar: <a href="https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_from_KL_Tower.jpg" target="_blank" rel="noopener noreferrer">Sławomir Gajowniczek / Wikimedia Commons</a> · CC BY-SA 4.0 · diwarnakan semula</div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
 <header class="top"><div class="brand"><div><h1>My<span>AKTA</span>172</h1><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div></div><div class="tools"><button id="desktopHomeButton" type="button">⌂ Utama</button><button id="caseOpen" class="case-btn">⌕ Carian Kata Kunci & Analisis Kes</button><button id="small">A-</button><button id="large">A+</button><button id="theme">☾ Tema</button><button onclick="alert('MyAKTA172 ialah aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.')">ⓘ Tentang</button></div><div class="mode-switch" id="modeSwitch"><span>Paparan</span><button id="modeDesktop" type="button">🖥️ Desktop</button><button id="modeMobile" type="button">📱 Mobile</button></div></header>
 <div class="app"><section id="mobileHome" class="mobile-home">
 <div class="reader-brand"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
@@ -1145,6 +1170,12 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  const close=()=>{screen.hidden=true;document.body.style.removeProperty('overflow');};
  document.body.style.overflow='hidden';
  enter.addEventListener('click',close);
+ document.getElementById('myaktaArtworkEnter')?.addEventListener('click',close);
+ // Avoid broken-image display if the user-provided artwork has not yet been uploaded.
+ const art=new Image();
+ art.onload=()=>{document.getElementById('myaktaArtworkImage').src=art.src;screen.classList.add('wl-artwork-ready');};
+ art.onerror=()=>{};
+ art.src='./welcome-hero.png';
  enter.focus({preventScroll:true});
 })();
 </script>
