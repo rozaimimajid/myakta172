@@ -695,6 +695,32 @@ body.mode-desktop .lawbox{overflow-wrap:break-word}
 .v22-none-label{font-size:18px;font-weight:900;letter-spacing:.4px;color:var(--blue2);margin-right:3px}
 .v22-glossary-note{font-style:italic;color:var(--muted);font-size:13px;margin:4px 0 12px!important;display:block}
 .v22-detail p{line-height:1!important;margin:5px 0 0!important}.v22-detail .v22-glossary-note{line-height:1!important;margin:2px 0 9px!important}
+
+/* V2.3 percubaan: Carta Alir Proses Kebenaran Merancang */
+.km-mobile-launch{display:none}
+body.mode-mobile .km-mobile-launch{display:flex;width:100%;align-items:center;justify-content:space-between;margin:10px 0 12px;padding:15px;border-radius:14px;border:1px solid var(--line);border-left:6px solid var(--blue2);background:var(--card);color:var(--blue2);font-weight:800;text-align:left;cursor:pointer}
+.km-overlay[hidden]{display:none!important}
+.km-overlay{position:fixed;inset:0;z-index:999999;background:rgba(3,14,30,.75);display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto}
+.km-window{width:min(850px,100%);background:var(--card);color:var(--text);border-radius:18px;overflow:hidden;box-shadow:0 20px 65px #0005}
+.km-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:22px 25px;background:linear-gradient(110deg,#07336f,#0758b6);color:#fff}
+.km-head small{font-size:11px;letter-spacing:1px;color:#ffda59;font-weight:800}.km-head h2{margin:7px 0 0;font-size:25px}
+.km-head button,.km-foot button{border:1px solid #ffffff80;border-radius:9px;background:#ffffff18;color:white;padding:10px 13px;font-weight:800;cursor:pointer}
+.km-intro{margin:0;padding:18px 24px;font-size:13px;line-height:1.6;color:var(--muted)}
+.km-chart{display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 20px 28px}
+.km-step{width:min(560px,100%);border:2px solid #aac7e8;background:var(--soft);border-radius:13px;padding:13px 18px;text-align:center}
+.km-step strong{display:block;color:var(--blue2);font-size:16px}.km-step p{margin:7px 0;font-size:13px;line-height:1.5}
+.km-step button{background:var(--blue2);color:#fff;border:0;border-radius:7px;padding:7px 12px;font-weight:700;cursor:pointer}
+.km-arrow{font-size:26px;color:var(--blue2);line-height:1.3}
+.km-decision{border:2px solid #b88724;background:#fff8e7;border-radius:13px;padding:14px 18px;text-align:center;width:min(440px,100%);font-weight:800;color:#6a4a0b}
+.km-branches{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(750px,100%);margin:9px 0 5px}
+.km-branch{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px;text-align:center}
+.km-branch b{display:block;color:var(--blue2);margin-bottom:8px}.km-branch p{font-size:13px;line-height:1.5}
+.km-branch button{border:0;background:var(--blue2);color:#fff;border-radius:7px;padding:7px 12px;cursor:pointer}
+.km-foot{padding:16px 24px;background:var(--soft);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.km-foot button{background:var(--blue2);border:0}
+body.dark .km-decision{background:#3b3020;color:#ffe2a3;border-color:#b88724}
+body.dark .km-step{border-color:#34587d}
+@media(max-width:600px){.km-overlay{padding:8px}.km-head{padding:15px;flex-wrap:wrap}.km-head h2{font-size:20px}.km-chart{padding:8px 10px 18px}.km-branches{grid-template-columns:1fr}.km-intro{padding:13px 16px}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -711,7 +737,7 @@ body.mode-desktop .lawbox{overflow-wrap:break-word}
 <div class="reader-brand"><h2>My<span class="akta-word">AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p></div>
 <div id="continueReading" class="continue-card" data-mobile-go="continue"><div class="continue-icon">◷</div><div class="meta"><small>SAMBUNG BACAAN</small><b id="continueSection">Belum ada bacaan</b><em id="continueTitle">Buka Akta untuk memulakan rujukan</em></div><span class="continue-arrow">›</span></div>
 <button class="open-act-primary" data-mobile-go="akta" type="button"><span class="book">▣</span><span><strong>Buka Akta 172</strong><small>Indeks Bahagian dan semua seksyen</small></span><span class="go">›</span></button>
-<div class="reader-stats">
+<button type="button" class="km-mobile-launch" id="kmMobileLaunch">⇢ Carta Alir Proses Kebenaran Merancang <span>›</span></button><div class="reader-stats">
  <div class="reader-stat" data-mobile-go="fav"><span>★</span><b>Kegemaran</b><small id="favCount">0 seksyen</small></div>
  <div class="reader-stat" data-mobile-go="frequent"><span>↻</span><b>Sering Dibuka</b><small id="freqCount">Belum ada</small></div>
  <div class="reader-stat" data-mobile-go="recent"><span>◷</span><b>Terbaharu</b><small id="recentCount">Belum ada</small></div>
@@ -728,7 +754,7 @@ body.mode-desktop .lawbox{overflow-wrap:break-word}
  <div class="settings-row"><div><strong>🔊 Suara</strong><small>Kawalan bacaan suara tersedia apabila seksyen dibuka.</small></div><div class="settings-actions"><button id="settingsOpenAct" type="button">Buka Akta</button></div></div>
  <div class="settings-row"><div><strong>📲 Pasang Aplikasi</strong><small>Pasang MyAKTA172 pada skrin utama telefon untuk akses seperti aplikasi.</small></div><div class="settings-actions"><button id="settingsInstallPwa" type="button">Pasang</button></div></div>
  <div class="settings-row"><div><strong>ⓘ Tentang MyAKTA172</strong><small>Aplikasi rujukan mudah Akta Perancangan Bandar dan Desa 1976 [Akta 172]. Sumber teks: cetakan semula sebagaimana pada 1 Jun 2021.</small></div></div>
-</div></section><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><section id="desktopHome" class="desktop-home" aria-label="Laman Utama MyAKTA172"><div class="dh-hero"><div class="dh-kicker">RUJUKAN PERUNDANGAN DIGITAL</div><h2>My<span>AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><small>Carian • Bacaan Akta • Analisis Kes • Rujukan Peribadi</small></div><button type="button" id="desktopContinue" class="dh-continue"><span class="dh-continue-icon">◷</span><span class="dh-continue-copy"><small>SAMBUNG BACAAN</small><strong id="desktopContinueSection">Belum ada bacaan</strong><em id="desktopContinueTitle">Buka Akta untuk memulakan rujukan</em></span><span class="dh-continue-arrow">›</span></button><div class="dh-tiles"><button type="button" data-dh="akta"><b>▣</b><strong>Buka Akta 172</strong><small>Teroka bahagian dan seksyen</small></button><button type="button" data-dh="search"><b>⌕</b><strong>Carian Kata Kunci</strong><small>Carian pantas dan padanan</small></button><button type="button" data-dh="analysis"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></button><button type="button" data-dh="favorites"><b>★</b><strong>Kegemaran</strong><small>Seksyen yang disimpan</small></button></div><div class="dh-columns"><section><h3>Akses Pantas</h3><button data-dh-sec="1">Bahagian I <span>Permulaan ›</span></button><button data-dh-sec="3">Bahagian II <span>Perancangan Pemajuan ›</span></button><button data-dh-sec="19">Seksyen 19 <span>Kebenaran Merancang ›</span></button></section><section><h3>Terbaharu Dibaca</h3><div id="desktopHomeRecent">Belum ada sejarah bacaan.</div></section></div><div class="dh-columns dh-secondary"><section><h3>Sering Dibuka</h3><div id="desktopHomeFrequent"></div></section><section><h3>Seksyen Kegemaran</h3><div id="desktopHomeFavorites"></div></section></div><div class="dh-note">Sumber teks: cetakan semula Akta 172 sebagaimana pada 1 Jun 2021. Gunakan teks peruntukan bagi rujukan utama.</div></section><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
+</div></section><aside class="sidebar"><div class="side-title">BAHAGIAN</div><div id="nav" class="nav"></div><div class="side-foot sidebar-owner">Hak Milik Terpelihara © 2026<br><strong>TPr. Gs. Rozaimi bin Majid</strong></div></aside><main class="main"><section id="desktopHome" class="desktop-home" aria-label="Laman Utama MyAKTA172"><div class="dh-hero"><div class="dh-kicker">RUJUKAN PERUNDANGAN DIGITAL</div><h2>My<span>AKTA</span>172</h2><p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><small>Carian • Bacaan Akta • Analisis Kes • Rujukan Peribadi</small></div><button type="button" id="desktopContinue" class="dh-continue"><span class="dh-continue-icon">◷</span><span class="dh-continue-copy"><small>SAMBUNG BACAAN</small><strong id="desktopContinueSection">Belum ada bacaan</strong><em id="desktopContinueTitle">Buka Akta untuk memulakan rujukan</em></span><span class="dh-continue-arrow">›</span></button><div class="dh-tiles"><button type="button" id="kmDesktopLaunch"><b>⇢</b><strong>Carta Alir Proses KM</strong><small>Aliran permohonan dan keputusan</small></button><button type="button" data-dh="akta"><b>▣</b><strong>Buka Akta 172</strong><small>Teroka bahagian dan seksyen</small></button><button type="button" data-dh="search"><b>⌕</b><strong>Carian Kata Kunci</strong><small>Carian pantas dan padanan</small></button><button type="button" data-dh="analysis"><b>⚖</b><strong>Analisis Kes</strong><small>Padanan dalaman tanpa AI</small></button><button type="button" data-dh="favorites"><b>★</b><strong>Kegemaran</strong><small>Seksyen yang disimpan</small></button></div><div class="dh-columns"><section><h3>Akses Pantas</h3><button data-dh-sec="1">Bahagian I <span>Permulaan ›</span></button><button data-dh-sec="3">Bahagian II <span>Perancangan Pemajuan ›</span></button><button data-dh-sec="19">Seksyen 19 <span>Kebenaran Merancang ›</span></button></section><section><h3>Terbaharu Dibaca</h3><div id="desktopHomeRecent">Belum ada sejarah bacaan.</div></section></div><div class="dh-columns dh-secondary"><section><h3>Sering Dibuka</h3><div id="desktopHomeFrequent"></div></section><section><h3>Seksyen Kegemaran</h3><div id="desktopHomeFavorites"></div></section></div><div class="dh-note">Sumber teks: cetakan semula Akta 172 sebagaimana pada 1 Jun 2021. Gunakan teks peruntukan bagi rujukan utama.</div></section><div id="caseView" class="case-view"><div class="case-title"><h2>⌕ CARIAN KATA KUNCI & ANALISIS KES</h2><p>Cari kata kunci dan analisis situasi melalui padanan dalaman Akta 172 — tanpa AI atau API luar</p></div><div class="case-box"><label for="caseInput">Masukkan kata kunci, frasa atau situasi / kes</label><textarea id="caseInput" placeholder="Contoh kata kunci: kebenaran merancang, rayuan, pokok. Atau masukkan situasi: Pemilik tanah ingin menjalankan pemajuan perumahan tetapi belum mendapat kebenaran merancang."></textarea><div class="case-actions"><button id="caseAnalyse" class="case-analyse">🔍 Cari & Analisis</button><button id="caseClear" class="case-clear">Kosongkan</button><button id="caseBack" class="case-clear">↩ Kembali kepada Akta</button></div></div><div id="caseResults" class="case-results"></div></div><div id="actView"><div class="crumb"><div>⌂ &nbsp; <span id="crumbPart"></span> &nbsp;›&nbsp; <b id="crumbSec"></b></div><div class="action"><button id="copyBtn">⧉ Salin</button><button id="printBtn">⎙ Cetak</button></div></div><div class="content"><div class="section-head"><div><h2 id="secTitle"></h2><h3 id="secSub"></h3></div><div><div class="nextprev-top"><button class="navbtn" id="prevTop">← Sebelumnya</button><button class="navbtn primary" id="nextTop">Seterusnya →</button></div>
 <div class="library-tools"><button class="library-btn" id="bookmarkBtn" type="button">☆ Simpan Kegemaran</button><button class="library-btn" id="savedBtn" type="button">🔖 Kegemaran & Sejarah</button></div></div></div><div class="saved-panel" id="savedPanel">
 <div class="saved-head"><span>SEKSYEN SAYA</span><button class="saved-remove" id="closeSaved" type="button">✕ Tutup</button></div>
 <div class="saved-head"><div class="saved-tabs"><button id="favTab" class="active" type="button">★ Kegemaran</button><button id="historyTab" type="button">◷ Sejarah Bacaan</button></div><button class="saved-remove" id="clearHistory" type="button">Kosongkan sejarah</button></div>
@@ -1386,6 +1412,59 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  // Watch the existing section heading instead of changing the original navigation.
  const title=document.getElementById('secTitle');
  if(title){new MutationObserver(update).observe(title,{childList:true,characterData:true,subtree:true});setTimeout(update,400)}
+})();
+</script>
+<div id="kmFlowOverlay" class="km-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="kmFlowTitle"><div class="km-window"><div class="km-head"><div><small>MyAKTA172 V2.3 • CARTA ALIR PROSES</small><h2 id="kmFlowTitle">Kebenaran Merancang (KM)</h2></div><button id="kmFlowClose" type="button" aria-label="Tutup carta alir">✕ Tutup</button></div><p class="km-intro">Carta rujukan pembelajaran berdasarkan peruntukan utama Akta 172. Susunan ini bukan prosedur operasi rasmi PBPT; syarat, pengecualian dan tatacara tambahan hendaklah dirujuk pada teks Akta serta peraturan berkenaan.</p><div class="km-chart" id="kmFlowChart"></div><div class="km-foot"><button id="kmFlowCloseBottom" type="button">← Kembali ke MyAKTA172</button><span>Sumber: Akta 172, cetakan semula sebagaimana pada 1 Jun 2021</span></div></div></div>
+<script>
+(function(){
+ const overlay=document.getElementById('kmFlowOverlay'),chart=document.getElementById('kmFlowChart');
+ if(!overlay||!chart)return;
+ const steps=[
+ ['Keperluan kebenaran merancang','Semak sama ada pemajuan memerlukan kebenaran merancang serta pengecualian yang diperuntukkan.','19'],
+ ['Permohonan kepada PBPT','Permohonan dibuat menurut kehendak seksyen 21; semak dokumen, keizinan dan perkara yang terpakai.','21'],
+ ['Dokumen dan pelan sokongan','Semak Laporan Cadangan Pemajuan, pelan susun atur dan penyediaan dokumen oleh orang berkelayakan, mengikut kehendak yang terpakai.','21A'],
+ ['Pertimbangan permohonan oleh PBPT','PBPT mempertimbangkan permohonan berdasarkan perkara yang ditetapkan Akta dan membuat keputusan.','22']
+ ];
+ function openSection(n){
+  close();
+  document.getElementById('desktopHome')?.classList.remove('open');
+  const a=document.getElementById('actView');if(a)a.style.removeProperty('display');
+  const c=document.getElementById('caseView');if(c)c.style.display='none';
+  if(document.body.classList.contains('mode-mobile')){
+   document.getElementById('mobileHome').style.display='none';
+   document.querySelector('.main')?.classList.add('mobile-open');
+   document.querySelector('.sidebar')?.classList.remove('mobile-open');
+  }
+  if(typeof show==='function')show(n);
+ }
+ function step(title,desc,n){
+  const e=document.createElement('div');e.className='km-step';
+  const h=document.createElement('strong');h.textContent=title;
+  const p=document.createElement('p');p.textContent=desc;
+  const b=document.createElement('button');b.type='button';b.textContent='Buka Seksyen '+n;b.addEventListener('click',()=>openSection(n));
+  e.append(h,p,b);return e
+ }
+ function arrow(){const e=document.createElement('div');e.className='km-arrow';e.textContent='↓';return e}
+ steps.forEach(([title,desc,n])=>{chart.append(step(title,desc,n),arrow())});
+ const decision=document.createElement('div');decision.className='km-decision';decision.textContent='KEPUTUSAN PBPT — Seksyen 22(3)';chart.append(decision);
+ const branches=document.createElement('div');branches.className='km-branches';
+ [['KEBENARAN DIBERIKAN','Dengan atau tanpa syarat. Semak pematuhan syarat, tempoh sah dan peruntukan berkaitan.','24'],
+  ['KEBENARAN DITOLAK / SYARAT DIPERTIKAI','Hak rayuan tertakluk kepada orang yang layak, alasan dan tempoh yang ditetapkan dalam Akta.','23']].forEach(([t,d,n])=>{
+   const e=document.createElement('div');e.className='km-branch';
+   const h=document.createElement('b');h.textContent=t;
+   const p=document.createElement('p');p.textContent=d;
+   const b=document.createElement('button');b.type='button';b.textContent='Rujuk Seksyen '+n;b.addEventListener('click',()=>openSection(n));
+   e.append(h,p,b);branches.append(e)
+  });chart.append(branches);
+ let previousFocus=null;
+ function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';document.getElementById('kmFlowClose')?.focus()}
+ function close(){overlay.hidden=true;document.body.style.removeProperty('overflow');previousFocus?.focus?.()}
+ document.getElementById('kmDesktopLaunch')?.addEventListener('click',open);
+ document.getElementById('kmMobileLaunch')?.addEventListener('click',open);
+ document.getElementById('kmFlowClose')?.addEventListener('click',close);
+ document.getElementById('kmFlowCloseBottom')?.addEventListener('click',close);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
 })();
 </script>
 </body></html>
