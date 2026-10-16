@@ -693,6 +693,7 @@ body.mode-desktop .lawbox{overflow-wrap:break-word}
  body.mode-desktop .navbtn{padding:9px 12px!important}
 }
 .v22-none-label{font-size:18px;font-weight:900;letter-spacing:.4px;color:var(--blue2);margin-right:3px}
+.v22-glossary-note{font-style:italic;color:var(--muted);font-size:13px;margin:4px 0 12px!important;display:block}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -1374,9 +1375,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   terms.filter(([t])=>text.includes(t)).slice(0,9).forEach(([t,desc])=>{
    const b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',()=>{
     detail.replaceChildren();const strong=document.createElement('strong');strong.textContent=t.toLocaleUpperCase('ms');
-    const p=document.createElement('p');p.textContent=desc+' Penerangan ini ialah panduan ringkas, bukan petikan takrif rasmi.';
+    const p=document.createElement('p');p.textContent=desc;const note=document.createElement('p');note.className='v22-glossary-note';note.textContent='(Penerangan ini ialah panduan ringkas, bukan petikan takrif rasmi)';
     const link=document.createElement('button');link.type='button';link.textContent='Rujuk Seksyen 2';link.addEventListener('click',()=>{if(typeof show==='function')show('2')});
-    detail.append(strong,p,link)
+    detail.append(strong,p,note,link)
    });gl.appendChild(b)
   });
   if(!gl.childElementCount){const e=document.createElement('span');e.className='v22-empty';e.textContent='Tiada istilah glosari terpilih ditemui dalam seksyen ini.';gl.appendChild(e)}
