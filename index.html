@@ -1474,10 +1474,10 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  const steps=[
   {title:'MULA — Tentukan keperluan KM',desc:'Semak keperluan kebenaran merancang dan pengecualian yang berkenaan sebelum meneruskan permohonan.',refs:['19'],kind:'start'},
   {title:'Semakan awal zoning dan rancangan pemajuan',desc:'Semak zon guna tanah, rancangan tempatan atau rancangan pemajuan yang berkuat kuasa, serta kesesuaian cadangan.',refs:['2','12','16B','18']},
-  {title:'Penyediaan dan pengemukaan permohonan KM',desc:'Sediakan dokumen permohonan. Kenal pasti urusan caj pemajuan yang terpakai menurut seksyen 32–34; ini tidak bermaksud semua permohonan tertakluk kepada caj atau caj perlu dibayar pada peringkat ini.',refs:['21','21A','21B','21C','32','33','34']},
+  {title:'Penyediaan dan pengemukaan permohonan KM + Pembayaran caj atau kelulusan ansuran',desc:'Sediakan dokumen permohonan dan semak pembayaran caj pemajuan atau kebenaran ansuran jika caj dikenakan. Seksyen 22(4)(b) menetapkan halangan terhadap pemberian KM; pembayaran tidak semestinya berlaku ketika permohonan mula dikemukakan.',refs:['21','21A','21B','21C','22','34']},
   {title:'Semakan terperinci, bantahan dan pertimbangan PBPT',desc:'Semak pematuhan rancangan pemajuan, tatacara bantahan atau pendengaran jika terpakai, serta pertimbangan PBPT.',refs:['21','22']},
   {title:'Semakan halangan perundangan',desc:'Tentukan sama ada terdapat halangan untuk memberikan KM, termasuk percanggahan dengan rancangan pemajuan.',refs:['22']},
-  {title:'Pembayaran caj atau kelulusan ansuran jika dikenakan',desc:'Jika caj pemajuan terpakai, semak sama ada caj yang kena dibayar sudah dijelaskan atau kebenaran ansuran diperoleh sebelum KM diberikan.',refs:['22']},
+  {title:'Urusan Caj Pemajuan',desc:'Tentukan sama ada caj pemajuan terpakai dan urus penentuan amaun serta notis mengikut peruntukan yang berkaitan. Tidak semua pemajuan dikenakan caj.',refs:['32','33','34']},
   {title:'Keputusan pemberian atau penolakan KM',desc:'PBPT memutuskan sama ada KM diberikan, dengan atau tanpa syarat, atau ditolak.',refs:['22']},
   {title:'Rayuan, tempoh sah dan tindakan susulan',desc:'Semak hak rayuan, tempoh sah KM, lanjutan dan tindakan lanjut mengikut keadaan.',refs:['23','24','25']}
  ];
@@ -1525,7 +1525,8 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
   if(i===0)decision('Adakah KM diperlukan?','Teruskan ke semakan zoning dan permohonan.','Jika pengecualian sah terpakai, laluan KM tamat; undang-undang lain masih terpakai.',['19'],['19']);
   if(i===1)decision('Adakah cadangan selaras dengan rancangan pemajuan?','Teruskan penyediaan permohonan.','Semak semula cadangan; KM tidak boleh diberikan dalam bentuk yang bercanggah dengan halangan Akta.',['22'],['22']);
   if(i===4)decision('Adakah terdapat halangan perundangan?','Selesaikan halangan; KM tidak boleh diberikan selagi halangan berkuat kuasa.','Teruskan pemeriksaan tanggungan caj dan keputusan KM.',['22'],['22']);
-  if(i===5)decision('Jika caj dikenakan, adakah bayaran dibuat atau ansuran dibenarkan?','Teruskan pertimbangan keputusan KM.','KM tidak boleh diberikan sehingga syarat Seksyen 22(4)(b) dipenuhi; jika tiada caj, teruskan proses.',['22'],['22']);
+  if(i===2)decision('Jika caj dikenakan, adakah bayaran dibuat atau ansuran dibenarkan?','Teruskan semakan dan pertimbangan KM.','Syarat Seksyen 22(4)(b) mesti dipenuhi sebelum KM diberikan; rujuk urusan caj pemajuan di peringkat 6.',['22','34'],['22','34']);
+  if(i===5)decision('Adakah urusan caj pemajuan terpakai?','Tentukan tanggungan, jumlah dan notis caj menurut Seksyen 32–34; pastikan halangan pemberian KM dipenuhi.','Jika tidak terpakai, teruskan kepada keputusan KM.',['32','33','34'],['32']);
   if(i===6)decision('Apakah keputusan PBPT?','KM diberikan tertakluk kepada syarat dan tempoh sah.','Permohonan ditolak; semak hak rayuan jika layak.',['22','24'],['22','23']);
  });
  chart.append(arrow());
