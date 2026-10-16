@@ -692,6 +692,7 @@ body.mode-desktop .lawbox{overflow-wrap:break-word}
  body.mode-desktop .action{flex-wrap:wrap}
  body.mode-desktop .navbtn{padding:9px 12px!important}
 }
+.v22-none-label{font-size:18px;font-weight:900;letter-spacing:.4px;color:var(--blue2);margin-right:3px}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
@@ -1368,7 +1369,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(!option)return;
    const b=document.createElement('button');b.type='button';b.textContent=option.textContent;b.addEventListener('click',()=>{if(typeof show==='function')show(n)});rel.appendChild(b)
   });
-  if(!rel.childElementCount){const e=document.createElement('span');e.className='v22-empty';e.textContent='Tiada rujukan silang berbentuk “seksyen [nombor]” dikenal pasti dalam teks seksyen ini.';rel.appendChild(e)}
+  if(!rel.childElementCount){const e=document.createElement('span');e.className='v22-empty';e.innerHTML='<strong class="v22-none-label">TIADA</strong> rujukan silang berbentuk “seksyen [nombor]” dikenal pasti dalam teks seksyen ini.';rel.appendChild(e)}
   const text=(raw+' '+(document.getElementById('secSub')?.textContent||'')).toLocaleLowerCase('ms');
   terms.filter(([t])=>text.includes(t)).slice(0,9).forEach(([t,desc])=>{
    const b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',()=>{
