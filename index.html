@@ -1435,7 +1435,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  ];
  function openSection(n){
   flowScrollY=overlay.scrollTop;fromFlow=true;if(returnBar)returnBar.hidden=false;
-  close();
+  close(true);
   document.getElementById('desktopHome')?.classList.remove('open');
   const a=document.getElementById('actView');if(a)a.style.removeProperty('display');
   const c=document.getElementById('caseView');if(c)c.style.display='none';
@@ -1467,12 +1467,12 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   });chart.append(branches);
  let previousFocus=null;
  function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';overlay.scrollTop=fromFlow?flowScrollY:0;document.getElementById('kmFlowClose')?.focus({preventScroll:true})}
- function close(){overlay.hidden=true;document.body.style.removeProperty('overflow');previousFocus?.focus?.()}
+ function close(keepReturn=false){overlay.hidden=true;document.body.style.removeProperty('overflow');if(!keepReturn){fromFlow=false;flowScrollY=0;if(returnBar)returnBar.hidden=true;}previousFocus?.focus?.()}
  returnButton?.addEventListener('click',()=>{open();overlay.scrollTop=flowScrollY});
  document.getElementById('kmDesktopLaunch')?.addEventListener('click',open);
  document.getElementById('kmMobileLaunch')?.addEventListener('click',open);
- document.getElementById('kmFlowClose')?.addEventListener('click',close);
- document.getElementById('kmFlowCloseBottom')?.addEventListener('click',close);
+ document.getElementById('kmFlowClose')?.addEventListener('click',()=>close());
+ document.getElementById('kmFlowCloseBottom')?.addEventListener('click',()=>close());
  overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
 })();
