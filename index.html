@@ -1633,7 +1633,30 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
   if(i===9){
    const firstEnd=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');firstEnd.id='km-end-first';firstEnd.tabIndex=-1;chart.append(arrow(),firstEnd);
    const end=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');end.id='km-end-exempt';end.tabIndex=-1;chart.append(end);
-   const separator=node('div','km-app<div id="rsnV24ReturnBar" class="km-return-bar" hidden><button id="rsnV24ReturnButton" type="button" aria-label="Kembali ke Carta Alir RSN"><span aria-hidden="true">↩</span><span>CARTA ALIR RSN</span></button></div>
+   const separator=node('div','km-appeal-separator','LALUAN RAYUAN — diakses daripada keputusan Turutan 7');chart.append(separator);
+  }
+  // Sambungan selepas pilihan keputusan ke proses seterusnya; tiada anak panah antara berlian dan pilihan.
+  if(i>0 && i!==9)chart.append(arrow());
+  const box=node('div','km-step');
+  box.id='km-process-'+(i+1);box.tabIndex=-1;box.append(node('strong','',(i+1)+'. '+title),node('p','',desc));refs(box,links);
+  stageNodes.push(box);chart.append(box);decision(i);
+ });
+ chart.append(arrow());
+ const endRegular=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');endRegular.id='km-end-regular';endRegular.tabIndex=-1;chart.append(endRegular);
+ const endAppeal=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');endAppeal.id='km-end-appeal';endAppeal.tabIndex=-1;chart.append(endAppeal);
+ let previousFocus=null;
+ function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';overlay.scrollTop=fromFlow?flowScrollY:0;document.getElementById('kmFlowClose')?.focus({preventScroll:true})}
+ function close(keepReturn=false){overlay.hidden=true;document.body.style.removeProperty('overflow');if(!keepReturn){fromFlow=false;flowScrollY=0;if(returnBar)returnBar.hidden=true;}previousFocus?.focus?.()}
+ returnButton?.addEventListener('click',()=>{open();overlay.scrollTop=flowScrollY});
+ document.getElementById('kmDesktopLaunch')?.addEventListener('click',open);
+ document.getElementById('kmMobileLaunch')?.addEventListener('click',open);
+ document.getElementById('kmFlowClose')?.addEventListener('click',()=>close());
+ document.getElementById('kmFlowCloseBottom')?.addEventListener('click',()=>close());
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
+})();
+</script>
+<div id="rsnV24ReturnBar" class="km-return-bar" hidden><button id="rsnV24ReturnButton" type="button" aria-label="Kembali ke Carta Alir RSN"><span aria-hidden="true">↩</span><span>CARTA ALIR RSN</span></button></div>
 <div id="rsnV24Overlay" class="km-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="rsnV24Title"><div class="km-window"><div class="km-head"><div><small>MyAKTA172 V2.4 • CARTA ALIR PROSES</small><h2 id="rsnV24Title">Rancangan Struktur Negeri (RSN)</h2></div><button id="rsnV24Close" type="button" aria-label="Tutup carta alir">✕ Tutup</button></div><p class="km-intro">Carta pembelajaran dan proses asas; bukan pengganti tatacara atau prosedur rasmi. Tekan pautan seksyen untuk mencuba navigasi kembali.</p><nav class="rsn-choice" aria-label="Pilih Carta Alir RSN"><button type="button" data-rsn-tab="prep">Penyediaan RSN</button><button type="button" data-rsn-tab="review">Kajian Semula RSN</button><button type="button" data-rsn-tab="amend">Pengubahan RSN</button></nav><div class="km-chart" id="rsnV24Chart"></div><div class="km-foot"><button id="rsnV24CloseBottom" type="button">← Kembali ke MyAKTA172</button><span>Sumber: Akta 172, cetakan semula sebagaimana pada 1 Jun 2021</span></div></div></div><script>
 (function(){
 const F={
