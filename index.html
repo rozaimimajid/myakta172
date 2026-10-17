@@ -727,6 +727,23 @@ body.dark .km-decision{background:#3b3020;color:#ffe2a3;border-color:#b88724}
 body.dark .km-step{border-color:#34587d}
 @media(max-width:600px){.km-overlay{padding:8px}.km-head{padding:15px;flex-wrap:wrap}.km-head h2{font-size:20px}.km-chart{padding:8px 10px 18px}.km-branches{grid-template-columns:1fr}.km-intro{padding:13px 16px}}
 
+/* V2.3: floating close action, accessible at any scroll position in the KM modal */
+#kmFlowOverlay:not([hidden]) #kmFlowClose{
+ position:fixed!important;right:clamp(10px,2vw,28px)!important;
+ top:calc(14px + env(safe-area-inset-top,0px))!important;
+ z-index:1000001!important;background:#0759bc!important;color:#fff!important;
+ border:2px solid #ffcf35!important;border-radius:12px!important;
+ padding:12px 16px!important;font-size:14px!important;font-weight:800!important;
+ box-shadow:0 7px 22px rgba(0,30,75,.35)!important;
+ cursor:pointer!important;
+}
+#kmFlowOverlay:not([hidden]) #kmFlowClose:focus-visible{outline:3px solid #ffcf35;outline-offset:3px}
+#kmFlowOverlay:not([hidden]) .km-head{padding-right:150px}
+@media(max-width:600px){
+ #kmFlowOverlay:not([hidden]) #kmFlowClose{right:10px!important;top:calc(9px + env(safe-area-inset-top,0px))!important;padding:10px 12px!important;font-size:12px!important}
+ #kmFlowOverlay:not([hidden]) .km-head{padding-right:108px}
+}
+
 /* V2.3: floating return control outside legal text; narrow screens use bottom safe area */
 .km-return-bar[hidden]{display:none!important}
 .km-return-bar{position:fixed!important;z-index:9500;right:18px;bottom:calc(22px + env(safe-area-inset-bottom,0px));display:block!important;width:auto!important;max-width:calc(100vw - 36px);padding:0!important;background:transparent!important;border:0!important;pointer-events:none}
