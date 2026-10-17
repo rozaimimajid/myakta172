@@ -1449,6 +1449,14 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  if(title){new MutationObserver(update).observe(title,{childList:true,characterData:true,subtree:true});setTimeout(update,400)}
 })();
 </script>
+<style id="km-route-v23">
+#kmFlowChart .km-decision-block{width:100%;display:flex;align-items:center;flex-direction:column}
+#kmFlowChart .km-route-note{text-align:center;font-size:11px;color:var(--muted);padding:8px 4px 13px}
+#kmFlowChart .km-route-button{display:block;margin:9px auto 0;background:#115eaa;color:white;border:0;border-radius:8px;padding:9px 11px;font-weight:800;cursor:pointer}
+#kmFlowChart .km-route-focus{outline:4px solid #f2b53a;outline-offset:4px}
+#kmFlowChart .km-exemption{background:#496071;border-color:#496071;margin-top:18px;font-size:12px}
+#kmFlowChart .km-step:focus,#kmFlowChart .km-finish:focus{outline:3px solid #f2b53a;outline-offset:3px}
+</style>
 <style id="km-flow-v23-audit-styles">
 #kmFlowChart .km-start,#kmFlowChart .km-finish{border-radius:999px;background:#155e41;color:#fff;border:2px solid #155e41}
 #kmFlowChart .km-start strong,#kmFlowChart .km-start p{color:#fff}
@@ -1509,28 +1517,63 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
   e.append(h,p);sectionButtons(e,item.refs);return e;
  }
  function arrow(){const e=document.createElement('div');e.className='km-arrow';e.textContent='↓';e.setAttribute('aria-hidden','true');return e;}
- function decision(question,yes,no,yesRefs,noRefs){
-  const d=document.createElement('div');d.className='km-decision';d.textContent=question;chart.append(arrow(),d);
+ // Setiap cabang mempunyai destinasi sebenar; tiada anak panah automatik merentasi keputusan.
+ const routeMap={
+  0:{yes:1,no:'end-exemption'},
+  1:{yes:2,no:1},
+  2:{yes:3,no:5},
+  4:{yes:3,no:5},
+  5:{yes:2,no:6},
+  6:{yes:7,no:7}
+ };
+ const stepNodes=[];
+ function jumpTo(destination){
+  const target=typeof destination==='number'?stepNodes[destination]:document.getElementById(destination);
+  if(!target)return;
+  target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+  target.classList.add('km-route-focus');
+  window.setTimeout(()=>target.classList.remove('km-route-focus'),1700);
+  target.focus({preventScroll:true});
+ }
+ function decision(index,question,yes,no,yesRefs,noRefs){
+  const d=document.createElement('div');d.className='km-decision';d.textContent=question;
+  const block=document.createElement('div');block.className='km-decision-block';
+  block.append(arrow(),d);
   const branches=document.createElement('div');branches.className='km-branches km-conditional';
-  [[yes,'YA',yesRefs],[no,'TIDAK',noRefs]].forEach(([description,label,refs])=>{
+  [[yes,'YA',yesRefs,'yes'],[no,'TIDAK',noRefs,'no']].forEach(([description,label,refs,key])=>{
     const cell=document.createElement('div');cell.className='km-branch';
     const t=document.createElement('b');t.textContent=label;
     const p=document.createElement('p');p.textContent=description;
-    cell.append(t,p);if(refs?.length)sectionButtons(cell,refs);branches.append(cell);
-  });chart.append(branches);
+    const next=routeMap[index][key];
+    const go=document.createElement('button');go.type='button';go.className='km-route-button';
+    go.textContent=typeof next==='number'?'↪ Pergi ke Turutan '+(next+1):'↪ Pergi ke TAMAT';
+    go.addEventListener('click',()=>jumpTo(next));
+    cell.append(t,p,go);if(refs?.length)sectionButtons(cell,refs);branches.append(cell);
+  });
+  block.append(branches);
+  const note=document.createElement('div');note.className='km-route-note';
+  note.textContent='Pilih YA atau TIDAK melalui butang laluan dalam kotak; tiada sambungan automatik.';
+  block.append(note);chart.append(block);
  }
  steps.forEach((item,i)=>{
-  if(i)chart.append(arrow());
-  chart.append(process(item,i+1));
-  if(i===0)decision('Adakah KM diperlukan?','Teruskan ke semakan zoning dan permohonan.','Jika pengecualian sah terpakai, laluan KM tamat; undang-undang lain masih terpakai.',['19'],['19']);
-  if(i===1)decision('Adakah cadangan selaras dengan rancangan pemajuan?','Teruskan penyediaan permohonan.','Semak semula cadangan; KM tidak boleh diberikan dalam bentuk yang bercanggah dengan halangan Akta.',['22'],['22']);
-  if(i===4)decision('Adakah terdapat halangan perundangan?','Selesaikan halangan; KM tidak boleh diberikan selagi halangan berkuat kuasa.','Teruskan pemeriksaan tanggungan caj dan keputusan KM.',['22'],['22']);
-  if(i===2)decision('Jika caj dikenakan, adakah bayaran dibuat atau ansuran dibenarkan?','Teruskan semakan dan pertimbangan KM.','Syarat Seksyen 22(4)(b) mesti dipenuhi sebelum KM diberikan; rujuk urusan caj pemajuan di peringkat 6.',['22','34'],['22','34']);
-  if(i===5)decision('Adakah urusan caj pemajuan terpakai?','Tentukan tanggungan, jumlah dan notis caj menurut Seksyen 32–34; pastikan halangan pemberian KM dipenuhi.','Pengecualian sah: tertakluk undang-undang lain dan keputusan PBPT. Teruskan proses.',['32','33','34'],['32']);
-  if(i===6)decision('Apakah keputusan PBPT?','KM diberikan tertakluk kepada syarat dan tempoh sah.','Permohonan semula dengan pembaikan. Semak hak rayuan.',['22','24'],['22','23']);
+  const node=process(item,i+1);node.id='km-process-'+(i+1);node.tabIndex=-1;
+  stepNodes.push(node);
+  // Anak panah biasa hanya antara proses tanpa keputusan di antaranya.
+  if(i && !routeMap[i-1])chart.append(arrow());
+  chart.append(node);
+  if(i===0)decision(i,'Adakah KM diperlukan?','Teruskan ke semakan zoning dan permohonan.','Jika pengecualian sah terpakai, laluan KM tamat; undang-undang lain masih terpakai.',['19'],['19']);
+  if(i===1)decision(i,'Adakah cadangan selaras dengan rancangan pemajuan?','Teruskan penyediaan permohonan.','Semak semula cadangan; KM tidak boleh diberikan dalam bentuk yang bercanggah dengan halangan Akta.',['22'],['22']);
+  if(i===2)decision(i,'Jika caj dikenakan, adakah bayaran dibuat atau ansuran dibenarkan?','Teruskan semakan dan pertimbangan KM.','Syarat Seksyen 22(4)(b) mesti dipenuhi sebelum KM diberikan; rujuk urusan caj pemajuan di peringkat 6.',['22','34'],['22','34']);
+  if(i===4)decision(i,'Adakah terdapat halangan perundangan?','Selesaikan halangan; KM tidak boleh diberikan selagi halangan berkuat kuasa.','Teruskan pemeriksaan tanggungan caj dan keputusan KM.',['22'],['22']);
+  if(i===5)decision(i,'Adakah urusan caj pemajuan terpakai?','Tentukan tanggungan, jumlah dan notis caj menurut Seksyen 32–34; pastikan halangan pemberian KM dipenuhi.','Pengecualian sah: tertakluk undang-undang lain dan keputusan PBPT. Teruskan proses.',['32','33','34'],['32']);
+  if(i===6)decision(i,'Apakah keputusan PBPT?','KM diberikan tertakluk kepada syarat dan tempoh sah.','Permohonan semula dengan pembaikan. Semak hak rayuan.',['22','24'],['22','23']);
  });
  chart.append(arrow());
- const finish=document.createElement('div');finish.className='km-finish';finish.textContent='TAMAT — Laluan mengikut keputusan dan tindakan susulan';chart.append(finish);
+ const finish=document.createElement('div');finish.className='km-finish';finish.id='km-finish';finish.tabIndex=-1;
+ finish.textContent='TAMAT — Laluan mengikut keputusan dan tindakan susulan';chart.append(finish);
+ const exemption=document.createElement('div');exemption.className='km-finish km-exemption';exemption.id='end-exemption';exemption.tabIndex=-1;
+ exemption.textContent='TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih perlu dipatuhi.';
+ chart.append(exemption);
  let previousFocus=null;
  function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';overlay.scrollTop=fromFlow?flowScrollY:0;document.getElementById('kmFlowClose')?.focus({preventScroll:true})}
  function close(keepReturn=false){overlay.hidden=true;document.body.style.removeProperty('overflow');if(!keepReturn){fromFlow=false;flowScrollY=0;if(returnBar)returnBar.hidden=true;}previousFocus?.focus?.()}
