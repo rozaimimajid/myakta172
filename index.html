@@ -811,6 +811,22 @@ body:has(.km-return-bar:not([hidden])) #actView{padding-bottom:0!important}
 #rsnV24Return{right:0!important;top:clamp(115px,17vh,190px)!important;bottom:auto!important;writing-mode:vertical-rl!important;text-orientation:mixed!important;border:2px solid #ffd33b!important;border-right:0!important;background:#074a9f!important;border-radius:12px 0 0 12px!important;font-weight:900!important;font-size:13px!important;letter-spacing:.6px!important;min-height:145px!important;padding:16px 10px!important;box-shadow:0 4px 15px #001b3c55!important;z-index:9000!important}
 @media(max-width:900px){#rsnV24Overlay{padding:8px!important}#rsnV24Return{top:clamp(90px,15vh,145px)!important;font-size:11px!important;min-height:118px!important;padding:11px 7px!important}}
 @media(max-width:480px){#rsnV24Return{font-size:10px!important;min-height:105px!important;padding:9px 5px!important}body:has(#rsnV24Return:not([hidden])) #actView{padding-right:29px!important;box-sizing:border-box!important}}
+</style><style id="rsn-v24-exact-km-component">
+#rsnV24Overlay[hidden],#rsnV24ReturnBar[hidden]{display:none!important}
+#rsnV24Overlay .rsn-choice{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:5px 20px 20px}
+#rsnV24Overlay .rsn-choice button{border:1px solid #aac7e8;background:var(--soft);color:var(--text);border-radius:9px;padding:10px 14px;font-weight:800;cursor:pointer}
+#rsnV24Overlay .rsn-choice button.active{background:var(--blue2);color:white;border-color:#ffd33b}
+#rsnV24Overlay .rsn-choice button:focus-visible{outline:3px solid #ffd33b}
+#rsnV24Overlay .km-window{width:min(850px,100%)}
+#rsnV24Overlay .km-head{padding-right:150px}
+#rsnV24Overlay .km-decision-block{width:100%;display:flex;flex-direction:column;align-items:center}
+#rsnV24Overlay .km-decision{clip-path:polygon(13% 0,87% 0,100% 50%,87% 100%,13% 100%,0 50%);border-radius:0;padding:25px 40px;box-sizing:border-box}
+#rsnV24Overlay .km-conditional .km-branch:first-child{border-top:3px solid #19845b}
+#rsnV24Overlay .km-conditional .km-branch:last-child{border-top:3px solid #ba7335}
+#rsnV24Overlay .km-start{background:#289466;color:white}
+#rsnV24Overlay:not([hidden]) #rsnV24Close{position:fixed!important;right:max(12px,calc((100vw - 850px)/2 + 12px))!important;top:calc(14px + env(safe-area-inset-top,0px))!important;z-index:1000001!important;background:#0759bc!important;color:white!important;border:2px solid #ffcf35!important;border-radius:12px!important;padding:12px 16px!important;font-size:14px!important;font-weight:800!important;box-shadow:0 7px 22px rgba(0,30,75,.35)!important;cursor:pointer!important}
+#rsnV24ReturnBar.km-return-bar{z-index:9000}
+@media(max-width:600px){#rsnV24Overlay .km-head{padding-right:108px}#rsnV24Overlay:not([hidden]) #rsnV24Close{right:10px!important;top:calc(9px + env(safe-area-inset-top,0px))!important;padding:10px 12px!important;font-size:12px!important}#rsnV24Overlay .km-decision{padding:23px 24px}}
 </style></head>
 <body>
 <section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-artwork" id="myaktaArtwork"><img class="wl-artwork-image" id="myaktaArtworkImage" alt="Halaman pembukaan MyAKTA172 dengan panorama bandar, buku Akta 172 dan empat fungsi utama" decoding="async"><button type="button" class="wl-artwork-action" id="myaktaArtworkEnter" aria-label="Mula Menggunakan MyAKTA172">Mula Menggunakan</button><button type="button" class="wl-mobile-action" id="myaktaMobileEnter">➜ Mula Menggunakan</button></div><div class="wl-city" aria-hidden="true"></div><div class="wl-visual" aria-hidden="true"><img src="./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_57_03%20PM.png" alt="" loading="eager"></div><div class="wl-plan" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-enter-hint">Klik butang di bawah untuk mengakses aplikasi MyAKTA172</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Klik di sini untuk masuk ke aplikasi</small></span></button><div class="wl-grid" aria-label="Ciri-ciri MyAKTA172 (maklumat, bukan butang)"><div class="wl-card"><b aria-hidden="true">▣</b><strong>Bacaan Akta 172</strong></div><div class="wl-card"><b aria-hidden="true">⇢</b><strong>Carta Alir Proses KM</strong></div><div class="wl-card"><b aria-hidden="true">⌕</b><strong>Carian Kata Kunci &amp; Analisis Kes</strong></div><div class="wl-card"><b aria-hidden="true">★</b><strong>Kegemaran &amp; Sejarah</strong></div><div class="wl-card"><b aria-hidden="true">♫</b><strong>Bacaan Suara</strong></div><div class="wl-card"><b aria-hidden="true">◐</b><strong>Desktop/Mobile &amp; Siang/Malam</strong></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
@@ -1617,51 +1633,99 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
   if(i===9){
    const firstEnd=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');firstEnd.id='km-end-first';firstEnd.tabIndex=-1;chart.append(arrow(),firstEnd);
    const end=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');end.id='km-end-exempt';end.tabIndex=-1;chart.append(end);
-   const separator=node('div','km-appeal-separator','LALUAN RAYUAN — diakses daripada keputusan Turutan 7');chart.append(separator);
-  }
-  // Sambungan selepas pilihan keputusan ke proses seterusnya; tiada anak panah antara berlian dan pilihan.
-  if(i>0 && i!==9)chart.append(arrow());
-  const box=node('div','km-step');
-  box.id='km-process-'+(i+1);box.tabIndex=-1;box.append(node('strong','',(i+1)+'. '+title),node('p','',desc));refs(box,links);
-  stageNodes.push(box);chart.append(box);decision(i);
+   const separator=node('div','km-app<div id="rsnV24ReturnBar" class="km-return-bar" hidden><button id="rsnV24ReturnButton" type="button" aria-label="Kembali ke Carta Alir RSN"><span aria-hidden="true">↩</span><span>CARTA ALIR RSN</span></button></div>
+<div id="rsnV24Overlay" class="km-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="rsnV24Title"><div class="km-window"><div class="km-head"><div><small>MyAKTA172 V2.4 • CARTA ALIR PROSES</small><h2 id="rsnV24Title">Rancangan Struktur Negeri (RSN)</h2></div><button id="rsnV24Close" type="button" aria-label="Tutup carta alir">✕ Tutup</button></div><p class="km-intro">Carta pembelajaran dan proses asas; bukan pengganti tatacara atau prosedur rasmi. Tekan pautan seksyen untuk mencuba navigasi kembali.</p><nav class="rsn-choice" aria-label="Pilih Carta Alir RSN"><button type="button" data-rsn-tab="prep">Penyediaan RSN</button><button type="button" data-rsn-tab="review">Kajian Semula RSN</button><button type="button" data-rsn-tab="amend">Pengubahan RSN</button></nav><div class="km-chart" id="rsnV24Chart"></div><div class="km-foot"><button id="rsnV24CloseBottom" type="button">← Kembali ke MyAKTA172</button><span>Sumber: Akta 172, cetakan semula sebagaimana pada 1 Jun 2021</span></div></div></div><script>
+(function(){
+const F={
+prep:{name:'Penyediaan dan Kelulusan RSN',sub:'Seksyen 7–10',rows:[
+['Tinjauan kawasan perancangan negeri','Pengarah Negeri menjalankan tinjauan dan menyediakan maklumat kajian.',['7']],
+['Penyediaan Draf RSN','Pengarah Negeri menyediakan draf berdasarkan laporan tinjauan.',['8']],
+['Publisiti awal','Orang awam berpeluang memberi pandangan semasa draf disediakan.',['9']],
+['Pengemukaan draf dan publisiti rasmi','Draf dikemukakan kepada JPN; notis serta tempoh bantahan diurus mengikut Akta.',['8','9']],
+['Penilaian kecukupan publisiti','JPN meneliti sama ada tindakan publisiti lanjut perlu dilaksanakan.',['9']],
+['Pertimbangan bantahan dan pendengaran','Peluang didengar diberikan kepada pembantah yang layak dan belum menarik balik bantahan.',['10']],
+['Perundingan MPFN','JPN mendapatkan arahan dan nasihat MPFN yang berkenaan.',['10']],
+['Keputusan JPN','JPN meluluskan, meluluskan dengan pengubahsuaian atau menolak draf.',['10']],
+['Persetujuan PBN','Draf yang diluluskan dikemukakan bagi persetujuan PBN.',['10']],
+['Pewartaan dan pemakluman','Fakta persetujuan disiarkan seperti diperuntukkan.',['10']]],
+choices:{4:['Adakah tindakan publisiti lanjut diperlukan?',['YA — Lengkapkan publisiti dan kemukakan semula.',3],['TIDAK — Teruskan pertimbangan.',5]],7:['Adakah JPN meluluskan draf RSN?',['YA — Kemukakan kepada PBN.',8],['TIDAK — Draf ditolak atau disemak semula.','reject']]},
+end:'TAMAT — RSN berkuat kuasa selepas persetujuan PBN; tindakan pemakluman disempurnakan.'},
+review:{name:'Kajian Semula RSN',sub:'Seksyen 11 dan 11A',rows:[
+['RSN sedia ada','Kenal pasti rancangan yang berkuat kuasa.',['11']],
+['Keperluan kajian semula','Tentukan kajian semula berkala lima tahun atau arahan/keputusan yang dibenarkan.',['11']],
+['Tinjauan dan laporan kajian semula','Laksanakan kajian dan laporan berdasarkan Seksyen 7 yang terpakai.',['7','11A']],
+['Pengemukaan cadangan','Kemukakan laporan dan cadangan kepada JPN.',['11A']],
+['Publisiti, bantahan dan pendengaran','Peruntukan Seksyen 9 dan 10 terpakai dengan ubah suaian yang perlu.',['9','10','11A']],
+['Pertimbangan JPN dan MPFN','Laksanakan pertimbangan dan keputusan yang berkaitan.',['10','11A']],
+['Persetujuan PBN','Kemukakan cadangan diluluskan untuk persetujuan PBN.',['10','11A']],
+['Pewartaan dan pemakluman','Sempurnakan tindakan penyiaran yang berkenaan.',['10','11A']]],
+choices:{1:['Adakah kajian semula diputuskan atau diarahkan?',['YA — Mulakan kajian semula.',2],['TIDAK — RSN sedia ada diteruskan.','defer']],5:['Adakah hasil kajian semula diluluskan?',['YA — Mohon persetujuan PBN.',6],['TIDAK — Ikut keputusan JPN.','reject']]},end:'TAMAT — Hasil kajian semula berkuat kuasa selepas persetujuan PBN.'},
+amend:{name:'Pengubahan RSN',sub:'Seksyen 11 dan 11B',rows:[
+['Keperluan atau arahan pengubahan','Kenal pasti cadangan pengubahan yang dibenarkan.',['11','11B']],
+['Penyediaan cadangan pengubahan','Sediakan draf pengubahan berdasarkan arahan yang berkenaan.',['11B']],
+['Pengemukaan draf yang diubah','Kemukakan cadangan kepada JPN.',['11B']],
+['Notis akhbar dan pemeriksaan awam','Publisiti dan tempoh bantahan dijalankan seperti diperuntukkan.',['11B']],
+['Pendengaran bantahan','Bantahan dipertimbangkan mengikut tatacara Seksyen 11B.',['11B']],
+['Pertimbangan keputusan JPN','JPN meluluskan dengan atau tanpa pindaan, atau menolak.',['11B']],
+['Persetujuan PBN','Pengubahan yang diluluskan dikemukakan untuk persetujuan PBN.',['11B']],
+['Pewartaan','Fakta persetujuan PBN disiarkan dalam Warta Negeri.',['11B']]],
+choices:{0:['Adakah pengubahan diputuskan?',['YA — Sediakan cadangan.',1],['TIDAK — RSN sedia ada diteruskan.','defer']],5:['Adakah pengubahan diluluskan JPN?',['YA — Dapatkan persetujuan PBN.',6],['TIDAK — Pengubahan ditolak.','reject']]},end:'TAMAT — Pengubahan RSN berkuat kuasa selepas persetujuan PBN.'}
+};
+const overlay=document.getElementById('rsnV24Overlay'),chart=document.getElementById('rsnV24Chart');
+const returnBar=document.getElementById('rsnV24ReturnBar'),returnButton=document.getElementById('rsnV24ReturnButton');
+const state={key:'prep',scroll:0,fromSection:false},stageNodes=[];
+let previousFocus=null;
+function node(tag,cls,txt){const e=document.createElement(tag);e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+function arrow(){const a=node('div','km-arrow','↓');a.setAttribute('aria-hidden','true');return a}
+function openSection(n){
+ state.scroll=overlay.scrollTop;state.fromSection=true;returnBar.hidden=false;close(true);
+ document.getElementById('desktopHome')?.classList.remove('open');
+ const act=document.getElementById('actView');if(act)act.style.removeProperty('display');
+ const cv=document.getElementById('caseView');if(cv)cv.style.display='none';
+ if(document.body.classList.contains('mode-mobile')){
+  document.getElementById('mobileHome')?.style.setProperty('display','none');
+  document.querySelector('.main')?.classList.add('mobile-open');
+  document.querySelector('.sidebar')?.classList.remove('mobile-open');
+ }
+ if(typeof show==='function')show(n);
+}
+function refs(where,nums){const holder=node('div','km-ref-links');nums.forEach(n=>{const b=node('button','','Buka Seksyen '+n);b.type='button';b.addEventListener('click',()=>openSection(n));holder.append(b)});where.append(holder)}
+function navigate(dest){
+ const target=typeof dest==='number'?stageNodes[dest]:document.getElementById('rsn-end-'+dest);
+ if(!target)return;
+ target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
+ target.focus({preventScroll:true});target.classList.add('km-route-focus');setTimeout(()=>target.classList.remove('km-route-focus'),1600);
+}
+function decision(q,choices,refNums){
+ const group=node('div','km-decision-block');group.append(arrow(),node('div','km-decision',q));
+ const branches=node('div','km-branches km-conditional');
+ choices.forEach((item,i)=>{const cell=node('div','km-branch');cell.append(node('b','',i===0?'YA':'TIDAK'),node('p','',item[0]));const dest=item[1];const btn=node('button','km-route-button',typeof dest==='number'?'↪ Pergi ke Turutan '+(dest+1):'↪ Pergi ke TAMAT');btn.type='button';btn.addEventListener('click',()=>navigate(dest));cell.append(btn);refs(cell,refNums);branches.append(cell)});
+ group.append(branches,node('div','km-route-note','Gunakan butang YA atau TIDAK untuk mengikuti laluan sebenar.'));chart.append(group);
+}
+function render(key){
+ state.key=key;stageNodes.length=0;chart.replaceChildren();
+ const flow=F[key];
+ document.querySelectorAll('[data-rsn-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.rsnTab===key);b.setAttribute('aria-pressed',String(b.dataset.rsnTab===key))});
+ chart.append(node('div','km-finish km-start','MULA'),arrow());
+ flow.rows.forEach(([title,desc,links],i)=>{
+  if(i>0)chart.append(arrow());
+  const box=node('div','km-step');box.tabIndex=-1;box.append(node('strong','',(i+1)+'. '+title),node('p','',desc));refs(box,links);chart.append(box);stageNodes.push(box);
+  if(flow.choices[i]){const choice=flow.choices[i];decision(choice[0],[choice[1],choice[2]],links)}
  });
  chart.append(arrow());
- const endRegular=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');endRegular.id='km-end-regular';endRegular.tabIndex=-1;chart.append(endRegular);
- const endAppeal=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');endAppeal.id='km-end-appeal';endAppeal.tabIndex=-1;chart.append(endAppeal);
- let previousFocus=null;
- function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';overlay.scrollTop=fromFlow?flowScrollY:0;document.getElementById('kmFlowClose')?.focus({preventScroll:true})}
- function close(keepReturn=false){overlay.hidden=true;document.body.style.removeProperty('overflow');if(!keepReturn){fromFlow=false;flowScrollY=0;if(returnBar)returnBar.hidden=true;}previousFocus?.focus?.()}
- returnButton?.addEventListener('click',()=>{open();overlay.scrollTop=flowScrollY});
- document.getElementById('kmDesktopLaunch')?.addEventListener('click',open);
- document.getElementById('kmMobileLaunch')?.addEventListener('click',open);
- document.getElementById('kmFlowClose')?.addEventListener('click',()=>close());
- document.getElementById('kmFlowCloseBottom')?.addEventListener('click',()=>close());
- overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
-})();
-</script>
-<div id="rsnV24Overlay" hidden role="dialog" aria-modal="true" aria-label="Carta Alir Rancangan Struktur Negeri"><iframe title="Carta Alir RSN V2.4" src="./rsn-v24.html"></iframe></div><button id="rsnV24Return" type="button" hidden>↩ CARTA ALIR RSN</button><script>
-(function(){
-const ov=document.getElementById('rsnV24Overlay'),ret=document.getElementById('rsnV24Return');
-let position=0;
-function open(){ov.hidden=false;ret.hidden=true;document.body.style.overflow='hidden';}
-function close(){ov.hidden=true;document.body.style.removeProperty('overflow');ret.hidden=true;}
-document.getElementById('rsnDesktopLaunch')?.addEventListener('click',open);
-
-ret.addEventListener('click',()=>{ov.hidden=false;ret.hidden=true;document.body.style.overflow='hidden';ov.querySelector('iframe')?.contentWindow?.scrollTo(0,position);});
-window.addEventListener('message',e=>{
-if(e.origin!==location.origin||e.source!==ov.querySelector('iframe')?.contentWindow||e.data?.source!=='myakta172-rsn-v24')return;
-if(e.data.action==='close'){close();return;}
-if(e.data.action==='open-section' && /^\d+[A-Z]?$/.test(String(e.data.section))){
-position=ov.querySelector('iframe')?.contentWindow?.scrollY||0;
-ov.hidden=true;ret.hidden=false;document.body.style.removeProperty('overflow');
-document.getElementById('desktopHome')?.classList.remove('open');
-document.getElementById('caseView')?.classList.remove('open');
-const act=document.getElementById('actView');if(act)act.style.display='block';
-if(typeof window.show==='function')window.show(String(e.data.section));
-if(act)act.style.display='block';
+ [['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan JPN.'],['defer','TAMAT — RSN sedia ada masih berkuat kuasa.']].forEach(([id,txt])=>{
+  const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rsn-end-'+id;end.tabIndex=-1;chart.append(end);
+ });
 }
-});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!ov.hidden)close()});
+function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';overlay.scrollTop=state.fromSection?state.scroll:0;document.getElementById('rsnV24Close')?.focus({preventScroll:true})}
+function close(keep=false){overlay.hidden=true;document.body.style.removeProperty('overflow');if(!keep){state.fromSection=false;state.scroll=0;returnBar.hidden=true}previousFocus?.focus?.()}
+document.getElementById('rsnDesktopLaunch')?.addEventListener('click',open);
+document.getElementById('rsnV24Close')?.addEventListener('click',()=>close());
+document.getElementById('rsnV24CloseBottom')?.addEventListener('click',()=>close());
+returnButton?.addEventListener('click',()=>{open();overlay.scrollTop=state.scroll});
+document.querySelectorAll('[data-rsn-tab]').forEach(b=>b.addEventListener('click',()=>{render(b.dataset.rsnTab);overlay.scrollTop=0;state.fromSection=false}));
+overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
+render('prep');
 })();
 </script></body></html>
