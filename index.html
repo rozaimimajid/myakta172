@@ -1506,7 +1506,7 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  ['Tempoh Sah dan Tindakan Susulan','Semak tempoh sah KM, pematuhan syarat, lanjutan dan tindakan susulan yang berkaitan.',['24','25']],
  ['Rayuan','Semak hak rayuan, tatacara dan tindakan lanjut sekiranya keputusan atau syarat KM dipertikaikan.',['23']]
  ];
- const paths={0:[1,'km-end-exempt'],1:[2,1],2:[3,2],3:[4,3],4:[5,4],5:[5,6],6:[7,9],7:[8,7],8:['km-end-regular',8],9:[6,'km-end-appeal']};
+ const paths={0:[1,'km-end-exempt'],1:[2,1],2:[3,2],3:[4,3],4:[5,4],5:[5,6],6:[7,9],7:[8,7],8:['km-end-first',8],9:[6,'km-end-appeal']};
  const questions=[
  ['Adakah pemajuan memerlukan KM?','KM diperlukan. Teruskan ke semakan zoning RT.','Jika pengecualian sah terpakai, laluan KM tamat; undang-undang lain masih perlu dipatuhi.'],
  ['Adakah cadangan selaras dengan zoning RT / rancangan pemajuan?','Cadangan selaras. Teruskan kepada permohonan KM.','Semak semula cadangan, zoning atau perincian pemajuan sebelum meneruskan.'],
@@ -1557,7 +1557,7 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  chart.append(node('div','km-finish km-start','MULA'),arrow());
  steps.forEach(([title,desc,links],i)=>{
   if(i===9){
-   chart.append(arrow(),node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan'));
+   const firstEnd=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');firstEnd.id='km-end-first';firstEnd.tabIndex=-1;chart.append(arrow(),firstEnd);
    const end=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');end.id='km-end-exempt';end.tabIndex=-1;chart.append(end);
    const separator=node('div','km-appeal-separator','LALUAN RAYUAN — diakses daripada keputusan Turutan 7');chart.append(separator);
   }
