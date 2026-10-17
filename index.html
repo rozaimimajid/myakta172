@@ -1561,6 +1561,8 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
    const end=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');end.id='km-end-exempt';end.tabIndex=-1;chart.append(end);
    const separator=node('div','km-appeal-separator','LALUAN RAYUAN — diakses daripada keputusan Turutan 7');chart.append(separator);
   }
+  // Sambungan selepas pilihan keputusan ke proses seterusnya; tiada anak panah antara berlian dan pilihan.
+  if(i>0 && i!==9)chart.append(arrow());
   const box=node('div','km-step');
   box.id='km-process-'+(i+1);box.tabIndex=-1;box.append(node('strong','',(i+1)+'. '+title),node('p','',desc));refs(box,links);
   stageNodes.push(box);chart.append(box);decision(i);
