@@ -1653,6 +1653,7 @@ document.getElementById('desktopHome')?.classList.remove('open');
 document.getElementById('caseView')?.classList.remove('open');
 const act=document.getElementById('actView');if(act)act.style.display='block';
 if(typeof window.show==='function')window.show(String(e.data.section));
+if(act)act.style.display='block';
 }
 });
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!ov.hidden)close()});
