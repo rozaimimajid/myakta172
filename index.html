@@ -782,31 +782,16 @@ body:has(.km-return-bar:not([hidden])) #actView{padding-bottom:0!important}
 <meta name="apple-mobile-web-app-title" content="MyAKTA172">
 <link rel="apple-touch-icon" href="./icon-v2.svg">
 <style id="welcome-simple-features-v23">
-/* Single, non-interactive feature panel on the approved hero background. */
+/* Approved six informational feature tiles: separate clear outlines, never clickable. */
 #myaktaWelcome{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
 #myaktaWelcome .wl-inner{max-width:1200px!important}
-#myaktaWelcome .wl-grid{
- display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
- gap:18px 20px!important;max-width:1080px!important;margin:22px auto 0!important;
- padding:23px 26px!important;border:4px solid #ffc400!important;border-radius:24px!important;
- background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;
-}
-#myaktaWelcome .wl-card,#myaktaWelcome .wl-card:nth-child(n){
- display:flex!important;justify-content:center!important;align-items:center!important;
- gap:9px!important;min-height:36px!important;margin:0!important;padding:3px!important;
- border:0!important;border-radius:0!important;background:none!important;
- box-shadow:none!important;backdrop-filter:none!important;
- pointer-events:none!important;cursor:default!important;
-}
-#myaktaWelcome .wl-card b{display:inline!important;margin:0!important;font-size:25px!important;color:#ffdb65!important}
-#myaktaWelcome .wl-card strong{display:inline!important;margin:0!important;font-size:clamp(16px,1.25vw,20px)!important;line-height:1.35!important;color:white!important;font-weight:800!important;text-shadow:0 2px 5px #001a45!important}
+#myaktaWelcome .wl-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:19px 22px!important;max-width:1080px!important;width:100%!important;margin:38px auto 0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;box-sizing:border-box!important}
+#myaktaWelcome .wl-card,#myaktaWelcome .wl-card:nth-child(n){display:flex!important;justify-content:center!important;align-items:center!important;gap:10px!important;min-height:88px!important;margin:0!important;padding:17px 15px!important;border:4px solid #ffc400!important;border-radius:22px!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;box-sizing:border-box!important;cursor:default!important;pointer-events:none!important;text-align:center!important}
+#myaktaWelcome .wl-card b{display:inline!important;margin:0!important;font-size:25px!important;color:#ffdb65!important;flex-shrink:0!important}
+#myaktaWelcome .wl-card strong{display:inline!important;margin:0!important;font-size:clamp(16px,1.2vw,20px)!important;line-height:1.35!important;color:#fff!important;font-weight:800!important;text-shadow:0 2px 5px #001a45!important}
 #myaktaWelcome .wl-card::after{display:none!important;content:none!important}
-@media(max-width:750px){
- #myaktaWelcome .wl-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:15px 12px!important;gap:13px!important;border-width:3px!important;border-radius:19px!important}
- #myaktaWelcome .wl-card strong{font-size:14px!important}
- #myaktaWelcome .wl-card b{font-size:21px!important}
-}
-@media(max-width:420px){#myaktaWelcome .wl-grid{grid-template-columns:1fr!important;gap:7px!important}}
+@media(max-width:900px){#myaktaWelcome .wl-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:720px!important;gap:14px!important;margin-top:30px!important}#myaktaWelcome .wl-card strong{font-size:16px!important}}
+@media(max-width:520px){#myaktaWelcome .wl-grid{grid-template-columns:1fr!important;max-width:370px!important;gap:10px!important;margin-top:25px!important}#myaktaWelcome .wl-card{min-height:62px!important;padding:12px!important}#myaktaWelcome .wl-card strong{font-size:15px!important}}
 </style>
 </head>
 <body>
