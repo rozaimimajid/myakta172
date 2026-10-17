@@ -1646,7 +1646,7 @@ ret.addEventListener('click',()=>{ov.hidden=false;ret.hidden=true;document.body.
 window.addEventListener('message',e=>{
 if(e.origin!==location.origin||e.source!==ov.querySelector('iframe')?.contentWindow||e.data?.source!=='myakta172-rsn-v24')return;
 if(e.data.action==='close'){close();return;}
-if(e.data.action==='open-section' && /^\\d+[A-Z]?$/.test(String(e.data.section))){
+if(e.data.action==='open-section' && /^\d+[A-Z]?$/.test(String(e.data.section))){
 position=ov.querySelector('iframe')?.contentWindow?.scrollY||0;
 ov.hidden=true;ret.hidden=false;document.body.style.removeProperty('overflow');
 document.getElementById('desktopHome')?.classList.remove('open');
