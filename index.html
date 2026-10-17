@@ -729,7 +729,7 @@ body.dark .km-step{border-color:#34587d}
 
 /* V2.3: floating close action, accessible at any scroll position in the KM modal */
 #kmFlowOverlay:not([hidden]) #kmFlowClose{
- position:fixed!important;right:clamp(10px,2vw,28px)!important;
+ position:fixed!important;right:max(12px,calc((100vw - 850px)/2 + 12px))!important;
  top:calc(14px + env(safe-area-inset-top,0px))!important;
  z-index:1000001!important;background:#0759bc!important;color:#fff!important;
  border:2px solid #ffcf35!important;border-radius:12px!important;
