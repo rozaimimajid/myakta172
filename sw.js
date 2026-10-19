@@ -1,1 +1,30 @@
-const CACHE='myakta172-pwa-v32';const CORE=['./','./index.html','./manifest.webmanifest','./icon-v2.svg','./welcome-background.svg','./icon-bacaan-suara.svg','./icon-carta-alir.svg'];self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)));self.skipWaiting()});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('./index.html'))))});
+const CACHE='myakta172-pwa-v33';
+const CORE=['./','./index.html','./manifest.webmanifest','./icon-v2.svg','./welcome-background.svg','./icon-bacaan-suara.svg','./icon-carta-alir.svg'];
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
+  self.skipWaiting();
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))));
+  self.clients.claim();
+});
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET')return;
+  event.respondWith(
+    fetch(event.request).then(response=>{
+      if(response.ok){
+        const copy=response.clone();
+        event.waitUntil(caches.open(CACHE).then(cache=>cache.put(event.request,copy)).catch(()=>{}));
+      }
+      return response;
+    }).catch(async()=>{
+      const cached=await caches.match(event.request);
+      if(cached)return cached;
+      if(event.request.mode==='navigate'){
+        const home=await caches.match('./index.html');
+        if(home)return home;
+      }
+      return Response.error();
+    })
+  );
+});
