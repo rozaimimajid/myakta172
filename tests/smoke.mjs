@@ -395,6 +395,22 @@ try {
      }
    }
  });
+ await check('Isolated KM-only print PDF diagnostic',async()=>{
+   await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+   await page.locator('#kmDesktopLaunch').evaluate(el=>el.click());
+   const info=await page.locator('#kmFlowChart').evaluate(el=>({steps:el.querySelectorAll('.km-step').length,textLength:el.innerText.length,scrollHeight:el.scrollHeight}));
+   const isolated=await browser.newPage({viewport:{width:1100,height:900}});
+   try{
+     const markup=await page.locator('#kmFlowOverlay .km-window').evaluate(el=>el.outerHTML);
+     await isolated.setContent('<!doctype html><html><head><meta charset="utf-8"><style>@page{size:A4;margin:12mm}*{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#111;background:white}.km-window{width:100%;overflow:visible}.km-head{padding:12px;background:#ddd}.km-chart{display:block}.km-step,.km-branch,.km-decision,.km-finish{break-inside:avoid;margin:10px auto;border:1px solid #bbb;padding:8px;max-width:630px}.km-arrow{margin:8px auto;text-align:center}button{display:none}</style></head><body>'+markup+'</body></html>');
+     const pdf=await isolated.pdf({format:'A4',printBackground:true});
+     await mkdir('audit-artifacts/print',{recursive:true});
+     await writeFile('audit-artifacts/print/KM-isolated-diagnostic.pdf',pdf);
+     const count=(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
+     console.log('PRINT_ISOLATED_KM','pages',count,'bytes',pdf.length,'source',JSON.stringify(info));
+     assert.ok(pdf.length>5000,'isolated KM PDF unexpectedly small');
+   }finally{await isolated.close();await page.locator('#kmFlowClose').evaluate(el=>el.click());}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
