@@ -289,8 +289,10 @@ try {
    assert.equal(await page.evaluate(()=>window.__auditPrints),1,'statute print did not invoke print');
    await page.locator('#desktopHomeButton').evaluate(el=>el.click());
    await page.locator('#kmDesktopLaunch').evaluate(el=>el.click());
+   // Simulate popup-blocked browser: legacy print fallback should still invoke window.print.
+   await page.evaluate(()=>{window.open=()=>null});
    await page.locator('#kmFlowPrint').evaluate(el=>el.click());
-   assert.equal(await page.evaluate(()=>window.__auditPrints),2,'KM print did not invoke print');
+   assert.equal(await page.evaluate(()=>window.__auditPrints),2,'KM popup-blocked fallback did not invoke print');
    await page.evaluate(()=>window.dispatchEvent(new Event('afterprint')));
    assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('km-print-mode')),false,'print mode remained after printing');
    await page.locator('#kmFlowClose').evaluate(el=>el.click());
