@@ -230,6 +230,33 @@ try {
    assert.equal((await page.locator('#caseResults').innerText()).trim(),'','case result not cleared');
    await page.locator('#caseBack').evaluate(el=>el.click());
  });
+ await check('Keyword search suggests and opens a statute section',async()=>{
+   const search=page.locator('#search');
+   assert.equal(await search.count(),1,'main keyword input missing');
+   await search.fill('kebenaran merancang');
+   await search.dispatchEvent('input');
+   const results=page.locator('#results .result');
+   assert.ok(await results.count()>0,'search returned no statute matches');
+   const number=await results.first().getAttribute('data-sec');
+   await results.first().evaluate(el=>el.click());
+   assert.match(await page.locator('#secTitle').innerText(),new RegExp('SEKSYEN\\s+'+number+'(?![\\dA-Z])','i'),'search opened incorrect section');
+ });
+ await check('Theme and voice preference toggles work',async()=>{
+   const theme=page.locator('#theme');
+   const before=await page.locator('body').evaluate(el=>el.classList.contains('dark'));
+   await theme.evaluate(el=>el.click());
+   assert.notEqual(await page.locator('body').evaluate(el=>el.classList.contains('dark')),before,'theme unchanged');
+   assert.equal(await page.evaluate(()=>localStorage.getItem('myakta172_theme_v1')),before?'light':'dark','theme preference not saved');
+   await theme.evaluate(el=>el.click());
+   assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('dark')),before,'theme did not restore');
+   const voice=page.locator('#voiceToggle');
+   const original=await voice.innerText();
+   await voice.evaluate(el=>el.click());
+   assert.notEqual(await voice.innerText(),original,'voice toggle unchanged');
+   assert.ok(['on','off'].includes(await page.evaluate(()=>localStorage.getItem('myakta172_voice'))),'voice preference missing');
+   await voice.evaluate(el=>el.click());
+   assert.equal(await voice.innerText(),original,'voice toggle did not restore');
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
