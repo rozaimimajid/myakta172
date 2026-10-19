@@ -424,6 +424,28 @@ try {
    assert.ok(result.chars>1000,'print content unexpectedly short');
    await page.locator('#kmFlowClose').evaluate(el=>el.click());
  });
+ await check('Real KM popup PDF contains full route and no interactive controls',async()=>{
+   const p=await browser.newPage({viewport:{width:1440,height:900}});
+   try{
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none'}});
+     await p.locator('#kmDesktopLaunch').evaluate(el=>el.click());
+     const popupPromise=p.waitForEvent('popup',{timeout:10000});
+     await p.locator('#kmFlowPrint').evaluate(el=>el.click());
+     const printPage=await popupPromise;
+     await printPage.waitForLoadState('domcontentloaded');
+     const checkData=await printPage.evaluate(()=>({steps:document.querySelectorAll('.km-step').length,buttons:document.querySelectorAll('button').length,last:document.body.innerText.includes('rayuan')}));
+     assert.equal(checkData.steps,10,'KM print omitted process steps');
+     assert.equal(checkData.buttons,0,'KM print contains screen-only buttons');
+     const pdf=await printPage.pdf({format:'A4',printBackground:true});
+     await mkdir('audit-artifacts/print',{recursive:true});
+     await writeFile('audit-artifacts/print/KM-actual-popup.pdf',pdf);
+     const pages=(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
+     console.log('PRINT_KM_POPUP','pages',pages,'bytes',pdf.length,'steps',checkData.steps);
+     assert.ok(pages>=1&&pages<=10,'popup PDF page count unexpected '+pages);
+     await printPage.close();
+   }finally{await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
