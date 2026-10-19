@@ -294,6 +294,26 @@ try {
    assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('km-print-mode')),false,'print mode remained after printing');
    await page.locator('#kmFlowClose').evaluate(el=>el.click());
  });
+ await check('PWA installs and opens cached statute homepage offline',async()=>{
+   const context=await browser.newContext({serviceWorkers:'allow'});
+   const p=await context.newPage();
+   const problems=[];p.on('pageerror',e=>problems.push(e.message));
+   try{
+     await p.goto(url,{waitUntil:'load'});
+     const state=await p.evaluate(async()=>{
+       if(!('serviceWorker' in navigator))throw Error('serviceWorker unavailable');
+       const ready=await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('SW ready timeout')),12000))]);
+       await navigator.serviceWorker.controller || await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
+       return {scope:ready.scope,active:ready.active?.state,cache:await caches.keys()};
+     });
+     assert.ok(state.cache.includes('myakta172-pwa-v32'),'expected PWA cache missing: '+state.cache);
+     await context.setOffline(true);
+     const response=await p.goto(url,{waitUntil:'domcontentloaded',timeout:12000});
+     assert.ok(response && response.ok(),'offline page response not OK');
+     assert.equal(await p.locator('#secTitle').count(),1,'offline statute page missing');
+     assert.deepEqual(problems,[],'offline JS page errors');
+   }finally{await context.setOffline(false);await context.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
