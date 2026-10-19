@@ -1697,6 +1697,12 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function isDesktop(){return document.body.classList.contains('mode-desktop')}
  function openHome(){
   if(!isDesktop())return;
+  // Tutup semua kumpulan Bahagian dan senarai Seksyen ketika kembali ke Utama.
+  const sidebarNav=document.getElementById('nav');
+  if(sidebarNav){
+   sidebarNav.querySelectorAll('.sections.open').forEach(list=>list.classList.remove('open'));
+   sidebarNav.querySelectorAll('.part-head.active').forEach(head=>head.classList.remove('active','voice-open'));
+  }
   home.classList.add('open');act.style.display='none';cv.style.display='none';
   refreshRecent();window.scrollTo({top:0,behavior:'smooth'});
  }
