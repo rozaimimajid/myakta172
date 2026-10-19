@@ -858,6 +858,61 @@ body.rsn-print-mode #rsnV24Overlay .km-step,body.rsn-print-mode #rsnV24Overlay .
 body.rsn-print-mode #rsnV24Overlay .km-chart{padding:6px 10px!important}
 body.rsn-print-mode #rsnV24Overlay .km-step,body.rsn-print-mode #rsnV24Overlay .km-branch,body.rsn-print-mode #rsnV24Overlay .km-decision,body.rsn-print-mode #rsnV24Overlay .km-finish{print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
+</style><style id="rsn-v24-km-parity-fix">
+
+#rsnV24Chart .km-start{background:#289466;border-color:#289466;color:#fff}
+#rsnV24Chart .km-decision-block{width:100%;display:flex;flex-direction:column;align-items:center}
+#rsnV24Chart .km-decision-block>.km-arrow{margin:12px 0}
+#rsnV24Chart .km-conditional{margin-top:13px}
+#rsnV24Chart .km-decision{color:#714d0f}
+body.dark #rsnV24Chart .km-decision{color:#ffe8aa!important;background:#493a1a;border-color:#d8a133;text-shadow:none}
+#rsnV24Chart .km-route-note{text-align:center;color:var(--muted);font-size:11px;padding:10px 4px 20px}
+#rsnV24Chart .km-route-button{display:block;margin:10px auto;background:#115eaa;color:white;border:0;border-radius:8px;padding:10px 12px;font-weight:800;cursor:pointer}
+#rsnV24Chart .km-route-focus{outline:4px solid #eab838;outline-offset:4px}
+#rsnV24Chart .km-appeal-separator{width:96%;text-align:center;border-top:2px dashed #609ee5;margin:27px 0 17px;padding:16px 4px 0;color:var(--blue2);font-weight:800;font-size:12px}
+#rsnV24Chart .km-exemption{background:#536e82;border-color:#536e82;margin-top:12px;font-size:12px}
+#rsnV24Chart .km-step:focus,#rsnV24Chart .km-finish:focus{outline:3px solid #eab838;outline-offset:3px}
+#rsnV24Chart .km-start,#rsnV24Chart .km-finish{width:min(560px,100%)}
+@media(max-width:600px){#rsnV24Chart .km-decision{padding:23px 25px}#rsnV24Chart .km-conditional{grid-template-columns:1fr}}
+
+
+#rsnV24Chart .km-decision-block{width:100%;display:flex;align-items:center;flex-direction:column}
+#rsnV24Chart .km-route-note{text-align:center;font-size:11px;color:var(--muted);padding:8px 4px 13px}
+#rsnV24Chart .km-route-button{display:block;margin:9px auto 0;background:#115eaa;color:white;border:0;border-radius:8px;padding:9px 11px;font-weight:800;cursor:pointer}
+#rsnV24Chart .km-route-focus{outline:4px solid #f2b53a;outline-offset:4px}
+#rsnV24Chart .km-exemption{background:#496071;border-color:#496071;margin-top:18px;font-size:12px}
+#rsnV24Chart .km-step:focus,#rsnV24Chart .km-finish:focus{outline:3px solid #f2b53a;outline-offset:3px}
+
+
+#rsnV24Chart .km-start,#rsnV24Chart .km-finish{border-radius:999px;background:#155e41;color:#fff;border:2px solid #155e41}
+#rsnV24Chart .km-start strong,#rsnV24Chart .km-start p{color:#fff}
+#rsnV24Chart .km-finish{padding:13px 22px;text-align:center;font-weight:800;width:min(560px,100%);box-sizing:border-box}
+#rsnV24Chart .km-ref-links{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:9px}
+#rsnV24Chart .km-ref-links button{font-size:12px;padding:6px 9px;line-height:1.3}
+#rsnV24Chart .km-decision{clip-path:polygon(13% 0,87% 0,100% 50%,87% 100%,13% 100%,0 50%);border-radius:0;padding:25px 40px;box-sizing:border-box}
+#rsnV24Chart .km-conditional .km-branch:first-child{border-top:3px solid #19845b}
+#rsnV24Chart .km-conditional .km-branch:last-child{border-top:3px solid #ba7335}
+#rsnV24Chart .km-step,#rsnV24Chart .km-decision,#rsnV24Chart .km-branch{box-sizing:border-box}
+#rsnV24Chart .km-branch p{margin:5px 0}
+body.dark #rsnV24Chart .km-finish,body.dark #rsnV24Chart .km-start{background:#155e41;color:white}
+@media(max-width:600px){#rsnV24Chart .km-decision{padding:23px 24px;width:min(100%,440px)}#rsnV24Chart .km-step{padding:12px 10px}#rsnV24Chart .km-ref-links button{font-size:11px}}
+
+
+#rsnV24Chart .km-finish{display:block!important;width:min(560px,100%)!important;border-radius:999px!important;background:#155e41!important;color:white!important;padding:13px 22px!important;font-weight:800!important;box-sizing:border-box!important;text-align:center!important}
+#rsnV24Chart .km-decision-block>.km-arrow{margin:12px 0}
+#rsnV24Chart .km-route-note{display:block;position:relative;clear:both;margin:0;padding:8px 4px 13px;font-size:11px;color:var(--muted);text-align:center}
+#rsnV24Chart .km-conditional{margin:13px 0 5px}
+#rsnV24Chart .km-branch{min-height:160px}
+#rsnV24Chart .km-branch p{margin:7px 0;line-height:1.5}
+#rsnV24Chart .km-route-button{display:block;margin:9px auto 0;background:#115eaa;color:#fff;border:0;border-radius:8px;padding:9px 11px;font-weight:800}
+#rsnV24Chart .km-ref-links{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:9px}
+#rsnV24Chart .km-end-separator{width:96%;border-top:2px dashed #609ee5;margin:24px 0 14px;padding:14px 4px 0;text-align:center;color:var(--blue2);font-size:12px;font-weight:800}
+#rsnV24Chart .km-finish.km-exemption{margin-top:16px;background:#155e41!important;color:white!important}
+#rsnV24ReturnBar[hidden]{display:none!important}
+#rsnV24ReturnBar{position:fixed!important;right:0!important;top:clamp(115px,17vh,190px)!important;bottom:auto!important;left:auto!important;z-index:9000!important;width:auto!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;display:block!important;pointer-events:none!important}
+#rsnV24ReturnBar button{pointer-events:auto!important;writing-mode:vertical-rl!important;text-orientation:mixed!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:10px!important;padding:16px 10px!important;min-height:145px!important;border:2px solid #ffd33b!important;border-right:0!important;border-radius:12px 0 0 12px!important;background:#074a9f!important;color:#fff!important;font-weight:900!important;font-size:13px!important;letter-spacing:.6px!important;line-height:1.2!important;text-shadow:none!important;opacity:1!important;box-shadow:0 4px 15px #001b3c55!important;animation:none!important;cursor:pointer!important}
+@media(max-width:900px){#rsnV24ReturnBar{top:clamp(90px,15vh,145px)!important}#rsnV24ReturnBar button{font-size:11px!important;padding:11px 7px!important;min-height:118px!important}}
+@media(max-width:480px){#rsnV24ReturnBar button{font-size:10px!important;padding:9px 5px!important;min-height:105px!important;letter-spacing:0!important}body:has(#rsnV24ReturnBar:not([hidden])) #actView{padding-right:29px!important;box-sizing:border-box!important}}
 </style></head>
 <body>
 <section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-artwork" id="myaktaArtwork"><img class="wl-artwork-image" id="myaktaArtworkImage" alt="Halaman pembukaan MyAKTA172 dengan panorama bandar, buku Akta 172 dan empat fungsi utama" decoding="async"><button type="button" class="wl-artwork-action" id="myaktaArtworkEnter" aria-label="Mula Menggunakan MyAKTA172">Mula Menggunakan</button><button type="button" class="wl-mobile-action" id="myaktaMobileEnter">➜ Mula Menggunakan</button></div><div class="wl-city" aria-hidden="true"></div><div class="wl-visual" aria-hidden="true"><img src="./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_57_03%20PM.png" alt="" loading="eager"></div><div class="wl-plan" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-enter-hint">Klik butang di bawah untuk mengakses aplikasi MyAKTA172</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Klik di sini untuk masuk ke aplikasi</small></span></button><div class="wl-grid" aria-label="Ciri-ciri MyAKTA172 (maklumat, bukan butang)"><div class="wl-card"><b aria-hidden="true">▣</b><strong>Bacaan Akta 172</strong></div><div class="wl-card"><b aria-hidden="true">⇢</b><strong>Carta Alir Proses KM</strong></div><div class="wl-card"><b aria-hidden="true">⌕</b><strong>Carian Kata Kunci &amp; Analisis Kes</strong></div><div class="wl-card"><b aria-hidden="true">★</b><strong>Kegemaran &amp; Sejarah</strong></div><div class="wl-card"><b aria-hidden="true">♫</b><strong>Bacaan Suara</strong></div><div class="wl-card"><b aria-hidden="true">◐</b><strong>Desktop/Mobile &amp; Siang/Malam</strong></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
@@ -1755,7 +1810,7 @@ function navigate(dest){
 function decision(q,choices,refNums){
  const group=node('div','km-decision-block');group.append(arrow(),node('div','km-decision',q));
  const branches=node('div','km-branches km-conditional');
- choices.forEach((item,i)=>{const cell=node('div','km-branch');cell.append(node('b','',i===0?'YA':'TIDAK'),node('p','',item[0]));const dest=item[1];const btn=node('button','km-route-button',typeof dest==='number'?'↪ Pergi ke Turutan '+(dest+1):'↪ Pergi ke TAMAT');btn.type='button';btn.addEventListener('click',()=>navigate(dest));cell.append(btn);refs(cell,refNums);branches.append(cell)});
+ choices.forEach((item,i)=>{const cell=node('div','km-branch');cell.append(node('b','',i===0?'YA':'TIDAK'),node('p','',String(item[0]).replace(/^(YA|TIDAK)\s*[—–-]\s*/i,'')));const dest=item[1];const btn=node('button','km-route-button',typeof dest==='number'?'↪ Pergi ke Turutan '+(dest+1):'↪ Pergi ke TAMAT');btn.type='button';btn.addEventListener('click',()=>navigate(dest));cell.append(btn);refs(cell,refNums);branches.append(cell)});
  group.append(branches,node('div','km-route-note','Gunakan butang YA atau TIDAK untuk mengikuti laluan sebenar.'));chart.append(group);
 }
 function render(key){
@@ -1769,7 +1824,10 @@ function render(key){
   if(flow.choices[i]){const choice=flow.choices[i];decision(choice[0],[choice[1],choice[2]],links)}
  });
  chart.append(arrow());
- [['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan JPN.'],['defer','TAMAT — RSN sedia ada masih berkuat kuasa.']].forEach(([id,txt])=>{
+ const possibilities=new Set(Object.values(flow.choices).flatMap(c=>[c[1][1],c[2][1]]).filter(d=>typeof d==='string'));
+ const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan JPN.'],['defer','TAMAT — RSN sedia ada masih berkuat kuasa.']];
+ ends.filter(([id])=>id==='complete'||possibilities.has(id)).forEach(([id,txt],i)=>{
+  if(i>0)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut keputusan YA/TIDAK'));
   const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rsn-end-'+id;end.tabIndex=-1;chart.append(end);
  });
 }
