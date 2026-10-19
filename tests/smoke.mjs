@@ -4,6 +4,7 @@
 // Usage: MYAKTA_TEST_URL=http://127.0.0.1:8080 node tests/smoke.mjs
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { mkdir, writeFile } from 'node:fs/promises';
 const url = process.env.MYAKTA_TEST_URL;
 if (!url || !/^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?\//.test(url)) {
   throw new Error('Provide a localhost MYAKTA_TEST_URL ending with /; production URLs are intentionally blocked.');
@@ -381,6 +382,8 @@ try {
      await page.locator('body').evaluate((el,cls)=>el.classList.add(cls),mode);
      try{
        const pdf=await page.pdf({format:'A4',printBackground:true,preferCSSPageSize:true});
+       await mkdir('audit-artifacts/print',{recursive:true});
+       await writeFile('audit-artifacts/print/'+name+'.pdf',pdf);
        assert.equal(pdf.subarray(0,5).toString(),'%PDF-',name+' not PDF');
        const count=(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
        console.log('PRINT_PDF',name,'pages',count,'bytes',pdf.length);
