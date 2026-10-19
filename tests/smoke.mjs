@@ -127,7 +127,8 @@ try {
      await refs.first().evaluate(el=>el.click());
      assert.equal(await page.locator('#'+overlay+'[hidden]').count(),1,name+' did not close for statute');
      assert.equal(await page.locator('#'+returnBar+'[hidden]').count(),0,name+' return control missing');
-     assert.match(await page.locator('#secTitle').innerText(),new RegExp('Seksyen\\s+'+expected,'i'),name+' wrong section opened');
+     const actualTitle=await page.locator('#secTitle').innerText();
+     assert.match(actualTitle,new RegExp('Seksyen\\s+'+expected,'i'),name+' wrong section opened: requested '+expected+' actual '+JSON.stringify(actualTitle));
      await page.locator('#'+returnButton).evaluate(el=>el.click());
      assert.equal(await page.locator('#'+overlay+'[hidden]').count(),0,name+' failed to return');
      await page.locator('#'+close).evaluate(el=>el.click());
