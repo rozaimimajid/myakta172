@@ -35,3 +35,11 @@ jobs:
         env:
           MYAKTA_TEST_URL: http://127.0.0.1:8080/
         run: node tests/smoke.mjs
+      - name: Upload chart print previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: myakta172-audit-chart-pdfs
+          path: audit-artifacts/print/*.pdf
+          if-no-files-found: warn
+          retention-days: 14
