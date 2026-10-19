@@ -1097,16 +1097,6 @@ body.dark #rkkV26Chart .km-finish,body.dark #rkkV26Chart .km-start{background:#1
 #mobileHome #mobilePlanningFlowOptions > #rkkMobileLaunch{background:#f3edff!important;color:#65389c!important;border:1px solid #dcd0f6!important;border-left:6px solid #7040a8!important}
 @media(max-width:900px){.dh-tiles .dh-plan-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:670px){.dh-tiles .dh-plan-options{grid-template-columns:1fr}}
-</style><style id="home-sidebar-collapse-v29">
-/* Force compact sidebar only on Utama; original menus work upon next interaction. */
-body.mode-desktop .sidebar.home-nav-collapsed .sections,
-body.mode-desktop .sidebar.home-nav-collapsed .sections.open{display:none!important}
-body.mode-desktop .sidebar.home-nav-collapsed .part-head.active{background:transparent!important}
-</style><style id="home-nav-stable-v30">body.mode-desktop .sidebar.home-nav-collapsed .sections{display:none!important}body.mode-desktop .sidebar.home-nav-collapsed .part-head.active{background:transparent!important}</style><style id="home-nav-source-of-truth-v32">
-/* Sidebar collapses whenever Desktop Utama is shown; user clicks may expand again. */
-body.mode-desktop:not(.sidebar-user-expanded):has(#desktopHome.open) #nav .sections,
-body.mode-desktop:not(.sidebar-user-expanded):has(#desktopHome.open) #nav .sections.open {display:none!important}
-body.mode-desktop:not(.sidebar-user-expanded):has(#desktopHome.open) #nav .part-head.active {background:transparent!important}
 </style></head>
 <body>
 <section id="myaktaWelcome" aria-label="Halaman pembukaan MyAKTA172" role="dialog" aria-modal="true"><div class="wl-artwork" id="myaktaArtwork"><img class="wl-artwork-image" id="myaktaArtworkImage" alt="Halaman pembukaan MyAKTA172 dengan panorama bandar, buku Akta 172 dan empat fungsi utama" decoding="async"><button type="button" class="wl-artwork-action" id="myaktaArtworkEnter" aria-label="Mula Menggunakan MyAKTA172">Mula Menggunakan</button><button type="button" class="wl-mobile-action" id="myaktaMobileEnter">➜ Mula Menggunakan</button></div><div class="wl-city" aria-hidden="true"></div><div class="wl-visual" aria-hidden="true"><img src="./ChatGPT%20Image%20Oct%2015%2C%202026%2C%2009_57_03%20PM.png" alt="" loading="eager"></div><div class="wl-plan" aria-hidden="true"></div><div class="wl-inner"><h1>My<span>AKTA</span>172</h1><p class="wl-sub">Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p><div class="wl-rule"></div><p class="wl-enter-hint">Klik butang di bawah untuk mengakses aplikasi MyAKTA172</p><button id="myaktaWelcomeEnter" class="wl-enter" type="button"><span aria-hidden="true">➜</span> <span class="wl-enter-label">Mula Menggunakan<small style="display:block;font-size:13px;font-weight:400;margin-top:6px">Klik di sini untuk masuk ke aplikasi</small></span></button><div class="wl-grid" aria-label="Ciri-ciri MyAKTA172 (maklumat, bukan butang)"><div class="wl-card"><b aria-hidden="true">▣</b><strong>Bacaan Akta 172</strong></div><div class="wl-card"><b aria-hidden="true"><img src="./icon-carta-alir.svg" alt="" style="display:block;width:1em;height:1em;margin:auto;object-fit:contain"></b><strong>Carta Alir Proses Perancangan</strong></div><div class="wl-card"><b aria-hidden="true">⌕</b><strong>Carian Kata Kunci &amp; Analisis Kes</strong></div><div class="wl-card"><b aria-hidden="true">★</b><strong>Kegemaran &amp; Sejarah</strong></div><div class="wl-card"><b aria-hidden="true"><img src="./icon-bacaan-suara.svg" alt="" style="display:block;width:1em;height:1em;margin:auto;object-fit:contain"></b><strong>Bacaan Suara</strong></div><div class="wl-card"><b aria-hidden="true">◐</b><strong>Desktop/Mobile &amp; Siang/Malam</strong></div></div></div><footer class="wl-foot"><span>MyAKTA172 ialah aplikasi rujukan dan pembelajaran; bukan portal rasmi kerajaan atau nasihat perundangan.</span><span>Hak Milik Terpelihara © 2026 &nbsp; <strong>TPr. Gs. Rozaimi bin Majid</strong></span></footer></section>
@@ -1168,7 +1158,7 @@ function formatLawText(txt){
 
 const sections=DATA.sections; const byNum=Object.fromEntries(sections.map(s=>[s.num,s])); let current='1';
 function partTitle(p){return DATA.parts.find(x=>x.num===p)?.title||''}
-function makeNav(){const nav=document.getElementById('nav'); nav.innerHTML=''; DATA.parts.forEach(p=>{const wrap=document.createElement('div');wrap.className='part'; const head=document.createElement('div');head.className='part-head';head.dataset.part=p.num;head.innerHTML=`<span class="part-icon">📖</span><span class="part-info"><span class="part-num">Bahagian ${p.num}</span><span class="part-title">${p.title}</span></span><span class="part-arrow">⌄</span>`; const list=document.createElement('div');list.className='sections'; p.sections.forEach(num=>{const s=byNum[num]; const b=document.createElement('button');b.className='sec-link';b.dataset.sec=num;b.textContent='Seksyen '+num+' - '+s.title;b.title='Seksyen '+num+' - '+s.title;b.onclick=()=>show(num);list.appendChild(b)}); head.onclick=()=>{const opening=!list.classList.contains('open');list.hidden=false;list.style.removeProperty('display');list.classList.toggle('open',opening);head.classList.toggle('active',opening);document.body.classList.add('sidebar-user-expanded');document.querySelector('.sidebar')?.classList.remove('home-nav-collapsed')}; wrap.appendChild(head);wrap.appendChild(list);nav.appendChild(wrap)})}
+function makeNav(){const nav=document.getElementById('nav'); nav.innerHTML=''; DATA.parts.forEach(p=>{const wrap=document.createElement('div');wrap.className='part'; const head=document.createElement('div');head.className='part-head';head.dataset.part=p.num;head.innerHTML=`<span class="part-icon">📖</span><span class="part-info"><span class="part-num">Bahagian ${p.num}</span><span class="part-title">${p.title}</span></span><span class="part-arrow">⌄</span>`; const list=document.createElement('div');list.className='sections'; p.sections.forEach(num=>{const s=byNum[num]; const b=document.createElement('button');b.className='sec-link';b.dataset.sec=num;b.textContent='Seksyen '+num+' - '+s.title;b.title='Seksyen '+num+' - '+s.title;b.onclick=()=>show(num);list.appendChild(b)}); head.onclick=()=>{const opening=!list.classList.contains('open');list.hidden=false;list.style.removeProperty('display');list.classList.toggle('open',opening);head.classList.toggle('active',opening)}; wrap.appendChild(head);wrap.appendChild(list);nav.appendChild(wrap)})}
 function show(num){
   window.scrollTo({top:0,behavior:'smooth'});if(typeof stopSpeech==='function') stopSpeech(false); current=num; const s=byNum[num]; document.getElementById('crumbPart').textContent='Bahagian '+s.part; document.getElementById('crumbSec').textContent='Seksyen '+num; document.getElementById('secTitle').textContent='SEKSYEN '+num; document.getElementById('secSub').textContent=s.title; document.getElementById('lawText').innerHTML=formatLawText(s.text); document.getElementById('explainText').textContent=DATA.explain[num]||''; document.querySelectorAll('.sec-link').forEach(x=>x.classList.toggle('active',x.dataset.sec===num)); document.querySelectorAll('.part-head').forEach(x=>x.classList.toggle('active',x.dataset.part===s.part)); document.querySelectorAll('.sections').forEach(list=>{const has=[...list.querySelectorAll('.sec-link')].some(b=>b.dataset.sec===num); if(has)list.classList.add('open')}); updateNavBtns(); if(typeof updateBookmarkBtn==='function')updateBookmarkBtn(); if(typeof recordHistory==='function')recordHistory(num); location.hash='seksyen-'+num;}
 function updateNavBtns(){const i=sections.findIndex(s=>s.num===current); const prev=sections[i-1], next=sections[i+1]; [['prevTop',prev],['prevBottom',prev]].forEach(([id,s])=>{let b=document.getElementById(id);b.disabled=!s;b.innerHTML=s?'← Sebelumnya<br><small>Seksyen '+s.num+'</small>':'← Sebelumnya';b.onclick=()=>s&&show(s.num)}); [['nextTop',next],['nextBottom',next]].forEach(([id,s])=>{let b=document.getElementById(id);b.disabled=!s;b.innerHTML=s?'Seterusnya →<br><small>Seksyen '+s.num+'</small>':'Seterusnya →';b.onclick=()=>s&&show(s.num)}); document.getElementById('jump').value=current;}
@@ -1710,9 +1700,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   // Keadaan Utama dikawal terus dalam pengendali utama, termasuk mula aplikasi.
   const sidebarNav=document.getElementById('nav');
   const sidebar=document.querySelector('.sidebar');
-  if(sidebar)sidebar.classList.add('home-nav-collapsed');
+  if(sidebar)sidebar.classList.remove('home-nav-collapsed');
   if(sidebarNav){
-   sidebarNav.querySelectorAll('.sections').forEach(list=>{list.classList.remove('open');list.hidden=true;list.style.setProperty('display','none','important')});
+   sidebarNav.querySelectorAll('.sections').forEach(list=>{list.classList.remove('open');list.hidden=false;list.style.removeProperty('display')});
    sidebarNav.querySelectorAll('.part-head').forEach(head=>head.classList.remove('active','voice-open'));
    sidebarNav.scrollTop=0;
   }
@@ -1729,40 +1719,6 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }
  $('desktopContinue')?.addEventListener('click',()=>{const n=$('desktopContinue')?.dataset.sec;if(n)openSection(n);else openSection('1')});
  $('desktopHomeButton')?.addEventListener('click',openHome);
-// Kawalan tunggal sidebar: tutup apabila Utama, boleh buka semula secara manual.
-function collapseHomeSidebar(){
- const nav=document.getElementById('nav');
- if(!nav)return;
- nav.querySelectorAll('.sections').forEach(list=>{
-  list.classList.remove('open');
-  list.style.setProperty('display','none','important');
- });
- nav.querySelectorAll('.part-head').forEach(head=>head.classList.remove('active','voice-open'));
- nav.scrollTop=0;
-}
-$('desktopHomeButton')?.addEventListener('click',collapseHomeSidebar);
-$('nav')?.addEventListener('click',event=>{
- const head=event.target.closest('.part-head');
- if(!head)return;
- const list=head.nextElementSibling;
- if(list?.classList.contains('sections'))list.style.removeProperty('display');
-},true);
-
- $('desktopHomeButton')?.addEventListener('click',()=>{
-  // Jalankan selepas semua pengendali Utama dan kemas kini sidebar selesai.
-  const collapse=()=>{
-   const nav=document.getElementById('nav');
-   if(!nav)return;
-   nav.querySelectorAll('.sections').forEach(el=>el.classList.remove('open'));
-   nav.querySelectorAll('.part-head').forEach(el=>el.classList.remove('active','voice-open'));
-   const scroller=nav.closest('.sidebar');
-   if(scroller)scroller.scrollTop=0;
-   nav.scrollTop=0;
-  };
-  collapse();
-  requestAnimationFrame(collapse);
-  setTimeout(collapse,80);
-});
  document.querySelectorAll('[data-dh-sec]').forEach(b=>b.addEventListener('click',()=>openSection(b.dataset.dhSec)));
  document.querySelectorAll('[data-dh]').forEach(b=>b.addEventListener('click',()=>{
   const v=b.dataset.dh;
@@ -2147,23 +2103,7 @@ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
 render('prep');
 })();
-</script><button class="flow-floating-up" id="rkkV26OverlayUp" type="button" hidden>↑ Ke Atas</button><script id="rkk-v26-svg-scroll">(function(){const o=document.getElementById('rkkV26Overlay'),b=document.getElementById('rkkV26OverlayUp'),c=document.getElementById('rkkV26Chart');const sync=()=>b.hidden=o.hidden||o.scrollTop<100;o.addEventListener('scroll',sync,{passive:true});new MutationObserver(sync).observe(o,{attributes:true,attributeFilter:['hidden']});b.addEventListener('click',()=>o.scrollTo({top:0,behavior:'smooth'}));const apply=()=>c.querySelectorAll('.km-decision').forEach(el=>{if(el.querySelector(':scope > .flow-diamond-outline'))return;let label=document.createElement('span');label.className='flow-diamond-label';while(el.firstChild)label.append(el.firstChild);let svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('flow-diamond-outline');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');let p=document.createElementNS('http://www.w3.org/2000/svg','polygon');p.setAttribute('points','13,1 87,1 99,50 87,99 13,99 1,50');svg.append(p);el.append(svg,label)});new MutationObserver(apply).observe(c,{childList:true,subtree:true});apply();sync()})();</script><script id="rkk-v26-preview-autostart">(function(){if(new URLSearchParams(location.search).get("preview")!=="rkk")return;function openPreview(){const w=document.getElementById("myaktaWelcome");if(w){w.hidden=true;w.style.setProperty("display","none","important")}document.getElementById("rkkDesktopLaunch")?.click()}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",openPreview,{once:true});else openPreview()})();</script><script id="home-sidebar-collapse-v29-js">(function(){
- const button=document.getElementById('desktopHomeButton');
- const sidebar=document.querySelector('.sidebar');
- const nav=document.getElementById('nav');
- if(!button||!sidebar||!nav)return;
- function reset(){
-   sidebar.classList.add('home-nav-collapsed');
-   nav.querySelectorAll('.sections').forEach(x=>x.classList.remove('open'));
-   nav.querySelectorAll('.part-head').forEach(x=>x.classList.remove('active','voice-open'));
-   nav.scrollTop=0;
- }
- button.addEventListener('click',reset,true);
- nav.addEventListener('click',event=>{
-   if(event.target.closest('.part-head, .sec-link'))sidebar.classList.remove('home-nav-collapsed');
- },true);
- document.querySelectorAll('[data-dh-sec], #desktopContinue, #modeMobile').forEach(x=>x.addEventListener('click',()=>sidebar.classList.remove('home-nav-collapsed'),true));
-})();</script></body><style>
+</script><button class="flow-floating-up" id="rkkV26OverlayUp" type="button" hidden>↑ Ke Atas</button><script id="rkk-v26-svg-scroll">(function(){const o=document.getElementById('rkkV26Overlay'),b=document.getElementById('rkkV26OverlayUp'),c=document.getElementById('rkkV26Chart');const sync=()=>b.hidden=o.hidden||o.scrollTop<100;o.addEventListener('scroll',sync,{passive:true});new MutationObserver(sync).observe(o,{attributes:true,attributeFilter:['hidden']});b.addEventListener('click',()=>o.scrollTo({top:0,behavior:'smooth'}));const apply=()=>c.querySelectorAll('.km-decision').forEach(el=>{if(el.querySelector(':scope > .flow-diamond-outline'))return;let label=document.createElement('span');label.className='flow-diamond-label';while(el.firstChild)label.append(el.firstChild);let svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('flow-diamond-outline');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');let p=document.createElementNS('http://www.w3.org/2000/svg','polygon');p.setAttribute('points','13,1 87,1 99,50 87,99 13,99 1,50');svg.append(p);el.append(svg,label)});new MutationObserver(apply).observe(c,{childList:true,subtree:true});apply();sync()})();</script><script id="rkk-v26-preview-autostart">(function(){if(new URLSearchParams(location.search).get("preview")!=="rkk")return;function openPreview(){const w=document.getElementById("myaktaWelcome");if(w){w.hidden=true;w.style.setProperty("display","none","important")}document.getElementById("rkkDesktopLaunch")?.click()}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",openPreview,{once:true});else openPreview()})();</script></body><style>
 #rtV25Overlay[hidden],#rtV25Return[hidden]{display:none!important}
 #rtV25Overlay{position:fixed;inset:0;z-index:100005;background:rgba(0,18,47,.66);padding:16px;box-sizing:border-box}
 #rtV25Overlay iframe{display:block;width:min(1060px,100%);height:100%;margin:auto;background:#fff;border:2px solid #e3edf9;border-radius:14px}
@@ -2362,19 +2302,4 @@ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
 render('prep');
 })();
-</script><button class="flow-floating-up" id="rtV25OverlayUp" type="button" hidden>↑ Ke Atas</button><script>(function(){const o=document.getElementById('rtV25Overlay'),b=document.getElementById('rtV25OverlayUp');const sync=()=>b.hidden=o.hidden||o.scrollTop<100;o.addEventListener('scroll',sync,{passive:true});new MutationObserver(sync).observe(o,{attributes:true,attributeFilter:['hidden']});b.addEventListener('click',()=>o.scrollTo({top:0,behavior:'smooth'}));sync();const chart=document.getElementById('rtV25Chart'),apply=()=>chart.querySelectorAll('.km-decision').forEach(el=>{if(el.querySelector(':scope > .flow-diamond-outline'))return;let label=document.createElement('span');label.className='flow-diamond-label';while(el.firstChild)label.append(el.firstChild);let svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('flow-diamond-outline');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');let p=document.createElementNS('http://www.w3.org/2000/svg','polygon');p.setAttribute('points','13,1 87,1 99,50 87,99 13,99 1,50');svg.append(p);el.append(svg,label)});new MutationObserver(apply).observe(chart,{childList:true,subtree:true});apply()})();</script><script id="rt-v25-preview-autostart">(function(){if(new URLSearchParams(location.search).get('preview')!=='rt')return;function start(){const welcome=document.getElementById('myaktaWelcome');if(welcome){welcome.hidden=true;welcome.style.setProperty('display','none','important')}document.getElementById('rtDesktopLaunch')?.click()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start()})();</script><script id="home-nav-source-of-truth-v32-js">(function(){
-const home=document.getElementById('desktopHome'), nav=document.getElementById('nav'),btn=document.getElementById('desktopHomeButton');
-if(!home||!nav||!btn)return;
-function collapse(){
- document.body.classList.remove('sidebar-user-expanded');
- nav.querySelectorAll('.sections').forEach(e=>{e.classList.remove('open');e.hidden=true;e.style.setProperty('display','none','important')});
- nav.querySelectorAll('.part-head').forEach(e=>e.classList.remove('active','voice-open'));
- nav.scrollTop=0;
-}
-btn.addEventListener('click',collapse,true);
-nav.addEventListener('click',e=>{
- if(e.target.closest('.part-head'))document.body.classList.add('sidebar-user-expanded');
-},true);
-new MutationObserver(()=>{if(home.classList.contains('open')&&!document.body.classList.contains('sidebar-user-expanded'))collapse()}).observe(home,{attributes:true,attributeFilter:['class']});
-if(home.classList.contains('open'))collapse();
-})();</script></html>
+</script><button class="flow-floating-up" id="rtV25OverlayUp" type="button" hidden>↑ Ke Atas</button><script>(function(){const o=document.getElementById('rtV25Overlay'),b=document.getElementById('rtV25OverlayUp');const sync=()=>b.hidden=o.hidden||o.scrollTop<100;o.addEventListener('scroll',sync,{passive:true});new MutationObserver(sync).observe(o,{attributes:true,attributeFilter:['hidden']});b.addEventListener('click',()=>o.scrollTo({top:0,behavior:'smooth'}));sync();const chart=document.getElementById('rtV25Chart'),apply=()=>chart.querySelectorAll('.km-decision').forEach(el=>{if(el.querySelector(':scope > .flow-diamond-outline'))return;let label=document.createElement('span');label.className='flow-diamond-label';while(el.firstChild)label.append(el.firstChild);let svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('flow-diamond-outline');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');let p=document.createElementNS('http://www.w3.org/2000/svg','polygon');p.setAttribute('points','13,1 87,1 99,50 87,99 13,99 1,50');svg.append(p);el.append(svg,label)});new MutationObserver(apply).observe(chart,{childList:true,subtree:true});apply()})();</script><script id="rt-v25-preview-autostart">(function(){if(new URLSearchParams(location.search).get('preview')!=='rt')return;function start(){const welcome=document.getElementById('myaktaWelcome');if(welcome){welcome.hidden=true;welcome.style.setProperty('display','none','important')}document.getElementById('rtDesktopLaunch')?.click()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start()})();</script></html>
