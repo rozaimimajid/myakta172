@@ -1929,7 +1929,20 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  returnButton?.addEventListener('click',()=>{open();overlay.scrollTop=flowScrollY});
  document.getElementById('kmDesktopLaunch')?.addEventListener('click',open);
  document.getElementById('kmMobileLaunch')?.addEventListener('click',open);
- document.getElementById('kmFlowPrint')?.addEventListener('click',()=>{document.body.classList.add('km-print-mode');window.print();});
+ document.getElementById('kmFlowPrint')?.addEventListener('click',()=>{
+   const printable=document.getElementById('kmFlowOverlay')?.querySelector('.km-window');
+   if(!printable)return;
+   const popup=window.open('','_blank');
+   if(!popup){document.body.classList.add('km-print-mode');window.print();return;}
+   const clean=printable.cloneNode(true);
+   clean.querySelectorAll('button,svg,canvas,.km-foot').forEach(el=>el.remove());
+   const style='@page{size:A4;margin:12mm}*{box-sizing:border-box}body{font:10px/1.12 Arial,sans-serif;color:#111;background:#fff}.km-window{width:100%;overflow:visible}.km-head{padding:7px;background:#ddd}.km-head h2{font-size:17px;margin:3px 0}.km-intro{font-size:9px}.km-chart{display:block}.km-step,.km-branch,.km-decision,.km-finish{break-inside:avoid;margin:4px auto;border:1px solid #bbb;padding:4px;max-width:680px}.km-step h3,.km-step h4{margin:2px 0}.km-arrow{margin:2px auto;text-align:center}.km-foot{display:none}';
+   popup.document.open();
+   popup.document.write('<!doctype html><html lang="ms"><head><meta charset="utf-8"><title>Carta Alir KM - MyAKTA172</title><style>'+style+'</style></head><body>'+clean.outerHTML+'</body></html>');
+   popup.document.close();
+   popup.focus();
+   popup.print();
+ });
  window.addEventListener('afterprint',()=>document.body.classList.remove('km-print-mode'));
  document.getElementById('kmFlowClose')?.addEventListener('click',()=>close());
  document.getElementById('kmFlowCloseBottom')?.addEventListener('click',()=>close());
