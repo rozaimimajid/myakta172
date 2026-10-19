@@ -464,6 +464,8 @@ try {
     const data=await pop.evaluate(id=>({nodes:document.querySelectorAll('#'+id+' .km-step').length,buttons:document.querySelectorAll('button').length,text:document.body.innerText.length}),chartId);
     assert.ok(data.nodes>0,name+' no flow steps in print');
     assert.equal(data.buttons,0,name+' print contains buttons');
+    const refs=await pop.locator('.km-ref-links').allTextContents();
+    assert.ok(refs.some(v=>/Rujukan Seksyen\s*\d/.test(v)),name+' printed legal references missing');
     assert.ok(data.text>400,name+' print empty');
     const pdf=await pop.pdf({format:'A4',printBackground:true});
     await mkdir('audit-artifacts/print',{recursive:true});
