@@ -137,6 +137,33 @@ try {
      assert.equal(await page.locator('#'+overlay+'[hidden]').count(),1,name+' failed to close');
    }
  });
+ await check('YA/TIDAK branches navigate to their labelled destinations',async()=>{
+   const flows=[['KM','kmDesktopLaunch','kmFlowChart'],['RSN','rsnDesktopLaunch','rsnV24Chart'],['RT','rtDesktopLaunch','rtV25Chart'],['RKK','rkkDesktopLaunch','rkkV26Chart']];
+   for(const [name,launch,chart] of flows){
+     await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+     await page.locator('#'+launch).evaluate(el=>el.click());
+     const tabs={RSN:'rsn',RT:'rt',RKK:'rkk'}[name];
+     const n=tabs?await page.locator('[data-'+tabs+'-tab]').count():1;
+     for(let t=0;t<n;t++){
+       if(tabs)await page.locator('[data-'+tabs+'-tab]').nth(t).evaluate(el=>el.click());
+       const buttons=page.locator('#'+chart+' .km-route-button');
+       const count=await buttons.count();
+       assert.ok(count>0,name+' tab '+t+' has no decision branches');
+       for(let i=0;i<count;i++){
+         const button=buttons.nth(i);
+         const label=(await button.innerText()).trim();
+         await button.evaluate(el=>el.click());
+         const target=await page.evaluate(()=>({tag:document.activeElement?.tagName,cls:document.activeElement?.className||'',text:(document.activeElement?.innerText||'').slice(0,160)}));
+         assert.match(target.cls,/km-step|km-finish/,name+' tab '+t+' branch '+i+' did not focus a destination: '+JSON.stringify(target));
+         const match=label.match(/Turutan\\s+(\\d+)/i);
+         if(match) assert.ok(target.text.trim().startsWith(match[1]+'.'),name+' tab '+t+' branch '+i+' wrong destination for '+label+': '+target.text);
+         else assert.match(target.cls,/km-finish/,name+' tab '+t+' branch '+i+' did not reach TAMAT');
+       }
+     }
+     const close={KM:'kmFlowClose',RSN:'rsnV24Close',RT:'rtV25Close',RKK:'rkkV26Close'}[name];
+     await page.locator('#'+close).evaluate(el=>el.click());
+   }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
