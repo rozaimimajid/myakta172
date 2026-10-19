@@ -401,7 +401,7 @@ try {
    const info=await page.locator('#kmFlowChart').evaluate(el=>({steps:el.querySelectorAll('.km-step').length,textLength:el.innerText.length,scrollHeight:el.scrollHeight}));
    const isolated=await browser.newPage({viewport:{width:1100,height:900}});
    try{
-     const markup=await page.locator('#kmFlowOverlay .km-window').evaluate(el=>el.outerHTML);
+     const markup=await page.locator('#kmFlowOverlay .km-window').evaluate(el=>{const c=el.cloneNode(true);c.querySelectorAll('svg,canvas').forEach(x=>x.remove());return c.outerHTML;});
      await isolated.setContent('<!doctype html><html><head><meta charset="utf-8"><style>@page{size:A4;margin:12mm}*{box-sizing:border-box}body{font-family:Arial,sans-serif;font-size:10px;line-height:1.12;color:#111;background:white}.km-window{width:100%;overflow:visible}.km-head{padding:7px;background:#ddd}.km-head h2{font-size:17px;margin:3px 0}.km-intro{font-size:9px}.km-chart{display:block}.km-step,.km-branch,.km-decision,.km-finish{break-inside:avoid;margin:4px auto;border:1px solid #bbb;padding:4px;max-width:680px}.km-step h3,.km-step h4{margin:2px 0}.km-arrow{margin:2px auto;text-align:center}.km-foot{display:none}button{display:none}</style></head><body>'+markup+'</body></html>');
      const pdf=await isolated.pdf({format:'A4',printBackground:true});
      await mkdir('audit-artifacts/print',{recursive:true});
