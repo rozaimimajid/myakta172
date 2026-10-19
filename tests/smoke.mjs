@@ -164,6 +164,35 @@ try {
      await page.locator('#'+close).evaluate(el=>el.click());
    }
  });
+ await check('Every planning tab links to its referenced statute section',async()=>{
+   const flows=[
+     ['KM','kmDesktopLaunch','kmFlowOverlay','kmFlowChart','kmReturnButton','kmFlowClose',null],
+     ['RSN','rsnDesktopLaunch','rsnV24Overlay','rsnV24Chart','rsnV24ReturnButton','rsnV24Close','rsn'],
+     ['RT','rtDesktopLaunch','rtV25Overlay','rtV25Chart','rtV25ReturnButton','rtV25Close','rt'],
+     ['RKK','rkkDesktopLaunch','rkkV26Overlay','rkkV26Chart','rkkV26ReturnButton','rkkV26Close','rkk']
+   ];
+   for(const [name,launch,overlay,chart,back,close,tab] of flows){
+     await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+     await page.locator('#'+launch).evaluate(el=>el.click());
+     const tabs=tab?await page.locator('[data-'+tab+'-tab]').count():1;
+     for(let t=0;t<tabs;t++){
+       if(tab)await page.locator('[data-'+tab+'-tab]').nth(t).evaluate(el=>el.click());
+       const links=page.locator('#'+chart+' .km-step .km-ref-links button');
+       const n=await links.count();
+       assert.ok(n>0,name+' tab '+t+' has no references');
+       const expected=(await links.first().innerText()).match(/Seksyen\s+([\w]+)/i)?.[1];
+       assert.ok(expected,name+' tab '+t+' cannot identify reference');
+       await links.first().evaluate(el=>el.click());
+       assert.equal(await page.locator('#'+overlay+'[hidden]').count(),1,name+' tab '+t+' did not open statute');
+       const actual=await page.locator('#secTitle').innerText();
+       assert.match(actual,new RegExp('SEKSYEN\\s+'+expected+'(?![\\dA-Z])','i'),name+' tab '+t+' incorrect statute: '+actual);
+       assert.ok((await page.locator('#lawText').innerText()).trim().length>20,name+' tab '+t+' statute empty');
+       await page.locator('#'+back).evaluate(el=>el.click());
+       assert.equal(await page.locator('#'+overlay+'[hidden]').count(),0,name+' tab '+t+' did not return');
+     }
+     await page.locator('#'+close).evaluate(el=>el.click());
+   }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
