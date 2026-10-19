@@ -1168,7 +1168,7 @@ function formatLawText(txt){
 
 const sections=DATA.sections; const byNum=Object.fromEntries(sections.map(s=>[s.num,s])); let current='1';
 function partTitle(p){return DATA.parts.find(x=>x.num===p)?.title||''}
-function makeNav(){const nav=document.getElementById('nav'); nav.innerHTML=''; DATA.parts.forEach(p=>{const wrap=document.createElement('div');wrap.className='part'; const head=document.createElement('div');head.className='part-head';head.dataset.part=p.num;head.innerHTML=`<span class="part-icon">📖</span><span class="part-info"><span class="part-num">Bahagian ${p.num}</span><span class="part-title">${p.title}</span></span><span class="part-arrow">⌄</span>`; const list=document.createElement('div');list.className='sections'; p.sections.forEach(num=>{const s=byNum[num]; const b=document.createElement('button');b.className='sec-link';b.dataset.sec=num;b.textContent='Seksyen '+num+' - '+s.title;b.title='Seksyen '+num+' - '+s.title;b.onclick=()=>show(num);list.appendChild(b)}); head.onclick=()=>{const opening=!list.classList.contains('open');list.classList.toggle('open');head.classList.toggle('active',opening)}; wrap.appendChild(head);wrap.appendChild(list);nav.appendChild(wrap)})}
+function makeNav(){const nav=document.getElementById('nav'); nav.innerHTML=''; DATA.parts.forEach(p=>{const wrap=document.createElement('div');wrap.className='part'; const head=document.createElement('div');head.className='part-head';head.dataset.part=p.num;head.innerHTML=`<span class="part-icon">📖</span><span class="part-info"><span class="part-num">Bahagian ${p.num}</span><span class="part-title">${p.title}</span></span><span class="part-arrow">⌄</span>`; const list=document.createElement('div');list.className='sections'; p.sections.forEach(num=>{const s=byNum[num]; const b=document.createElement('button');b.className='sec-link';b.dataset.sec=num;b.textContent='Seksyen '+num+' - '+s.title;b.title='Seksyen '+num+' - '+s.title;b.onclick=()=>show(num);list.appendChild(b)}); head.onclick=()=>{const opening=!list.classList.contains('open');list.hidden=false;list.style.removeProperty('display');list.classList.toggle('open',opening);head.classList.toggle('active',opening);document.body.classList.add('sidebar-user-expanded');document.querySelector('.sidebar')?.classList.remove('home-nav-collapsed')}; wrap.appendChild(head);wrap.appendChild(list);nav.appendChild(wrap)})}
 function show(num){
   window.scrollTo({top:0,behavior:'smooth'});if(typeof stopSpeech==='function') stopSpeech(false); current=num; const s=byNum[num]; document.getElementById('crumbPart').textContent='Bahagian '+s.part; document.getElementById('crumbSec').textContent='Seksyen '+num; document.getElementById('secTitle').textContent='SEKSYEN '+num; document.getElementById('secSub').textContent=s.title; document.getElementById('lawText').innerHTML=formatLawText(s.text); document.getElementById('explainText').textContent=DATA.explain[num]||''; document.querySelectorAll('.sec-link').forEach(x=>x.classList.toggle('active',x.dataset.sec===num)); document.querySelectorAll('.part-head').forEach(x=>x.classList.toggle('active',x.dataset.part===s.part)); document.querySelectorAll('.sections').forEach(list=>{const has=[...list.querySelectorAll('.sec-link')].some(b=>b.dataset.sec===num); if(has)list.classList.add('open')}); updateNavBtns(); if(typeof updateBookmarkBtn==='function')updateBookmarkBtn(); if(typeof recordHistory==='function')recordHistory(num); location.hash='seksyen-'+num;}
 function updateNavBtns(){const i=sections.findIndex(s=>s.num===current); const prev=sections[i-1], next=sections[i+1]; [['prevTop',prev],['prevBottom',prev]].forEach(([id,s])=>{let b=document.getElementById(id);b.disabled=!s;b.innerHTML=s?'← Sebelumnya<br><small>Seksyen '+s.num+'</small>':'← Sebelumnya';b.onclick=()=>s&&show(s.num)}); [['nextTop',next],['nextBottom',next]].forEach(([id,s])=>{let b=document.getElementById(id);b.disabled=!s;b.innerHTML=s?'Seterusnya →<br><small>Seksyen '+s.num+'</small>':'Seterusnya →';b.onclick=()=>s&&show(s.num)}); document.getElementById('jump').value=current;}
@@ -1712,7 +1712,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   const sidebar=document.querySelector('.sidebar');
   if(sidebar)sidebar.classList.add('home-nav-collapsed');
   if(sidebarNav){
-   sidebarNav.querySelectorAll('.sections').forEach(list=>list.classList.remove('open'));
+   sidebarNav.querySelectorAll('.sections').forEach(list=>{list.classList.remove('open');list.hidden=true;list.style.setProperty('display','none','important')});
    sidebarNav.querySelectorAll('.part-head').forEach(head=>head.classList.remove('active','voice-open'));
    sidebarNav.scrollTop=0;
   }
@@ -2367,7 +2367,7 @@ const home=document.getElementById('desktopHome'), nav=document.getElementById('
 if(!home||!nav||!btn)return;
 function collapse(){
  document.body.classList.remove('sidebar-user-expanded');
- nav.querySelectorAll('.sections').forEach(e=>{e.classList.remove('open');e.style.removeProperty('display')});
+ nav.querySelectorAll('.sections').forEach(e=>{e.classList.remove('open');e.hidden=true;e.style.setProperty('display','none','important')});
  nav.querySelectorAll('.part-head').forEach(e=>e.classList.remove('active','voice-open'));
  nav.scrollTop=0;
 }
