@@ -42,6 +42,29 @@ try {
    for(const id of ['kmFlowChart','rsnV24Chart','rtV25Chart','rkkV26Chart'])
      assert.equal(await page.locator('#'+id).count(),1);
  });
+ await check('Open statute section from sidebar', async()=>{
+   await page.locator('#nav .sections.open .sec-link').first().click();
+   assert.match((await page.locator('#secTitle').innerText()).toUpperCase(),/SEKSYEN/);
+   assert.ok((await page.locator('#lawText').innerText()).trim().length>10,'law text is empty');
+ });
+ await check('Return to Home after reading section', async()=>{
+   await page.locator('#desktopHomeButton').click();
+   assert.equal(await page.locator('#desktopHome.open').count(),1);
+   assert.equal(await page.locator('#nav .sections.open').count(),0);
+ });
+ await check('Planning tabs render content without JavaScript errors', async()=>{
+   for (const prefix of ['rsn','rt','rkk']) {
+     const selector='[data-'+prefix+'-tab]';
+     const tabs=page.locator(selector);
+     const count=await tabs.count();
+     assert.ok(count>=2,'missing '+prefix+' tabs');
+     for(let i=0;i<count;i++) {
+       await tabs.nth(i).evaluate(el=>el.click());
+       const chartId={rsn:'#rsnV24Chart',rt:'#rtV25Chart',rkk:'#rkkV26Chart'}[prefix];
+       assert.ok((await page.locator(chartId).innerText()).trim().length>5,prefix+' chart empty on tab '+i);
+     }
+   }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
