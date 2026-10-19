@@ -1724,6 +1724,25 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }
  $('desktopContinue')?.addEventListener('click',()=>{const n=$('desktopContinue')?.dataset.sec;if(n)openSection(n);else openSection('1')});
  $('desktopHomeButton')?.addEventListener('click',openHome);
+// Kawalan tunggal sidebar: tutup apabila Utama, boleh buka semula secara manual.
+function collapseHomeSidebar(){
+ const nav=document.getElementById('nav');
+ if(!nav)return;
+ nav.querySelectorAll('.sections').forEach(list=>{
+  list.classList.remove('open');
+  list.style.setProperty('display','none','important');
+ });
+ nav.querySelectorAll('.part-head').forEach(head=>head.classList.remove('active','voice-open'));
+ nav.scrollTop=0;
+}
+$('desktopHomeButton')?.addEventListener('click',collapseHomeSidebar);
+$('nav')?.addEventListener('click',event=>{
+ const head=event.target.closest('.part-head');
+ if(!head)return;
+ const list=head.nextElementSibling;
+ if(list?.classList.contains('sections'))list.style.removeProperty('display');
+},true);
+
  $('desktopHomeButton')?.addEventListener('click',()=>{
   // Jalankan selepas semua pengendali Utama dan kemas kini sidebar selesai.
   const collapse=()=>{
