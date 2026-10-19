@@ -123,7 +123,7 @@ try {
      assert.ok(await page.locator('#'+chart+' .km-step').count()>0,name+' has no steps');
      const refs=page.locator('#'+chart+' .km-ref-links button');
      assert.ok(await refs.count()>0,name+' lacks section links');
-     const expected=(await refs.first().innerText()).match(/Seksyen\\s+(\\w+)/i)?.[1];
+     const expected=(await refs.first().innerText()).match(/Seksyen\s+(\w+)/i)?.[1];
      await refs.first().evaluate(el=>el.click());
      assert.equal(await page.locator('#'+overlay+'[hidden]').count(),1,name+' did not close for statute');
      assert.equal(await page.locator('#'+returnBar+'[hidden]').count(),0,name+' return control missing');
