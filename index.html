@@ -1935,6 +1935,8 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
    const popup=window.open('','_blank');
    if(!popup){document.body.classList.add('km-print-mode');window.print();return;}
    const clean=printable.cloneNode(true);
+   const intro=clean.querySelector('.km-intro');
+   if(intro)intro.textContent='Carta pembelajaran dan proses asas; bukan pengganti tatacara atau prosedur rasmi di PBPT. Rujukan seksyen dinyatakan bagi setiap langkah dan keputusan.';
    clean.querySelectorAll('button,svg,canvas,.km-foot').forEach(el=>el.remove());
    // Keep legal section references as printable text after removing interactive buttons.
    const originalRefs=printable.querySelectorAll('.km-ref-links');
