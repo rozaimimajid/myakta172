@@ -269,7 +269,7 @@ try {
      await mobile.evaluate(()=>{const e=document.getElementById('myaktaWelcome');if(e){e.hidden=true;e.style.display='none';}});
      const choose=async key=>mobile.locator('[data-mobile-nav="'+key+'"]').evaluate(el=>el.click());
      await choose('akta');
-     assert.equal(await mobile.locator('.main.mobile-open').count(),1,'mobile law reader did not open');
+     assert.equal(await mobile.locator('.sidebar.mobile-open').count(),1,'mobile section navigator did not open');
      await choose('case');
      assert.equal(await mobile.locator('#caseView.open').count(),1,'mobile case analysis did not open');
      await choose('settings');
