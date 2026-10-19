@@ -43,6 +43,8 @@ try {
      assert.equal(await page.locator('#'+id).count(),1);
  });
  await check('Open statute section from sidebar', async()=>{
+   await page.locator('#desktopHomeButton').click();
+   await page.locator('#nav .part-head').first().click();
    await page.locator('#nav .sections.open .sec-link').first().click();
    assert.match((await page.locator('#secTitle').innerText()).toUpperCase(),/SEKSYEN/);
    assert.ok((await page.locator('#lawText').innerText()).trim().length>10,'law text is empty');
