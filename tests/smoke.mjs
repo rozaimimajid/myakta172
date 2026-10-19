@@ -450,6 +450,31 @@ try {
      await printPage.close();
    }finally{await p.close();}
  });
+ await check('RSN RT RKK print popups contain flow content',async()=>{
+  for(const [name,launch,printId,chartId] of [['RSN','rsnDesktopLaunch','rsnV24Print','rsnV24Chart'],['RT','rtDesktopLaunch','rtV25Print','rtV25Chart'],['RKK','rkkDesktopLaunch','rkkV26Print','rkkV26Chart']]){
+   const p=await browser.newPage();
+   try{
+    await p.goto(url);
+    await p.evaluate(()=>{const e=document.getElementById('myaktaWelcome');if(e){e.hidden=true;e.style.display='none'}});
+    await p.locator('#'+launch).evaluate(el=>el.click());
+    const promise=p.waitForEvent('popup',{timeout:10000});
+    await p.locator('#'+printId).evaluate(el=>el.click());
+    const pop=await promise;
+    await pop.waitForLoadState('domcontentloaded');
+    const data=await pop.evaluate(id=>({nodes:document.querySelectorAll('#'+id+' .km-step').length,buttons:document.querySelectorAll('button').length,text:document.body.innerText.length}),chartId);
+    assert.ok(data.nodes>0,name+' no flow steps in print');
+    assert.equal(data.buttons,0,name+' print contains buttons');
+    assert.ok(data.text>400,name+' print empty');
+    const pdf=await pop.pdf({format:'A4',printBackground:true});
+    await mkdir('audit-artifacts/print',{recursive:true});
+    await writeFile('audit-artifacts/print/'+name+'-popup.pdf',pdf);
+    const count=(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
+    console.log('PRINT_POPUP',name,'pages',count,'steps',data.nodes);
+    assert.ok(count>0&&count<20,name+' unexpected page count');
+    await pop.close();
+   }finally{await p.close();}
+  }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
