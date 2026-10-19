@@ -65,6 +65,50 @@ try {
      }
    }
  });
+ await check('Three different parts collapse on Home and reopen',async()=>{
+   await page.locator('#desktopHomeButton').click();
+   const heads=page.locator('#nav .part-head');
+   assert.ok(await heads.count()>=3,'fewer than three parts');
+   for(let i=0;i<3;i++){
+     await heads.nth(i).click();
+     assert.ok(await page.locator('#nav .sections.open').count()>=1,'part '+i+' did not open');
+     await page.locator('#desktopHomeButton').click();
+     assert.equal(await page.locator('#nav .sections.open').count(),0,'part '+i+' remained open after Home');
+     await heads.nth(i).click();
+     assert.ok(await page.locator('#nav .sections.open').count()>=1,'part '+i+' cannot reopen');
+     await page.locator('#desktopHomeButton').click();
+   }
+ });
+ await check('Statute sections change title and populated law text',async()=>{
+   await page.locator('#desktopHomeButton').click();
+   await page.locator('#nav .part-head').first().click();
+   const links=page.locator('#nav .sections.open .sec-link');
+   assert.ok(await links.count()>=2,'not enough sections to compare');
+   await links.nth(0).click();
+   const firstTitle=(await page.locator('#secTitle').innerText()).trim();
+   const firstBody=(await page.locator('#lawText').innerText()).trim();
+   assert.ok(firstBody.length>20,'first law text empty');
+   await page.locator('#nav .part-head').first().click();
+   if(!(await page.locator('#nav .sections.open').count())) await page.locator('#nav .part-head').first().click();
+   await page.locator('#nav .sections.open .sec-link').nth(1).click();
+   const secondTitle=(await page.locator('#secTitle').innerText()).trim();
+   const secondBody=(await page.locator('#lawText').innerText()).trim();
+   assert.ok(secondBody.length>20,'second law text empty');
+   assert.notEqual(firstTitle,secondTitle,'section title did not change');
+   assert.notEqual(firstBody,secondBody,'section body did not change');
+ });
+ await check('Mobile viewport initial navigation has no uncaught errors',async()=>{
+   const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+   const mobileErrors=[];mobile.on('pageerror',e=>mobileErrors.push(e.message));
+   try{
+     await mobile.goto(url,{waitUntil:'domcontentloaded'});
+     await mobile.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none';}});
+     assert.equal(await mobile.locator('#mobileHome').count(),1,'mobile home missing');
+     assert.equal(await mobile.locator('#mobileBottomNav').count(),1,'mobile navigation missing');
+     assert.equal(await mobile.locator('#nav').count(),1,'nav missing on mobile');
+     assert.deepEqual(mobileErrors,[],'mobile JavaScript exception');
+   }finally{await mobile.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
