@@ -314,6 +314,17 @@ try {
      assert.deepEqual(problems,[],'offline JS page errors');
    }finally{await context.setOffline(false);await context.close();}
  });
+ await check('Offline missing SVG is not served as HTML',async()=>{
+   const context=await browser.newContext({serviceWorkers:'allow'});
+   const p=await context.newPage();
+   try{
+     await p.goto(url,{waitUntil:'load'});
+     await p.evaluate(async()=>{await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));});
+     await context.setOffline(true);
+     const result=await p.evaluate(async()=>{try{const r=await fetch('./audit-never-cached-image.svg');return {type:r.headers.get('content-type'),status:r.status}}catch(e){return {rejected:true}}});
+     assert.ok(result.rejected || (result.type||'').includes('image/'),'offline missing asset wrongly returned '+JSON.stringify(result));
+   }finally{await context.setOffline(false);await context.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
