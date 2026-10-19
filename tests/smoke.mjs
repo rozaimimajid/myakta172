@@ -261,6 +261,39 @@ try {
    await voice.evaluate(el=>el.click());
    assert.equal(await voice.innerText(),original,'voice toggle did not restore');
  });
+ await check('Mobile navigation opens home, statute, case and settings',async()=>{
+   const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+   const errs=[];mobile.on('pageerror',e=>errs.push(e.message));
+   try{
+     await mobile.goto(url,{waitUntil:'domcontentloaded'});
+     await mobile.evaluate(()=>{const e=document.getElementById('myaktaWelcome');if(e){e.hidden=true;e.style.display='none';}});
+     const choose=async key=>mobile.locator('[data-mobile-nav="'+key+'"]').evaluate(el=>el.click());
+     await choose('akta');
+     assert.equal(await mobile.locator('.main.mobile-open').count(),1,'mobile law reader did not open');
+     await choose('case');
+     assert.equal(await mobile.locator('#caseView.open').count(),1,'mobile case analysis did not open');
+     await choose('settings');
+     assert.equal(await mobile.locator('#mobileSettings.open').count(),1,'mobile settings did not open');
+     await choose('home');
+     assert.equal(await mobile.locator('#mobileHome').count(),1,'mobile home unavailable');
+     assert.deepEqual(errs,[],'mobile page exceptions');
+   }finally{await mobile.close();}
+ });
+ await check('Print buttons invoke browser print without source mutation',async()=>{
+   await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+   await page.locator('#nav .part-head').first().evaluate(el=>el.click());
+   await page.locator('#nav .sections.open .sec-link').first().evaluate(el=>el.click());
+   await page.evaluate(()=>{window.__auditPrints=0;window.print=()=>{window.__auditPrints++}});
+   await page.locator('#printBtn').evaluate(el=>el.click());
+   assert.equal(await page.evaluate(()=>window.__auditPrints),1,'statute print did not invoke print');
+   await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+   await page.locator('#kmDesktopLaunch').evaluate(el=>el.click());
+   await page.locator('#kmFlowPrint').evaluate(el=>el.click());
+   assert.equal(await page.evaluate(()=>window.__auditPrints),2,'KM print did not invoke print');
+   await page.evaluate(()=>window.dispatchEvent(new Event('afterprint')));
+   assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('km-print-mode')),false,'print mode remained after printing');
+   await page.locator('#kmFlowClose').evaluate(el=>el.click());
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
