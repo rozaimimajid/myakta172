@@ -375,8 +375,6 @@ try {
    }finally{await page.emulateMedia({media:'screen'});}
  });
  await check('Chromium renders printable PDF pages for all four charts',async()=>{
-   // Prevent Chromium's synthetic afterprint during page.pdf from clearing print mode before rendering.
-   await page.evaluate(()=>window.addEventListener('afterprint',event=>event.stopImmediatePropagation(),true));
    const flows=[['KM','kmDesktopLaunch','kmFlowOverlay','km-print-mode','kmFlowClose'],['RSN','rsnDesktopLaunch','rsnV24Overlay','rsn-print-mode','rsnV24Close'],['RT','rtDesktopLaunch','rtV25Overlay','rt-print-mode','rtV25Close'],['RKK','rkkDesktopLaunch','rkkV26Overlay','rkk-print-mode','rkkV26Close']];
    for(const [name,launch,overlay,mode,close] of flows){
      await page.locator('#desktopHomeButton').evaluate(el=>el.click());
