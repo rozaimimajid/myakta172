@@ -335,8 +335,17 @@ try {
       await caches.open('myakta172-audit-stale-cache');
       const reg=await navigator.serviceWorker.getRegistration();
       await reg.unregister();
-      await navigator.serviceWorker.register('./sw.js?audit-reinstall=1');
-      await navigator.serviceWorker.ready;
+      const updated=await navigator.serviceWorker.register('./sw.js?audit-reinstall=1');
+      const worker=updated.installing||updated.waiting||updated.active;
+      if(worker && worker.state!=='activated')await new Promise((resolve,reject)=>{
+        const deadline=setTimeout(()=>reject(new Error('updated worker activation timeout')),10000);
+        worker.addEventListener('statechange',()=>{if(worker.state==='activated'){clearTimeout(deadline);resolve()}});
+      });
+      for(let tries=0;tries<30;tries++){
+        const keys=await caches.keys();
+        if(!keys.includes('myakta172-audit-stale-cache'))return keys;
+        await new Promise(resolve=>setTimeout(resolve,100));
+      }
       return caches.keys();
     });
     assert.ok(keys.includes('myakta172-pwa-v33'),'new PWA cache absent');
