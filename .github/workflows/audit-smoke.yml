@@ -1,0 +1,37 @@
+name: MyAKTA172 audit smoke test
+on:
+  push:
+    branches:
+      - audit/stabilization-v1
+    paths:
+      - '.github/workflows/audit-smoke.yml'
+      - 'tests/smoke.mjs'
+      - 'index.html'
+      - 'sw.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    if: github.ref == 'refs/heads/audit/stabilization-v1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser testing dependencies
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start local preview
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 > /tmp/myakta-preview.log 2>&1 &
+          echo $! > /tmp/myakta-preview.pid
+          sleep 2
+          curl --fail http://127.0.0.1:8080/index.html -o /dev/null
+      - name: Run browser regression
+        env:
+          MYAKTA_TEST_URL: http://127.0.0.1:8080/
+        run: node tests/smoke.mjs
