@@ -352,6 +352,27 @@ try {
     assert.ok(!keys.includes('myakta172-audit-stale-cache'),'stale cache remains');
   }finally{await ctx.close();}
  });
+ await check('Print stylesheet isolates each planning chart',async()=>{
+   const flows=[['kmDesktopLaunch','kmFlowOverlay','kmFlowChart','km-print-mode','kmFlowClose'],['rsnDesktopLaunch','rsnV24Overlay','rsnV24Chart','rsn-print-mode','rsnV24Close'],['rtDesktopLaunch','rtV25Overlay','rtV25Chart','rt-print-mode','rtV25Close'],['rkkDesktopLaunch','rkkV26Overlay','rkkV26Chart','rkk-print-mode','rkkV26Close']];
+   await page.emulateMedia({media:'print'});
+   try{
+     for(const [launch,overlay,chart,cls,close] of flows){
+       await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+       await page.locator('#'+launch).evaluate(el=>el.click());
+       await page.locator('body').evaluate((el,c)=>el.classList.add(c),cls);
+       const result=await page.evaluate(([overlay,chart])=>{
+         const o=document.getElementById(overlay),c=document.getElementById(chart),home=document.getElementById('desktopHome');
+         return {overlay:getComputedStyle(o).display,chart:getComputedStyle(c).display,steps:c.querySelectorAll('.km-step').length,home:getComputedStyle(home).display,printWidth:o.getBoundingClientRect().width};
+       },[overlay,chart]);
+       assert.notEqual(result.overlay,'none',overlay+' not displayed in print');
+       assert.notEqual(result.chart,'none',chart+' hidden in print');
+       assert.ok(result.steps>0,chart+' steps absent');
+       assert.ok(result.printWidth>200,overlay+' print width too narrow');
+       await page.locator('body').evaluate((el,c)=>el.classList.remove(c),cls);
+       await page.locator('#'+close).evaluate(el=>el.click());
+     }
+   }finally{await page.emulateMedia({media:'screen'});}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
