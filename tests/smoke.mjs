@@ -306,7 +306,7 @@ try {
        await navigator.serviceWorker.controller || await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
        return {scope:ready.scope,active:ready.active?.state,cache:await caches.keys()};
      });
-     assert.ok(state.cache.includes('myakta172-pwa-v32'),'expected PWA cache missing: '+state.cache);
+     assert.ok(state.cache.includes('myakta172-pwa-v33'),'expected PWA cache missing: '+state.cache);
      await context.setOffline(true);
      const response=await p.goto(url,{waitUntil:'domcontentloaded',timeout:12000});
      assert.ok(response && response.ok(),'offline page response not OK');
@@ -324,6 +324,24 @@ try {
      const result=await p.evaluate(async()=>{try{const r=await fetch('./audit-never-cached-image.svg');return {type:r.headers.get('content-type'),status:r.status}}catch(e){return {rejected:true}}});
      assert.ok(result.rejected || (result.type||'').includes('image/'),'offline missing asset wrongly returned '+JSON.stringify(result));
    }finally{await context.setOffline(false);await context.close();}
+ });
+ await check('PWA activation removes stale cache',async()=>{
+  const ctx=await browser.newContext({serviceWorkers:'allow'});
+  const p=await ctx.newPage();
+  try{
+    await p.goto(url,{waitUntil:'load'});
+    const keys=await p.evaluate(async()=>{
+      await navigator.serviceWorker.ready;
+      await caches.open('myakta172-audit-stale-cache');
+      const reg=await navigator.serviceWorker.getRegistration();
+      await reg.unregister();
+      await navigator.serviceWorker.register('./sw.js?audit-reinstall=1');
+      await navigator.serviceWorker.ready;
+      return caches.keys();
+    });
+    assert.ok(keys.includes('myakta172-pwa-v33'),'new PWA cache absent');
+    assert.ok(!keys.includes('myakta172-audit-stale-cache'),'stale cache remains');
+  }finally{await ctx.close();}
  });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
