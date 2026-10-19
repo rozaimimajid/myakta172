@@ -437,6 +437,7 @@ try {
      const checkData=await printPage.evaluate(()=>({steps:document.querySelectorAll('.km-step').length,buttons:document.querySelectorAll('button').length,last:document.body.innerText.includes('rayuan')}));
      assert.equal(checkData.steps,10,'KM print omitted process steps');
      assert.equal(checkData.buttons,0,'KM print contains screen-only buttons');
+     assert.equal(await printPage.getByText('Tekan pautan seksyen',{exact:false}).count(),0,'print still contains interactive instruction');
      assert.ok(await printPage.locator('.km-ref-links').count()>0,'KM print missing legal references');
      const refs=await printPage.locator('.km-ref-links').allTextContents();
      assert.ok(refs.some(t=>/Rujukan Seksyen\s*\d/.test(t)),'KM print missing section numbers');
