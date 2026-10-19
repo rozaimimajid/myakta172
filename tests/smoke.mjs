@@ -155,7 +155,7 @@ try {
          await button.evaluate(el=>el.click());
          const target=await page.evaluate(()=>({tag:document.activeElement?.tagName,cls:document.activeElement?.className||'',text:(document.activeElement?.innerText||'').slice(0,160)}));
          assert.match(target.cls,/km-step|km-finish/,name+' tab '+t+' branch '+i+' did not focus a destination: '+JSON.stringify(target));
-         const match=label.match(/Turutan\\s+(\\d+)/i);
+         const match=label.match(/Turutan\s+(\d+)/i);
          if(match) assert.ok(target.text.trim().startsWith(match[1]+'.'),name+' tab '+t+' branch '+i+' wrong destination for '+label+': '+target.text);
          else assert.match(target.cls,/km-finish/,name+' tab '+t+' branch '+i+' did not reach TAMAT');
        }
