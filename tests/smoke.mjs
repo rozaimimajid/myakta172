@@ -438,7 +438,7 @@ try {
      assert.equal(checkData.steps,10,'KM print omitted process steps');
      assert.equal(checkData.buttons,0,'KM print contains screen-only buttons');
      const flowText=await printPage.locator('#kmFlowChart').innerText();
-     assert.match(flowText,/jangan anggap KM diluluskan secara automatik/i,'appeal path must not imply automatic KM approval');
+     assert.match(flowText,/KM tidak diluluskan secara automatik/i,'appeal path must not imply automatic KM approval');
      assert.match(flowText,/tiada ansuran/i,'installment path must include no-installment case');
      assert.equal(await printPage.getByText('Tekan pautan seksyen',{exact:false}).count(),0,'print still contains interactive instruction');
      assert.ok(await printPage.locator('.km-ref-links').count()>0,'KM print missing legal references');
