@@ -1863,14 +1863,14 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  const questions=[
  ['Adakah pemajuan memerlukan KM?','KM diperlukan. Teruskan ke semakan zoning RT.','Jika pengecualian sah terpakai, laluan KM tamat; undang-undang lain masih perlu dipatuhi.'],
  ['Adakah cadangan selaras dengan zoning RT / rancangan pemajuan?','Cadangan selaras. Teruskan kepada permohonan KM.','Semak semula cadangan, zoning atau perincian pemajuan sebelum meneruskan.'],
- ['Adakah dokumen permohonan lengkap?','Teruskan kepada semakan pembayaran atau ansuran.','Lengkapkan dokumen permohonan.'],
+ ['Adakah dokumen permohonan lengkap?','Teruskan kepada penentuan caj pemajuan dan prasyarat pembayaran jika terpakai.','Lengkapkan dokumen permohonan.'],
  ['Adakah tanggungan caj dinilai dan prasyarat bayaran dipenuhi jika berkaitan?','Teruskan kepada pertimbangan PBPT; sahkan semula sebelum pemberian KM.','Tentukan caj dan selesaikan bayaran atau dapatkan kebenaran ansuran jika terpakai.'],
  ['Adakah semakan dan pertimbangan PBPT memuaskan?','Teruskan kepada semakan halangan perundangan.','Baiki cadangan atau dokumen dan kemukakan semula jika perlu.'],
  ['Adakah terdapat halangan pemberian KM termasuk prasyarat caj?','Jika ada halangan, selesaikan sebelum KM diberikan.','Jika tiada halangan, teruskan kepada keputusan PBPT.'],
  ['Apakah keputusan PBPT?','KM diberikan selepas prasyarat dipenuhi. Pantau ansuran jika berkenaan.','Permohonan ditolak / syarat dipertikaikan. Semak rayuan.'],
- ['Adakah ansuran selepas KM dipatuhi (jika berkenaan)?','Teruskan kepada tempoh sah dan tindakan susulan.','Ambil tindakan notis dan tunggakan menurut Seksyen 34 jika ansuran gagal dibayar.'],
+ ['Adakah ansuran selepas KM dipatuhi (atau tiada ansuran)?','YA — Tiada ansuran atau bayaran yang perlu dijelaskan telah dipatuhi; teruskan kepada tempoh sah KM.','TIDAK — Jika ansuran tertunggak, semak notis, tuntutan dan tindakan menurut Seksyen 34 sebelum meneruskan pemantauan.'],
  ['Adakah tindakan susulan dan tempoh sah dipatuhi?','Laluan proses selesai dengan pematuhan.','Ambil tindakan susulan atau mohon lanjutan jika berkaitan.'],
- ['Adakah rayuan berjaya / membawa perubahan keputusan?','Rujuk semula keputusan PBPT.','Proses rayuan tamat.']
+ ['Adakah keputusan rayuan memerlukan tindakan lanjut PBPT?','YA — Semak keputusan rayuan dan tindakan PBPT yang berkaitan; jangan anggap KM diluluskan secara automatik.','TIDAK — Laluan rayuan tamat mengikut keputusan yang dibuat.']
  ];
  const stageNodes=[];
  function openSection(n){
