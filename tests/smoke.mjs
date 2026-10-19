@@ -439,7 +439,7 @@ try {
      assert.equal(checkData.buttons,0,'KM print contains screen-only buttons');
      assert.ok(await printPage.locator('.km-ref-links').count()>0,'KM print missing legal references');
      const refs=await printPage.locator('.km-ref-links').allTextContents();
-     assert.ok(refs.some(t=>/Rujukan Seksyen\\s*\\d/.test(t)),'KM print missing section numbers');
+     assert.ok(refs.some(t=>/Rujukan Seksyen\s*\d/.test(t)),'KM print missing section numbers');
      const pdf=await printPage.pdf({format:'A4',printBackground:true});
      await mkdir('audit-artifacts/print',{recursive:true});
      await writeFile('audit-artifacts/print/KM-actual-popup.pdf',pdf);
