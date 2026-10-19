@@ -382,7 +382,7 @@ try {
      try{
        const pdf=await page.pdf({format:'A4',printBackground:true,preferCSSPageSize:true});
        assert.equal(pdf.subarray(0,5).toString(),'%PDF-',name+' not PDF');
-       const count=(pdf.toString('latin1').match(/\\/Type\\s*\\/Page\\b/g)||[]).length;
+       const count=(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
        console.log('PRINT_PDF',name,'pages',count,'bytes',pdf.length);
        assert.ok(count>=1&&count<=30,name+' unexpected PDF page count '+count);
        assert.ok(pdf.length>5000,name+' PDF suspiciously small');
