@@ -1716,6 +1716,21 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }
  $('desktopContinue')?.addEventListener('click',()=>{const n=$('desktopContinue')?.dataset.sec;if(n)openSection(n);else openSection('1')});
  $('desktopHomeButton')?.addEventListener('click',openHome);
+ $('desktopHomeButton')?.addEventListener('click',()=>{
+  // Jalankan selepas semua pengendali Utama dan kemas kini sidebar selesai.
+  const collapse=()=>{
+   const nav=document.getElementById('nav');
+   if(!nav)return;
+   nav.querySelectorAll('.sections').forEach(el=>el.classList.remove('open'));
+   nav.querySelectorAll('.part-head').forEach(el=>el.classList.remove('active','voice-open'));
+   const scroller=nav.closest('.sidebar');
+   if(scroller)scroller.scrollTop=0;
+   nav.scrollTop=0;
+  };
+  collapse();
+  requestAnimationFrame(collapse);
+  setTimeout(collapse,80);
+});
  document.querySelectorAll('[data-dh-sec]').forEach(b=>b.addEventListener('click',()=>openSection(b.dataset.dhSec)));
  document.querySelectorAll('[data-dh]').forEach(b=>b.addEventListener('click',()=>{
   const v=b.dataset.dh;
