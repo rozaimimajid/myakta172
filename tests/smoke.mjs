@@ -193,6 +193,43 @@ try {
      await page.locator('#'+close).evaluate(el=>el.click());
    }
  });
+ await check('Bookmarks persist and reading history updates',async()=>{
+   await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+   await page.locator('#nav .part-head').first().evaluate(el=>el.click());
+   await page.locator('#nav .sections.open .sec-link').first().evaluate(el=>el.click());
+   const section=(await page.locator('#secTitle').innerText()).match(/SEKSYEN\s+(\w+)/i)?.[1];
+   assert.ok(section,'cannot identify current section');
+   await page.evaluate(()=>{localStorage.removeItem('myakta172_favourites_v1');localStorage.removeItem('myakta172_history_v1')});
+   await page.locator('#nav .sections.open .sec-link').first().evaluate(el=>el.click());
+   await page.locator('#bookmarkBtn').evaluate(el=>el.click());
+   assert.ok((await page.evaluate(()=>JSON.parse(localStorage.getItem('myakta172_favourites_v1')||'[]'))).includes(section),'bookmark not saved');
+   await page.locator('#savedBtn').evaluate(el=>el.click());
+   assert.ok((await page.locator('#savedList').innerText()).includes('Seksyen '+section),'bookmark absent from list');
+   await page.locator('#historyTab').evaluate(el=>el.click());
+   assert.ok((await page.locator('#savedList').innerText()).includes('Seksyen '+section),'reading history absent');
+   await page.locator('#clearHistory').evaluate(el=>el.click());
+   assert.equal((await page.evaluate(()=>JSON.parse(localStorage.getItem('myakta172_history_v1')||'[]'))).length,0,'history not cleared');
+   await page.locator('#closeSaved').evaluate(el=>el.click());
+   await page.locator('#bookmarkBtn').evaluate(el=>el.click());
+   assert.equal((await page.evaluate(()=>JSON.parse(localStorage.getItem('myakta172_favourites_v1')||'[]'))).length,0,'bookmark not removed');
+ });
+ await check('Case analysis returns linked statute sections and clears',async()=>{
+   await page.locator('#caseOpen').evaluate(el=>el.click());
+   assert.equal(await page.locator('#caseView.open').count(),1,'case analysis did not open');
+   await page.locator('#caseInput').fill('kebenaran merancang');
+   await page.locator('#caseAnalyse').evaluate(el=>el.click());
+   const matches=page.locator('#caseResults [data-case-sec]');
+   assert.ok(await matches.count()>0,'case analysis has no section matches');
+   const section=await matches.first().getAttribute('data-case-sec');
+   await matches.first().evaluate(el=>el.click());
+   assert.equal(await page.locator('#caseView.open').count(),0,'case view did not close on section selection');
+   assert.match(await page.locator('#secTitle').innerText(),new RegExp('SEKSYEN\\s+'+section+'(?![\\dA-Z])','i'),'wrong section from case analysis');
+   await page.locator('#caseOpen').evaluate(el=>el.click());
+   await page.locator('#caseClear').evaluate(el=>el.click());
+   assert.equal(await page.locator('#caseInput').inputValue(),'','case input not cleared');
+   assert.equal((await page.locator('#caseResults').innerText()).trim(),'','case result not cleared');
+   await page.locator('#caseBack').evaluate(el=>el.click());
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
