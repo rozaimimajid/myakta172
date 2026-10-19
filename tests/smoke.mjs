@@ -109,6 +109,31 @@ try {
      assert.deepEqual(mobileErrors,[],'mobile JavaScript exception');
    }finally{await mobile.close();}
  });
+ await check('Four flowcharts open, link to statute, return and close',async()=>{
+   const flows=[
+     ['KM','kmDesktopLaunch','kmFlowOverlay','kmFlowChart','kmReturnBar','kmReturnButton','kmFlowClose'],
+     ['RSN','rsnDesktopLaunch','rsnV24Overlay','rsnV24Chart','rsnV24ReturnBar','rsnV24ReturnButton','rsnV24Close'],
+     ['RT','rtDesktopLaunch','rtV25Overlay','rtV25Chart','rtV25ReturnBar','rtV25ReturnButton','rtV25Close'],
+     ['RKK','rkkDesktopLaunch','rkkV26Overlay','rkkV26Chart','rkkV26ReturnBar','rkkV26ReturnButton','rkkV26Close']
+   ];
+   for(const [name,launch,overlay,chart,returnBar,returnButton,close] of flows){
+     await page.locator('#desktopHomeButton').click();
+     await page.locator('#'+launch).evaluate(el=>el.click());
+     assert.equal(await page.locator('#'+overlay+'[hidden]').count(),0,name+' failed to open');
+     assert.ok(await page.locator('#'+chart+' .km-step').count()>0,name+' has no steps');
+     const refs=page.locator('#'+chart+' .km-ref-links button');
+     assert.ok(await refs.count()>0,name+' lacks section links');
+     const expected=(await refs.first().innerText()).match(/Seksyen\\s+(\\w+)/i)?.[1];
+     await refs.first().evaluate(el=>el.click());
+     assert.equal(await page.locator('#'+overlay+'[hidden]').count(),1,name+' did not close for statute');
+     assert.equal(await page.locator('#'+returnBar+'[hidden]').count(),0,name+' return control missing');
+     assert.match(await page.locator('#secTitle').innerText(),new RegExp('Seksyen\\s+'+expected,'i'),name+' wrong section opened');
+     await page.locator('#'+returnButton).evaluate(el=>el.click());
+     assert.equal(await page.locator('#'+overlay+'[hidden]').count(),0,name+' failed to return');
+     await page.locator('#'+close).evaluate(el=>el.click());
+     assert.equal(await page.locator('#'+overlay+'[hidden]').count(),1,name+' failed to close');
+   }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
