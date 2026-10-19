@@ -373,6 +373,25 @@ try {
      }
    }finally{await page.emulateMedia({media:'screen'});}
  });
+ await check('Chromium renders printable PDF pages for all four charts',async()=>{
+   const flows=[['KM','kmDesktopLaunch','kmFlowOverlay','km-print-mode','kmFlowClose'],['RSN','rsnDesktopLaunch','rsnV24Overlay','rsn-print-mode','rsnV24Close'],['RT','rtDesktopLaunch','rtV25Overlay','rt-print-mode','rtV25Close'],['RKK','rkkDesktopLaunch','rkkV26Overlay','rkk-print-mode','rkkV26Close']];
+   for(const [name,launch,overlay,mode,close] of flows){
+     await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+     await page.locator('#'+launch).evaluate(el=>el.click());
+     await page.locator('body').evaluate((el,cls)=>el.classList.add(cls),mode);
+     try{
+       const pdf=await page.pdf({format:'A4',printBackground:true,preferCSSPageSize:true});
+       assert.equal(pdf.subarray(0,5).toString(),'%PDF-',name+' not PDF');
+       const count=(pdf.toString('latin1').match(/\\/Type\\s*\\/Page\\b/g)||[]).length;
+       console.log('PRINT_PDF',name,'pages',count,'bytes',pdf.length);
+       assert.ok(count>=1&&count<=30,name+' unexpected PDF page count '+count);
+       assert.ok(pdf.length>5000,name+' PDF suspiciously small');
+     }finally{
+       await page.locator('body').evaluate((el,cls)=>el.classList.remove(cls),mode);
+       await page.locator('#'+close).evaluate(el=>el.click());
+     }
+   }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
