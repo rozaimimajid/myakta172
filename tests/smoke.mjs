@@ -411,6 +411,17 @@ try {
      assert.ok(pdf.length>5000,'isolated KM PDF unexpectedly small');
    }finally{await isolated.close();await page.locator('#kmFlowClose').evaluate(el=>el.click());}
  });
+ await check('KM print button creates clean document in separate window',async()=>{
+   await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+   await page.locator('#kmDesktopLaunch').evaluate(el=>el.click());
+   await page.evaluate(()=>{window.__auditPrintDocuments=[];window.open=()=>{const frame=document.implementation.createHTMLDocument('KM Audit');const fake={document:frame,focus(){},print(){window.__auditPrintDocuments.push(frame.documentElement.outerHTML)}};frame.open=()=>{};frame.write=(markup)=>{frame.documentElement.innerHTML=markup.slice(markup.indexOf('<head>'))};frame.close=()=>{};return fake;}});
+   await page.locator('#kmFlowPrint').evaluate(el=>el.click());
+   const result=await page.evaluate(()=>{const s=window.__auditPrintDocuments[0]||'';return {hasKM:s.includes('Kebenaran Merancang'),hasChart:s.includes('km-chart'),hasButton:s.includes('km-route-button'),chars:s.length}});
+   assert.ok(result.hasKM&&result.hasChart,'KM separate print document missing content');
+   assert.equal(result.hasButton,false,'interactive route buttons included in print');
+   assert.ok(result.chars>1000,'print content unexpectedly short');
+   await page.locator('#kmFlowClose').evaluate(el=>el.click());
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
