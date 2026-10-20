@@ -117,3 +117,20 @@ Artifak asal: `myakta172-audit-chart-pdfs` (artifact ID 12250230714; sumber caba
 **Cadangan pembaikan berhati-hati:** Profil cetak RT sahaja, cuba pengoptimuman jurang menegak, margin cetak, dan susunan terminal; kekalkan saiz fon boleh baca. Bandingkan PDF sebelum/selepas dengan ujian automatik dan semakan visual pada semua lima RT. Jangan ubah cetakan RSN, RKK dan KM tanpa sebab.
 
 **Status:** Cetakan belum diluluskan untuk penggabungan. Tiada perubahan kod aplikasi dibuat dalam langkah ini.
+
+
+## Eksperimen pembaikan cetakan RT — 20 Oktober 2026
+
+Commit kod `1f969448` mengubah **hanya CSS pada tetingkap cetak RT**: margin A4 daripada 12 mm kepada 8 mm, ketinggian baris daripada 1.22 kepada 1.18, margin body kepada 0; saiz fon kekal 11 px. Ujian regresi GitHub Actions run `39393135718` lulus.
+
+Perbandingan PDF daripada artifak sebelum (`39392175349`) dan selepas (`39393135718`):
+
+| RT | Sebelum | Selepas | Kandungan halaman terakhir |
+|---|---:|---:|---|
+| prep | 2 halaman | 2 halaman | Hanya penamat, teks hingga 36 pt dari atas |
+| review | 2 | 2 | Langkah 6 dan terminal; teks hingga 175 pt |
+| amend | 2 | 2 | Langkah 6 dan terminal; teks hingga 175 pt |
+| cancel | 2 | 2 | Langkah 6 dan terminal; teks hingga 175 pt |
+| director | 2 | 2 | Langkah akhir dan terminal; teks hingga 275 pt |
+
+**Rumusan:** Margin kecil sahaja tidak menyelesaikan pembaziran satu halaman bagi kesemua RT. Jangan dakwa telah selesai. Syor tindakan susulan: semak pengulangan/ruang komponen terminal dan kadar ketinggian langkah sebelum membuat perubahan lanjut; jangan mengecilkan fon secara agresif. RSN/RKK/KM tidak diubah oleh eksperimen ini. Status: BELUM LULUS audit visual cetakan.
