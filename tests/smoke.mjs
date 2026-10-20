@@ -610,7 +610,20 @@ try {
            assert.ok(data.text.includes(original),name+' '+variant+' printed wrong selected variant');
            const pdf=await pop.pdf({format:'A4',printBackground:true});
            assert.ok(pdf.subarray(0,5).toString()==='%PDF-' && pdf.length>5000,name+' '+variant+' invalid printable PDF');
-           console.log('PRINT_VARIANT_VERIFIED',name,variant,data.steps,pdf.length);
+           const pageCount=(pdf.toString('latin1').match(/\\/Type\\s*\\/Page\\b/g)||[]).length;
+           assert.ok(pageCount>=1 && pageCount<=20,name+' '+variant+' excessive PDF pages: '+pageCount);
+           const layout=await pop.evaluate(()=>{
+             const doc=document.documentElement;
+             const rects=[...document.querySelectorAll('.km-step,.km-decision-block,.km-finish')].map(e=>e.getBoundingClientRect());
+             const bounds=rects.filter(r=>r.width>0&&r.height>0);
+             return {paperWidth:doc.clientWidth,scrollWidth:doc.scrollWidth,
+               outside:bounds.filter(r=>r.left < -4 || r.right > doc.clientWidth+4).length,
+               empty:bounds.length===0};
+           });
+           assert.ok(!layout.empty,name+' '+variant+' no printable flow boxes');
+           assert.ok(layout.scrollWidth<=layout.paperWidth+4 && layout.outside===0,
+             name+' '+variant+' horizontal clipping in print: '+JSON.stringify(layout));
+           console.log('PRINT_VARIANT_VERIFIED',name,variant,data.steps,'pages',pageCount,'bytes',pdf.length);
          }finally{await pop.close();}
        }
        await p.locator('#'+close).evaluate(el=>el.click());
