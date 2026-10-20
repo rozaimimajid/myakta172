@@ -256,3 +256,8 @@ Audit peruntukan Seksyen 22 mengesahkan Turutan 5 carta alir KM belum menerangka
 ## Tempoh sah dan lanjutan KM — Seksyen 24 (20 Oktober 2026)
 
 Audit baca sahaja mendapati Turutan 9 KM terlalu umum tentang luput/lanjutan. Seksyen 24(1) menetapkan luput 12 bulan jika pemajuan belum dimulakan melainkan dilanjutkan; 24(2) mengecualikan KM yang nyata menyatakan tiada kerja bangunan; permohonan lanjutan perlu dibuat **sebelum luput** menurut 24(3), tertakluk fi dan kemungkinan syarat lanjutan. Commit `b6f4321b` menjelaskan perkara itu pada Turutan 9 sahaja, tanpa mengubah struktur carta, laluan YA/TIDAK atau teks asal Akta. Sahkan GitHub Actions run `39403885382` sebelum menandakan regresi lulus. `main` tidak disentuh.
+
+
+## Sahkan Seksyen 24; bezakan pembatalan KM di bawah Seksyen 25 — 20 Oktober 2026
+
+GitHub Actions run `39403885382` bagi commit `b6f4321b` disahkan **SUCCESS**, menutup ujian regresi penerangan tempoh sah Seksyen 24. Semakan susulan mendapati Turutan 9 merujuk Seksyen 25 tetapi belum menjelaskan bahawa **perintah pembatalan atau pengubahsuaian KM demi kepentingan awam tidak berkuat kuasa sehingga disahkan Jawatankuasa** (25(1)–(2)). Commit `dd61c434` menambah ayat berkenaan secara terhad pada Turutan 9, memisahkannya daripada lanjutan/luput di bawah Seksyen 24. Susunan dan destinasi keputusan tidak diubah. Ujian susulan run `39404194246` mesti disahkan sebelum isu dianggap selesai. `main` tidak disentuh.
