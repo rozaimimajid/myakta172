@@ -234,3 +234,10 @@ Commit `b4d74980` pada cabang audit mengemaskini **ayat sahaja** dalam carta ali
 **Punca isu:** Sebelum pembetulan, turutan Rayuan KM terlalu mengutamakan pertimbangan semula oleh PBPT; perintah Lembaga Rayuan di bawah Seksyen 23(3) mempunyai skop lebih luas (kekalkan keputusan/tolak rayuan, arahkan pemberian KM, ketepikan KM, ubah syarat). Turutan pertama juga perlu menyatakan pengecualian khusus Seksyen 19(2), bukan pengecualian umum tanpa syarat.
 
 **Pembetulan terkawal pada commit `49fdae41` (index.html sahaja):** Terangkan kewajipan KM Seksyen 19(1) dan pengecualian khusus 19(2); kemas kini Turutan Rayuan dan keputusan YA/TIDAK untuk mengikut perintah Lembaga Rayuan sebenar, dengan arah balik ke PBPT hanya jika pelaksanaan perintah memerlukan tindakan PBPT. Bilangan 10 turutan, destinasi laluan, peruntukan data asal dan kod fungsi lain tidak diubah. Semakan sumber: Akta 172 cetakan semula 1 Jun 2021, Seksyen 19 dan 23. Semakan formal perundangan terkini serta ujian regresi tetap diperlukan. `main` tidak disentuh.
+
+
+## Penutupan isu rayuan KM dan pembetulan rujukan zoning — 20 Oktober 2026
+
+Ujian GitHub Actions bagi commit `38133c35` (run `39401806518`) disahkan **SUCCESS**: penerangan pengecualian KM Seksyen 19(2) dan pelaksanaan perintah rayuan Seksyen 23 dapat ditutup bagi regresi aplikasi. Ini tidak menggantikan semakan undang-undang profesional.
+
+Audit baca sahaja Turutan 2 KM mengenal pasti rujukan zoning yang tidak menyatakan larangan khusus **Seksyen 22(4)(a)** apabila pemajuan bercanggah dengan peruntukan rancangan pemajuan. Commit `c7db8e6b` menambah penjelasan dan pautan Seksyen 22 pada Turutan 2 sahaja; tiada perubahan susunan 10 turutan, laluan YA/TIDAK atau teks DATA seksyen. Ujian susulan: GitHub Actions run `39402267549`; semak keputusan sebelum menandakan pembetulan ini lulus. Cabang `main` tidak disentuh.
