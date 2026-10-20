@@ -289,3 +289,10 @@ Semakan baca sahaja terhadap rekod Seksyen 22 dalam DATA aplikasi mengesahkan te
 Ujian regresi baharu ditambah ke `tests/smoke.mjs` untuk memastikan rekod Seksyen 22 unik, termasuk dalam Bahagian IV, mempunyai teks subseksyen utama, dan mengekalkan frasa kunci berkaitan nasihat Majlis, caj pemajuan, Seksyen 34(1), pemeliharaan pokok dan tiga halangan dalam carta alir KM. Commit terakhir bagi semakan/penyelarasan ujian ini ialah `6fe4d9d`. Tiada pindaan kepada teks Akta atau logik aplikasi. **Keputusan GitHub Actions untuk ujian tambahan masih belum dapat disahkan; ujian belum boleh dilabel lulus.**
 
 Audit teks ini bukan pengesahan pemakaian mutakhir undang-undang atau peraturan negeri. Tindakan seterusnya: semak keputusan GitHub Actions, kemudian audit Seksyen 23 dan laluan rayuan KM. **BELUM LULUS UNTUK MERGE.** Cabang `main` tidak diubah.
+
+
+## Audit Seksyen 23 — hak rayuan dan keputusan Lembaga Rayuan (20 Oktober 2026)
+
+Pemeriksaan DATA aplikasi: satu rekod Seksyen 23 berada dalam Bahagian IV. Teks memuatkan tempoh satu bulan dan dua kategori perayu di bawah 23(1), kewajipan mendengar pihak merayu dan PBPT di bawah 23(2), serta empat pilihan perintah di bawah 23(3): mengesahkan keputusan/menolak rayuan, mengarahkan pemberian KM, mengetepikan KM, atau memotong/mengubah/mengganti syarat. Carta KM sudah menyatakan perintah Lembaga Rayuan hendaklah dipatuhi; kembali kepada PBPT hanya untuk tindakan pelaksanaan yang perlu, bukan pertimbangan semula secara bebas. Tiada pembetulan kandungan tambahan dianggap perlu berdasarkan semakan ini.
+
+Commit `8510a6f` menambah kawalan regresi terarah dalam `tests/smoke.mjs` untuk rekod, kedudukan Bahagian IV, frasa hak rayuan dan arahan pelaksanaan di carta KM. Semakan kandungan ini tidak bermaksud teks undang-undang dan pemakaian negeri mutakhir sudah diperakukan. **Status CI untuk ujian baharu: belum disahkan**. Cabang `main` tidak disentuh; **jangan merge** sebelum ujian dan audit selesai.
