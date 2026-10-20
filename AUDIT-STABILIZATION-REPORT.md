@@ -71,3 +71,24 @@ TIDAK LULUS UNTUK MERGE. Teruskan ujian interaksi dalam persekitaran pelayar ber
 - P2: Audit semantik setiap laluan dan kandungan penuh Akta 172.
 
 **Keputusan terkini: BELUM LULUS UNTUK MERGE.** Lulus ujian pelayar tidak menggugurkan jurang liputan undang-undang ini. Tiada pindaan ke cabang main dibenarkan tanpa kelulusan pengguna.
+
+
+## Audit visual PDF sebenar — artifak GitHub Actions 39391448829
+
+Artifak asal: `myakta172-audit-chart-pdfs` (artifact ID 12250230714; sumber cabang audit commit `040db081`). Semakan visual dan pengekstrakan kedudukan teks dibuat pada PDF sebenar yang dimuat turun daripada larian ujian.
+
+### Penemuan yang boleh disahkan
+- **RT-popup.pdf:** 2 muka surat. Muka surat kedua hanya mengandungi langkah 7 dan penamat, dengan kandungan teks sehingga kira-kira 124/843 pt tinggi halaman; kebanyakan ruang A4 tidak digunakan. Klasifikasi: isu susun atur/cetakan, bukan kegagalan penjanaan PDF.
+- **RSN-popup.pdf:** 1 muka surat; kandungan berada dalam sempadan A4. Perlu semak saiz fon/carta sebelum diterima sebagai mutu visual muktamad.
+- **RKK-popup.pdf:** 1 muka surat; kandungan berada dalam sempadan A4. Perlu semak saiz fon/carta sebelum diterima sebagai mutu visual muktamad.
+- **KM-actual-popup.pdf:** 2 muka surat; kedua-duanya mengandungi kandungan yang bermakna.
+- Tiada muka surat kosong dikesan dalam sembilan PDF artifak yang tersedia menggunakan pemeriksaan teks; ini tidak membuktikan kebolehbacaan sempurna semua elemen grafik.
+- Artifak ini mengandungi hanya cetakan variasi lalai popup untuk RT/RSN/RKK, **bukan** 11 PDF setiap variasi. Ujian automatik menguji semua variasi tetapi belum menyimpan semua PDF berasingan untuk audit visual.
+
+### Perlu dibetulkan / diuji
+1. **P1 Cetakan RT:** kurangkan muka surat kedua yang hampir kosong tanpa memotong kandungan atau mengecilkan fon secara berlebihan. Elakkan tetapan skala yang menyebabkan teks sukar dibaca.
+2. **P1 Liputan bukti:** simpan PDF bagi setiap 11 variasi dalam artifak supaya penyemakan halaman sebenar bukan semata-mata pemeriksaan CSS.
+3. **P2 Pemeriksaan visual:** semak bingkai berlian, susunan anak panah, saiz fon dan ruang di sempadan halaman. Ujian unit DOM tidak mencukupi.
+4. **P2 Artifak RSN/RKK:** cetakan satu halaman tampak padat; kekalkan kebolehbacaan sebagai keutamaan mengatasi bilangan halaman.
+
+**Keputusan cetakan visual: BELUM LULUS SEPENUHNYA.** Tiada perubahan kod produksi dibuat daripada penemuan ini. Jangan merge ke `main` sehingga audit lengkap.
