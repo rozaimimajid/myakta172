@@ -198,3 +198,10 @@ Ini menyelesaikan **isu bilangan halaman dan ruang pembaziran RT** dalam penghas
 4. **Keputusan:** 5/5 RT satu halaman secara teknikal tetapi **BELUM LULUS mutu visual cetakan**. Jangan membuat pengoptimuman halaman tambahan semata-mata; utamakan geometri keputusan dan kebolehbacaan, walaupun hasil akhirnya 2 halaman.
 
 **Cadangan kawalan:** Tambah ujian yang memeriksa geometri berlian dalam dokumen cetak dan ukuran fon/carta sebelum mengubah gaya cetak. Simpan rujukan sebelum/selepas. Cabang `main` kekal tidak disentuh.
+
+
+## Pengesahan cetakan berlian RT — 20 Oktober 2026
+
+Commit `f5e2515d` mengekalkan SVG keputusan dalam popup cetak RT dan memberikan gaya garis berlian. GitHub Actions run `39397577797` SUCCESS; pengesahan visual fail PDF membuktikan bentuk berlian kini kelihatan. Namun, **empat variasi RT (review, amend, cancel, director) kembali kepada 2 halaman**; `prep` kekal 1 halaman. Ini regresi penggunaan kertas berbanding keadaan sebelumnya (5/5 pada satu halaman). **Jangan dakwa pembaikan menyeluruh telah selesai.** Bentuk keputusan dan kebolehbacaan harus diberi keutamaan sebelum pemaksaan satu halaman.
+
+Commit `ad220150` menambah ujian yang mengesahkan setiap keputusan RT dalam dokumen cetak mengandungi polygon SVG berlian; GitHub Actions run `39397986847` SUCCESS. Audit kualiti cetakan dan pengesahan perundangan menyeluruh masih terbuka. `main` tidak disentuh.
