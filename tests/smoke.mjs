@@ -610,7 +610,7 @@ try {
            assert.ok(data.text.includes(original),name+' '+variant+' printed wrong selected variant');
            const pdf=await pop.pdf({format:'A4',printBackground:true});
            assert.ok(pdf.subarray(0,5).toString()==='%PDF-' && pdf.length>5000,name+' '+variant+' invalid printable PDF');
-           const pageCount=(pdf.toString('latin1').match(/\\/Type\\s*\\/Page\\b/g)||[]).length;
+           const pageCount=(pdf.toString('latin1').match(new RegExp('/Type\\s*/Page\\b','g'))||[]).length;
            assert.ok(pageCount>=1 && pageCount<=20,name+' '+variant+' excessive PDF pages: '+pageCount);
            const layout=await pop.evaluate(()=>{
              const doc=document.documentElement;
