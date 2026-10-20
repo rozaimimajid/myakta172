@@ -251,3 +251,8 @@ Penemuan audit: Turutan 6 carta alir KM sebelum ini merujuk Seksyen 22(4) secara
 ## Pertimbangan permohonan KM: Seksyen 22(2) dan 22(2A) — 20 Oktober 2026
 
 Audit peruntukan Seksyen 22 mengesahkan Turutan 5 carta alir KM belum menerangkan arahan Jawatankuasa di bawah perenggan 22(2)(aa) dan keperluan **Jawatankuasa meminta nasihat Majlis** untuk kategori pemajuan khusus Seksyen 22(2A). Perkara ini disemak terhadap teks Akta yang dimuatkan dalam aplikasi serta halaman rasmi PLANMalaysia berkenaan Majlis Perancang Fizikal Negara. Commit `f94a0e5f` memperjelas pertimbangan PBPT dan syarat rujukan 22(2A) pada **Turutan 5 sahaja**; tidak mengubah bilangan turutan atau destinasi YA/TIDAK. GitHub Actions run `39403474539` **SUCCESS**. Ini penjelasan teks carta alir, bukan jaminan semakan undang-undang terkini atau pemakaian spesifik setiap negeri. `main` tidak disentuh.
+
+
+## Tempoh sah dan lanjutan KM — Seksyen 24 (20 Oktober 2026)
+
+Audit baca sahaja mendapati Turutan 9 KM terlalu umum tentang luput/lanjutan. Seksyen 24(1) menetapkan luput 12 bulan jika pemajuan belum dimulakan melainkan dilanjutkan; 24(2) mengecualikan KM yang nyata menyatakan tiada kerja bangunan; permohonan lanjutan perlu dibuat **sebelum luput** menurut 24(3), tertakluk fi dan kemungkinan syarat lanjutan. Commit `b6f4321b` menjelaskan perkara itu pada Turutan 9 sahaja, tanpa mengubah struktur carta, laluan YA/TIDAK atau teks asal Akta. Sahkan GitHub Actions run `39403885382` sebelum menandakan regresi lulus. `main` tidak disentuh.
