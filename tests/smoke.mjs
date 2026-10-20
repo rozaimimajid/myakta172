@@ -168,12 +168,12 @@ try {
  // Independent branch contract: expected destination IDs and exact stage indices for all nine statutory-planning variants.
  // Each pair is [YA target, TIDAK target]; numeric targets are zero-based process steps.
  // These assertions must remain independent of the flow data in index.html.
- await check('RSN RT RKK nine-variant decision contracts',async()=>{
+ await check('RSN RT RKK eleven-variant decision contracts',async()=>{
    const contracts=[
      {name:'RSN',launch:'rsnDesktopLaunch',chart:'rsnV24Chart',close:'rsnV24Close',tab:'rsn',prefix:'rsn',
        choices:{prep:[[3,5],[8,'reject']],review:[[2,'defer'],[6,'reject']],amend:[[1,'defer'],[6,'reject']]}},
      {name:'RT',launch:'rtDesktopLaunch',chart:'rtV25Chart',close:'rtV25Close',tab:'rt',prefix:'rt',
-       choices:{prep:[[4,5],[6,2]],review:[[1,'defer'],[3,4],[5,'reject']],amend:[[1,'defer'],[3,4],[5,'reject']]}},
+       choices:{prep:[[4,5],[6,2]],review:[[1,'defer'],[3,4],[5,'reject']],amend:[[1,'defer'],[3,4],[5,'reject']],cancel:[[1,'defer'],[3,4],[5,'reject']],director:[[1,'defer'],[2,'defer'],[4,5],[6,'reject']]}},
      {name:'RKK',launch:'rkkDesktopLaunch',chart:'rkkV26Chart',close:'rkkV26Close',tab:'rkk',prefix:'rkk',
        choices:{prep:[[1,'defer'],[4,5],[6,'reject']],review:[[1,'defer'],[3,4],[5,'reject']],amend:[[1,'defer'],[3,4],[5,'reject']]}}
    ];
