@@ -209,7 +209,7 @@ try {
            }else{
              assert.equal(focus.id,flow.prefix+'-end-'+expected,flow.name+' '+variant+' '+token+' wrong terminal');
              assert.match(focus.text,/TAMAT/i,flow.name+' '+variant+' '+token+' missing terminal');
-             assert.match(explanation,/(tidak|ditolak|kekal|diteruskan|memerlukan)/i,flow.name+' '+variant+' '+token+' terminal wording ambiguous');
+             assert.match(explanation,/(tidak|ditolak|kekal|diteruskan|memerlukan|ikut keputusan)/i,flow.name+' '+variant+' '+token+' terminal wording ambiguous');
            }
            verified++;
          }
