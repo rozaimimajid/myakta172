@@ -335,3 +335,10 @@ Audit statik terhadap carta dalam `index.html` menemui 36 corak langkah dengan s
 Commit `d85cafa7` menambah satu regresi pelayar yang merentas keseluruhan 12 paparan carta (KM + 3 RSN + 5 RT + 3 RKK) dan membaca setiap label butang rujukan, mengekstrak nombor seksyen, lalu memastikan seksyen tersebut wujud dalam DATA. Ini melengkapkan semakan statik namun tidak membuktikan bahawa rujukan yang wujud itu adalah tepat secara tafsiran perundangan. CI untuk commit terbaru belum dapat disahkan, maka status ujian ini **BELUM DIUJI DALAM CI TERKINI**.
 
 Sumber silang rasmi: PLANMalaysia, teks Akta 172 sebagaimana 1 Jun 2021 dan panduan publisiti peruntukan Seksyen 9, 12A, 13, 15, 16(3), 16B(3). Teks sumber tersebut ialah garis dasar, bukan jaminan pindaan dan pemakaian negeri terkini. Baki: kesahihan semantik semua langkah/keputusan, mutu 11 PDF cetakan, pengesahan CI. Jangan merge ke `main`.
+
+
+## Audit berkelompok IV — bukti paginasi cetakan (20 Oktober 2026)
+
+Semakan audit menemui ujian PDF 11 variasi sudah menghasilkan fail, tetapi had halaman yang dibenarkan adalah terlalu luas (hingga 20 halaman), dan tiada manifest automatik perbandingan jumlah halaman untuk setiap variasi. Commit `9343bcc0` menambah `manifest.json` yang merekod variasi, bilangan halaman, bait PDF dan jumlah langkah; juga menandakan lebih daripada lima halaman sebagai regresi luar biasa. Had lima halaman ialah *penggera regresi*, bukan syarat semua carta mesti satu halaman. Commit `87886fb3` mengubah hanya workflow audit supaya manifest turut dimuat naik bersama PDF.
+
+Bukti CI terakhir yang dapat diperiksa secara langsung ialah run 39434163575 (job smoke SUCCESS) pada kod yang lebih lama, dan **tidak** membuktikan dua commit baharu telah lulus. Perlu semak run terkini, artifact manifest dan PDF visual sebenar sebelum menerima mutu cetakan. Tidak ada perubahan kod aplikasi produksi atau cabang main. **BELUM LULUS UNTUK MERGE.**
