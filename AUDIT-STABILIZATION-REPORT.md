@@ -310,3 +310,12 @@ Commit `98325783` menambah ujian regresi khusus Seksyen 24 pada `tests/smoke.mjs
 Semakan DATA Bahagian IV mengesahkan Seksyen 25(1)–(10) wujud, merangkumi pembatalan/pengubahsuaian demi kepentingan awam, pengesahan Jawatankuasa sebelum kuat kuasa, perobohan dan pembayaran balik kos, pampasan, serta rayuan amaun pampasan. Turutan 9 carta KM menyatakan Seksyen 25(1)–(2) secara berasingan daripada luput dan lanjutan KM Seksyen 24.
 
 Commit `4fef550` menambah ujian regresi khusus dalam `tests/smoke.mjs` untuk rekod, navigasi, subseksyen, frasa penting dan rujukan KM. Keputusan GitHub Actions bagi ujian baharu **belum disahkan**, bukan lulus. Tiada perubahan pada teks Akta atau carta. Audit undang-undang mutakhir masih terbuka. **BELUM LULUS UNTUK MERGE; main tidak disentuh.**
+
+
+## Audit berkelompok keseluruhan — 20 Oktober 2026
+
+**Skop statik sebenar:** index.html, sw.js, workflow GitHub Actions, ujian Playwright dan daftar semua DATA seksyen. Analisis secara pukal menemui 83 rekod seksyen dalam 12 Bahagian; tiada rekod kosong, nombor seksyen pendua, seksyen tersalah Bahagian, seksyen navigasi tanpa rekod, penerangan yang tiada, atau rujukan literal seksyen tidak wujud dalam pemeriksaan yang dijalankan. Bilangan tag pembuka/penutup script 18/18 dan style 38/38. Dapatan ini ialah **integriti struktur**, bukan pembuktian kesahihan setiap perkataan Akta.
+
+Suite regresi yang ditemui mempunyai 38 kelompok ujian sebelum tambahan baharu, meliputi navigasi, 4 carta, 11 variasi RSN/RT/RKK, PWA, desktop/mobile, cetakan/PDF, serta ujian khusus Seksyen 21A–25. Commit `14e190f` menambah **satu ujian menyeluruh untuk semua 83 rekod serentak**, termasuk keunikan, tajuk, kandungan, penerangan dan liputan navigasi mengikut Bahagian. Commit `e04fd5c` membetulkan cara lima ujian undang-undang membaca teks Carta KM ketika dialog tersembunyi, daripada `innerText` kepada `textContent`; bacaan `innerText` pada elemen tersembunyi boleh mengembalikan teks kosong dan menghasilkan gagal palsu. Tiada kod aplikasi produksi diubah oleh kedua-dua commit ini.
+
+**Belum disahkan:** keputusan CI bagi kedua-dua commit terbaru, kesahihan teks Akta terhadap naskhah rasmi berkuat kuasa dan pindaan selepas 1 Jun 2021, ketepatan semantik keseluruhan 11 variasi carta, keputusan visual PDF cetak, kebolehgunaan peranti sebenar, dan pengujian pengguna. Kekalkan status **BELUM LULUS UNTUK MERGE**. Cabang `main` tidak diubah.
