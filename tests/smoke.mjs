@@ -795,6 +795,37 @@ try {
    assert.equal(new Set(routed).size,routed.length,'Duplicate navigation section');
    for(const num of routed) assert.ok(valid.has(num),'Unknown navigation section '+num);
  });
+ await check('All chart variants have valid statute reference buttons',async()=>{
+   const legal=await page.evaluate(()=>new Set(DATA.sections.map(s=>s.num)).size);
+   assert.equal(legal,83,'Unexpected legal reference registry size');
+   const flows=[
+     ['KM','kmDesktopLaunch','kmFlowChart','kmFlowClose',null],
+     ['RSN','rsnDesktopLaunch','rsnV24Chart','rsnV24Close','rsn'],
+     ['RT','rtDesktopLaunch','rtV25Chart','rtV25Close','rt'],
+     ['RKK','rkkDesktopLaunch','rkkV26Chart','rkkV26Close','rkk']
+   ];
+   let total=0;
+   for(const [name,launch,chart,close,tab] of flows){
+     await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+     await page.locator('#'+launch).evaluate(el=>el.click());
+     try {
+       const variants=tab?await page.locator('[data-'+tab+'-tab]').count():1;
+       for(let i=0;i<variants;i++){
+         if(tab) await page.locator('[data-'+tab+'-tab]').nth(i).evaluate(el=>el.click());
+         const labels=await page.locator('#'+chart+' .km-ref-links button').allTextContents();
+         assert.ok(labels.length>0,name+' variant '+i+' lacks references');
+         for(const label of labels){
+           const match=label.match(/Seksyen\s+(\d+[A-Z]?)/i);
+           assert.ok(match,name+' variant '+i+' invalid reference label '+label);
+           const exists=await page.evaluate(id=>DATA.sections.some(s=>s.num===id),match[1]);
+           assert.ok(exists,name+' variant '+i+' references missing section '+match[1]);
+           total++;
+         }
+       }
+     }finally{await page.locator('#'+close).evaluate(el=>el.click());}
+   }
+   console.log('CHART_LEGAL_LINKS_VERIFIED',total);
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
