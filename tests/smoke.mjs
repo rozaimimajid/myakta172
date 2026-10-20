@@ -690,6 +690,26 @@ try {
    assert.match(result.rows[2][0].text,/undang-undang bertulis lain/i);
    for(const id of ['21A','21B','21C']) assert.ok(result.kmText.includes(id),'KM chart missing reference '+id);
  });
+ await check('Section 22 statutory decision safeguards remain intact',async()=>{
+   const data=await page.evaluate(()=>{
+     const matches=DATA.sections.filter(s=>s.num==='22');
+     return {matches,part:DATA.parts.find(p=>p.num==='IV')?.sections||[],explanation:DATA.explain['22']||'',kmText:document.getElementById('kmFlowChart')?.innerText||''};
+   });
+   assert.equal(data.matches.length,1,'Section 22 missing or duplicated');
+   assert.equal(data.matches[0].part,'IV','Section 22 wrong Part');
+   assert.ok(data.part.includes('22'),'Section 22 missing from sidebar grouping');
+   const law=data.matches[0].text;
+   for(const subsection of ['(1)','(2)','(2A)','(2B)','(3)','(4)','(5)','(5A)','(6)'])
+     assert.ok(law.includes(subsection),'Section 22 missing subsection '+subsection);
+   assert.match(law,/Jawatankuasa hendaklah meminta daripada Majlis nasihatnya/i);
+   assert.match(law,/belum membayar caj\\s+pemajuan/i);
+   assert.match(law,/subseksyen 34\\(1\\)/i);
+   assert.match(law,/perintah pemeliharaan pokok/i);
+   assert.ok(data.explanation.length>60,'Section 22 explanation missing');
+   assert.match(data.kmText,/Seksyen 22\\(4\\)\\(a\\)/i);
+   assert.match(data.kmText,/22\\(4\\)\\(aa\\)/i);
+   assert.match(data.kmText,/22\\(4\\)\\(b\\)/i);
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
