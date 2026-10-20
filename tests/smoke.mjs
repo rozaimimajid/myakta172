@@ -513,6 +513,10 @@ try {
      const checkData=await printPage.evaluate(()=>({steps:document.querySelectorAll('.km-step').length,buttons:document.querySelectorAll('button').length,last:document.body.innerText.includes('rayuan')}));
      assert.equal(checkData.steps,10,'KM print omitted process steps');
      assert.equal(checkData.buttons,0,'KM print contains screen-only buttons');
+     const diamonds=await printPage.locator('#kmFlowChart .km-decision .flow-diamond-outline polygon').count();
+     assert.ok(diamonds>0,'KM print lost SVG diamond outlines');
+     const diamondStroke=await printPage.locator('#kmFlowChart .km-decision .flow-diamond-outline polygon').first().evaluate(el=>getComputedStyle(el).stroke);
+     assert.ok(diamondStroke!=='none'&&diamondStroke!=='transparent','KM print diamond border invisible');
      const flowText=await printPage.locator('#kmFlowChart').innerText();
      assert.match(flowText,/KM tidak diluluskan secara automatik/i,'appeal path must not imply automatic KM approval');
      assert.match(flowText,/tiada ansuran/i,'installment path must include no-installment case');
