@@ -832,6 +832,20 @@ try {
    }
    console.log('CHART_LEGAL_LINKS_VERIFIED',total);
  });
+ await check('Saved records only render valid statute IDs',async()=>{
+   const p=await browser.newPage();
+   try{
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{
+       localStorage.setItem('myakta172_history_v1',JSON.stringify([{num:'UNKNOWN',at:Date.now()},{num:'__proto__',at:Date.now()},{num:'1',at:Date.now()}]));
+       const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none'}
+     });
+     await p.locator('#savedBtn').evaluate(el=>el.click());
+     await p.locator('#historyTab').evaluate(el=>el.click());
+     assert.equal(await p.locator('#savedList .saved-item').count(),1,'Forged record was rendered');
+     assert.equal(await p.locator('#savedList .saved-item').first().getAttribute('data-sec'),'1');
+   }finally{await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
