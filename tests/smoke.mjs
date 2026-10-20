@@ -611,6 +611,14 @@ try {
              const decisions=await pop.locator('.km-decision').count();
              assert.ok(decisions>0,name+' '+variant+' has no decisions');
              assert.equal(shapes,decisions,name+' '+variant+' missing SVG decision diamonds in print');
+             const diamondPaint=await pop.locator('.km-decision .flow-diamond-outline polygon').first().evaluate(el=>{
+               const css=getComputedStyle(el);
+               return {stroke:css.stroke,strokeWidth:parseFloat(css.strokeWidth),fill:css.fill,box:el.getBoundingClientRect().toJSON()};
+             });
+             assert.ok(diamondPaint.stroke!=='none'&&diamondPaint.stroke!=='transparent'&&diamondPaint.strokeWidth>=1,
+               name+' '+variant+' diamond stroke not printable: '+JSON.stringify(diamondPaint));
+             assert.ok(diamondPaint.box.width>=20&&diamondPaint.box.height>=15,
+               name+' '+variant+' diamond SVG too small in print: '+JSON.stringify(diamondPaint));
            }
            assert.ok(data.steps>=4,name+' '+variant+' printed too few steps');
            assert.ok(data.text.includes(original),name+' '+variant+' printed wrong selected variant');
