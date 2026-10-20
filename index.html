@@ -2107,7 +2107,7 @@ function render(key){
  });
  chart.append(arrow());
  const possibilities=new Set(Object.values(flow.choices).flatMap(c=>[c[1][1],c[2][1]]).filter(d=>typeof d==='string'));
- const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan JPN.'],['defer','TAMAT — RKK sedia ada masih berkuat kuasa.']];
+ const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan pihak berkuasa berkenaan.'],['defer','TAMAT — Cadangan tidak diteruskan; RKK sedia ada, jika ada, tidak berubah.']];
  ends.filter(([id])=>id==='complete'||possibilities.has(id)).forEach(([id,txt],i)=>{
   if(i>0)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut keputusan YA/TIDAK'));
   const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rkk-end-'+id;end.tabIndex=-1;chart.append(end);
@@ -2306,7 +2306,7 @@ function render(key){
  });
  chart.append(arrow());
  const possibilities=new Set(Object.values(flow.choices).flatMap(c=>[c[1][1],c[2][1]]).filter(d=>typeof d==='string'));
- const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan JPN.'],['defer','TAMAT — RT sedia ada masih berkuat kuasa.']];
+ const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan pihak berkuasa berkenaan.'],['defer','TAMAT — RT sedia ada masih berkuat kuasa.']];
  ends.filter(([id])=>id==='complete'||possibilities.has(id)).forEach(([id,txt],i)=>{
   if(i>0)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut keputusan YA/TIDAK'));
   const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rt-end-'+id;end.tabIndex=-1;chart.append(end);
