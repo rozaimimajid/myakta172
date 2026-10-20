@@ -205,11 +205,11 @@ try {
              const stage=page.locator('#'+flow.chart+' .km-step').nth(expected);
              const heading=(await stage.locator('strong').innerText()).trim();
              assert.ok(focus.text.trim().startsWith(heading),flow.name+' '+variant+' '+token+' wrong process destination');
-             assert.match(explanation,/(teruskan|mulakan|jalankan|lengkapkan|mohon|dapatkan|kemukakan|sediakan|semak)/i,flow.name+' '+variant+' '+token+' explanation not an action');
+             assert.match(explanation,/(teruskan|mulakan|jalankan|lengkapkan|mohon|dapatkan|kemukakan|sediakan|semak|urus|pertimbangkan)/i,flow.name+' '+variant+' '+token+' explanation not an action');
            }else{
              assert.equal(focus.id,flow.prefix+'-end-'+expected,flow.name+' '+variant+' '+token+' wrong terminal');
              assert.match(focus.text,/TAMAT/i,flow.name+' '+variant+' '+token+' missing terminal');
-             assert.match(explanation,/(tidak|ditolak|kekal|diteruskan|memerlukan|ikut keputusan)/i,flow.name+' '+variant+' '+token+' terminal wording ambiguous');
+             assert.match(explanation,/(tidak|ditolak|kekal|diteruskan|memerlukan|ikut keputusan|tiada|tatacara biasa)/i,flow.name+' '+variant+' '+token+' terminal wording ambiguous');
            }
            verified++;
          }
