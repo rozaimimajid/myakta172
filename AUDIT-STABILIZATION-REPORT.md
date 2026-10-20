@@ -326,3 +326,12 @@ Suite regresi yang ditemui mempunyai 38 kelompok ujian sebelum tambahan baharu, 
 Pemeriksaan semula suite mengesan **39 kelompok ujian** selepas penambahan ujian menyeluruh 83 seksyen. Audit khusus regex mengesan masalah sebenar pada ujian Seksyen 23: literal regex menyimpan backslash berganda lalu tidak dapat memadankan rujukan biasa `Seksyen 23(1)` dan `23(3)` dalam teks carta. Dibaiki secara terkawal pada commit `f3185849` (`tests/smoke.mjs` sahaja). Semakan statik susulan terhadap baris `assert.match` tidak lagi menemui pola backslash berganda yang sama; regex dinamik `new RegExp` yang betul sengaja tidak diubah.
 
 Suite masih belum disahkan dengan satu pelaksanaan Chromium terkini. Respons status gabungan GitHub bagi commit ujian ini tidak memaparkan check berdaftar; ia **bukan bukti SUCCESS atau FAILURE** dan tidak harus ditafsir sebagai ujian sudah lulus. Pautan halaman Actions juga tidak dapat diakses daripada persekitaran semasa. Audit undang-undang bahan primer, peraturan pindaan berkuat kuasa dan kebolehbacaan PDF sebenar masih terbuka. Tiada perubahan kepada `index.html`, `sw.js`, atau `main` dalam kelompok ini. **BELUM LULUS UNTUK MERGE.**
+
+
+## Audit berkelompok III — semua pautan rujukan carta (20 Oktober 2026)
+
+Audit statik terhadap carta dalam `index.html` menemui 36 corak langkah dengan senarai rujukan eksplisit; tiada rujukan nombor seksyen tidak dikenali dalam corak yang diperiksa. Suite sedia ada menguji destinasi keputusan 11 variasi RSN/RT/RKK dan membuka **pautan pertama** setiap tab, tetapi belum menguji kesahihan nombor bagi **semua** butang rujukan carta.
+
+Commit `d85cafa7` menambah satu regresi pelayar yang merentas keseluruhan 12 paparan carta (KM + 3 RSN + 5 RT + 3 RKK) dan membaca setiap label butang rujukan, mengekstrak nombor seksyen, lalu memastikan seksyen tersebut wujud dalam DATA. Ini melengkapkan semakan statik namun tidak membuktikan bahawa rujukan yang wujud itu adalah tepat secara tafsiran perundangan. CI untuk commit terbaru belum dapat disahkan, maka status ujian ini **BELUM DIUJI DALAM CI TERKINI**.
+
+Sumber silang rasmi: PLANMalaysia, teks Akta 172 sebagaimana 1 Jun 2021 dan panduan publisiti peruntukan Seksyen 9, 12A, 13, 15, 16(3), 16B(3). Teks sumber tersebut ialah garis dasar, bukan jaminan pindaan dan pemakaian negeri terkini. Baki: kesahihan semantik semua langkah/keputusan, mutu 11 PDF cetakan, pengesahan CI. Jangan merge ke `main`.
