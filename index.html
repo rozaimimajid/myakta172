@@ -1848,7 +1848,7 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
 
  if(!overlay||!chart)return;
  const steps=[
- ['Tentukan keperluan KM','Semak sama ada cadangan pemajuan memerlukan kebenaran merancang atau termasuk dalam pengecualian yang sah.',['19']],
+ ['Tentukan keperluan KM','Semak kewajipan mendapatkan KM di bawah Seksyen 19(1) dan sama ada pemajuan benar-benar memenuhi mana-mana pengecualian khusus Seksyen 19(2). Pengecualian tidak boleh dianggap terpakai secara automatik.',['19']],
  ['Semakan Zoning RT','Semak zon guna tanah, syarat dan kesesuaian cadangan dengan Rancangan Tempatan atau rancangan pemajuan berkuat kuasa.',['2','12','16B','18']],
  ['Permohonan KM','Sediakan dan kemukakan permohonan bersama dokumen, pelan dan maklumat yang berkaitan.',['21','21A','21B','21C']],
  ['Penentuan Caj Pemajuan (Jika Terpakai)','PBPT menentukan sama ada caj pemajuan kena dibayar berdasarkan Seksyen 32; jika berkenaan, menentukan amaun dan mengeluarkan notis tuntutan menurut Seksyen 33. Semakan pematuhan bayaran atau kebenaran ansuran dibuat sebelum KM diberikan pada Turutan 6.',['32','33']],
@@ -1857,11 +1857,11 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  ['Keputusan Pemberian atau Penolakan KM','PBPT memutuskan untuk memberikan KM dengan atau tanpa syarat, atau menolaknya.',['22']],
  ['Pemantauan Ansuran Selepas KM (Jika Berkenaan)','Jika PBPT telah membenarkan pembayaran caj secara ansuran, pantau ansuran yang genap masa serta tindakan notis dan tunggakan menurut Seksyen 34. Langkah ini bukan pengganti prasyarat pemberian KM.',['34']],
  ['Tempoh Sah dan Tindakan Susulan','Semak tempoh sah KM, pematuhan syarat, lanjutan dan tindakan susulan yang berkaitan.',['24','25']],
- ['Rayuan','Semak hak rayuan, tatacara dan tindakan lanjut sekiranya keputusan atau syarat KM dipertikaikan.',['23']]
+ ['Rayuan','Semak kelayakan dan tempoh satu bulan untuk merayu kepada Lembaga Rayuan menurut Seksyen 23(1). Perintah di bawah Seksyen 23(3) boleh mengekalkan keputusan, mengarahkan pemberian KM, mengetepikan KM atau mengubah syarat; patuhi perintah sebenar.',['23']]
  ];
  const paths={0:[1,'km-end-exempt'],1:[2,1],2:[3,2],3:[4,3],4:[5,4],5:[5,6],6:[7,9],7:[8,7],8:['km-end-first',8],9:[6,'km-end-appeal']};
  const questions=[
- ['Adakah pemajuan memerlukan KM?','KM diperlukan. Teruskan ke semakan zoning RT.','Jika pengecualian sah terpakai, laluan KM tamat; undang-undang lain masih perlu dipatuhi.'],
+ ['Adakah pemajuan memerlukan KM?','KM diperlukan. Teruskan ke semakan zoning RT.','Jika pengecualian khusus Seksyen 19(2) disahkan terpakai, laluan KM tamat; keperluan undang-undang lain masih perlu dipatuhi.'],
  ['Adakah cadangan selaras dengan zoning RT / rancangan pemajuan?','Cadangan selaras. Teruskan kepada permohonan KM.','Semak semula cadangan, zoning atau perincian pemajuan sebelum meneruskan.'],
  ['Adakah dokumen permohonan lengkap?','Teruskan kepada penentuan tanggungan dan amaun caj pemajuan jika terpakai.','Lengkapkan dokumen permohonan.'],
  ['Adakah penentuan caj pemajuan telah dibuat jika terpakai?','Teruskan kepada pertimbangan PBPT; prasyarat bayaran disahkan pada Turutan 6 sebelum KM diberikan.','Tentukan sama ada caj kena dibayar, amaun dan notis tuntutan menurut Seksyen 32–33 jika terpakai.'],
@@ -1870,7 +1870,7 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  ['Apakah keputusan PBPT?','KM diberikan selepas prasyarat dipenuhi. Pantau ansuran jika berkenaan.','Permohonan ditolak / syarat dipertikaikan. Semak rayuan.'],
  ['Adakah ansuran selepas KM dipatuhi (atau tiada ansuran)?','YA — Tiada ansuran atau bayaran yang perlu dijelaskan telah dipatuhi; teruskan kepada tempoh sah KM.','TIDAK — Jika ansuran tertunggak, semak notis, tuntutan dan tindakan menurut Seksyen 34 sebelum meneruskan pemantauan.'],
  ['Adakah tindakan susulan dan tempoh sah dipatuhi?','Laluan proses selesai dengan pematuhan.','Ambil tindakan susulan atau mohon lanjutan jika berkaitan.'],
- ['Adakah keputusan rayuan menghendaki pertimbangan semula oleh PBPT?','YA — Kembali ke Turutan 7 untuk pertimbangan atau keputusan semula menurut keputusan rayuan; KM tidak diluluskan secara automatik.','TIDAK — Laluan rayuan tamat mengikut keputusan yang dibuat.']
+ ['Adakah perintah Lembaga Rayuan memerlukan tindakan lanjut PBPT?','YA — Kembali ke Turutan 7 hanya bagi melaksanakan perintah Lembaga Rayuan yang memerlukan tindakan PBPT; patuhi kandungan perintah dan jangan putuskan semula secara bebas.','TIDAK — Ikut perintah Lembaga Rayuan, termasuk pengesahan atau pengetepian keputusan, dan tamatkan laluan yang berkaitan.']
  ];
  const stageNodes=[];
  function openSection(n){
