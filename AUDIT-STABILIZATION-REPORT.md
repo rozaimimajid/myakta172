@@ -261,3 +261,8 @@ Audit baca sahaja mendapati Turutan 9 KM terlalu umum tentang luput/lanjutan. Se
 ## Sahkan Seksyen 24; bezakan pembatalan KM di bawah Seksyen 25 — 20 Oktober 2026
 
 GitHub Actions run `39403885382` bagi commit `b6f4321b` disahkan **SUCCESS**, menutup ujian regresi penerangan tempoh sah Seksyen 24. Semakan susulan mendapati Turutan 9 merujuk Seksyen 25 tetapi belum menjelaskan bahawa **perintah pembatalan atau pengubahsuaian KM demi kepentingan awam tidak berkuat kuasa sehingga disahkan Jawatankuasa** (25(1)–(2)). Commit `dd61c434` menambah ayat berkenaan secara terhad pada Turutan 9, memisahkannya daripada lanjutan/luput di bawah Seksyen 24. Susunan dan destinasi keputusan tidak diubah. Ujian susulan run `39404194246` mesti disahkan sebelum isu dianggap selesai. `main` tidak disentuh.
+
+
+## Keperluan permohonan KM Seksyen 21 — 20 Oktober 2026
+
+Semakan mendapati Turutan 3 belum menerangkan secara jelas dokumen dan fi Seksyen 21(1), keizinan bertulis pemunya tanah bagi pemohon bukan pemunya tanah di bawah 21(2), dan arahan pindaan/pengemukaan semula pelan 21(3)–(5). Turutan 5 pula belum menyatakan bahawa, **apabila tiada rancangan tempatan bagi kawasan cadangan**, PBPT perlu menyampaikan notis kepada pemunya tanah berjiran bagi bantahan dalam tempoh **21 hari** menurut 21(6), dan mengurus bantahan mengikut 21(7). Commit `083178bc` menambah penerangan ini pada Turutan 3 dan 5 sahaja tanpa mengubah susunan carta, laluan YA/TIDAK atau teks asal Akta. Ujian GitHub Actions run `39405551656`; sahkan keputusan sebelum menandakan lulus. `main` tidak disentuh.
