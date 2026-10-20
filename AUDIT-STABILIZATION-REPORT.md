@@ -271,3 +271,12 @@ Semakan mendapati Turutan 3 belum menerangkan secara jelas dokumen dan fi Seksye
 ## Audit Seksyen 21A–21C: LCP, pelan susun atur, orang berkelayakan — 20 Oktober 2026
 
 Perbandingan baca sahaja dengan teks Akta 172 cetakan semula sebagaimana pada 1 Jun 2021 (salinan MBK, https://mbk.gov.my/portal/wp-content/uploads/2022/12/Akta172-aktaperancangbandardandesa.pdf) mengesahkan peruntukan 21A–21C ada dalam DATA aplikasi. Jurang yang dikenal pasti ialah **penerangan Turutan 3 KM**, yang memaut ke seksyen berkenaan tetapi belum menghuraikan LCP dan pengecualian PBN melalui kaedah-kaedah (21A), pelan susun atur dan prosedur pindaan/pengemukaan semula (21B), serta syarat penyedia yang berkelayakan/berhak (21C). Commit `15dff036` menambah penerangan terhad di Turutan 3, tanpa mengubah teks DATA, bilangan turutan atau laluan YA/TIDAK. Semak keputusan GitHub Actions run `39434163575` sebelum mengisytiharkan lulus. Catatan: kesahihan perubahan undang-undang selepas 1 Jun 2021 belum diperakukan. `main` tidak disentuh.
+
+
+## Regresi khusus Seksyen 21A–21C — 20 Oktober 2026
+
+GitHub Actions run `39434163575` bagi pembetulan carta KM sebelumnya telah disemak melalui senarai pekerjaan: job `smoke` dan langkah `Run browser regression` berstatus **completed/success**. Ini membuktikan set ujian terdahulu lulus, tetapi tiada ujian khusus yang menyebut Seksyen 21A, 21B atau 21C dalam `tests/smoke.mjs` ketika diperiksa.
+
+Commit `c720d769` menambah ujian regresi terarah dalam `tests/smoke.mjs` sahaja. Ujian memeriksa satu rekod bagi setiap Seksyen 21A, 21B dan 21C; pengelasan ketiganya di Bahagian IV dan navigasi; kandungan teks tidak kosong; penerangan; ciri penting 21A (impak sosial dan pengecualian melalui kaedah-kaedah PBN), 21B (permohonan disifatkan ditarik balik), 21C (hak berdasarkan undang-undang bertulis lain); serta kemunculan rujukan ketiga-tiganya di carta KM.
+
+**Status pengesahan:** Pindaan ujian telah dihantar ke cabang audit, namun keputusan GitHub Actions untuk commit `c720d769` belum dapat disahkan pada masa catatan ini. Jangan tandakan ujian tambahan sebagai lulus sebelum menyemak run berkenaan. Perubahan ini tidak meminda teks akta, aliran aplikasi atau cabang `main`. Ujian ini menjaga integriti data/rujukan, **bukan** perakuan bahawa naskhah perundangan semasa sudah disemak sepenuhnya. Kekalkan keputusan **BELUM LULUS UNTUK MERGE**.
