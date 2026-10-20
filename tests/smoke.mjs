@@ -729,6 +729,29 @@ try {
    assert.match(d.km,/KM tidak diluluskan secara automatik/i,'KM appeal path implies automatic approval');
    assert.match(d.km,/pelaksanaan perintah/i,'KM appeal path omits order implementation safeguard');
  });
+ await check('Section 24 expiry and extension safeguards',async()=>{
+   const d=await page.evaluate(()=>({
+     records:DATA.sections.filter(x=>x.num==='24'),
+     part:DATA.parts.find(x=>x.num==='IV')?.sections||[],
+     explanation:DATA.explain['24']||'',
+     km:document.getElementById('kmFlowChart')?.innerText||''
+   }));
+   assert.equal(d.records.length,1,'Section 24 missing or duplicated');
+   assert.equal(d.records[0].part,'IV','Section 24 wrong Part');
+   assert.ok(d.part.includes('24'),'Section 24 missing from navigation');
+   const law=d.records[0].text;
+   for(const v of ['(1)','(2)','(3)','(4)','(5)']) assert.ok(law.includes(v),'Section 24 missing subsection '+v);
+   assert.match(law,/luput dua belas bulan/i,'12-month expiry absent');
+   assert.match(law,/tidak melibatkan apa-apa kerja\s+bangunan/i,'no-building-work exemption absent');
+   assert.match(law,/sebelum kebenaran merancang itu luput/i,'extension-before-expiry absent');
+   assert.match(law,/fi yang ditetapkan/i,'extension fee absent');
+   assert.match(law,/seksyen 23 hendaklah terpakai/i,'extension conditions appeal right absent');
+   assert.ok(d.explanation.length>45,'Section 24 explanation missing');
+   assert.match(d.km,/Seksyen 24\(1\)/i,'KM flow misses expiry');
+   assert.match(d.km,/Seksyen 24\(2\)/i,'KM flow misses exception');
+   assert.match(d.km,/Permohonan lanjutan hendaklah dibuat sebelum luput/i,'KM flow misses extension deadline');
+   assert.match(d.km,/Seksyen 25\(2\)/i,'KM flow misses distinct cancellation confirmation');
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
