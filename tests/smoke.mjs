@@ -710,6 +710,25 @@ try {
    assert.match(data.kmText,/Seksyen 22\(4\)[\s\S]{0,230}\(aa\)/i);
    assert.match(data.kmText,/Seksyen 22\(4\)[\s\S]{0,330}\(b\)/i);
  });
+ await check('Section 23 appeal rights and KM route safeguards',async()=>{
+   const d=await page.evaluate(()=>({
+     sections:DATA.sections.filter(s=>s.num==='23'),
+     partSections:DATA.parts.find(p=>p.num==='IV')?.sections||[],
+     explanation:DATA.explain['23']||'',
+     km:document.getElementById('kmFlowChart')?.innerText||''
+   }));
+   assert.equal(d.sections.length,1,'Section 23 missing or duplicated');
+   assert.equal(d.sections[0].part,'IV','Section 23 wrong part');
+   assert.ok(d.partSections.includes('23'),'Section 23 missing from Part IV');
+   assert.ok(d.explanation.length>40,'Section 23 explanation missing');
+   const law=d.sections[0].text;
+   for(const phrase of ['tempoh satu bulan','mendengar pihak merayu','mengesahkan keputusan','mengarahkan pihak','mengetepikan','mengubah suai'])
+     assert.ok(law.toLowerCase().includes(phrase.toLowerCase()),'Section 23 missing '+phrase);
+   assert.match(d.km,/Seksyen 23\\(1\\)/i,'KM appeal step missing deadline');
+   assert.match(d.km,/Seksyen 23\\(3\\)/i,'KM appeal step missing appeal powers');
+   assert.match(d.km,/KM tidak diluluskan secara automatik/i,'KM appeal path implies automatic approval');
+   assert.match(d.km,/pelaksanaan perintah/i,'KM appeal path omits order implementation safeguard');
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
