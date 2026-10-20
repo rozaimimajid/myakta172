@@ -620,6 +620,18 @@ try {
                outside:bounds.filter(r=>r.left < -4 || r.right > doc.clientWidth+4).length,
                empty:bounds.length===0};
            });
+           const pagination=await pop.evaluate(()=>{
+             const nodes=[...document.querySelectorAll('.km-step,.km-decision-block,.km-finish')];
+             const topOf=e=>e.getBoundingClientRect().top+window.scrollY;
+             const styles=nodes.map(e=>({element:e,style:getComputedStyle(e)}));
+             return {breakInsideAvoid:styles.filter(v=>/avoid/.test(v.style.breakInside)||/avoid/.test(v.style.pageBreakInside)).length,
+               nodes:styles.length,
+               zeroHeight:nodes.filter(e=>e.getBoundingClientRect().height<4).length,
+               firstTop:nodes.length?Math.round(topOf(nodes[0])):null};
+           });
+           assert.equal(pagination.zeroHeight,0,name+' '+variant+' collapsed print nodes');
+           assert.ok(pagination.nodes>=4,name+' '+variant+' missing print nodes');
+           console.log('PRINT_PAGINATION_AUDIT',name,variant,JSON.stringify(pagination));
            assert.ok(!layout.empty,name+' '+variant+' no printable flow boxes');
            assert.ok(layout.scrollWidth<=layout.paperWidth+4 && layout.outside===0,
              name+' '+variant+' horizontal clipping in print: '+JSON.stringify(layout));
