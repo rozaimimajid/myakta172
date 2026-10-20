@@ -219,6 +219,25 @@ try {
    }
    console.log('DECISION_CONTRACTS_VERIFIED',verified);
  });
+ await check('Section 16 cancellation and 16A statutory safeguards',async()=>{
+   await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+   await page.locator('#rtDesktopLaunch').evaluate(el=>el.click());
+   try {
+     await page.locator('[data-rt-tab="cancel"]').evaluate(el=>el.click());
+     const cancel=await page.locator('#rtV25Chart').innerText();
+     assert.match(cancel,/cadangan pembatalan RT/i,'cancellation proposal not named');
+     assert.match(cancel,/subseksyen 16\(3\)/i,'section 16(3) dependency missing');
+     assert.match(cancel,/Seksyen 13/i,'publicity procedure missing');
+     assert.match(cancel,/persetujuan PBN/i,'PBN consent missing');
+     await page.locator('[data-rt-tab="director"]').evaluate(el=>el.click());
+     const director=await page.locator('#rtV25Chart').innerText();
+     assert.match(director,/JPN berpuas hati/i,'JPN satisfaction condition missing');
+     assert.match(director,/PBPT kepada Pengarah Negeri/i,'mandatory costs payer missing');
+     assert.match(director,/subseksyen 16A\(1\)/i,'section 16A(1) missing');
+     assert.match(director,/subseksyen 16A\(2\)/i,'section 16A(2) missing');
+     assert.match(director,/Seksyen 12, 13, 14, 15 dan 16/i,'statutory procedures incomplete');
+   } finally { await page.locator('#rtV25Close').evaluate(el=>el.click()); }
+ });
  await check('Every planning tab links to its referenced statute section',async()=>{
    const flows=[
      ['KM','kmDesktopLaunch','kmFlowOverlay','kmFlowChart','kmReturnButton','kmFlowClose',null],
