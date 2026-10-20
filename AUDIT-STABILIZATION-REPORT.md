@@ -44,3 +44,30 @@ Ini ialah pemeriksaan struktur statik sahaja. Semua ujian pelayar di atas masih 
 
 ## Keputusan terkini
 TIDAK LULUS UNTUK MERGE. Teruskan ujian interaksi dalam persekitaran pelayar berasingan apabila sumber kod dan aset boleh dimuatkan secara lengkap.
+
+
+## Kemas kini audit silang perundangan — 20 Oktober 2026
+
+**Asas semakan:** Akta Perancangan Bandar dan Desa 1976 (Akta 172), teks PLANMalaysia sebagaimana pada 1 Jun 2021:
+- https://www.planmalaysia.gov.my/planmalaysia/resources/dokumen/Akta_172/AKTA_172_MUKTAMAD_SEBAGAIMANA_1_JUN_2021.pdf
+- https://www.planmalaysia.gov.my/epublisiti/article?id=keperluan-akta-172
+
+### Perkara yang telah terbukti oleh automasi (bukan pengesahan keseluruhan undang-undang)
+- GitHub Actions pada commit 572322e dan versi ujian terdahulu telah berjaya.
+- Ujian kontrak keputusan RSN/RT/RKK merangkumi sembilan variasi sedia ada dan 46 laluan YA/TIDAK.
+- Ini menguji destinasi dan tingkah laku paparan; kesahihan semua fakta, peringkat kuasa dan pengecualian perlu diaudit berasingan.
+
+### Jurang liputan dikesan — perlu keputusan reka bentuk sebelum kod baharu
+1. **Seksyen 16 — Pembatalan RT belum ditawarkan sebagai variasi carta berasingan.** Menu semasa: Penyediaan RT, Pengubahan RT, Penggantian RT. Keperluan meliputi pembatalan perlu ditentukan dan diwujudkan sebagai laluan tersendiri jika skop aplikasi ialah proses Akta 172 yang lengkap. Jangan samakan pembatalan dengan penggantian.
+2. **Seksyen 16A — laluan arahan kepada Pengarah Negeri tidak diwakili sebagai keputusan/pengecualian.** Jika JPN berpuas hati PBPT tidak mengambil langkah, JPN boleh mengarahkan Pengarah Negeri menyediakan RT atau cadangan di bawah peruntukan berkenaan. Seksyen 12–16 terpakai melalui subseksyen 16A(2).
+3. **RKK — Seksyen 16B(3) menetapkan kaedah penyediaan seperti RT dan kuat kuasa seperti RT.** Variasi Pengubahan/Penggantian RKK semasa merupakan pemodelan melalui hubungan dengan peruntukan RT; ia tidak semestinya prosedur autonomi yang disebut secara nyata dalam Seksyen 16B. Pastikan label pedagogi tidak membayangkan peruntukan bebas.
+4. **Penolakan draf penyediaan RT** kini mempunyai laluan kembali terus ke proses penyediaan draf. Perlu sahkan sama ada sambungan tersebut sekadar pembelajaran bersyarat atau memerlukan permulaan tatacara baharu, termasuk publisiti, mengikut sifat pindaan dan keputusan pihak berkuasa.
+5. **Kelulusan JPN vs persetujuan PBN dan kuat kuasa** mesti terus dipisahkan dalam semakan semantik setiap carta, khususnya laluan terminal selepas penolakan.
+
+### Keutamaan
+- P1: Sahkan tatacara pembatalan RT (Seksyen 16) dan tambah liputan yang berbeza daripada penggantian.
+- P1: Modelkan pengecualian Seksyen 16A dengan syarat JPN/PBPT/ Pengarah Negeri yang tepat.
+- P2: Semak terma RKK melalui subseksyen 16B(1)–(3) dan tatacara RT yang dirujuk.
+- P2: Audit semantik setiap laluan dan kandungan penuh Akta 172.
+
+**Keputusan terkini: BELUM LULUS UNTUK MERGE.** Lulus ujian pelayar tidak menggugurkan jurang liputan undang-undang ini. Tiada pindaan ke cabang main dibenarkan tanpa kelulusan pengguna.
