@@ -303,3 +303,10 @@ Commit `8510a6f` menambah kawalan regresi terarah dalam `tests/smoke.mjs` untuk 
 Teks DATA Bahagian IV Seksyen 24 telah disemak: lima subseksyen wujud, meliputi luput dua belas bulan jika pemajuan belum dimulakan, pengecualian bagi KM yang nyata tidak melibatkan kerja bangunan, permohonan lanjutan sebelum luput dengan fi, luput selepas lanjutan, dan kuasa mengenakan/mengubah syarat yang melibatkan hak rayuan di bawah Seksyen 23. Turutan 9 carta KM membezakan Seksyen 24 dengan pembatalan/pengubahsuaian di bawah Seksyen 25. Tiada pembetulan teks aplikasi diperlukan berdasarkan pemeriksaan ini.
 
 Commit `98325783` menambah ujian regresi khusus Seksyen 24 pada `tests/smoke.mjs` (identiti, bahagian, subseksyen, frasa penting dan padanan rujukan carta KM). Status pengesahan GitHub Actions ujian baharu belum disahkan; **jangan anggap lulus** sehingga keputusan CI diperoleh. Tiada perubahan pada `main` dan **BELUM LULUS UNTUK MERGE**. Pemakaian undang-undang terkini dan kaedah negeri masih memerlukan pengesahan berasingan.
+
+
+## Audit Seksyen 25 — 20 Oktober 2026
+
+Semakan DATA Bahagian IV mengesahkan Seksyen 25(1)–(10) wujud, merangkumi pembatalan/pengubahsuaian demi kepentingan awam, pengesahan Jawatankuasa sebelum kuat kuasa, perobohan dan pembayaran balik kos, pampasan, serta rayuan amaun pampasan. Turutan 9 carta KM menyatakan Seksyen 25(1)–(2) secara berasingan daripada luput dan lanjutan KM Seksyen 24.
+
+Commit `4fef550` menambah ujian regresi khusus dalam `tests/smoke.mjs` untuk rekod, navigasi, subseksyen, frasa penting dan rujukan KM. Keputusan GitHub Actions bagi ujian baharu **belum disahkan**, bukan lulus. Tiada perubahan pada teks Akta atau carta. Audit undang-undang mutakhir masih terbuka. **BELUM LULUS UNTUK MERGE; main tidak disentuh.**
