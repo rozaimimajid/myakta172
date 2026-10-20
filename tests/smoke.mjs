@@ -382,7 +382,7 @@ try {
        await navigator.serviceWorker.controller || await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
        return {scope:ready.scope,active:ready.active?.state,cache:await caches.keys()};
      });
-     assert.ok(state.cache.includes('myakta172-pwa-v33'),'expected PWA cache missing: '+state.cache);
+     assert.ok(state.cache.includes('myakta172-pwa-v34'),'expected PWA cache missing: '+state.cache);
      await context.setOffline(true);
      const response=await p.goto(url,{waitUntil:'domcontentloaded',timeout:12000});
      assert.ok(response && response.ok(),'offline page response not OK');
@@ -408,7 +408,8 @@ try {
     await p.goto(url,{waitUntil:'load'});
     const keys=await p.evaluate(async()=>{
       await navigator.serviceWorker.ready;
-      await caches.open('myakta172-audit-stale-cache');
+      await caches.open('myakta172-pwa-audit-stale');
+      await caches.open('unrelated-app-audit-keep');
       const reg=await navigator.serviceWorker.getRegistration();
       await reg.unregister();
       const updated=await navigator.serviceWorker.register('./sw.js?audit-reinstall=1');
@@ -419,13 +420,14 @@ try {
       });
       for(let tries=0;tries<30;tries++){
         const keys=await caches.keys();
-        if(!keys.includes('myakta172-audit-stale-cache'))return keys;
+        if(!keys.includes('myakta172-pwa-audit-stale'))return keys;
         await new Promise(resolve=>setTimeout(resolve,100));
       }
       return caches.keys();
     });
-    assert.ok(keys.includes('myakta172-pwa-v33'),'new PWA cache absent');
-    assert.ok(!keys.includes('myakta172-audit-stale-cache'),'stale cache remains');
+    assert.ok(keys.includes('myakta172-pwa-v34'),'new PWA cache absent');
+    assert.ok(!keys.includes('myakta172-pwa-audit-stale'),'stale cache remains');
+    assert.ok(keys.includes('unrelated-app-audit-keep'),'unrelated cache was deleted');
   }finally{await ctx.close();}
  });
  await check('Print stylesheet isolates each planning chart',async()=>{
