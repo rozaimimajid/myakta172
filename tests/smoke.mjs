@@ -674,7 +674,7 @@ try {
      const part=DATA.parts.find(p=>p.num==='IV');
      const explanations=ids.map(id=>DATA.explain[id]);
      const km=document.getElementById('kmFlowChart');
-     return {rows,partSections:part?.sections||[],explanations,kmText:km?.innerText||''};
+     return {rows,partSections:part?.sections||[],explanations,kmText:km?.textContent||''};
    });
    for(let i=0;i<3;i++){
      const id=['21A','21B','21C'][i];
@@ -693,7 +693,7 @@ try {
  await check('Section 22 statutory decision safeguards remain intact',async()=>{
    const data=await page.evaluate(()=>{
      const matches=DATA.sections.filter(s=>s.num==='22');
-     return {matches,part:DATA.parts.find(p=>p.num==='IV')?.sections||[],explanation:DATA.explain['22']||'',kmText:document.getElementById('kmFlowChart')?.innerText||''};
+     return {matches,part:DATA.parts.find(p=>p.num==='IV')?.sections||[],explanation:DATA.explain['22']||'',kmText:document.getElementById('kmFlowChart')?.textContent||''};
    });
    assert.equal(data.matches.length,1,'Section 22 missing or duplicated');
    assert.equal(data.matches[0].part,'IV','Section 22 wrong Part');
@@ -715,7 +715,7 @@ try {
      sections:DATA.sections.filter(s=>s.num==='23'),
      partSections:DATA.parts.find(p=>p.num==='IV')?.sections||[],
      explanation:DATA.explain['23']||'',
-     km:document.getElementById('kmFlowChart')?.innerText||''
+     km:document.getElementById('kmFlowChart')?.textContent||''
    }));
    assert.equal(d.sections.length,1,'Section 23 missing or duplicated');
    assert.equal(d.sections[0].part,'IV','Section 23 wrong part');
@@ -734,7 +734,7 @@ try {
      records:DATA.sections.filter(x=>x.num==='24'),
      part:DATA.parts.find(x=>x.num==='IV')?.sections||[],
      explanation:DATA.explain['24']||'',
-     km:document.getElementById('kmFlowChart')?.innerText||''
+     km:document.getElementById('kmFlowChart')?.textContent||''
    }));
    assert.equal(d.records.length,1,'Section 24 missing or duplicated');
    assert.equal(d.records[0].part,'IV','Section 24 wrong Part');
@@ -757,7 +757,7 @@ try {
      entries:DATA.sections.filter(x=>x.num==='25'),
      part:DATA.parts.find(x=>x.num==='IV')?.sections||[],
      explanation:DATA.explain['25']||'',
-     km:document.getElementById('kmFlowChart')?.innerText||''
+     km:document.getElementById('kmFlowChart')?.textContent||''
    }));
    assert.equal(d.entries.length,1,'Section 25 missing or duplicated');
    assert.equal(d.entries[0].part,'IV','Section 25 wrong Part');
