@@ -186,3 +186,15 @@ Commit `5315ec95` hanya menyusun semula jarak pemisah dan terminal alternatif da
 | Arahan Pengarah Negeri / 16A | 1 | Ya; termasuk `RT sedia ada masih berkuat kuasa` |
 
 Ini menyelesaikan **isu bilangan halaman dan ruang pembaziran RT** dalam penghasilan PDF Chromium yang diuji, tanpa mengecilkan fon asas atau membuang terminal. Audit mutu visual halus (bentuk berlian/anak panah pada resolusi cetak) dan kesahihan penuh teks perundangan **masih terbuka**. Tiada penggabungan ke `main`.
+
+
+## Audit visual bentuk dan kebolehbacaan PDF — 20 Oktober 2026
+
+**Bukti:** PNG yang dirender daripada artifak sebenar GitHub Actions run `39396908187` (versi 11 variasi); perbandingan RSN prep, RT prep/review/cancel/director dan RKK prep secara berdampingan.
+
+1. **P1 — Simbol keputusan berbentuk berlian tidak dikekalkan dalam PDF cetak.** Pada PDF berkenaan, soalan keputusan dan kotak YA/TIDAK kelihatan sebagai susunan segi empat biasa, tanpa geometri berlian yang jelas. Skrip cetak klon memadam `svg` dan gaya popup cetak tidak memuatkan gaya berlian seperti paparan aplikasi. Oleh itu ujian 60 destinasi keputusan lulus tetapi identiti visual carta keputusan masih belum disahkan dalam PDF.
+2. **P1 — Teks cetakan kelihatan terlalu kecil pada paparan satu helaian A4**, khususnya carta yang mengandungi banyak langkah dan perihal panjang. Saiz fon 11px pada CSS tidak sama dengan jaminan teks mudah dibaca pada kertas A4; pemampatan menegak mempertingkat risiko ini.
+3. **P2 — Elemen alternatif terminal terlalu rapat** dalam beberapa variasi, dan di RT 16A terdapat beberapa baris terminal/pemisah yang sangat padat di kaki carta. Semak penjarakan dan sempadan bacaan.
+4. **Keputusan:** 5/5 RT satu halaman secara teknikal tetapi **BELUM LULUS mutu visual cetakan**. Jangan membuat pengoptimuman halaman tambahan semata-mata; utamakan geometri keputusan dan kebolehbacaan, walaupun hasil akhirnya 2 halaman.
+
+**Cadangan kawalan:** Tambah ujian yang memeriksa geometri berlian dalam dokumen cetak dan ukuran fon/carta sebelum mengubah gaya cetak. Simpan rujukan sebelum/selepas. Cabang `main` kekal tidak disentuh.
