@@ -752,6 +752,26 @@ try {
    assert.match(d.km,/Permohonan lanjutan hendaklah dibuat sebelum luput/i,'KM flow misses extension deadline');
    assert.match(d.km,/Seksyen 25\(2\)/i,'KM flow misses distinct cancellation confirmation');
  });
+ await check('Section 25 cancellation modification and compensation safeguards',async()=>{
+   const d=await page.evaluate(()=>({
+     entries:DATA.sections.filter(x=>x.num==='25'),
+     part:DATA.parts.find(x=>x.num==='IV')?.sections||[],
+     explanation:DATA.explain['25']||'',
+     km:document.getElementById('kmFlowChart')?.innerText||''
+   }));
+   assert.equal(d.entries.length,1,'Section 25 missing or duplicated');
+   assert.equal(d.entries[0].part,'IV','Section 25 wrong Part');
+   assert.ok(d.part.includes('25'),'Section 25 absent from navigation');
+   const law=d.entries[0].text;
+   for(const n of ['(1)','(2)','(3)','(4)','(5)','(6)','(7)','(8)','(9)','(10)'])
+     assert.ok(law.includes(n),'Section 25 missing subsection '+n);
+   for(const phrase of ['kepentingan awam','sehingga disahkan oleh Jawatankuasa','amaun maksimum','kos sebenar dan munasabah','peluang yang munasabah untuk didengar','pampasan','Lembaga Rayuan'])
+     assert.ok(law.toLowerCase().includes(phrase.toLowerCase()),'Section 25 missing '+phrase);
+   assert.ok(d.explanation.length>45,'Section 25 explanation missing');
+   assert.match(d.km,/Seksyen 25\(1\)/i,'KM lacks cancellation reference');
+   assert.match(d.km,/Seksyen 25\(2\)/i,'KM lacks committee confirmation reference');
+   assert.match(d.km,/tidak berkuat kuasa sehingga disahkan Jawatankuasa/i,'KM wrongly implies immediate cancellation');
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
