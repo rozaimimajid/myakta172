@@ -171,3 +171,18 @@ Commit `7ce9d375` menambahkan kelas CSS cetakan hanya apabila variasi `director`
 Perbandingan fail sebenar `RT-director-popup.pdf`: **2 halaman sebelum dan selepas**. Isi halaman kedua berkurang: batas teks terakhir pada halaman kedua kira-kira **89 pt → 36 pt** dari atas. Perubahan kecil ini **belum menyingkirkan halaman kedua**. Elakkan pemadatan lebih agresif sebelum pengesahan kebolehbacaan visual dan pemisahan halaman; jangan dakwa masalah telah selesai.
 
 Kedudukan: empat variasi RT lain masih satu halaman pada audit terdahulu; audit cetakan 16A belum lulus sepenuhnya. `main` tidak disentuh.
+
+
+## Penyelesaian pembaziran halaman RT 16A — 20 Oktober 2026
+
+Commit `5315ec95` hanya menyusun semula jarak pemisah dan terminal alternatif dalam **popup cetakan RT Seksyen 16A**. GitHub Actions run `39396908187` selesai SUCCESS. Semakan semula PDF sebenar daripada artifact `12252316256` mengesahkan **semua lima variasi RT kini tepat satu halaman A4**:
+
+| Variasi | Bilangan halaman | Terminal akhir hadir |
+|---|---:|---|
+| Penyediaan | 1 | Ya |
+| Pengubahan | 1 | Ya |
+| Penggantian | 1 | Ya |
+| Pembatalan | 1 | Ya |
+| Arahan Pengarah Negeri / 16A | 1 | Ya; termasuk `RT sedia ada masih berkuat kuasa` |
+
+Ini menyelesaikan **isu bilangan halaman dan ruang pembaziran RT** dalam penghasilan PDF Chromium yang diuji, tanpa mengecilkan fon asas atau membuang terminal. Audit mutu visual halus (bentuk berlian/anak panah pada resolusi cetak) dan kesahihan penuh teks perundangan **masih terbuka**. Tiada penggabungan ke `main`.
