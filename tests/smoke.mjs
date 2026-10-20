@@ -853,7 +853,7 @@ try {
      const result=await p.evaluate(()=>{
        localStorage.setItem('myakta172_favourites_v1',JSON.stringify(['1','UNKNOWN','__proto__']));
        localStorage.setItem('myakta172_history_v1',JSON.stringify([{num:'1',at:Date.now()},{num:'UNKNOWN',at:Date.now()}]));
-       renderMobileLists();
+       document.querySelector('[data-mobile-nav="home"]').click();
        return {fav:[...document.querySelectorAll('#mobileFav .reader-row')].map(e=>e.dataset.mobileSec),recent:[...document.querySelectorAll('#mobileRecent .reader-row')].map(e=>e.dataset.mobileSec)};
      });
      assert.deepEqual(result.fav,['1'],'Invalid favourite ID rendered on mobile');
