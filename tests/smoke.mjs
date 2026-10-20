@@ -631,6 +631,15 @@ try {
            });
            assert.equal(pagination.zeroHeight,0,name+' '+variant+' collapsed print nodes');
            assert.ok(pagination.nodes>=4,name+' '+variant+' missing print nodes');
+           const printBreaks=await pop.evaluate(()=>{
+             const content=[...document.querySelectorAll('.km-step,.km-decision-block,.km-finish')];
+             return {total:content.length,protected:content.filter(e=>{
+               const css=getComputedStyle(e);
+               return css.breakInside==='avoid'||css.breakInside==='avoid-page'||css.pageBreakInside==='avoid';
+             }).length};
+           });
+           assert.ok(printBreaks.total>=4,name+' '+variant+' no print sections');
+           console.log('PRINT_BREAK_COVERAGE',name,variant,printBreaks.protected,'of',printBreaks.total);
            console.log('PRINT_PAGINATION_AUDIT',name,variant,JSON.stringify(pagination));
            assert.ok(!layout.empty,name+' '+variant+' no printable flow boxes');
            assert.ok(layout.scrollWidth<=layout.paperWidth+4 && layout.outside===0,
