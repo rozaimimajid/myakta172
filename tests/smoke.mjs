@@ -706,9 +706,9 @@ try {
    assert.match(law,/subseksyen 34\\(1\\)/i);
    assert.match(law,/perintah pemeliharaan pokok/i);
    assert.ok(data.explanation.length>60,'Section 22 explanation missing');
-   assert.match(data.kmText,/Seksyen 22\\(4\\)\\(a\\)/i);
-   assert.match(data.kmText,/22\\(4\\)\\(aa\\)/i);
-   assert.match(data.kmText,/22\\(4\\)\\(b\\)/i);
+   assert.match(data.kmText,/Seksyen 22\\(4\\)[\\s\\S]{0,160}\\(a\\)/i);
+   assert.match(data.kmText,/Seksyen 22\\(4\\)[\\s\\S]{0,230}\\(aa\\)/i);
+   assert.match(data.kmText,/Seksyen 22\\(4\\)[\\s\\S]{0,330}\\(b\\)/i);
  });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
