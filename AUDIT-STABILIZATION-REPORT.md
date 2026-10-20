@@ -246,3 +246,8 @@ Audit baca sahaja Turutan 2 KM mengenal pasti rujukan zoning yang tidak menyatak
 ## Lengkapkan halangan pemberian KM, Seksyen 22(4) — 20 Oktober 2026
 
 Penemuan audit: Turutan 6 carta alir KM sebelum ini merujuk Seksyen 22(4) secara umum tetapi penerangannya hanya menjelaskan caj pemajuan di bawah perenggan (b). Semakan terhadap teks Akta 172 dalam aplikasi dan rujukan PLANMalaysia (cetakan semula 1 Jun 2021) mengesahkan tiga halangan berasingan: (a) percanggahan dengan rancangan pemajuan; (aa) percanggahan dengan perenggan 22(2)(aa); (b) caj pemajuan terhutang belum dibayar atau kebenaran ansuran 34(1) belum diperoleh. Commit `f3d68bdc` memperjelas ketiga-tiganya dalam Turutan 6 sahaja, tanpa mengubah data asal Akta, turutan atau sambungan YA/TIDAK. GitHub Actions run `39402636168` **SUCCESS**. Audit sumber sah terkini dan peruntukan negeri masih terbuka; `main` tidak disentuh.
+
+
+## Pertimbangan permohonan KM: Seksyen 22(2) dan 22(2A) — 20 Oktober 2026
+
+Audit peruntukan Seksyen 22 mengesahkan Turutan 5 carta alir KM belum menerangkan arahan Jawatankuasa di bawah perenggan 22(2)(aa) dan keperluan **Jawatankuasa meminta nasihat Majlis** untuk kategori pemajuan khusus Seksyen 22(2A). Perkara ini disemak terhadap teks Akta yang dimuatkan dalam aplikasi serta halaman rasmi PLANMalaysia berkenaan Majlis Perancang Fizikal Negara. Commit `f94a0e5f` memperjelas pertimbangan PBPT dan syarat rujukan 22(2A) pada **Turutan 5 sahaja**; tidak mengubah bilangan turutan atau destinasi YA/TIDAK. GitHub Actions run `39403474539` **SUCCESS**. Ini penjelasan teks carta alir, bukan jaminan semakan undang-undang terkini atau pemakaian spesifik setiap negeri. `main` tidak disentuh.
