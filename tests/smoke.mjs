@@ -12,9 +12,10 @@ if (!url || !/^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?\//.test(url)) {
 const browser = await chromium.launch({ headless: true });
 const errors = [];
 let failures = 0;
+const regressionResults = [];
 const check = async (name, fn) => {
-  try { await fn(); console.log('PASS', name); }
-  catch (e) { failures++; console.error('FAIL', name, e.message); }
+  try { await fn(); regressionResults.push({name,status:'pass'}); console.log('PASS', name); }
+  catch (e) { failures++; regressionResults.push({name,status:'fail',message:String(e?.message||e)}); console.error('FAIL', name, e.message); }
 };
 try {
  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -864,4 +865,7 @@ try {
    assert.deepEqual(errors,[]);
  });
 } finally { await browser.close(); }
+await mkdir('audit-artifacts',{recursive:true});
+await writeFile('audit-artifacts/regression-summary.json',JSON.stringify({schema:1,total:regressionResults.length,passed:regressionResults.length-failures,failed:failures,checks:regressionResults},null,2)+'\n');
+console.log('REGRESSION_TOTAL',regressionResults.length,'PASSED',regressionResults.length-failures,'FAILED',failures);
 if (failures) process.exitCode=1;
