@@ -165,6 +165,60 @@ try {
      await page.locator('#'+close).evaluate(el=>el.click());
    }
  });
+ // Independent branch contract: expected destination IDs and exact stage indices for all nine statutory-planning variants.
+ // Each pair is [YA target, TIDAK target]; numeric targets are zero-based process steps.
+ // These assertions must remain independent of the flow data in index.html.
+ await check('RSN RT RKK nine-variant decision contracts',async()=>{
+   const contracts=[
+     {name:'RSN',launch:'rsnDesktopLaunch',chart:'rsnV24Chart',close:'rsnV24Close',tab:'rsn',prefix:'rsn',
+       choices:{prep:[[3,5],[8,'reject']],review:[[2,'defer'],[6,'reject']],amend:[[1,'defer'],[6,'reject']]}},
+     {name:'RT',launch:'rtDesktopLaunch',chart:'rtV25Chart',close:'rtV25Close',tab:'rt',prefix:'rt',
+       choices:{prep:[[4,5],[6,2]],review:[[1,'defer'],[3,4],[5,'reject']],amend:[[1,'defer'],[3,4],[5,'reject']]}},
+     {name:'RKK',launch:'rkkDesktopLaunch',chart:'rkkV26Chart',close:'rkkV26Close',tab:'rkk',prefix:'rkk',
+       choices:{prep:[[1,'defer'],[4,5],[6,'reject']],review:[[1,'defer'],[3,4],[5,'reject']],amend:[[1,'defer'],[3,4],[5,'reject']]}}
+   ];
+   let verified=0;
+   for(const flow of contracts){
+     await page.locator('#desktopHomeButton').evaluate(el=>el.click());
+     await page.locator('#'+flow.launch).evaluate(el=>el.click());
+     for(const [variant,pairs] of Object.entries(flow.choices)){
+       await page.locator('[data-'+flow.tab+'-tab="'+variant+'"]').evaluate(el=>el.click());
+       const groups=page.locator('#'+flow.chart+' .km-decision-block');
+       assert.equal(await groups.count(),pairs.length,flow.name+' '+variant+' decision count');
+       for(let g=0;g<pairs.length;g++){
+         const group=groups.nth(g);
+         const branches=group.locator('.km-branch');
+         assert.equal(await branches.count(),2,'YA/TIDAK branch count');
+         for(let side=0;side<2;side++){
+           const branch=branches.nth(side);
+           const token=side===0?'YA':'TIDAK';
+           assert.equal((await branch.locator('b').innerText()).trim(),token,'branch label');
+           const explanation=(await branch.locator('p').innerText()).trim();
+           assert.ok(explanation.length>=8,flow.name+' '+variant+' '+token+' missing explanation');
+           const expected=pairs[g][side];
+           const button=branch.locator('.km-route-button');
+           assert.equal((await button.innerText()).includes(typeof expected==='number'?'Turutan '+(expected+1):'TAMAT'),true,'incorrect route caption');
+           await button.evaluate(el=>el.click());
+           const focus=await page.evaluate(()=>({id:document.activeElement?.id||'',className:document.activeElement?.className||'',text:document.activeElement?.innerText||''}));
+           if(typeof expected==='number'){
+             assert.match(focus.className,/km-step/,flow.name+' '+variant+' '+token+' does not focus a step');
+             const stage=page.locator('#'+flow.chart+' .km-step').nth(expected);
+             const heading=(await stage.locator('strong').innerText()).trim();
+             assert.ok(focus.text.trim().startsWith(heading),flow.name+' '+variant+' '+token+' wrong process destination');
+             assert.match(explanation,/(teruskan|mulakan|jalankan|lengkapkan|mohon|dapatkan|sediakan|semak)/i,flow.name+' '+variant+' '+token+' explanation not an action');
+           }else{
+             assert.equal(focus.id,flow.prefix+'-end-'+expected,flow.name+' '+variant+' '+token+' wrong terminal');
+             assert.match(focus.text,/TAMAT/i,flow.name+' '+variant+' '+token+' missing terminal');
+             assert.match(explanation,/(tidak|ditolak|kekal|diteruskan|memerlukan)/i,flow.name+' '+variant+' '+token+' terminal wording ambiguous');
+           }
+           verified++;
+         }
+       }
+     }
+     await page.locator('#'+flow.close).evaluate(el=>el.click());
+   }
+   console.log('DECISION_CONTRACTS_VERIFIED',verified);
+ });
  await check('Every planning tab links to its referenced statute section',async()=>{
    const flows=[
      ['KM','kmDesktopLaunch','kmFlowOverlay','kmFlowChart','kmReturnButton','kmFlowClose',null],
