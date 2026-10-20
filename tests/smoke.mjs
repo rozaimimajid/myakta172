@@ -615,6 +615,10 @@ try {
            await pop.waitForLoadState('domcontentloaded');
            const data=await pop.evaluate(()=>({text:document.body.innerText,buttons:document.querySelectorAll('button').length,steps:document.querySelectorAll('.km-step').length}));
            assert.equal(data.buttons,0,name+' '+variant+' printed interactive buttons');
+           const design=await pop.evaluate(()=>({start:getComputedStyle(document.querySelector('.km-start')).backgroundColor,finish:getComputedStyle(document.querySelector('.km-finish')).backgroundColor,diamonds:document.querySelectorAll('.km-decision .flow-diamond-outline polygon').length}));
+           assert.match(design.start,/23, 100, 69/,'MULA not green in '+name+' '+variant);
+           assert.match(design.finish,/23, 100, 69/,'TAMAT not green in '+name+' '+variant);
+           assert.ok(design.diamonds>0,name+' '+variant+' missing diamond SVG');
            if(name==='RT'){
              const shapes=await pop.locator('.km-decision .flow-diamond-outline polygon').count();
              const decisions=await pop.locator('.km-decision').count();
