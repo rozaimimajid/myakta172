@@ -134,3 +134,22 @@ Perbandingan PDF daripada artifak sebelum (`39392175349`) dan selepas (`39393135
 | director | 2 | 2 | Langkah akhir dan terminal; teks hingga 275 pt |
 
 **Rumusan:** Margin kecil sahaja tidak menyelesaikan pembaziran satu halaman bagi kesemua RT. Jangan dakwa telah selesai. Syor tindakan susulan: semak pengulangan/ruang komponen terminal dan kadar ketinggian langkah sebelum membuat perubahan lanjut; jangan mengecilkan fon secara agresif. RSN/RKK/KM tidak diubah oleh eksperimen ini. Status: BELUM LULUS audit visual cetakan.
+
+
+## Eksperimen jarak penamat RT — 20 Oktober 2026
+
+Commit `2e4d4e5` mengecilkan jarak pemisah terminal, kotak penamat dan anak panah dalam **CSS popup cetak RT sahaja**; tiada perubahan carta alir dalam aplikasi utama. GitHub Actions run `39394850356` berjaya.
+
+Semakan artifak PDF sebenar (`myakta172-audit-chart-pdfs`, artifact ID 12250593733) menunjukkan:
+
+| Variasi RT | Sebelum | Selepas |
+|---|---:|---:|
+| Penyediaan | 2 halaman | **1 halaman** |
+| Pengubahan | 2 | 2 |
+| Penggantian | 2 | 2 |
+| Pembatalan | 2 | 2 |
+| Arahan Pengarah Negeri | 2 | 2 |
+
+Halaman kedua bagi pengubahan, penggantian dan pembatalan masih menggunakan ruang kecil (teks hingga kira-kira 119 pt). Halaman kedua variasi Pengarah Negeri hingga sekitar 280 pt. Jangan anggap isu cetakan telah diselesaikan sepenuhnya.
+
+**Kesimpulan:** Pengoptimuman berjaya untuk Penyediaan RT sahaja dan tidak menjejaskan ujian regresi. Status audit visual keseluruhan masih BELUM LULUS; pemeriksaan bentuk berlian, garis dan kebolehbacaan pada resolusi sebenar masih diperlukan. Cabang `main` tidak disentuh.
