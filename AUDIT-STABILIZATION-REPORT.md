@@ -280,3 +280,12 @@ GitHub Actions run `39434163575` bagi pembetulan carta KM sebelumnya telah disem
 Commit `c720d769` menambah ujian regresi terarah dalam `tests/smoke.mjs` sahaja. Ujian memeriksa satu rekod bagi setiap Seksyen 21A, 21B dan 21C; pengelasan ketiganya di Bahagian IV dan navigasi; kandungan teks tidak kosong; penerangan; ciri penting 21A (impak sosial dan pengecualian melalui kaedah-kaedah PBN), 21B (permohonan disifatkan ditarik balik), 21C (hak berdasarkan undang-undang bertulis lain); serta kemunculan rujukan ketiga-tiganya di carta KM.
 
 **Status pengesahan:** Pindaan ujian telah dihantar ke cabang audit, namun keputusan GitHub Actions untuk commit `c720d769` belum dapat disahkan pada masa catatan ini. Jangan tandakan ujian tambahan sebagai lulus sebelum menyemak run berkenaan. Perubahan ini tidak meminda teks akta, aliran aplikasi atau cabang `main`. Ujian ini menjaga integriti data/rujukan, **bukan** perakuan bahawa naskhah perundangan semasa sudah disemak sepenuhnya. Kekalkan keputusan **BELUM LULUS UNTUK MERGE**.
+
+
+## Audit lanjutan Seksyen 22 — 20 Oktober 2026
+
+Semakan baca sahaja terhadap rekod Seksyen 22 dalam DATA aplikasi mengesahkan teks tersedia bagi subseksyen (1), (2), (2A), (2B), (3), (4), (5), (5A) dan (6). Perkara utama yang diliputi: keputusan permohonan selepas bantahan Seksyen 21(6)–(7); faktor pertimbangan PBPT; nasihat Majlis yang diminta oleh Jawatankuasa untuk kategori Seksyen 22(2A); kuasa mengenakan syarat; halangan pemberian KM di bawah 22(4)(a), (aa) dan (b); pemeliharaan pokok dan pemakluman keputusan.
+
+Ujian regresi baharu ditambah ke `tests/smoke.mjs` untuk memastikan rekod Seksyen 22 unik, termasuk dalam Bahagian IV, mempunyai teks subseksyen utama, dan mengekalkan frasa kunci berkaitan nasihat Majlis, caj pemajuan, Seksyen 34(1), pemeliharaan pokok dan tiga halangan dalam carta alir KM. Commit terakhir bagi semakan/penyelarasan ujian ini ialah `6fe4d9d`. Tiada pindaan kepada teks Akta atau logik aplikasi. **Keputusan GitHub Actions untuk ujian tambahan masih belum dapat disahkan; ujian belum boleh dilabel lulus.**
+
+Audit teks ini bukan pengesahan pemakaian mutakhir undang-undang atau peraturan negeri. Tindakan seterusnya: semak keputusan GitHub Actions, kemudian audit Seksyen 23 dan laluan rayuan KM. **BELUM LULUS UNTUK MERGE.** Cabang `main` tidak diubah.
