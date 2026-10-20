@@ -772,6 +772,29 @@ try {
    assert.match(d.km,/Seksyen 25\(2\)/i,'KM lacks committee confirmation reference');
    assert.match(d.km,/tidak berkuat kuasa sehingga disahkan Jawatankuasa/i,'KM wrongly implies immediate cancellation');
  });
+ await check('Whole-statute Part and section data integrity',async()=>{
+   const d=await page.evaluate(()=>({
+     parts:DATA.parts.map(p=>({num:p.num,sections:p.sections})),
+     sections:DATA.sections.map(s=>({num:s.num,part:s.part,title:s.title,text:s.text})),
+     explanations:DATA.explain
+   }));
+   assert.equal(d.sections.length,83,'Unexpected statute section count');
+   assert.equal(d.parts.length,12,'Unexpected statute Part count');
+   const seen=new Set();
+   const valid=new Set(d.sections.map(s=>s.num));
+   for(const entry of d.sections){
+     assert.ok(!seen.has(entry.num),'Duplicate section '+entry.num);seen.add(entry.num);
+     assert.ok(entry.title?.trim().length>3,'Missing title '+entry.num);
+     assert.ok(entry.text?.trim().length>30,'Missing statute text '+entry.num);
+     assert.ok(d.explanations[entry.num]?.trim().length>15,'Missing explanation '+entry.num);
+     assert.equal(d.parts.filter(p=>p.num===entry.part&&p.sections.includes(entry.num)).length,1,
+       'Section absent from assigned Part '+entry.num);
+   }
+   const routed=d.parts.flatMap(p=>p.sections);
+   assert.equal(routed.length,seen.size,'Navigation does not enumerate each section exactly once');
+   assert.equal(new Set(routed).size,routed.length,'Duplicate navigation section');
+   for(const num of routed) assert.ok(valid.has(num),'Unknown navigation section '+num);
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
