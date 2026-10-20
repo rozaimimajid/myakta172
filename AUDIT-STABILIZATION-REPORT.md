@@ -241,3 +241,8 @@ Commit `b4d74980` pada cabang audit mengemaskini **ayat sahaja** dalam carta ali
 Ujian GitHub Actions bagi commit `38133c35` (run `39401806518`) disahkan **SUCCESS**: penerangan pengecualian KM Seksyen 19(2) dan pelaksanaan perintah rayuan Seksyen 23 dapat ditutup bagi regresi aplikasi. Ini tidak menggantikan semakan undang-undang profesional.
 
 Audit baca sahaja Turutan 2 KM mengenal pasti rujukan zoning yang tidak menyatakan larangan khusus **Seksyen 22(4)(a)** apabila pemajuan bercanggah dengan peruntukan rancangan pemajuan. Commit `c7db8e6b` menambah penjelasan dan pautan Seksyen 22 pada Turutan 2 sahaja; tiada perubahan susunan 10 turutan, laluan YA/TIDAK atau teks DATA seksyen. Ujian susulan: GitHub Actions run `39402267549`; semak keputusan sebelum menandakan pembetulan ini lulus. Cabang `main` tidak disentuh.
+
+
+## Lengkapkan halangan pemberian KM, Seksyen 22(4) — 20 Oktober 2026
+
+Penemuan audit: Turutan 6 carta alir KM sebelum ini merujuk Seksyen 22(4) secara umum tetapi penerangannya hanya menjelaskan caj pemajuan di bawah perenggan (b). Semakan terhadap teks Akta 172 dalam aplikasi dan rujukan PLANMalaysia (cetakan semula 1 Jun 2021) mengesahkan tiga halangan berasingan: (a) percanggahan dengan rancangan pemajuan; (aa) percanggahan dengan perenggan 22(2)(aa); (b) caj pemajuan terhutang belum dibayar atau kebenaran ansuran 34(1) belum diperoleh. Commit `f3d68bdc` memperjelas ketiga-tiganya dalam Turutan 6 sahaja, tanpa mengubah data asal Akta, turutan atau sambungan YA/TIDAK. GitHub Actions run `39402636168` **SUCCESS**. Audit sumber sah terkini dan peruntukan negeri masih terbuka; `main` tidak disentuh.
