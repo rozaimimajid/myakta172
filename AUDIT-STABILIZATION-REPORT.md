@@ -162,3 +162,12 @@ Pelarasan CSS cetak RT sahaja pada commit `e3f81680` (jarak cabang keputusan) da
 **Semakan PDF sebenar pada artifak run 39395593594:** Penyediaan RT, Pengubahan RT, Penggantian RT dan Pembatalan RT masing-masing **1 halaman**. Arahan Pengarah Negeri (16A) masih **2 halaman**, dengan halaman kedua hanya sedikit kandungan (teks hingga ~89 pt daripada atas). Semua PDF tersebut dijana oleh ujian Chromium dan tidak boleh disamakan dengan pengesahan kualiti pencetak sebenar.
 
 **P1 baki:** Pengoptimuman RT 16A agar tidak menghasilkan halaman kedua terlalu kosong, tanpa membuang langkah atau mengecilkan fon. **P2:** Semak kebolehbacaan visual dan keutuhan anak panah/berlian selepas pemadatan CSS. **Keputusan keseluruhan:** belum lulus merge ke main.
+
+
+## Audit cetakan RT Seksyen 16A — pelarasan khusus
+
+Commit `7ce9d375` menambahkan kelas CSS cetakan hanya apabila variasi `director` dipilih. CSS mengetatkan ruang kotak langkah, cabang dan pemisah tanpa mengubah kandungan atau saiz fon asas 11 px. GitHub Actions run `39396105659` SUCCESS.
+
+Perbandingan fail sebenar `RT-director-popup.pdf`: **2 halaman sebelum dan selepas**. Isi halaman kedua berkurang: batas teks terakhir pada halaman kedua kira-kira **89 pt → 36 pt** dari atas. Perubahan kecil ini **belum menyingkirkan halaman kedua**. Elakkan pemadatan lebih agresif sebelum pengesahan kebolehbacaan visual dan pemisahan halaman; jangan dakwa masalah telah selesai.
+
+Kedudukan: empat variasi RT lain masih satu halaman pada audit terdahulu; audit cetakan 16A belum lulus sepenuhnya. `main` tidak disentuh.
