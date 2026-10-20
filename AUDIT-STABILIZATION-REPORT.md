@@ -215,3 +215,10 @@ Commit `6f95c1eb` menurunkan min-height CSS keputusan cetak RT daripada 54px kep
 ## Ujian pemisahan kumpulan keputusan RT — 20 Oktober 2026
 
 Eksperimen commit `c2328910` mengubah CSS popup RT agar `.km-decision-block` boleh dipecahkan antara halaman sambil mengekalkan `break-inside:avoid` pada keputusan, cabang dan terminal. GitHub Actions run `39398625192` SUCCESS tetapi artifak PDF sebenar `12253247750` mengesahkan **tiada pembaikan bilangan halaman**: RT prep 1 halaman; RT review/amend/cancel 2 halaman dengan 41 aksara pada halaman kedua; RT director 2 halaman dengan ~402 aksara pada halaman kedua. Eksperimen telah **dikembalikan** melalui commit `8419f0f0`, yang memulihkan blob `index.html` kepada keadaan sebelum percubaan. Ini ialah keputusan negatif yang disahkan; jangan terus mengubah `break-inside` secara rawak. Langkah seterusnya: analisis geometri kawasan penamat dalam PDF atau reka cetakan khusus yang mengekalkan fon/bentuk berlian dan membenarkan 2 halaman jika diperlukan. `main` kekal tidak disentuh.
+
+
+## Kawalan regresi SVG berlian cetakan RT — 20 Oktober 2026
+
+Ujian selepas pemulihan CSS (`8419f0f0`) telah disahkan **SUCCESS** pada GitHub Actions run `39398832786`. Commit `1f8655a9` kemudian menambah pengesahan di `tests/smoke.mjs`: selain setiap keputusan RT memiliki poligon SVG, garisnya mesti memiliki `stroke` yang wujud, ketebalan terhitung sekurang-kurangnya 1px, dan kotak poligon mempunyai dimensi yang boleh dilihat (sekurang-kurangnya 20 × 15 CSS px). GitHub Actions run `39399218589` **SUCCESS**. Ini kawalan regresi geometri, **bukan** pengesahan visual akhir cetakan kertas.
+
+Tiada CSS aplikasi diubah dalam commit ini. Isu empat variasi RT berhalaman kedua tidak cekap masih terbuka. Keutamaan seterusnya: semak keseimbangan paginasi dengan bukti PDF dan jangan hapuskan berlian demi sasaran satu halaman. `main` tidak disentuh.
