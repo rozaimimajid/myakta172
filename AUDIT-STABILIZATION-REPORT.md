@@ -379,3 +379,28 @@ Kelemahan bukti: pelaksanaan sebelum ini hanya mencetak `PASS`/`FAIL` ke log, se
 Pemeriksaan langsung cabang menunjukkan **168 commit di hadapan `main`, 0 di belakang**, dengan enam fail berbeza (`index.html`, `sw.js`, `tests/smoke.mjs`, workflow audit, laporan audit dan panduan preview). Suite mengandungi **42 kelompok ujian**; fungsi pelaporan `regression-summary.json` telah didefinisikan dan `process.exitCode=1` dikekalkan apabila terdapat ujian gagal. Ini pemeriksaan kod, **bukan** bukti larian 42/42.
 
 Cubaan mendapatkan status GitHub Actions bagi commit akhir Kelompok VIII melalui status gabungan dan carian workflow mengembalikan senarai kosong; halaman Actions dan API web tidak boleh dibaca dalam persekitaran semasa. Maka **keputusan CI terkini tidak diketahui**. Jangan tambah ujian tanpa jurang yang dibuktikan, jangan ubah `main`, dan jangan umumkan siap atau lulus merge. Gerbang Kelompok X: (1) dapatkan run CI terkini dan artifak `myakta172-audit-regression-results`; (2) periksa 42 keputusan, betulkan kegagalan sebenar; (3) semak manifest dan PDF cetakan; (4) nyatakan baki risiko semantik undang-undang dan keselamatan sebelum keputusan akhir. Jika hasil tetap tidak tersedia, tutup audit sebagai **TIDAK DAPAT DISAHKAN / BELUM LULUS MERGE**, bukannya lulus bersyarat.
+
+
+# LAPORAN PENUTUP AUDIT BERKELOMPOK I–X — 20 Oktober 2026
+
+**Keputusan muktamad penilaian semasa: AUDIT DITUTUP DENGAN ISU TERBUKA; TIDAK DISAHKAN LULUS; JANGAN MERGE KE MAIN.** Ini penutupan kitaran audit berkelompok, bukan kelulusan pelancaran atau pensijilan keselamatan/perundangan.
+
+## Bukti yang disahkan
+- Cabang `audit/stabilization-v1` berada 169 commit di hadapan `main`, 0 di belakang, pada permulaan Kelompok X. Enam fail berbeza daripada main: `.github/workflows/audit-smoke.yml`, `AUDIT-STABILIZATION-REPORT.md`, `PREVIEW-TESTING-GUIDE.md`, `index.html`, `sw.js`, `tests/smoke.mjs`.
+- Suite kini mengandungi 42 kelompok `await check`; konfigurasi GitHub Actions menjalankan Chromium pada push ke cabang audit untuk fail terpilih dan cuba menyimpan laporan regresi serta PDF/manifest.
+- Audit struktur semasa menemui 83 rekod seksyen dalam 12 Bahagian dengan keunikan/rujukan navigasi konsisten; ini tidak mengesahkan bahawa kandungan teks sama sepenuhnya dengan akta rasmi terkini.
+- Pembetulan pada cabang audit termasuk pengasingan pembersihan cache Service Worker, pemaparan rekod tersimpan secara terkawal, dan ujian rujukan 12 varian paparan carta.
+
+## Bukti yang BELUM diperoleh / isu menghalang kelulusan
+1. **P0 — CI terkini:** status gabungan commit Kelompok IX `f4885d1` dan carian workflow tidak memaparkan hasil; bukan bukti lulus/gagal. Tiada laporan `regression-summary.json` hasil pelaksanaan terkini tersedia untuk dinilai. Run terdahulu `39434163575` pernah lulus, tetapi tidak mewakili kod sekarang.
+2. **P1 — PDF:** manifest dan visual PDF sebenar yang dijana daripada versi terbaru belum diperiksa, termasuk jumlah halaman dan risiko elemen terpotong bagi 11 variasi.
+3. **P1 — perundangan:** ketepatan kata demi kata semua kandungan Akta 172, pindaan berkuat kuasa dan semantik semua cabang/carta belum disahkan menyeluruh dengan naskhah rasmi terkini serta kaedah negeri.
+4. **P1 — keselamatan dan penggunaan sebenar:** pembaikan keselamatan telah di-commit tetapi belum dibuktikan lulus melalui CI dan pengujian peranti/pelayar sebenar; jangan anggap audit keselamatan penuh selesai.
+
+## Syarat sebelum sebarang merge atau penggunaan komersial
+- Dapatkan run GitHub Actions untuk HEAD cabang audit dan semua 42 keputusan, selesaikan setiap kegagalan, serta jalankan semula sehingga lulus.
+- Muat turun dan semak artifak PDF/manifest bagi setiap carta; betulkan masalah susun atur jika wujud dan sahkan semula.
+- Sahkan padanan kandungan perundangan dengan sumber rasmi terkini dan semak semua rujukan langkah/cabang penting.
+- Laksanakan tinjauan keselamatan terakhir dan uji paparan sebenar desktop serta telefon; hanya kemudian buat keputusan merge berasingan dengan persetujuan pemilik.
+
+**Tiada perubahan ke `main`; tiada penggabungan dibuat. Audit berkelompok berakhir pada Kelompok X dan isu terbuka diserahkan sebagai senarai tindakan, bukan dibuka Kelompok XI secara automatik.**
