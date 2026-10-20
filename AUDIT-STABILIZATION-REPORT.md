@@ -222,3 +222,8 @@ Eksperimen commit `c2328910` mengubah CSS popup RT agar `.km-decision-block` bol
 Ujian selepas pemulihan CSS (`8419f0f0`) telah disahkan **SUCCESS** pada GitHub Actions run `39398832786`. Commit `1f8655a9` kemudian menambah pengesahan di `tests/smoke.mjs`: selain setiap keputusan RT memiliki poligon SVG, garisnya mesti memiliki `stroke` yang wujud, ketebalan terhitung sekurang-kurangnya 1px, dan kotak poligon mempunyai dimensi yang boleh dilihat (sekurang-kurangnya 20 × 15 CSS px). GitHub Actions run `39399218589` **SUCCESS**. Ini kawalan regresi geometri, **bukan** pengesahan visual akhir cetakan kertas.
 
 Tiada CSS aplikasi diubah dalam commit ini. Isu empat variasi RT berhalaman kedua tidak cekap masih terbuka. Keutamaan seterusnya: semak keseimbangan paginasi dengan bukti PDF dan jangan hapuskan berlian demi sasaran satu halaman. `main` tidak disentuh.
+
+
+## Penjelasan penentuan caj pemajuan dan prasyarat pemberian KM — 20 Oktober 2026
+
+Commit `b4d74980` pada cabang audit mengemaskini **ayat sahaja** dalam carta alir KM, tanpa mengubah susunan 10 turutan atau destinasi YA/TIDAK: Turutan 4 kini menumpukan penentuan tanggungan di bawah Seksyen 32, amaun dan notis tuntutan di bawah Seksyen 33 (jika terpakai); Turutan 6 mengesahkan pembayaran atau kebenaran ansuran di bawah Seksyen 34(1), tertakluk pada Seksyen 22(4), **sebelum KM diberikan**. Soalan keputusan pada Turutan 3–4 diselaraskan; Turutan 8 kekal sebagai pemantauan ansuran selepas KM. GitHub Actions run `39401179341`: **SUCCESS**. Masih memerlukan semakan naskhah rasmi akhir sebelum penggunaan undang-undang profesional. Cabang `main` tidak disentuh.
