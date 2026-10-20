@@ -590,6 +590,7 @@ try {
      ['RT','rtDesktopLaunch','rtV25Print','rtV25Close','rt',['prep','review','amend','cancel','director']],
      ['RKK','rkkDesktopLaunch','rkkV26Print','rkkV26Close','rkk',['prep','review','amend']]
    ];
+   const manifest=[];
    const p=await browser.newPage();
    try{
      await p.goto(url,{waitUntil:'domcontentloaded'});
@@ -627,7 +628,8 @@ try {
            await mkdir('audit-artifacts/print',{recursive:true});
            await writeFile('audit-artifacts/print/'+name+'-'+variant+'-popup.pdf',pdf);
            const pageCount=(pdf.toString('latin1').match(new RegExp('/Type\\s*/Page\\b','g'))||[]).length;
-           assert.ok(pageCount>=1 && pageCount<=20,name+' '+variant+' excessive PDF pages: '+pageCount);
+           assert.ok(pageCount>=1 && pageCount<=5,name+' '+variant+' excessive PDF pages: '+pageCount);
+           manifest.push({chart:name,variant,pages:pageCount,bytes:pdf.length,steps:data.steps});
            const layout=await pop.evaluate(()=>{
              const doc=document.documentElement;
              const rects=[...document.querySelectorAll('.km-step,.km-decision-block,.km-finish')].map(e=>e.getBoundingClientRect());
@@ -666,6 +668,8 @@ try {
        await p.locator('#'+close).evaluate(el=>el.click());
      }
    }finally{await p.close();}
+   assert.equal(manifest.length,11,'Print manifest must include all eleven planning variants');
+   await writeFile('audit-artifacts/print/manifest.json',JSON.stringify({schema:1,variants:manifest},null,2)+'\n');
  });
  await check('Sections 21A–21C retain distinct statutory content and references',async()=>{
    const result=await page.evaluate(()=>{
