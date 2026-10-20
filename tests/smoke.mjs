@@ -667,6 +667,29 @@ try {
      }
    }finally{await p.close();}
  });
+ await check('Sections 21A–21C retain distinct statutory content and references',async()=>{
+   const result=await page.evaluate(()=>{
+     const ids=['21A','21B','21C'];
+     const rows=ids.map(id=>DATA.sections.filter(s=>s.num===id));
+     const part=DATA.parts.find(p=>p.num==='IV');
+     const explanations=ids.map(id=>DATA.explain[id]);
+     const km=document.getElementById('kmFlowChart');
+     return {rows,partSections:part?.sections||[],explanations,kmText:km?.innerText||''};
+   });
+   for(let i=0;i<3;i++){
+     const id=['21A','21B','21C'][i];
+     assert.equal(result.rows[i].length,1,id+' must be unique');
+     assert.equal(result.rows[i][0].part,'IV',id+' must belong to Part IV');
+     assert.ok(result.partSections.includes(id),id+' missing from Part IV navigation');
+     assert.ok(result.rows[i][0].text.length>150,id+' statute content appears incomplete');
+     assert.ok(result.explanations[i]?.length>40,id+' explanatory text absent');
+   }
+   assert.match(result.rows[0][0].text,/impak sosial/i);
+   assert.match(result.rows[0][0].text,/Pihak Berkuasa Negeri boleh, melalui kaedah-kaedah/i);
+   assert.match(result.rows[1][0].text,/disifatkan telah ditarik balik/i);
+   assert.match(result.rows[2][0].text,/undang-undang bertulis lain/i);
+   for(const id of ['21A','21B','21C']) assert.ok(result.kmText.includes(id),'KM chart missing reference '+id);
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
