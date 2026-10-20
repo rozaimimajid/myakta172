@@ -296,3 +296,10 @@ Audit teks ini bukan pengesahan pemakaian mutakhir undang-undang atau peraturan 
 Pemeriksaan DATA aplikasi: satu rekod Seksyen 23 berada dalam Bahagian IV. Teks memuatkan tempoh satu bulan dan dua kategori perayu di bawah 23(1), kewajipan mendengar pihak merayu dan PBPT di bawah 23(2), serta empat pilihan perintah di bawah 23(3): mengesahkan keputusan/menolak rayuan, mengarahkan pemberian KM, mengetepikan KM, atau memotong/mengubah/mengganti syarat. Carta KM sudah menyatakan perintah Lembaga Rayuan hendaklah dipatuhi; kembali kepada PBPT hanya untuk tindakan pelaksanaan yang perlu, bukan pertimbangan semula secara bebas. Tiada pembetulan kandungan tambahan dianggap perlu berdasarkan semakan ini.
 
 Commit `8510a6f` menambah kawalan regresi terarah dalam `tests/smoke.mjs` untuk rekod, kedudukan Bahagian IV, frasa hak rayuan dan arahan pelaksanaan di carta KM. Semakan kandungan ini tidak bermaksud teks undang-undang dan pemakaian negeri mutakhir sudah diperakukan. **Status CI untuk ujian baharu: belum disahkan**. Cabang `main` tidak disentuh; **jangan merge** sebelum ujian dan audit selesai.
+
+
+## Audit Seksyen 24 — luput dan lanjutan KM (20 Oktober 2026)
+
+Teks DATA Bahagian IV Seksyen 24 telah disemak: lima subseksyen wujud, meliputi luput dua belas bulan jika pemajuan belum dimulakan, pengecualian bagi KM yang nyata tidak melibatkan kerja bangunan, permohonan lanjutan sebelum luput dengan fi, luput selepas lanjutan, dan kuasa mengenakan/mengubah syarat yang melibatkan hak rayuan di bawah Seksyen 23. Turutan 9 carta KM membezakan Seksyen 24 dengan pembatalan/pengubahsuaian di bawah Seksyen 25. Tiada pembetulan teks aplikasi diperlukan berdasarkan pemeriksaan ini.
+
+Commit `98325783` menambah ujian regresi khusus Seksyen 24 pada `tests/smoke.mjs` (identiti, bahagian, subseksyen, frasa penting dan padanan rujukan carta KM). Status pengesahan GitHub Actions ujian baharu belum disahkan; **jangan anggap lulus** sehingga keputusan CI diperoleh. Tiada perubahan pada `main` dan **BELUM LULUS UNTUK MERGE**. Pemakaian undang-undang terkini dan kaedah negeri masih memerlukan pengesahan berasingan.
