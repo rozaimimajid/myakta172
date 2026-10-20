@@ -1,11 +1,11 @@
-const CACHE='myakta172-pwa-v33';
+const CACHE='myakta172-pwa-v34';
 const CORE=['./','./index.html','./manifest.webmanifest','./icon-v2.svg','./welcome-background.svg','./icon-bacaan-suara.svg','./icon-carta-alir.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
   self.skipWaiting();
 });
 self.addEventListener('activate',event=>{
-  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))));
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('myakta172-pwa-')&&key!==CACHE).map(key=>caches.delete(key)))));
   self.clients.claim();
 });
 self.addEventListener('fetch',event=>{
