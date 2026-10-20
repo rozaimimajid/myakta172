@@ -606,6 +606,12 @@ try {
            await pop.waitForLoadState('domcontentloaded');
            const data=await pop.evaluate(()=>({text:document.body.innerText,buttons:document.querySelectorAll('button').length,steps:document.querySelectorAll('.km-step').length}));
            assert.equal(data.buttons,0,name+' '+variant+' printed interactive buttons');
+           if(name==='RT'){
+             const shapes=await pop.locator('.km-decision .flow-diamond-outline polygon').count();
+             const decisions=await pop.locator('.km-decision').count();
+             assert.ok(decisions>0,name+' '+variant+' has no decisions');
+             assert.equal(shapes,decisions,name+' '+variant+' missing SVG decision diamonds in print');
+           }
            assert.ok(data.steps>=4,name+' '+variant+' printed too few steps');
            assert.ok(data.text.includes(original),name+' '+variant+' printed wrong selected variant');
            const pdf=await pop.pdf({format:'A4',printBackground:true});
