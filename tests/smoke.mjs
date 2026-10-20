@@ -702,13 +702,13 @@ try {
    for(const subsection of ['(1)','(2)','(2A)','(2B)','(3)','(4)','(5)','(5A)','(6)'])
      assert.ok(law.includes(subsection),'Section 22 missing subsection '+subsection);
    assert.match(law,/Jawatankuasa hendaklah meminta daripada Majlis nasihatnya/i);
-   assert.match(law,/belum membayar caj\\s+pemajuan/i);
-   assert.match(law,/subseksyen 34\\(1\\)/i);
+   assert.match(law,/belum membayar caj\s+pemajuan/i);
+   assert.match(law,/subseksyen 34\(1\)/i);
    assert.match(law,/perintah pemeliharaan pokok/i);
    assert.ok(data.explanation.length>60,'Section 22 explanation missing');
-   assert.match(data.kmText,/Seksyen 22\\(4\\)[\\s\\S]{0,160}\\(a\\)/i);
-   assert.match(data.kmText,/Seksyen 22\\(4\\)[\\s\\S]{0,230}\\(aa\\)/i);
-   assert.match(data.kmText,/Seksyen 22\\(4\\)[\\s\\S]{0,330}\\(b\\)/i);
+   assert.match(data.kmText,/Seksyen 22\(4\)[\s\S]{0,160}\(a\)/i);
+   assert.match(data.kmText,/Seksyen 22\(4\)[\s\S]{0,230}\(aa\)/i);
+   assert.match(data.kmText,/Seksyen 22\(4\)[\s\S]{0,330}\(b\)/i);
  });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
