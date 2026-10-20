@@ -92,3 +92,28 @@ Artifak asal: `myakta172-audit-chart-pdfs` (artifact ID 12250230714; sumber caba
 4. **P2 Artifak RSN/RKK:** cetakan satu halaman tampak padat; kekalkan kebolehbacaan sebagai keutamaan mengatasi bilangan halaman.
 
 **Keputusan cetakan visual: BELUM LULUS SEPENUHNYA.** Tiada perubahan kod produksi dibuat daripada penemuan ini. Jangan merge ke `main` sehingga audit lengkap.
+
+
+## Audit visual lengkap 11 variasi — 20 Oktober 2026
+
+**Asas bukti:** Artifak PDF `myakta172-audit-chart-pdfs`, GitHub Actions run `39392175349`, commit `6ea47e1b`, selepas ujian menyimpan PDF setiap variasi. Semua 11 PDF diperiksa menggunakan paparan halaman dan ukuran lokasi teks dalam halaman A4 (tinggi ~843 pt).
+
+| Variasi | Halaman | Kedudukan teks paling bawah pada halaman akhir / 843 pt |
+|---|---:|---:|
+| RSN prep / review / amend | 1 / 1 / 1 | 771 / 696 / 706 |
+| RT prep | 2 | 124 |
+| RT review | 2 | 188 |
+| RT amend | 2 | 188 |
+| RT cancel | 2 | 188 |
+| RT director | 2 | 345 |
+| RKK prep / review / amend | 1 / 1 / 1 | 789 / 715 / 706 |
+
+**P1 — Pembaziran halaman RT terbukti bagi kelima-lima variasi.** Semua RT memerlukan dua muka surat, tetapi baki halaman kedua digunakan kurang daripada separuh; variasi prep/review/amend/cancel sangat rendah. Dokumen tidak kosong sepenuhnya; terdapat langkah terakhir/terminal dan teks laluan alternatif. Jangan laporkan sebagai 'halaman kosong'.
+
+**P2 — Kekemasan hujung carta dan terminal.** Pemeriksaan visual halaman akhir menunjukkan beberapa kotak terminal laluan keputusan dipaparkan rapat selepas proses akhir. Semak pengasingan visual terminal tanpa menambah pembaziran halaman.
+
+**Batasan audit:** PDF membuktikan hasil Chromium pada tetapan cetakan ujian, bukan setiap versi pelayar atau tetapan pencetak. Keputusan lulus CSS `break-inside: avoid` (148/148 elemen) tidak sama dengan lulus mutu cetakan visual.
+
+**Cadangan pembaikan berhati-hati:** Profil cetak RT sahaja, cuba pengoptimuman jurang menegak, margin cetak, dan susunan terminal; kekalkan saiz fon boleh baca. Bandingkan PDF sebelum/selepas dengan ujian automatik dan semakan visual pada semua lima RT. Jangan ubah cetakan RSN, RKK dan KM tanpa sebab.
+
+**Status:** Cetakan belum diluluskan untuk penggabungan. Tiada perubahan kod aplikasi dibuat dalam langkah ini.
