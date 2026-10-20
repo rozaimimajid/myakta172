@@ -342,3 +342,10 @@ Sumber silang rasmi: PLANMalaysia, teks Akta 172 sebagaimana 1 Jun 2021 dan pand
 Semakan audit menemui ujian PDF 11 variasi sudah menghasilkan fail, tetapi had halaman yang dibenarkan adalah terlalu luas (hingga 20 halaman), dan tiada manifest automatik perbandingan jumlah halaman untuk setiap variasi. Commit `9343bcc0` menambah `manifest.json` yang merekod variasi, bilangan halaman, bait PDF dan jumlah langkah; juga menandakan lebih daripada lima halaman sebagai regresi luar biasa. Had lima halaman ialah *penggera regresi*, bukan syarat semua carta mesti satu halaman. Commit `87886fb3` mengubah hanya workflow audit supaya manifest turut dimuat naik bersama PDF.
 
 Bukti CI terakhir yang dapat diperiksa secara langsung ialah run 39434163575 (job smoke SUCCESS) pada kod yang lebih lama, dan **tidak** membuktikan dua commit baharu telah lulus. Perlu semak run terkini, artifact manifest dan PDF visual sebenar sebelum menerima mutu cetakan. Tidak ada perubahan kod aplikasi produksi atau cabang main. **BELUM LULUS UNTUK MERGE.**
+
+
+## Audit berkelompok V — PWA/cache (20 Oktober 2026)
+
+**Penemuan risiko:** Kod aktivasi asal dalam `sw.js` menggunakan `caches.keys().filter(key=>key!==CACHE)`, yang memadam **semua** cache origin selain cache MyAKTA172 aktif. Ini berisiko mengganggu cache aplikasi lain di origin yang sama. Commit `b3cd293` mengehadkan pemadaman kepada awalan `myakta172-pwa-` dan menaikkan versi cache daripada v33 kepada v34 supaya pekerja baharu dipasang. Strategi network-first, aset CORE dan fallback navigasi tidak diubah.
+
+Commit `0313e18` mengemas kini ujian PWA kepada v34 serta memastikan cache usang bernama `myakta172-pwa-audit-stale` dibuang tetapi cache ujian `unrelated-app-audit-keep` dipelihara semasa pemasangan semula Service Worker. Ini ujian di persekitaran origin tempatan dan bukan bukti keselamatan penuh bagi multi-app hosting sebenar. **CI baharu belum disahkan.** Penting: perubahan ini menyentuh Service Worker pengeluaran **hanya pada cabang audit**. Jangan merge ke `main` sebelum regresi penuh lulus.
