@@ -513,6 +513,7 @@ try {
      const checkData=await printPage.evaluate(()=>({steps:document.querySelectorAll('.km-step').length,buttons:document.querySelectorAll('button').length,last:document.body.innerText.includes('rayuan')}));
      assert.equal(checkData.steps,10,'KM print omitted process steps');
      assert.equal(checkData.buttons,0,'KM print contains screen-only buttons');
+     assert.equal(await printPage.locator('.km-print-sheet').count(),0,'KM should not force prematurely separated print sheets');
      const diamonds=await printPage.locator('#kmFlowChart .km-decision .flow-diamond-outline polygon').count();
      assert.ok(diamonds>0,'KM print lost SVG diamond outlines');
      const diamondStroke=await printPage.locator('#kmFlowChart .km-decision .flow-diamond-outline polygon').first().evaluate(el=>getComputedStyle(el).stroke);
@@ -529,7 +530,7 @@ try {
      await writeFile('audit-artifacts/print/KM-actual-popup.pdf',pdf);
      const pages=(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g)||[]).length;
      console.log('PRINT_KM_POPUP','pages',pages,'bytes',pdf.length,'steps',checkData.steps);
-     assert.ok(pages>=1&&pages<=10,'popup PDF page count unexpected '+pages);
+     assert.ok(pages>=1&&pages<=5,'KM PDF regressed beyond five A4 pages: '+pages);
      await printPage.close();
    }finally{await p.close();}
  });
