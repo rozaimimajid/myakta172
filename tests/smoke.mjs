@@ -724,8 +724,8 @@ try {
    const law=d.sections[0].text;
    for(const phrase of ['tempoh satu bulan','mendengar pihak merayu','mengesahkan keputusan','mengarahkan pihak','mengetepikan','mengubah suai'])
      assert.ok(law.toLowerCase().includes(phrase.toLowerCase()),'Section 23 missing '+phrase);
-   assert.match(d.km,/Seksyen 23\\(1\\)/i,'KM appeal step missing deadline');
-   assert.match(d.km,/Seksyen 23\\(3\\)/i,'KM appeal step missing appeal powers');
+   assert.match(d.km,/Seksyen 23\(1\)/i,'KM appeal step missing deadline');
+   assert.match(d.km,/Seksyen 23\(3\)/i,'KM appeal step missing appeal powers');
    assert.match(d.km,/KM tidak diluluskan secara automatik/i,'KM appeal path implies automatic approval');
    assert.match(d.km,/pelaksanaan perintah/i,'KM appeal path omits order implementation safeguard');
  });
