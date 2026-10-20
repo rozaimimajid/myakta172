@@ -153,3 +153,12 @@ Semakan artifak PDF sebenar (`myakta172-audit-chart-pdfs`, artifact ID 122505937
 Halaman kedua bagi pengubahan, penggantian dan pembatalan masih menggunakan ruang kecil (teks hingga kira-kira 119 pt). Halaman kedua variasi Pengarah Negeri hingga sekitar 280 pt. Jangan anggap isu cetakan telah diselesaikan sepenuhnya.
 
 **Kesimpulan:** Pengoptimuman berjaya untuk Penyediaan RT sahaja dan tidak menjejaskan ujian regresi. Status audit visual keseluruhan masih BELUM LULUS; pemeriksaan bentuk berlian, garis dan kebolehbacaan pada resolusi sebenar masih diperlukan. Cabang `main` tidak disentuh.
+
+
+## Pembaikan cetakan RT — keputusan 20 Oktober 2026
+
+Pelarasan CSS cetak RT sahaja pada commit `e3f81680` (jarak cabang keputusan) dan `9c4417b2` (jarak kotak langkah/rujukan/tajuk). Saiz fon asas **11px dikekalkan**. GitHub Actions run `39395380401` dan `39395593594` kedua-duanya berjaya.
+
+**Semakan PDF sebenar pada artifak run 39395593594:** Penyediaan RT, Pengubahan RT, Penggantian RT dan Pembatalan RT masing-masing **1 halaman**. Arahan Pengarah Negeri (16A) masih **2 halaman**, dengan halaman kedua hanya sedikit kandungan (teks hingga ~89 pt daripada atas). Semua PDF tersebut dijana oleh ujian Chromium dan tidak boleh disamakan dengan pengesahan kualiti pencetak sebenar.
+
+**P1 baki:** Pengoptimuman RT 16A agar tidak menghasilkan halaman kedua terlalu kosong, tanpa membuang langkah atau mengecilkan fon. **P2:** Semak kebolehbacaan visual dan keutuhan anak panah/berlian selepas pemadatan CSS. **Keputusan keseluruhan:** belum lulus merge ke main.
