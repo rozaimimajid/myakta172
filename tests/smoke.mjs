@@ -554,6 +554,36 @@ try {
    }finally{await p.close();}
   }
  });
+ await check('All eleven flow variants fit desktop and mobile viewport',async()=>{
+   const cases=[
+     ['RSN','rsnDesktopLaunch','rsnV24Chart','rsnV24Overlay','rsnV24Close','rsn',['prep','review','amend']],
+     ['RT','rtDesktopLaunch','rtV25Chart','rtV25Overlay','rtV25Close','rt',['prep','review','amend','cancel','director']],
+     ['RKK','rkkDesktopLaunch','rkkV26Chart','rkkV26Overlay','rkkV26Close','rkk',['prep','review','amend']]
+   ];
+   for(const width of [1440,390]){
+     const p=await browser.newPage({viewport:{width,height:844}});
+     try{
+       await p.goto(url,{waitUntil:'domcontentloaded'});
+       await p.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none'}});
+       for(const [label,launch,chart,overlay,close,tab,variants] of cases){
+         await p.locator('#'+launch).evaluate(el=>el.click());
+         for(const variant of variants){
+           await p.locator('[data-'+tab+'-tab="'+variant+'"]').evaluate(el=>el.click());
+           const d=await p.evaluate(([id,ov])=>{
+             const root=document.getElementById(id),dialog=document.getElementById(ov);
+             const cards=[...root.querySelectorAll('.km-step')];
+             const rect=dialog.querySelector('.km-window').getBoundingClientRect();
+             return {count:cards.length,text:root.innerText.length,visible:!dialog.hidden,width:rect.width,x:rect.left,screen:innerWidth};
+           },[chart,overlay]);
+           assert.ok(d.visible && d.count>=4 && d.text>150,label+' '+variant+' chart missing at '+width);
+           assert.ok(d.width>200 && d.x>=-3 && d.x+d.width<=d.screen+3,
+             label+' '+variant+' chart window overflows '+width+': '+JSON.stringify(d));
+         }
+         await p.locator('#'+close).evaluate(el=>el.click());
+       }
+     }finally{await p.close();}
+   }
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
