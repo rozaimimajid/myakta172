@@ -205,3 +205,8 @@ Ini menyelesaikan **isu bilangan halaman dan ruang pembaziran RT** dalam penghas
 Commit `f5e2515d` mengekalkan SVG keputusan dalam popup cetak RT dan memberikan gaya garis berlian. GitHub Actions run `39397577797` SUCCESS; pengesahan visual fail PDF membuktikan bentuk berlian kini kelihatan. Namun, **empat variasi RT (review, amend, cancel, director) kembali kepada 2 halaman**; `prep` kekal 1 halaman. Ini regresi penggunaan kertas berbanding keadaan sebelumnya (5/5 pada satu halaman). **Jangan dakwa pembaikan menyeluruh telah selesai.** Bentuk keputusan dan kebolehbacaan harus diberi keutamaan sebelum pemaksaan satu halaman.
 
 Commit `ad220150` menambah ujian yang mengesahkan setiap keputusan RT dalam dokumen cetak mengandungi polygon SVG berlian; GitHub Actions run `39397986847` SUCCESS. Audit kualiti cetakan dan pengesahan perundangan menyeluruh masih terbuka. `main` tidak disentuh.
+
+
+## Eksperimen ketinggian berlian cetakan RT — 20 Oktober 2026
+
+Commit `6f95c1eb` menurunkan min-height CSS keputusan cetak RT daripada 54px kepada 42px dan padding 8px 28px kepada 5px 24px; polygon SVG berlian dan fon asas kekal. GitHub Actions run `39398302984` SUCCESS. PDF artifak `12252104546` telah diperiksa secara berasingan: RT prep **1 halaman**, RT review, amend dan cancel **2 halaman** masing-masing dengan hanya ~41 aksara pada halaman kedua; RT director **2 halaman** dengan ~402 aksara di halaman kedua. Ini menunjukkan pengecilan ketinggian berlian sahaja **tidak menyelesaikan pembaziran halaman**. Jangan memampatkan secara agresif: perlu menilai struktur kumpulan keputusan dan terminal serta kebolehbacaan sebenar. `main` tidak disentuh.
