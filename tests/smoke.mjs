@@ -584,6 +584,39 @@ try {
      }finally{await p.close();}
    }
  });
+ await check('All planning variants print their selected tab without interactive controls',async()=>{
+   const flows=[
+     ['RSN','rsnDesktopLaunch','rsnV24Print','rsnV24Close','rsn',['prep','review','amend']],
+     ['RT','rtDesktopLaunch','rtV25Print','rtV25Close','rt',['prep','review','amend','cancel','director']],
+     ['RKK','rkkDesktopLaunch','rkkV26Print','rkkV26Close','rkk',['prep','review','amend']]
+   ];
+   const p=await browser.newPage();
+   try{
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none'}});
+     for(const [name,launch,print,close,prefix,variants] of flows){
+       await p.locator('#'+launch).evaluate(el=>el.click());
+       for(const variant of variants){
+         await p.locator('[data-'+prefix+'-tab="'+variant+'"]').evaluate(el=>el.click());
+         const original=await p.locator('#'+({rsn:'rsnV24Chart',rt:'rtV25Chart',rkk:'rkkV26Chart'}[prefix])+' .km-step strong').first().innerText();
+         const popupWait=p.waitForEvent('popup',{timeout:10000});
+         await p.locator('#'+print).evaluate(el=>el.click());
+         const pop=await popupWait;
+         try{
+           await pop.waitForLoadState('domcontentloaded');
+           const data=await pop.evaluate(()=>({text:document.body.innerText,buttons:document.querySelectorAll('button').length,steps:document.querySelectorAll('.km-step').length}));
+           assert.equal(data.buttons,0,name+' '+variant+' printed interactive buttons');
+           assert.ok(data.steps>=4,name+' '+variant+' printed too few steps');
+           assert.ok(data.text.includes(original),name+' '+variant+' printed wrong selected variant');
+           const pdf=await pop.pdf({format:'A4',printBackground:true});
+           assert.ok(pdf.subarray(0,5).toString()==='%PDF-' && pdf.length>5000,name+' '+variant+' invalid printable PDF');
+           console.log('PRINT_VARIANT_VERIFIED',name,variant,data.steps,pdf.length);
+         }finally{await pop.close();}
+       }
+       await p.locator('#'+close).evaluate(el=>el.click());
+     }
+   }finally{await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
