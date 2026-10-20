@@ -45,3 +45,11 @@ jobs:
             audit-artifacts/print/manifest.json
           if-no-files-found: warn
           retention-days: 14
+      - name: Upload regression result summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: myakta172-audit-regression-results
+          path: audit-artifacts/regression-summary.json
+          if-no-files-found: warn
+          retention-days: 14
