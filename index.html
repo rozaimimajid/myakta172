@@ -1551,7 +1551,10 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }
  function titleFor(n){return (window.byNum&&byNum[n])?byNum[n].title:(typeof CASE_SHORT!=='undefined'&&CASE_SHORT[n]?CASE_SHORT[n]:'')}
  function row(n,extra){
-   return '<div class="reader-row" data-mobile-sec="'+n+'"><div class="reader-num">'+n+'</div><div><strong>'+titleFor(n)+'</strong>'+(extra?'<small>'+extra+'</small>':'')+'</div><div class="chev">›</div></div>';
+   const key=String(n);
+   if(!Object.hasOwn(byNum,key))return '';
+   const section=byNum[key],safe=escapeHtml(section.num);
+   return '<div class="reader-row" data-mobile-sec="'+safe+'"><div class="reader-num">'+safe+'</div><div><strong>'+escapeHtml(section.title)+'</strong>'+(extra?'<small>'+escapeHtml(extra)+'</small>':'')+'</div><div class="chev">›</div></div>';
  }
  function renderMobileLists(){
    const fav=arr('myakta172_favourites_v1');
