@@ -2023,7 +2023,7 @@ if(decisions[i]){const [question,...branches]=decisions[i],group=el('div','km-de
 const br=el('div','km-branches');branches.forEach(([text,target],j)=>{const side=el('div','km-branch');side.append(el('b','',j?'TIDAK':'YA'),el('p','',text));const button=el('button','km-route-button',typeof target==='number'?'Ke Turutan '+(target+1):'Ke TAMAT');button.type='button';button.addEventListener('click',()=>go(target));side.append(button);br.append(side)});group.append(br);chart.append(group)}chart.append(arrow())});
 const complete=el('div','km-finish',"TAMAT — Tindakan penguatkuasaan direkod dan pemantauan diteruskan.");complete.id='enforce-end-complete';complete.tabIndex=-1;chart.append(complete);
 const separator=el('div','enforce-end-separator','LALUAN TAMAT ALTERNATIF — PILIHAN KEPUTUSAN YA / TIDAK');chart.append(separator);
-[['noenforce','TAMAT — Tidak termasuk kategori rayuan Seksyen 23.'],['blocked','TAMAT — Tempoh rayuan Seksyen 23(1) tidak dipenuhi.'],['rejected','TAMAT — Rayuan ditolak; keputusan PBPT disahkan.']].forEach(([id,label])=>{const finish=el('div','km-finish enforce-alternative-end',label);finish.id='enforce-end-'+id;finish.tabIndex=-1;chart.append(finish)})}
+[["nobreach","TAMAT — Tiada pelanggaran Seksyen 19 disahkan."],["other","TAMAT — Perlu penilaian laluan undang-undang lain."]].forEach(([id,label])=>{const finish=el('div','km-finish enforce-alternative-end',label);finish.id='enforce-end-'+id;finish.tabIndex=-1;chart.append(finish)})}
 const up=document.getElementById('enforceUp');
 function syncUp(){up.hidden=overlay.hidden||overlay.scrollTop<240}
 function open(){render();overlay.hidden=false;back.hidden=true;overlay.scrollTop=0;syncUp()}
@@ -2119,7 +2119,7 @@ if(decisions[i]){const [question,...branches]=decisions[i],group=el('div','km-de
 const br=el('div','km-branches');branches.forEach(([text,target],j)=>{const side=el('div','km-branch');side.append(el('b','',j?'TIDAK':'YA'),el('p','',text));const button=el('button','km-route-button',typeof target==='number'?'Ke Turutan '+(target+1):'Ke TAMAT');button.type='button';button.addEventListener('click',()=>go(target));side.append(button);br.append(side)});group.append(br);chart.append(group)}chart.append(arrow())});
 const complete=el('div','km-finish',"TAMAT — Status perintah dan tindakan susulan direkod.");complete.id='trees-end-complete';complete.tabIndex=-1;chart.append(complete);
 const separator=el('div','trees-end-separator','LALUAN TAMAT ALTERNATIF — PILIHAN KEPUTUSAN YA / TIDAK');chart.append(separator);
-[['notrees','TAMAT — Tidak termasuk kategori rayuan Seksyen 23.'],['blocked','TAMAT — Tempoh rayuan Seksyen 23(1) tidak dipenuhi.'],['rejected','TAMAT — Rayuan ditolak; keputusan PBPT disahkan.']].forEach(([id,label])=>{const finish=el('div','km-finish trees-alternative-end',label);finish.id='trees-end-'+id;finish.tabIndex=-1;chart.append(finish)})}
+[["barred","TAMAT — Perintah tidak boleh dibuat kerana Seksyen 35B terpakai."]].forEach(([id,label])=>{const finish=el('div','km-finish trees-alternative-end',label);finish.id='trees-end-'+id;finish.tabIndex=-1;chart.append(finish)})}
 const up=document.getElementById('treesUp');
 function syncUp(){up.hidden=overlay.hidden||overlay.scrollTop<240}
 function open(){render();overlay.hidden=false;back.hidden=true;overlay.scrollTop=0;syncUp()}
