@@ -1914,7 +1914,7 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  steps.forEach(([title,desc,links],i)=>{
   if(i===9){
    const firstEnd=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');firstEnd.id='km-end-first';firstEnd.tabIndex=-1;chart.append(arrow(),firstEnd);
-   const end=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');end.id='km-end-exempt';end.tabIndex=-1;chart.append(end);
+
    const separator=node('div','km-appeal-separator','LALUAN RAYUAN — diakses daripada keputusan Turutan 7');chart.append(separator);
   }
   // Sambungan selepas pilihan keputusan ke proses seterusnya; tiada anak panah antara berlian dan pilihan.
@@ -1925,7 +1925,9 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
  });
  chart.append(arrow());
  const endRegular=node('div','km-finish','TAMAT — Laluan mengikut keputusan dan tindakan susulan');endRegular.id='km-end-regular';endRegular.tabIndex=-1;chart.append(endRegular);
- const endAppeal=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');endAppeal.id='km-end-appeal';endAppeal.tabIndex=-1;chart.append(endAppeal);
+ const sep=node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut turutan peringkat keputusan');chart.append(sep);
+ const endExempt=node('div','km-finish km-exemption','TAMAT — KM tidak diperlukan jika pengecualian sah terpakai; keperluan undang-undang lain masih terpakai.');endExempt.id='km-end-exempt';endExempt.tabIndex=-1;chart.append(endExempt);
+ const endAppeal=node('div','km-finish km-exemption','TAMAT — Laluan rayuan: keputusan tertakluk kepada proses rayuan dan tindakan susulan yang berkenaan.');endAppeal.id='km-end-appeal';endAppeal.tabIndex=-1;chart.append(endAppeal);
  let previousFocus=null;
  function open(){previousFocus=document.activeElement;overlay.hidden=false;document.body.style.overflow='hidden';overlay.scrollTop=fromFlow?flowScrollY:0;document.getElementById('kmFlowClose')?.focus({preventScroll:true})}
  function close(keepReturn=false){overlay.hidden=true;document.body.style.removeProperty('overflow');if(!keepReturn){fromFlow=false;flowScrollY=0;if(returnBar)returnBar.hidden=true;}previousFocus?.focus?.()}
@@ -2045,8 +2047,10 @@ function render(key){
  chart.append(arrow());
  const possibilities=new Set(Object.values(flow.choices).flatMap(c=>[c[1][1],c[2][1]]).filter(d=>typeof d==='string'));
  const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan JPN.'],['defer','TAMAT — RSN sedia ada masih berkuat kuasa.']];
- ends.filter(([id])=>id==='complete'||possibilities.has(id)).forEach(([id,txt],i)=>{
-  if(i>0)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut keputusan YA/TIDAK'));
+ const firstStage={};Object.entries(flow.choices).forEach(([stage,choice])=>{choice.slice(1).forEach(option=>{const target=option[1];if(typeof target==='string'&&(firstStage[target]===undefined||Number(stage)<firstStage[target]))firstStage[target]=Number(stage)})});
+ const orderedEnds=ends.filter(([id])=>id==='complete'||possibilities.has(id)).sort((a,b)=>a[0]==='complete'?-1:b[0]==='complete'?1:(firstStage[a[0]]??999)-(firstStage[b[0]]??999));
+ orderedEnds.forEach(([id,txt],i)=>{
+  if(i===1)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut turutan peringkat keputusan YA/TIDAK'));
   const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rsn-end-'+id;end.tabIndex=-1;chart.append(end);
  });
 }
@@ -2111,8 +2115,10 @@ function render(key){
  chart.append(arrow());
  const possibilities=new Set(Object.values(flow.choices).flatMap(c=>[c[1][1],c[2][1]]).filter(d=>typeof d==='string'));
  const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan pihak berkuasa berkenaan.'],['defer','TAMAT — Cadangan tidak diteruskan; RKK sedia ada, jika ada, tidak berubah.']];
- ends.filter(([id])=>id==='complete'||possibilities.has(id)).forEach(([id,txt],i)=>{
-  if(i>0)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut keputusan YA/TIDAK'));
+ const firstStage={};Object.entries(flow.choices).forEach(([stage,choice])=>{choice.slice(1).forEach(option=>{const target=option[1];if(typeof target==='string'&&(firstStage[target]===undefined||Number(stage)<firstStage[target]))firstStage[target]=Number(stage)})});
+ const orderedEnds=ends.filter(([id])=>id==='complete'||possibilities.has(id)).sort((a,b)=>a[0]==='complete'?-1:b[0]==='complete'?1:(firstStage[a[0]]??999)-(firstStage[b[0]]??999));
+ orderedEnds.forEach(([id,txt],i)=>{
+  if(i===1)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut turutan peringkat keputusan YA/TIDAK'));
   const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rkk-end-'+id;end.tabIndex=-1;chart.append(end);
  });
 }
@@ -2310,8 +2316,10 @@ function render(key){
  chart.append(arrow());
  const possibilities=new Set(Object.values(flow.choices).flatMap(c=>[c[1][1],c[2][1]]).filter(d=>typeof d==='string'));
  const ends=[['complete',flow.end],['reject','TAMAT — Cadangan tidak diluluskan; tindakan susulan tertakluk kepada keputusan pihak berkuasa berkenaan.'],['defer','TAMAT — RT sedia ada masih berkuat kuasa.']];
- ends.filter(([id])=>id==='complete'||possibilities.has(id)).forEach(([id,txt],i)=>{
-  if(i>0)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut keputusan YA/TIDAK'));
+ const firstStage={};Object.entries(flow.choices).forEach(([stage,choice])=>{choice.slice(1).forEach(option=>{const target=option[1];if(typeof target==='string'&&(firstStage[target]===undefined||Number(stage)<firstStage[target]))firstStage[target]=Number(stage)})});
+ const orderedEnds=ends.filter(([id])=>id==='complete'||possibilities.has(id)).sort((a,b)=>a[0]==='complete'?-1:b[0]==='complete'?1:(firstStage[a[0]]??999)-(firstStage[b[0]]??999));
+ orderedEnds.forEach(([id,txt],i)=>{
+  if(i===1)chart.append(node('div','km-end-separator','LALUAN TAMAT ALTERNATIF — mengikut turutan peringkat keputusan YA/TIDAK'));
   const end=node('div','km-finish'+(id==='complete'?'':' km-exemption'),txt);end.id='rt-end-'+id;end.tabIndex=-1;chart.append(end);
  });
 }
