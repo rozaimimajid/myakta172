@@ -2343,6 +2343,17 @@ body.dark #kmFlowChart .km-decision .flow-diamond-outline polygon,body.dark #rsn
 #chargeChart .flow-diamond-outline polygon{fill:#fff7e4!important;stroke:#b88724!important;stroke-width:1.6!important;stroke-linejoin:round!important;vector-effect:non-scaling-stroke!important}
 #chargeChart .km-ref-links button{background:#095db9!important;color:white!important;border:1px solid #095db9!important;font-weight:700}
 @media(max-width:600px){#chargeChart .km-decision{padding:19px 36px!important}}
+</style><style id="charge-full-template-rt">
+#chargeOverlay:not([hidden]) #chargePrint,#chargeOverlay:not([hidden]) #chargeClose{position:fixed!important;top:calc(14px + env(safe-area-inset-top,0px))!important;z-index:1000001!important;background:#0759bc!important;color:#fff!important;border:2px solid #ffce23!important;border-radius:12px!important;padding:12px 16px!important;font-size:14px!important;font-weight:800!important;box-shadow:0 7px 22px #001e4b59!important;cursor:pointer!important}
+#chargeOverlay:not([hidden]) #chargePrint{right:max(116px,calc((100vw - 850px)/2 + 116px))!important}
+#chargeOverlay:not([hidden]) #chargeClose{right:max(12px,calc((100vw - 850px)/2 + 12px))!important}
+#chargeOverlay .km-head{padding-right:220px!important}
+#chargeOverlay .km-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#eaf3ff;padding:15px 20px;color:#546a88;font-size:12px;flex-wrap:wrap}
+#chargeOverlay .km-foot button{background:#095ebf;color:#fff;border:0;border-radius:9px;font-weight:800;padding:12px 15px;cursor:pointer}
+#chargeUp{position:fixed;right:max(12px,calc((100vw - 850px)/2 + 12px));bottom:20px;z-index:1000001;border-radius:30px;border:2px solid #fff;background:#0759bc;color:white;font-weight:800;padding:13px 18px;box-shadow:0 5px 18px #001e4b66;cursor:pointer}
+#chargeUp[hidden]{display:none!important}
+#chargeReturn{right:0!important;top:clamp(115px,17vh,190px)!important;bottom:auto!important;writing-mode:vertical-rl!important;border:2px solid #ffd33b!important;border-right:0!important;border-radius:12px 0 0 12px!important;font-weight:800!important;text-orientation:mixed!important}
+@media(max-width:600px){#chargeOverlay:not([hidden]) #chargePrint{right:105px!important;top:9px!important;padding:10px 12px!important;font-size:12px!important}#chargeOverlay:not([hidden]) #chargeClose{right:10px!important;top:9px!important;padding:10px 12px!important;font-size:12px!important}#chargeOverlay .km-head{padding-right:205px!important}#chargeReturn{top:160px!important}}
 </style><style id="charge-end-clarification">
 #chargeChart .charge-end-separator{width:96%;margin:24px auto 10px;padding:12px 4px 4px;text-align:center;border-top:2px dashed #659ce1;color:#486b90;font-size:12px;font-weight:800;letter-spacing:.2px}
 #chargeChart .charge-alternative-end{margin:7px auto 11px!important;background:#236a4d!important}
@@ -2380,7 +2391,7 @@ body.dark #kmFlowChart .km-decision .flow-diamond-outline polygon,body.dark #rsn
 <button id="chargeReturn" hidden type="button">↩ Kembali ke Carta Alir Caj Pemajuan</button>
 <div id="chargeOverlay" class="km-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="chargeTitle">
 <div class="km-window"><div class="km-head"><div><small>MyAKTA172 • CARTA ALIR PROSES</small><h2 id="chargeTitle">Proses Caj Pemajuan</h2></div><div><button type="button" id="chargePrint">⎙ Cetak</button> <button type="button" id="chargeClose">✕ Tutup</button></div></div>
-<p class="km-intro">Panduan pembelajaran Bahagian V Akta 172. Kadar, pengecualian dan kaedah pembayaran tertakluk pada kaedah-kaedah Negeri yang berkuat kuasa.</p><div class="km-chart" id="chargeChart"></div></div></div>
+<p class="km-intro">Panduan pembelajaran Bahagian V Akta 172. Kadar, pengecualian dan kaedah pembayaran tertakluk pada kaedah-kaedah Negeri yang berkuat kuasa.</p><div class="km-chart" id="chargeChart"></div><div class="km-foot"><button id="chargeCloseBottom" type="button">← Kembali ke MyAKTA172</button><span>Sumber: Akta 172, cetakan semula sebagaimana pada 1 Jun 2021</span></div></div></div><button id="chargeUp" type="button" hidden>↑ Ke Atas</button>
 <script id="charge-flow-module">
 (function(){
 const overlay=document.getElementById('chargeOverlay'),chart=document.getElementById('chargeChart'),back=document.getElementById('chargeReturn');
@@ -2416,11 +2427,16 @@ const br=el('div','km-branches');branches.forEach(([text,target],j)=>{const side
 const complete=el('div','km-finish','TAMAT — Bayaran diterima dan tindakan susulan mengikut Akta.');complete.id='charge-end-complete';complete.tabIndex=-1;chart.append(complete);
 const separator=el('div','charge-end-separator','LALUAN TAMAT ALTERNATIF — PILIHAN KEPUTUSAN YA / TIDAK');chart.append(separator);
 [['nocharge','TAMAT — Syarat tanggungan caj tidak dipenuhi.'],['exempt','TAMAT — Pengecualian Negeri yang sah terpakai.'],['blocked','TAMAT — Prasyarat caj sebelum pemberian KM belum dipenuhi.']].forEach(([id,label])=>{const finish=el('div','km-finish charge-alternative-end',label);finish.id='charge-end-'+id;finish.tabIndex=-1;chart.append(finish)})}
-function open(){render();overlay.hidden=false;back.hidden=true;overlay.scrollTop=0}
-function close(){overlay.hidden=true;back.hidden=true}
+const up=document.getElementById('chargeUp');
+function syncUp(){up.hidden=overlay.hidden||overlay.scrollTop<240}
+function open(){render();overlay.hidden=false;back.hidden=true;overlay.scrollTop=0;syncUp()}
+function close(){overlay.hidden=true;back.hidden=true;up.hidden=true}
+overlay.addEventListener('scroll',syncUp,{passive:true});
+up.addEventListener('click',()=>overlay.scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('chargeCloseBottom').addEventListener('click',close);
 ['chargeDesktopLaunch','chargeMobileLaunch'].forEach(id=>document.getElementById(id)?.addEventListener('click',open));
 document.getElementById('chargeClose').addEventListener('click',close);
-back.addEventListener('click',()=>{overlay.hidden=false;back.hidden=true});
+back.addEventListener('click',()=>{overlay.hidden=false;back.hidden=true;syncUp()});
 overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)close()});
 document.getElementById('chargePrint').addEventListener('click',()=>{const p=window.open('','_blank');if(!p){window.print();return}const copy=chart.cloneNode(true);copy.querySelectorAll('button').forEach(b=>b.remove());const st=document.getElementById('charge-flow-style').textContent+'@page{size:A4;margin:12mm}body{margin:0;background:white!important;color:#16304e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}#chargeChart{display:block!important}#chargeChart .km-step,#chargeChart .km-decision,#chargeChart .km-branches,#chargeChart .km-finish{break-inside:avoid;page-break-inside:avoid}#chargeChart .km-decision-block{break-inside:auto}';p.document.write('<!doctype html><html lang="ms"><head><meta charset="utf-8"><title>Carta Caj Pemajuan</title><style>'+st+'</style></head><body><h2>Carta Alir Proses Caj Pemajuan</h2>'+copy.outerHTML+'</body></html>');p.document.close();p.focus();p.print()});
