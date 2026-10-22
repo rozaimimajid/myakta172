@@ -383,7 +383,7 @@ try {
        await navigator.serviceWorker.controller || await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
        return {scope:ready.scope,active:ready.active?.state,cache:await caches.keys()};
      });
-     assert.ok(state.cache.includes('myakta172-pwa-v34'),'expected PWA cache missing: '+state.cache);
+     assert.ok(state.cache.includes('myakta172-pwa-v35'),'expected PWA cache missing: '+state.cache);
      await context.setOffline(true);
      const response=await p.goto(url,{waitUntil:'domcontentloaded',timeout:12000});
      assert.ok(response && response.ok(),'offline page response not OK');
@@ -426,7 +426,7 @@ try {
       }
       return caches.keys();
     });
-    assert.ok(keys.includes('myakta172-pwa-v34'),'new PWA cache absent');
+    assert.ok(keys.includes('myakta172-pwa-v35'),'new PWA cache absent');
     assert.ok(!keys.includes('myakta172-pwa-audit-stale'),'stale cache remains');
     assert.ok(keys.includes('unrelated-app-audit-keep'),'unrelated cache was deleted');
   }finally{await ctx.close();}
@@ -743,7 +743,7 @@ try {
    assert.match(d.km,/Seksyen 23\(1\)/i,'KM appeal step missing deadline');
    assert.match(d.km,/Seksyen 23\(3\)/i,'KM appeal step missing appeal powers');
    assert.match(d.km,/KM tidak diluluskan secara automatik/i,'KM appeal path implies automatic approval');
-   assert.match(d.km,/pelaksanaan perintah/i,'KM appeal path omits order implementation safeguard');
+   assert.match(d.km,/(?:pelaksanaan|melaksanakan)\s+perintah/i,'KM appeal path omits order implementation safeguard');
  });
  await check('Section 24 expiry and extension safeguards',async()=>{
    const d=await page.evaluate(()=>({
