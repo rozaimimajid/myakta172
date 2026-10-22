@@ -1241,7 +1241,7 @@ function bestMalayVoice(){
 function speechTextForCurrent(mode='section'){
   const s=byNum[current];
   const raw=mode==='explain' ? ('Penerangan ringkas bagi Seksyen '+s.num+'. '+(DATA.explain[s.num]||'Tiada penerangan ringkas tersedia.')) : ('Seksyen '+s.num+'. '+s.title+'. '+s.text);
-  return raw.replace(/\*+/g,'').replace(/\n+/g,' ').replace(/\s+/g,' ').trim();
+  return raw.replace(/[\*]+/g,'').replace(/\n+/g,' ').replace(/\s+/g,' ').trim();
 }
 function chunkSpeech(text,maxLen=900){
   const sentences=text.match(/[^.!?;:]+[.!?;:]?|[^.!?;:]+$/g)||[text];
