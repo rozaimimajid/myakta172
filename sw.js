@@ -1,4 +1,4 @@
-const CACHE='myakta172-pwa-v34';
+const CACHE='myakta172-pwa-v35';
 const CORE=['./','./index.html','./manifest.webmanifest','./icon-v2.svg','./welcome-background.svg','./icon-bacaan-suara.svg','./icon-carta-alir.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
@@ -12,7 +12,7 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   event.respondWith(
     fetch(event.request).then(response=>{
-      if(response.ok){
+      if(response.ok && new URL(event.request.url).origin===self.location.origin && event.request.url.startsWith(self.registration.scope)){
         const copy=response.clone();
         event.waitUntil(caches.open(CACHE).then(cache=>cache.put(event.request,copy)).catch(()=>{}));
       }
