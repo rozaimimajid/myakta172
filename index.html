@@ -2715,6 +2715,8 @@ document.getElementById('treesPrint').addEventListener('click',()=>{
 const DIGITALHUBB_PRINT_CSS = '.km-head{position:relative!important;padding-right:210px!important;min-height:78px!important}.digitalhubb-print-logo{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:185px;height:58px;padding:0;background:transparent;border-radius:0;box-shadow:none}.digitalhubb-print-logo img{display:block;width:100%;height:100%;object-fit:contain;background:transparent;mix-blend-mode:multiply}';
 function digitalHubbPrintHtml(original){
   const copy=original.cloneNode(true);
+  const intro=copy.querySelector('.km-intro');
+  if(intro)intro.textContent='Carta pembelajaran dan proses asas; bukan pengganti tatacara atau prosedur rasmi di PBPT. Rujukan seksyen dinyatakan bagi setiap langkah dan keputusan.';
   const head=copy.querySelector('.km-head');
   if(head){
     const box=document.createElement('span');box.className='digitalhubb-print-logo';
