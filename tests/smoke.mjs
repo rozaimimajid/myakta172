@@ -383,7 +383,7 @@ try {
        await navigator.serviceWorker.controller || await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
        return {scope:ready.scope,active:ready.active?.state,cache:await caches.keys()};
      });
-     assert.ok(state.cache.includes('myakta172-pwa-v35'),'expected PWA cache missing: '+state.cache);
+     assert.ok(state.cache.includes('myakta172-pwa-v36'),'expected PWA cache missing: '+state.cache);
      await context.setOffline(true);
      const response=await p.goto(url,{waitUntil:'domcontentloaded',timeout:12000});
      assert.ok(response && response.ok(),'offline page response not OK');
@@ -426,7 +426,7 @@ try {
       }
       return caches.keys();
     });
-    assert.ok(keys.includes('myakta172-pwa-v35'),'new PWA cache absent');
+    assert.ok(keys.includes('myakta172-pwa-v36'),'new PWA cache absent');
     assert.ok(!keys.includes('myakta172-pwa-audit-stale'),'stale cache remains');
     assert.ok(keys.includes('unrelated-app-audit-keep'),'unrelated cache was deleted');
   }finally{await ctx.close();}
