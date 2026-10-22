@@ -1213,6 +1213,7 @@ const sections=DATA.sections; const byNum=Object.fromEntries(sections.map(s=>[s.
 function partTitle(p){return DATA.parts.find(x=>x.num===p)?.title||''}
 function makeNav(){const nav=document.getElementById('nav'); nav.innerHTML=''; DATA.parts.forEach(p=>{const wrap=document.createElement('div');wrap.className='part'; const head=document.createElement('div');head.className='part-head';head.dataset.part=p.num;head.innerHTML=`<span class="part-icon">📖</span><span class="part-info"><span class="part-num">Bahagian ${p.num}</span><span class="part-title">${p.title}</span></span><span class="part-arrow">⌄</span>`; const list=document.createElement('div');list.className='sections'; p.sections.forEach(num=>{const s=byNum[num]; const b=document.createElement('button');b.className='sec-link';b.dataset.sec=num;b.textContent='Seksyen '+num+' - '+s.title;b.title='Seksyen '+num+' - '+s.title;b.onclick=()=>show(num);list.appendChild(b)}); head.onclick=()=>{const opening=!list.classList.contains('open');list.hidden=false;list.style.removeProperty('display');list.classList.toggle('open',opening);head.classList.toggle('active',opening)}; wrap.appendChild(head);wrap.appendChild(list);nav.appendChild(wrap)})}
 function show(num){
+  if(!Object.hasOwn(byNum,String(num)))return;
   window.scrollTo({top:0,behavior:'smooth'});if(typeof stopSpeech==='function') stopSpeech(false); current=num; const s=byNum[num]; document.getElementById('crumbPart').textContent='Bahagian '+s.part; document.getElementById('crumbSec').textContent='Seksyen '+num; document.getElementById('secTitle').textContent='SEKSYEN '+num; document.getElementById('secSub').textContent=s.title; document.getElementById('lawText').innerHTML=formatLawText(s.text); document.getElementById('explainText').textContent=DATA.explain[num]||''; document.querySelectorAll('.sec-link').forEach(x=>x.classList.toggle('active',x.dataset.sec===num)); document.querySelectorAll('.part-head').forEach(x=>x.classList.toggle('active',x.dataset.part===s.part)); document.querySelectorAll('.sections').forEach(list=>{const has=[...list.querySelectorAll('.sec-link')].some(b=>b.dataset.sec===num); if(has)list.classList.add('open')}); updateNavBtns(); if(typeof updateBookmarkBtn==='function')updateBookmarkBtn(); if(typeof recordHistory==='function')recordHistory(num); location.hash='seksyen-'+num;}
 function updateNavBtns(){const i=sections.findIndex(s=>s.num===current); const prev=sections[i-1], next=sections[i+1]; [['prevTop',prev],['prevBottom',prev]].forEach(([id,s])=>{let b=document.getElementById(id);b.disabled=!s;b.innerHTML=s?'← Sebelumnya<br><small>Seksyen '+s.num+'</small>':'← Sebelumnya';b.onclick=()=>s&&show(s.num)}); [['nextTop',next],['nextBottom',next]].forEach(([id,s])=>{let b=document.getElementById(id);b.disabled=!s;b.innerHTML=s?'Seterusnya →<br><small>Seksyen '+s.num+'</small>':'Seterusnya →';b.onclick=()=>s&&show(s.num)}); document.getElementById('jump').value=current;}
 function makeJump(){const j=document.getElementById('jump'); sections.forEach(s=>{const o=document.createElement('option');o.value=s.num;o.textContent='Seksyen '+s.num+' — '+s.title;j.appendChild(o)}); j.onchange=()=>show(j.value)}
@@ -1280,116 +1281,7 @@ if(localStorage.getItem('myakta172_voice')==='off'){voiceEnabled=false;document.
 window.addEventListener('beforeunload',()=>{if(synth)synth.cancel();});
 
 
-// Arahan suara / Speech Recognition
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-let recognition=null, listening=false;
-const micBtn=document.getElementById('micBtn'), commandStatus=document.getElementById('commandStatus');
-function setCommandStatus(msg,heard=false){commandStatus.innerHTML=heard?'<span class="heard">'+escapeHtml(msg)+'</span>':escapeHtml(msg);}
-function normalizeCommand(t){return String(t||'').toLowerCase().replace(/[.,!?]/g,' ').replace(/\s+/g,' ').trim();}
-function romanToSpeech(r){
- const map={I:'satu',II:'dua',IIA:'dua A',IIB:'dua B',III:'tiga',IV:'empat',V:'lima',VA:'lima A',VI:'enam',VII:'tujuh',VIII:'lapan',IX:'sembilan'};
- return map[r]||r;
-}
-function sectionSpeechName(n){return String(n).replace(/(\d+)([A-Z])/i,(_,a,b)=>a+' '+b.toUpperCase());}
-function findPartToken(text){
- const t=text.toUpperCase().replace(/BAHAGIAN\s+/,'').trim();
- const aliases={'1':'I','SATU':'I','I':'I','2':'II','DUA':'II','II':'II','2A':'IIA','DUA A':'IIA','IIA':'IIA','2B':'IIB','DUA B':'IIB','IIB':'IIB','3':'III','TIGA':'III','III':'III','4':'IV','EMPAT':'IV','IV':'IV','5':'V','LIMA':'V','V':'V','5A':'VA','LIMA A':'VA','VA':'VA','6':'VI','ENAM':'VI','VI':'VI','7':'VII','TUJUH':'VII','VII':'VII','8':'VIII','LAPAN':'VIII','VIII':'VIII','9':'IX','SEMBILAN':'IX','IX':'IX'};
- return aliases[t]||null;
-}
-function partAnnouncement(p){
- const names=p.sections.map(n=>'Seksyen '+sectionSpeechName(n)+', '+(byNum[n]?.title||'')).join('; ');
- const count=p.sections.length;
- return 'Bahagian '+romanToSpeech(p.num)+', '+p.title+'. Bahagian ini mengandungi '+count+' seksyen, iaitu '+names+'.';
-}
-function openPart(partNum,announce=true){
- const p=DATA.parts.find(x=>x.num===partNum); if(!p)return false;
- document.querySelectorAll('.part-head').forEach(h=>{const is=h.dataset.part===partNum;h.classList.toggle('active',is);h.classList.toggle('voice-open',is);const list=h.nextElementSibling;if(list&&list.classList.contains('sections'))list.classList.toggle('open',is)});
- const head=document.querySelector('.part-head[data-part="'+partNum+'"]'); if(head)head.scrollIntoView({behavior:'smooth',block:'center'});
- if(announce){speakCustom(partAnnouncement(p),'Bahagian '+partNum);}
- return true;
-}
-function speakCustom(text,label='Maklum balas'){
- if(!synth||!voiceEnabled){setVoiceStatus('Suara tidak aktif atau tidak disokong.',false);return;}
- synth.cancel();speechMode='custom';speechPaused=false;speechQueue=chunkSpeech(text);speechIndex=0;window._customSpeechLabel=label;speakNext();
-}
-const oldSpeechLabel=speechLabel;
-speechLabel=function(){return speechMode==='custom'?(window._customSpeechLabel||'Maklum balas'):oldSpeechLabel();};
-function voiceSearch(term){
- term=term.trim(); if(!term){speakCustom('Sila sebut perkara yang hendak dicari.','Carian');return;}
- const q=term.toLowerCase();
- let hits=sections.filter(s=>('seksyen '+s.num+' '+s.title+' '+s.text+' '+(DATA.explain[s.num]||'')).toLowerCase().includes(q));
- // rank title matches first
- hits.sort((a,b)=>{const at=a.title.toLowerCase().includes(q)?0:1,bt=b.title.toLowerCase().includes(q)?0:1;return at-bt;});
- if(!hits.length){speakCustom('Carian '+term+'. Tiada padanan ditemui dalam kandungan MyAKTA172.','Carian');return;}
- const top=hits.slice(0,5);
- const desc=top.map(s=>'Bahagian '+romanToSpeech(s.part)+', Seksyen '+sectionSpeechName(s.num)+', '+s.title).join('; ');
- if(hits.length===1){show(hits[0].num);speakCustom('Carian '+term+'. Ditemui di '+desc+'. Seksyen ini telah dibuka.','Carian');}
- else {
-   openCaseView();
-   document.getElementById('caseInput').value=term;
-   analyseCase();
-   speakCustom('Carian '+term+'. Ditemui '+hits.length+' padanan. Antara yang berkaitan ialah '+desc+'. Hasil berkaitan dipaparkan dalam Carian Kata Kunci dan Analisis Kes.','Carian');
- }
-}
-function processVoiceCommand(raw){
- const t=normalizeCommand(raw);setCommandStatus('Didengar: “'+raw+'”',true);
- let m;
- if((m=t.match(/^(?:buka|pergi ke|tunjuk) bahagian (.+)$/))){const p=findPartToken(m[1]);if(p){openPart(p,true);return;}speakCustom('Bahagian yang disebut tidak dapat dikenal pasti.','Arahan Suara');return;}
- if((m=t.match(/^(?:buka|pergi ke|tunjuk) seksyen\s*(\d+)\s*([a-z])?$/))){const n=m[1]+(m[2]?m[2].toUpperCase():'');if(byNum[n]){show(n);speakCustom('Seksyen '+sectionSpeechName(n)+', '+byNum[n].title+', telah dibuka.','Seksyen '+n);return;}speakCustom('Seksyen '+sectionSpeechName(n)+' tidak ditemui.','Arahan Suara');return;}
- if(/^dengar (?:ayat )?seksyen$/.test(t)||/^baca (?:ayat )?seksyen$/.test(t)){startSpeech('section');return;}
- if(/^dengar penerangan(?: ringkas)?$/.test(t)||/^baca penerangan(?: ringkas)?$/.test(t)){startSpeech('explain');return;}
- if(/^cari\s+/.test(t)){voiceSearch(t.replace(/^cari\s+/,''));return;}
- if(/^(jeda|pause)$/.test(t)){pauseSpeech();return;}
- if(/^(sambung|teruskan)$/.test(t)){if(synth&&synth.paused)pauseSpeech();else speakCustom('Tiada bacaan yang sedang dijeda.','Arahan Suara');return;}
- if(/^(berhenti|stop)$/.test(t)){stopSpeech(true);return;}
- if(/^(seksyen )?(seterusnya|berikutnya)$/.test(t)){const i=sections.findIndex(s=>s.num===current);if(sections[i+1]){show(sections[i+1].num);speakCustom('Seksyen '+sectionSpeechName(current)+', '+byNum[current].title+'.','Navigasi');}return;}
- if(/^(seksyen )?(sebelumnya|terdahulu)$/.test(t)){const i=sections.findIndex(s=>s.num===current);if(sections[i-1]){show(sections[i-1].num);speakCustom('Seksyen '+sectionSpeechName(current)+', '+byNum[current].title+'.','Navigasi');}return;}
- speakCustom('Arahan tidak dikenal pasti. Cuba sebut buka bahagian, buka seksyen, dengar seksyen, dengar penerangan ringkas, atau cari diikuti kata kunci.','Arahan Suara');
-}
-function initRecognition(){
- if(!micBtn||!commandStatus)return;
- if(!window.isSecureContext){micBtn.disabled=true;micBtn.textContent='🎙 Mikrofon Tidak Tersedia';setCommandStatus('Arahan suara memerlukan sambungan HTTPS yang selamat.');return;}
- if(!SpeechRecognition){micBtn.disabled=true;micBtn.textContent='🎙 Tidak Disokong';setCommandStatus('Pelayar ini tidak menyediakan pengecaman suara. Pada telefon Android, buka MyAKTA172 terus dalam Google Chrome dan benarkan mikrofon.');return;}
- recognition=new SpeechRecognition();
- recognition.lang='ms-MY';recognition.interimResults=false;recognition.continuous=false;recognition.maxAlternatives=3;
- recognition.onstart=()=>{listening=true;micBtn.classList.add('listening');micBtn.textContent='● Mendengar…';setCommandStatus('Mendengar arahan Bahasa Melayu…');};
- recognition.onresult=e=>{
-   let best=e.results[0][0]?.transcript||'';
-   // Try alternatives when the first transcript is empty.
-   if(!best&&e.results[0].length>1)best=e.results[0][1]?.transcript||'';
-   if(best)processVoiceCommand(best); else setCommandStatus('Suara tidak dapat dikenal pasti. Cuba sebut sekali lagi.');
- };
- recognition.onerror=e=>{
-   listening=false;micBtn.classList.remove('listening');micBtn.textContent='🎙 Cuba Lagi';
-   const msg={
-    'not-allowed':'Akses mikrofon ditolak. Tekan ikon kunci/Settings pada pelayar → Permissions → Microphone → Allow, kemudian cuba lagi.',
-    'service-not-allowed':'Perkhidmatan pengecaman suara tidak dibenarkan pada pelayar/peranti ini.',
-    'audio-capture':'Mikrofon tidak dapat diakses. Pastikan mikrofon tidak sedang digunakan aplikasi lain dan kebenaran mikrofon telah diberi.',
-    'no-speech':'Tiada suara dikesan. Tekan “Cuba Lagi” dan sebut arahan dengan jelas.',
-    'network':'Pengecaman suara memerlukan sambungan rangkaian pada sesetengah peranti. Semak Internet dan cuba lagi.',
-    'aborted':'Pendengaran dihentikan. Tekan “Cuba Lagi”.'
-   };
-   setCommandStatus(msg[e.error]||('Arahan suara tidak dapat diproses ('+e.error+'). Cuba sekali lagi.'));
- };
- recognition.onend=()=>{listening=false;micBtn.classList.remove('listening');if(!micBtn.disabled&&micBtn.textContent==='● Mendengar…')micBtn.textContent='🎙 Mula Mendengar';};
- micBtn.onclick=async()=>{
-   if(listening){recognition.stop();return;}
-   // Explicit permission request improves reliability on mobile browsers.
-   try{
-     if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-       const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-       stream.getTracks().forEach(t=>t.stop());
-     }
-     setCommandStatus('Mikrofon dibenarkan. Mendengar arahan…');
-     recognition.start();
-   }catch(e){
-     micBtn.classList.remove('listening');micBtn.textContent='🎙 Cuba Lagi';
-     setCommandStatus('Mikrofon belum dibenarkan. Benarkan akses mikrofon untuk laman MyAKTA172 dalam tetapan pelayar, kemudian tekan “Cuba Lagi”.');
-   }
- };
-}
-initRecognition();
-
+// Arahan Suara digugurkan. Bacaan Suara (Text-to-Speech) dikekalkan.
 
 document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText('Seksyen '+current+' — '+byNum[current].title+'\n\n'+byNum[current].text); document.getElementById('printBtn').onclick=()=>window.print(); document.getElementById('large').onclick=()=>document.body.classList.add('large'); document.getElementById('small').onclick=()=>document.body.classList.remove('large'); document.getElementById('theme').onclick=()=>{const dark=!document.body.classList.contains('dark');document.body.classList.toggle('dark',dark);localStorage.setItem('myakta172_theme_v1',dark?'dark':'light');document.getElementById('theme').textContent=dark?'☀ Siang':'☾ Malam';};
 makeNav(); makeJump(); const h=decodeURIComponent(location.hash.replace('#seksyen-','')); const INITIAL_SECTION=byNum[h]?h:'1';
@@ -1409,7 +1301,7 @@ updateBackToTop();
 /* Bookmark / Seksyen Kegemaran dan sejarah bacaan — disimpan pada pelayar pengguna */
 const FAV_KEY='myakta172_favourites_v1', HISTORY_KEY='myakta172_history_v1';
 let savedMode='fav';
-function loadLocal(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
+function loadLocal(key){try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[]}catch(e){return []}}
 function saveLocal(key,v){try{localStorage.setItem(key,JSON.stringify(v))}catch(e){}}
 function favourites(){return loadLocal(FAV_KEY)}
 function historyItems(){return loadLocal(HISTORY_KEY)}
