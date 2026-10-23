@@ -2747,4 +2747,26 @@ function digitalHubbPrintWhenReady(popup){
 /* KM only: separate alternative-route heading from adjacent TAMAT nodes. */
 #kmFlowChart .km-end-separator{margin-top:19px!important;margin-bottom:16px!important;padding-top:5px!important;}
 </style>
+
+<!-- Mukadimah/Lampiran return directly to application Home; no changes to other navigation -->
+<script>
+(function(){
+ if(new URLSearchParams(location.search).get('view')!=='home')return;
+ function goToAppHome(){
+  const welcome=document.getElementById('myaktaWelcome');
+  if(welcome){welcome.hidden=true;welcome.style.setProperty('display','none','important')}
+  if(document.body.classList.contains('mode-mobile')){
+   document.querySelector('[data-mobile-nav="home"]')?.click();
+   const home=document.getElementById('mobileHome');
+   if(home)home.style.display='block';
+  }else{
+   document.getElementById('desktopHomeButton')?.click();
+  }
+  window.scrollTo(0,0);
+  history.replaceState(null,'',location.pathname);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',goToAppHome,{once:true});
+ else goToAppHome();
+})();
+</script>
 </body></html>
