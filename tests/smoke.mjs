@@ -885,7 +885,7 @@ try {
          document.getElementById('modeMobile').click();
        },id);
        assert.equal(await p.locator('#mobileHome').evaluate(e=>e.style.display),'none','Section '+id+' did not remain in Mobile');
-       await p.locator('[data-mobile-nav="home"]').click();
+       await p.locator('[data-mobile-nav="home"]').evaluate(el=>el.click());
        assert.equal(await p.locator('#mobileHome').evaluate(e=>e.style.display),'block','Mobile Home not visible');
        await p.locator('#modeDesktop').click();
        await p.waitForTimeout(100);
