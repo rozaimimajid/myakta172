@@ -1477,7 +1477,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function selectedMode(){return localStorage.getItem(MODE_KEY)||defaultMode()}
  function setMode(mode,save){
    const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
-   const reading=!!save && previous!==mode &&
+   const atMobileHome=previous==='mobile' && document.getElementById('mobileHome')?.style.display==='block';
+   const reading=!!save && previous!==mode && !atMobileHome &&
      (previous==='mobile'
        ? /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
          document.getElementById('mobileHome')?.style.display==='none' &&
@@ -1509,7 +1510,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
          document.querySelector('.sidebar')?.classList.remove('mobile-open');
        };
        activateHome();
-       setTimeout(activateHome,0);
+       setTimeout(()=>{document.getElementById('desktopHomeButton')?.click();activateHome();},0);
      }
      if(reading){
        document.getElementById('desktopHome')?.classList.remove('open');
