@@ -1476,6 +1476,11 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function defaultMode(){return window.innerWidth<=700?'mobile':'desktop'}
  function selectedMode(){return localStorage.getItem(MODE_KEY)||defaultMode()}
  function setMode(mode,save){
+   const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
+   const reading=!!save && previous!==mode && document.getElementById('actView')?.style.display!=='none' &&
+     (previous==='mobile'
+       ? document.querySelector('.main')?.classList.contains('mobile-open') && document.getElementById('mobileHome')?.style.display==='none'
+       : !document.getElementById('desktopHome')?.classList.contains('open'));
    document.body.classList.remove('mode-desktop','mode-mobile');
    document.body.classList.add('mode-'+mode);
    document.querySelector('.top')?.style.removeProperty('transform');
@@ -1486,9 +1491,16 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    $('settingsMobile')?.classList.toggle('active',mode==='mobile');
    $('modeDesktop')?.classList.toggle('active',mode==='desktop');
    $('modeMobile')?.classList.toggle('active',mode==='mobile');
-   if(mode==='mobile') mobileNavigate('home'); else {
+   if(mode==='mobile') mobileNavigate(reading?'section':'home'); else {
      document.querySelector('.sidebar')?.classList.remove('mobile-open');
      document.querySelector('.main')?.classList.remove('mobile-open');
+     if(reading){
+       document.getElementById('desktopHome')?.classList.remove('open');
+       document.getElementById('actView').style.display='block';
+       const cv=document.getElementById('caseView');if(cv)cv.style.display='none';
+       document.getElementById('mobileHome').style.display='none';
+       window.scrollTo({top:0,behavior:'smooth'});
+     }
    }
  }
  function arr(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
