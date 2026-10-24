@@ -1481,6 +1481,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      (previous==='mobile'
        ? document.querySelector('.main')?.classList.contains('mobile-open') && document.getElementById('mobileHome')?.style.display==='none'
        : !document.getElementById('desktopHome')?.classList.contains('open'));
+   document.body.dataset.preserveModeReading=reading?'1':'0';
    document.body.classList.remove('mode-desktop','mode-mobile');
    document.body.classList.add('mode-'+mode);
    document.querySelector('.top')?.style.removeProperty('transform');
@@ -1693,8 +1694,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }));
  $('caseOpen')?.addEventListener('click',leaveHome,true);
  $('nav')?.addEventListener('click',e=>{if(e.target.closest('.sec-link'))leaveHome()},true);
- $('modeDesktop')?.addEventListener('click',()=>setTimeout(openHome,0));
- $('settingsDesktop')?.addEventListener('click',()=>setTimeout(openHome,0));
+ $('modeDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.preserveModeReading!=='1')openHome()},0));
+ $('settingsDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.preserveModeReading!=='1')openHome()},0));
  $('modeMobile')?.addEventListener('click',leaveHome);
  $('settingsMobile')?.addEventListener('click',leaveHome);
  // Show the new desktop landing page on every fresh opening of the app.
