@@ -870,6 +870,39 @@ try {
      assert.deepEqual(result.recent,['1'],'Invalid history ID rendered on mobile');
    }finally{await p.close();}
  });
+ await check('Mobile Home switches to Desktop Home, while active reading remains preserved',async()=>{
+   const p=await browser.newPage({viewport:{width:1440,height:900}});
+   try{
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none';}});
+     for(const id of ['1','2','7','19']){
+       await p.evaluate(id=>{
+         document.getElementById('modeDesktop').click();
+         document.getElementById('desktopHomeButton').click();
+         show(id);
+         document.getElementById('desktopHome').classList.remove('open');
+         document.getElementById('actView').style.display='block';
+         document.getElementById('modeMobile').click();
+       },id);
+       assert.equal(await p.locator('#mobileHome').evaluate(e=>e.style.display),'none','Section '+id+' did not remain in Mobile');
+       await p.locator('[data-mobile-nav="home"]').click();
+       assert.equal(await p.locator('#mobileHome').evaluate(e=>e.style.display),'block','Mobile Home not visible');
+       await p.locator('#modeDesktop').click();
+       await p.waitForTimeout(100);
+       assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),true,'Desktop Home missing after Mobile Home for '+id);
+       assert.equal(await p.locator('#actView').evaluate(e=>e.style.display),'none','Old section reappeared for '+id);
+     }
+     await p.evaluate(()=>{
+       document.getElementById('desktopHomeButton').click();show('19');
+       document.getElementById('desktopHome').classList.remove('open');
+       document.getElementById('actView').style.display='block';
+       document.getElementById('modeMobile').click();
+       document.getElementById('modeDesktop').click();
+     });
+     assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
+     assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false,'Active reading was replaced by Home');
+   }finally{await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
