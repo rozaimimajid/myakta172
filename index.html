@@ -1499,8 +1499,17 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      document.querySelector('.sidebar')?.classList.remove('mobile-open');
      document.querySelector('.main')?.classList.remove('mobile-open');
      if(!reading && previous==='mobile'){
-       // Utama Mobile mesti menjadi Utama Desktop, bukan seksyen lama.
-       document.getElementById('desktopHomeButton')?.click();
+       // Paksa Utama Desktop; hash menyimpan bacaan terakhir, bukan destinasi semasa.
+       const desktopHome=$('desktopHome'),act=$('actView'),cv=$('caseView');
+       const activateHome=()=>{
+         if(!document.body.classList.contains('mode-desktop') || document.body.dataset.preserveModeReading==='1')return;
+         desktopHome?.classList.add('open');
+         if(act)act.style.display='none';
+         if(cv){cv.style.display='none';cv.classList.remove('open');}
+         document.querySelector('.sidebar')?.classList.remove('mobile-open');
+       };
+       activateHome();
+       setTimeout(activateHome,0);
      }
      if(reading){
        document.getElementById('desktopHome')?.classList.remove('open');
