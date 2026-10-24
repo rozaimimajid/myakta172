@@ -1477,10 +1477,13 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function selectedMode(){return localStorage.getItem(MODE_KEY)||defaultMode()}
  function setMode(mode,save){
    const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
-   const reading=!!save && previous!==mode && document.getElementById('actView')?.style.display!=='none' &&
+   const reading=!!save && previous!==mode &&
      (previous==='mobile'
-       ? document.querySelector('.main')?.classList.contains('mobile-open') && document.getElementById('mobileHome')?.style.display==='none'
-       : !document.getElementById('desktopHome')?.classList.contains('open'));
+       ? document.querySelector('.main')?.classList.contains('mobile-open') &&
+         document.getElementById('mobileHome')?.style.display==='none' &&
+         /^#seksyen-/i.test(location.hash)
+       : !document.getElementById('desktopHome')?.classList.contains('open') &&
+         document.getElementById('actView')?.style.display!=='none');
    document.body.dataset.preserveModeReading=reading?'1':'0';
    document.body.classList.remove('mode-desktop','mode-mobile');
    document.body.classList.add('mode-'+mode);
@@ -1501,6 +1504,14 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
        const cv=document.getElementById('caseView');if(cv)cv.style.display='none';
        document.getElementById('mobileHome').style.display='none';
        window.scrollTo({top:0,behavior:'smooth'});
+       // Pastikan pengendali Utama lain tidak mengatasi pertukaran Mobile → Desktop.
+       setTimeout(()=>{
+         if(document.body.classList.contains('mode-desktop') && document.body.dataset.preserveModeReading==='1'){
+           document.getElementById('desktopHome')?.classList.remove('open');
+           document.getElementById('actView').style.display='block';
+           const caseView=document.getElementById('caseView');if(caseView)caseView.style.display='none';
+         }
+       },0);
      }
    }
  }
