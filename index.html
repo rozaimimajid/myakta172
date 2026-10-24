@@ -1479,9 +1479,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
    const reading=!!save && previous!==mode &&
      (previous==='mobile'
-       ? document.querySelector('.main')?.classList.contains('mobile-open') &&
+       ? /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
          document.getElementById('mobileHome')?.style.display==='none' &&
-         /^#seksyen-/i.test(location.hash)
+         document.getElementById('actView')?.style.display!=='none'
        : !document.getElementById('desktopHome')?.classList.contains('open') &&
          document.getElementById('actView')?.style.display!=='none');
    document.body.dataset.preserveModeReading=reading?'1':'0';
@@ -1711,7 +1711,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  $('settingsMobile')?.addEventListener('click',leaveHome);
  // Show the new desktop landing page on every fresh opening of the app.
  // In-app navigation still opens sections normally.
- setTimeout(()=>{if(isDesktop()){document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));openHome()}},250);
+ setTimeout(()=>{if(isDesktop() && document.body.dataset.preserveModeReading!=='1'){document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));openHome()}},250);
 })();
 </script>
 <script>
