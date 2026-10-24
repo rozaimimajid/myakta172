@@ -1498,6 +1498,10 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(mode==='mobile') mobileNavigate(reading?'section':'home'); else {
      document.querySelector('.sidebar')?.classList.remove('mobile-open');
      document.querySelector('.main')?.classList.remove('mobile-open');
+     if(!reading && previous==='mobile'){
+       // Utama Mobile mesti menjadi Utama Desktop, bukan seksyen lama.
+       document.getElementById('desktopHomeButton')?.click();
+     }
      if(reading){
        document.getElementById('desktopHome')?.classList.remove('open');
        document.getElementById('actView').style.display='block';
@@ -1553,6 +1557,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(!document.body.classList.contains('mode-mobile'))return;
    const home=$('mobileHome'), settings=$('mobileSettings'), side=document.querySelector('.sidebar'), main=document.querySelector('.main');
    home.style.display=where==='home'?'block':'none';
+   if(where==='home')document.body.dataset.preserveModeReading='0';
    if(settings)settings.classList.toggle('open',where==='settings');
    side.classList.toggle('mobile-open',where==='akta');
    main.classList.toggle('mobile-open',!['home','akta','settings'].includes(where));
