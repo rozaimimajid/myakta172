@@ -1,0 +1,43 @@
+name: MyAKTA172 Final Audit
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - audit/stabilization-v1
+    paths:
+      - 'tests/audit-final.spec.cjs'
+      - '.github/workflows/final-audit.yml'
+      - 'index.html'
+jobs:
+  playwright-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save @playwright/test@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Start local app server
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 > /tmp/myakta-http.log 2>&1 &
+          for i in $(seq 1 30); do curl --fail --silent http://127.0.0.1:8000/ >/dev/null && exit 0; sleep 1; done
+          exit 1
+      - name: Run Desktop and Mobile audits
+        run: npx playwright test tests/audit-final.spec.cjs --reporter=line,html
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:8000
+      - name: Save audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: myakta172-final-audit
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
