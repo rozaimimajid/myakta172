@@ -1462,7 +1462,7 @@ function analyseCase(){
  // Carian fleksibel pada tajuk dan teks Akta. "*" bermaksud wildcard.
  // Kekalkan padanan peraturan khusus (contohnya KM) apabila wujud.
  if(!matches.length){
-   const words=normSearch(raw).split(/\s+/).filter(Boolean);
+   const words=String(raw).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9*]+/g,' ').trim().split(/\s+/).filter(Boolean);
    const patterns=words.filter(w=>w.replace(/\*/g,'').length>=2).map(w=>{
      const escaped=w.split('*').map(t=>t.replace(/[^a-z0-9]/g,'')).join('[a-z0-9]*');
      return new RegExp(escaped,'i');
