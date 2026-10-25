@@ -1482,10 +1482,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(previous==='mobile'){
      if($('mobileHome')?.style.display==='block')return 'home';
      // Seksyen yang sedang dibaca mengatasi panel/kawalan lama yang masih berstatus open.
-     if(/^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
-        $('mobileHome')?.style.display==='none' &&
-        document.querySelector('.main')?.classList.contains('mobile-open') &&
-        $('actView')?.style.display!=='none')return 'section';
+     if(activeView==='section' && $('mobileHome')?.style.display==='none' &&
+        document.querySelector('.main')?.classList.contains('mobile-open'))return 'section';
      if($('mobileSettings')?.classList.contains('open'))return 'settings';
      if($('caseView')?.classList.contains('open'))return 'case';
      if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
@@ -1594,7 +1592,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    window.scrollTo({top:0,behavior:'smooth'});
  }
  const oldShow=typeof show==='function'?show:null;
- if(oldShow){show=function(num){markView('section');oldShow(num);recordFrequent(num);if(document.body.classList.contains('mode-mobile')){document.querySelector('.sidebar')?.classList.remove('mobile-open');document.querySelector('.main')?.classList.add('mobile-open');$('mobileHome').style.display='none';}}}
+ if(oldShow){show=function(num){markView('section');oldShow(num);recordFrequent(num);if(document.body.classList.contains('mode-mobile')){document.querySelector('.sidebar')?.classList.remove('mobile-open');document.querySelector('.main')?.classList.add('mobile-open');$('mobileHome').style.display='none';if($('actView'))$('actView').style.display='block';}}}
  $('modeDesktop')?.addEventListener('click',()=>setMode('desktop',true));
  $('modeMobile')?.addEventListener('click',()=>setMode('mobile',true));
  document.querySelectorAll('[data-mobile-nav]').forEach(b=>b.addEventListener('click',()=>mobileNavigate(b.dataset.mobileNav)));
