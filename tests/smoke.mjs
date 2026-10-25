@@ -887,7 +887,7 @@ try {
        assert.equal(await p.locator('#mobileHome').evaluate(e=>e.style.display),'none','Section '+id+' did not remain in Mobile');
        await p.locator('[data-mobile-nav="home"]').evaluate(el=>el.click());
        assert.equal(await p.locator('#mobileHome').evaluate(e=>e.style.display),'block','Mobile Home not visible');
-       await p.locator('#modeDesktop').click();
+       await p.locator('#modeDesktop').evaluate(el=>el.click());
        await p.waitForTimeout(100);
        assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),true,'Desktop Home missing after Mobile Home for '+id);
        assert.equal(await p.locator('#actView').evaluate(e=>e.style.display),'none','Old section reappeared for '+id);
