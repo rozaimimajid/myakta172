@@ -1481,6 +1481,11 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function viewNow(previous){
    if(previous==='mobile'){
      if($('mobileHome')?.style.display==='block')return 'home';
+     // Seksyen yang sedang dibaca mengatasi panel/kawalan lama yang masih berstatus open.
+     if(/^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
+        $('mobileHome')?.style.display==='none' &&
+        document.querySelector('.main')?.classList.contains('mobile-open') &&
+        $('actView')?.style.display!=='none')return 'section';
      if($('mobileSettings')?.classList.contains('open'))return 'settings';
      if($('caseView')?.classList.contains('open'))return 'case';
      if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
