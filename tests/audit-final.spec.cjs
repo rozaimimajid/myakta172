@@ -45,7 +45,7 @@ for (const device of [{name:'desktop',width:1440,height:900},{name:'mobile',widt
    await expect(page.locator('#caseResults [data-case-sec]')).toHaveCount(1);
    await expect(page.locator('#caseResults [data-case-sec]').first()).toHaveAttribute('data-case-sec','21B');
    await page.locator('#caseInput').evaluate(el=>el.value='material');
-   await page.locator('#caseAnalyse').click();
+   await page.evaluate(()=>analyseCase());
    await expect(page.locator('#caseResults [data-case-sec="19"]')).toBeVisible();
    await page.locator('#caseResults [data-case-sec="19"]').evaluate(el=>el.click());
    await expect(page.locator('#lawText mark.act-search-match').first()).toBeVisible();
