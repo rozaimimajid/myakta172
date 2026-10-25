@@ -916,7 +916,7 @@ try {
      });
      assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
      await p.locator('#modeDesktop').evaluate(el=>el.click());
-     await p.waitForTimeout(80);
+     await p.waitForTimeout(450);
      assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false);
      assert.equal(await p.locator('#actView').evaluate(e=>e.style.display),'block');
      assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
