@@ -960,6 +960,27 @@ try {
      assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false,'Home replaced Search');
    }finally{await p.close();}
  });
+ await check('Search survives stale statute URL and Mobile/Desktop toggle',async()=>{
+   const p=await browser.newPage({viewport:{width:1440,height:900}});
+   try {
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{
+       const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none';}
+       document.getElementById('desktopHomeButton').click();
+       show('7');
+       document.getElementById('desktopHome').classList.remove('open');
+       document.getElementById('caseOpen').click();
+       document.getElementById('caseInput').value='kebenaran merancang';
+       document.getElementById('modeMobile').click();
+     });
+     assert.equal(await p.locator('#caseView').evaluate(e=>e.classList.contains('open')),true);
+     await p.locator('#modeDesktop').evaluate(el=>el.click());
+     await p.waitForTimeout(400);
+     assert.equal(await p.locator('#caseView').evaluate(e=>e.classList.contains('open')),true,'Search lost after switching from Mobile');
+     assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false,'Home overrides Search');
+     assert.equal(await p.locator('#caseInput').inputValue(),'kebenaran merancang');
+   } finally {await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
