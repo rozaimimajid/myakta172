@@ -1469,6 +1469,17 @@ function analyseCase(){
   out.querySelectorAll('[data-case-sec]').forEach(el=>el.addEventListener('click',()=>{closeCaseView();show(el.dataset.caseSec)}));
   return;
  }
+ // Carian kata kunci dalam tajuk dan keseluruhan teks sebenar Akta.
+ const word=normSearch(raw);
+ const hits=sections.filter(s=>normSearch(s.title+' '+s.text).includes(word));
+ if(hits.length){
+  const htmlEscape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-note">'+hits.length+' seksyen mengandungi padanan bagi “'+htmlEscape(raw)+'”.</div>'+
+   hits.map(s=>'<div class="case-match" data-case-sec="'+s.num+'"><b>Seksyen '+s.num+'</b> – '+htmlEscape(s.title)+'</div>').join('')+
+   '<div class="case-note">Padanan daripada tajuk atau teks penuh Akta 172. Klik seksyen untuk membaca kandungannya.</div>';
+  out.querySelectorAll('[data-case-sec]').forEach(el=>el.addEventListener('click',()=>{closeCaseView();show(el.dataset.caseSec)}));
+  return;
+ }
  const q=expandCaseAbbr(normSearch(raw)), matches=CASE_RULES.map(r=>{let score=0;r.keys.forEach(k=>{const n=normSearch(k);if(caseHas(q,k))score+=n.length>8?4:2});return {r,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
  if(!matches.length){out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-issue">Tiada padanan dalaman yang cukup jelas ditemui. Cuba gunakan istilah Akta seperti “kebenaran merancang”, “LCP”, “rancangan tempatan”, “rayuan”, “caj pemajuan”, “penguatkuasaan”, “pemeliharaan pokok”, “pendakwaan” atau “penyampaian dokumen”.</div><div class="case-note">Analisis Kes ini menggunakan peraturan padanan dalaman sahaja dan tidak menggunakan AI.</div>';return}
  const issues=matches.slice(0,4).map(x=>x.r.issue);
