@@ -449,3 +449,13 @@ Cubaan mendapatkan status GitHub Actions bagi commit akhir Kelompok VIII melalui
 - **Had bukti:** Sesetengah ujian menggunakan panggilan programatik ke fungsi/kawalan tersembunyi; kejayaan ini **bukan** bukti klik sebenar melalui UI Mobile atau Desktop untuk semua fungsi. Carta alir, PWA/offline, cetak, suara, bookmark, semua interaksi manual dan pengesahan visual rinci masih bukan liputan run #6.
 - Keputusan: **LULUS SUIT UJIAN AUTOMATIK FINAL AUDIT #6**; **audit regresi menyeluruh keseluruhan aplikasi belum boleh dianggap lulus atau dikunci sepenuhnya**.
 - Kod aplikasi dan cabang `main` tidak diubah untuk rekod ini.
+
+
+## Keputusan audit lanjutan #7 — berdasarkan paparan GitHub Actions pengguna
+- Pengguna menunjukkan status **Success (hijau)** bagi workflow *MyAKTA172 Final Audit #7*, commit `8ace71f`, cabang `audit/stabilization-v1`.
+- Workflow telah dikemas kini untuk memanggil suite asas (`audit-final.spec.cjs`) dan suite tambahan (`audit-extended.spec.cjs`).
+- Status keseluruhan workflow: **LULUS menurut paparan GitHub Actions**.
+- Jumlah ujian individu belum dapat diperoleh daripada log #7 melalui penyambung semasa; **jangan lapor angka tanpa log**.
+- Liputan ujian tambahan: kewujudan kandungan carta KM/RSN/RT/RKK dan tab, bookmark selepas muat semula, kawalan suara, tema, panggilan cetak, aset dan pendaftaran PWA.
+- Batasan: ujian ini tidak membuktikan ketepatan semantik carta, audio yang didengar, cetakan fizikal atau pengalaman penuh klik/touch; beberapa ujian menggunakan panggilan DOM programatik.
+- **Status:** Audit automatik yang disediakan telah lulus; audit manual hujung-ke-hujung penuh / kesahihan undang-undang masih item berasingan. Tiada arahan merge ke `main`.
