@@ -1481,6 +1481,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function viewNow(previous){
    if(previous==='mobile'){
      if($('mobileHome')?.style.display==='block')return 'home';
+     if(activeView==='case' && $('caseView')?.classList.contains('open'))return 'case';
      // Seksyen yang sedang dibaca mengatasi panel/kawalan lama yang masih berstatus open.
      if($('mobileHome')?.style.display==='none' &&
         /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
@@ -1576,7 +1577,11 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(settings)settings.classList.toggle('open',where==='settings');
    side.classList.toggle('mobile-open',where==='akta');
    main.classList.toggle('mobile-open',!['home','akta','settings'].includes(where));
-   if(where==='case' && typeof openCaseView==='function')openCaseView();
+   if(where==='case' && typeof openCaseView==='function'){
+     $('desktopHome')?.classList.remove('open');
+     if($('caseView'))$('caseView').style.display='block';
+     openCaseView();
+   }
    if(where==='fav'){
      if(typeof closeCaseView==='function')closeCaseView();
      setTimeout(()=>{const p=$('savedPanel');if(p)p.classList.add('open');if(typeof renderSaved==='function'){savedMode='fav';renderSaved()}},0);
