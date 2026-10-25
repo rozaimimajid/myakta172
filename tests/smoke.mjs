@@ -903,6 +903,25 @@ try {
      assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false,'Active reading was replaced by Home');
    }finally{await p.close();}
  });
+ await check('Mobile-first section 19 stays visible after switching to Desktop',async()=>{
+   const p=await browser.newPage({viewport:{width:390,height:844}});
+   try{
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{
+       const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none';}
+       document.getElementById('modeMobile').click();
+       document.querySelector('[data-mobile-nav="home"]').click();
+       const b=document.querySelector('[data-mobile-sec="19"]');
+       if(b)b.click();else show('19');
+     });
+     assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
+     await p.locator('#modeDesktop').evaluate(el=>el.click());
+     await p.waitForTimeout(80);
+     assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false);
+     assert.equal(await p.locator('#actView').evaluate(e=>e.style.display),'block');
+     assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
+   }finally{await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
