@@ -1490,8 +1490,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
      return activeView;
    }
-   if($('desktopHome')?.classList.contains('open'))return 'home';
    if($('caseView')?.classList.contains('open'))return 'case';
+   if($('desktopHome')?.classList.contains('open'))return 'home';
    return activeView==='favorites'?'favorites':'section';
  }
  function setMode(mode,save){
@@ -1511,7 +1511,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    $('modeMobile')?.classList.toggle('active',mode==='mobile');
    if(mode==='mobile'){
      mobileNavigate(view==='section'?'section':view==='case'?'case':view==='favorites'?'fav':view==='settings'?'settings':'home');
-     if(view==='section')markView('section');
+     markView(view);
    }else{
      document.querySelector('.sidebar')?.classList.remove('mobile-open');
      document.querySelector('.main')?.classList.remove('mobile-open');
@@ -1531,7 +1531,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      };
      applyView();
      // Pengendali Desktop lama menggunakan setTimeout(0); pastikan state yang sama kekal.
-     setTimeout(applyView,0);
+     setTimeout(()=>{if(document.body.dataset.activeView===view)applyView();},0);
    }
  }
  function arr(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
@@ -1729,8 +1729,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  $('nav')?.addEventListener('click',e=>{if(e.target.closest('.sec-link'))leaveHome()},true);
  $('modeDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.activeView==='home')openHome()},0));
  $('settingsDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.activeView==='home')openHome()},0));
- $('modeMobile')?.addEventListener('click',leaveHome);
- $('settingsMobile')?.addEventListener('click',leaveHome);
+ // Menukar mod bukan navigasi; jangan panggil leaveHome selepas setMode.
  // Show the new desktop landing page on every fresh opening of the app.
  // In-app navigation still opens sections normally.
  setTimeout(()=>{if(isDesktop() && document.body.dataset.activeView==='home' && document.body.dataset.preserveModeReading!=='1'){document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));openHome()}},250);
