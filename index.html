@@ -1219,7 +1219,7 @@ function formatLawText(txt){
   const remove=/^(BAHAGIAN\s+[IVX]+[A-Z]?|UNDANG-UNDANG MALAYSIA|Akta\s+172|AKTA PERANCANGAN BANDAR DAN DESA 1976|Perancangan Bandar dan Desa|Undang-Undang Malaysia\s+AKTA\s+172)$/i;
   let lines=txt.split('\n').map(l=>l.replace(/\s+/g,' ').trim()).filter(l=>l && !remove.test(l));
   let paras=[], cur='';
-  const newPara=/^(\d+[A-Z]?\.\s*|\(\d+\)|\([a-z]\)|\([ivxlcdm]+\))/i;
+  const newPara=/^(\d+[A-Z]?\.\s*|\(\d+[A-Z]?\)|\([a-z]{1,2}\)|\([ivxlcdm]+\))/i;
   for(const line of lines){
     if(newPara.test(line)){
       if(cur) paras.push(cur.trim());
@@ -1234,16 +1234,16 @@ function formatLawText(txt){
   // Contoh 35C: (c) (i) di aras kedua, (ii) di aras ketiga, (d) kembali ke kedua.
   let lastAlpha='', romanActive=false;
   return paras.map(t=>{
-    const alpha=t.match(/^\(([a-z])\)(?:\s|$)/i);
+    const alpha=t.match(/^\(([a-z]{1,2})\)(?:\s|$)/i);
     const roman=t.match(/^\((i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv)\)(?:\s|$)/i);
     let cls='';
-    if(/^\d+[A-Z]?\.\s/i.test(t)||/^\(\d+\)/.test(t)){
+    if(/^\d+[A-Z]?\.\s/i.test(t)||/^\(\d+[A-Z]?\)/i.test(t)){
       lastAlpha=''; romanActive=false;
     }else if(alpha||roman){
       const marker=(roman||alpha)[1].toLowerCase();
       const letter=alpha?.[1].toLowerCase()||'';
       const alphaNext=!!lastAlpha && !!letter &&
-        letter.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
+        letter.length===1 && lastAlpha.length===1 && letter.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
       const compound=/^\([a-z]\)\s*\(i\)(?:\s|$)/i.test(t);
       const isRoman=!!roman && !alphaNext &&
         (romanActive || (lastAlpha && (marker==='i'||marker.length>1)));
@@ -1255,8 +1255,8 @@ function formatLawText(txt){
     }
     // Asingkan penanda perundangan daripada ayat untuk penjajaran lajur sebenar.
     const sectionStart=t.match(/^(\d+[A-Z]?\.)\s*(\(\d+\))?\s*([\s\S]*)$/i);
-    const subsection=!sectionStart && t.match(/^(\(\d+\))\s*([\s\S]*)$/);
-    const nested=!sectionStart&&!subsection && t.match(/^(\([a-zivxlcdm]+\))\s*([\s\S]*)$/i);
+    const subsection=!sectionStart && t.match(/^(\(\d+[A-Z]?\))\s*([\s\S]*)$/i);
+    const nested=!sectionStart&&!subsection && t.match(/^(\([a-z]{1,2}\))\s*([\s\S]*)$/i);
     let level='plain', marker='', content=t, secLabel='';
     if(sectionStart){level='section';secLabel=sectionStart[1];marker=sectionStart[2]||'';content=sectionStart[3]}
     else if(subsection){level='subsection';marker=subsection[1];content=subsection[2]}
