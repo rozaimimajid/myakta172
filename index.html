@@ -1205,9 +1205,9 @@ function formatLawText(txt){
     }
   }
   if(cur) paras.push(cur.trim());
-  // Perenggan huruf (a)–(z) ialah aras kedua; roman (i), (ii) dan seterusnya aras ketiga.
-  // Huruf (c), (d), (i), (v) juga boleh menjadi nombor Roman:
-  // jangan kelaskan sebagai Roman tanpa mengambil kira turutan senarai.
+  // Ikut struktur dokumen asal: (a)–(z) ialah aras kedua;
+  // (i), (ii), ... ialah aras ketiga hanya dalam senarai Roman sebenar.
+  // Contoh 35C: (c) (i) di aras kedua, (ii) di aras ketiga, (d) kembali ke kedua.
   let lastAlpha='', romanActive=false;
   return paras.map(t=>{
     const alpha=t.match(/^\(([a-z])\)(?:\s|$)/i);
@@ -1216,14 +1216,17 @@ function formatLawText(txt){
     if(/^\d+[A-Z]?\.\s/i.test(t)||/^\(\d+\)/.test(t)){
       lastAlpha=''; romanActive=false;
     }else if(alpha||roman){
-      const marker=(alpha||roman)[1].toLowerCase();
-      const alphaNext=lastAlpha && marker.length===1 &&
-        marker.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
-      const isRoman=!!roman && (romanActive || (marker==='i' && !alphaNext && !!lastAlpha));
+      const marker=(roman||alpha)[1].toLowerCase();
+      const letter=alpha?.[1].toLowerCase()||'';
+      const alphaNext=!!lastAlpha && !!letter &&
+        letter.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
+      const compound=/^\([a-z]\)\s*\(i\)(?:\s|$)/i.test(t);
+      const isRoman=!!roman && !alphaNext &&
+        (romanActive || (lastAlpha && (marker==='i'||marker.length>1)));
       if(isRoman){
         cls=' class="subindent"';romanActive=true;
       }else{
-        cls=' class="indent"';lastAlpha=marker;romanActive=false;
+        cls=' class="indent"';lastAlpha=letter;romanActive=compound;
       }
     }
     return `<p${cls}>${escapeHtml(t)}</p>`;
