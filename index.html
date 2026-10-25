@@ -1159,46 +1159,42 @@ body.dark #rkkV26Chart .km-finish,body.dark #rkkV26Chart .km-start{background:#1
 #myaktaWelcome .wl-grid .wl-card{min-width:0}
 @media(max-width:700px){#myaktaWelcome .wl-brand-footer{gap:6px}#myaktaWelcome .wl-brand-footer img{width:116px;height:35px;max-width:34vw}}
 </style><style id="act-hierarchy-tab-04">
-.lawbox p.act-entry{display:grid!important;grid-template-columns:0.4in minmax(0,1fr);align-items:start;column-gap:0;padding:0!important;text-indent:0!important;margin:0 0 0.13in!important;width:auto;min-width:0;max-width:100%;box-sizing:border-box}
-.lawbox p.act-entry>.act-entry-marker{grid-column:1}
-.lawbox p.act-entry>.act-entry-body{grid-column:2;min-width:0;max-width:100%;width:auto;text-align:justify;overflow-wrap:anywhere;word-break:normal}
+/* Susunan dokumen Akta 172: setiap aras menggunakan sela 0.4in, lebar dalaman terkawal. */
+.lawbox{box-sizing:border-box;min-width:0;max-width:100%;overflow-x:clip}
+.lawbox p.act-entry{
+ display:grid!important;grid-template-columns:0.4in minmax(0,1fr);
+ width:100%!important;min-width:0!important;max-width:100%!important;
+ box-sizing:border-box!important;margin:0 0 0.13in!important;margin-left:0!important;
+ padding:0!important;text-indent:0!important;column-gap:0;align-items:start
+}
+.lawbox p.act-entry>.act-entry-marker{grid-column:1;grid-row:1}
+.lawbox p.act-entry>.act-entry-body{
+ grid-column:2;grid-row:1;display:block;min-width:0;max-width:100%;
+ text-align:justify;overflow-wrap:anywhere;word-break:normal
+}
 .lawbox p.act-entry-section{grid-template-columns:0.4in 0.4in minmax(0,1fr)}
-.lawbox p.act-entry-plain>.act-entry-body{grid-column:1 / -1}
-.lawbox p.act-entry{min-width:0;overflow-wrap:anywhere}
-.lawbox{min-width:0;max-width:100%;box-sizing:border-box}
 .lawbox p.act-entry-section>.act-entry-section{grid-column:1;grid-row:1}
 .lawbox p.act-entry-section>.act-entry-marker{grid-column:2;grid-row:1}
 .lawbox p.act-entry-section>.act-entry-body{grid-column:3;grid-row:1}
 .lawbox p.act-entry-section:not(:has(>.act-entry-marker))>.act-entry-body{grid-column:2}
-.lawbox p.act-entry-subsection{margin-left:0.4in!important}
-.lawbox p.act-entry-alpha{margin-left:0.8in!important}
-.lawbox p.act-entry-roman{margin-left:1.2in!important}
-.lawbox p.act-entry-compound{margin-left:0.8in!important;grid-template-columns:0.4in 0.4in minmax(0,1fr)}
-.lawbox p.act-entry-compound>.act-entry-roman-marker{grid-column:2;grid-row:1}
-.lawbox p.act-entry-compound>.act-entry-body{grid-column:3;grid-row:1}
-.lawbox .act-entry-marker,.lawbox .act-entry-section,.lawbox .act-entry-roman-marker{white-space:nowrap;text-align:left}
-@media(max-width:650px){
-.lawbox p.act-entry{grid-template-columns:0.3in minmax(0,1fr)}
-.lawbox p.act-entry-section,.lawbox p.act-entry-compound{grid-template-columns:0.3in 0.3in minmax(0,1fr)}
-.lawbox p.act-entry-subsection{margin-left:0.3in!important}
-.lawbox p.act-entry-alpha,.lawbox p.act-entry-compound{margin-left:0.6in!important}
-.lawbox p.act-entry-roman{margin-left:0.9in!important}
-}
-
-/* Semakan susun atur: semua inden dikira DI DALAM lebar kotak, bukan ditambah pada luarnya. */
-.lawbox p.act-entry{width:100%!important;max-width:100%!important;margin-left:0!important;min-width:0!important;box-sizing:border-box!important}
 .lawbox p.act-entry-subsection{padding-left:0.4in!important}
 .lawbox p.act-entry-alpha,.lawbox p.act-entry-compound{padding-left:0.8in!important}
 .lawbox p.act-entry-roman{padding-left:1.2in!important}
 .lawbox p.act-entry-direct.act-entry-alpha,.lawbox p.act-entry-direct.act-entry-compound{padding-left:0.4in!important}
 .lawbox p.act-entry-direct.act-entry-roman{padding-left:0.8in!important}
-.lawbox p.act-entry>.act-entry-body{min-width:0!important;max-width:100%!important;overflow-wrap:break-word;word-break:normal}
+.lawbox p.act-entry-compound{grid-template-columns:0.4in 0.4in minmax(0,1fr)}
+.lawbox p.act-entry-compound>.act-entry-roman-marker{grid-column:2;grid-row:1}
+.lawbox p.act-entry-compound>.act-entry-body{grid-column:3;grid-row:1}
+.lawbox p.act-entry-plain>.act-entry-body{grid-column:1/-1}
+.lawbox .act-entry-marker,.lawbox .act-entry-section,.lawbox .act-entry-roman-marker{white-space:nowrap;text-align:left}
 @media(max-width:650px){
-.lawbox p.act-entry-subsection{padding-left:0.3in!important}
-.lawbox p.act-entry-alpha,.lawbox p.act-entry-compound{padding-left:0.6in!important}
-.lawbox p.act-entry-roman{padding-left:0.9in!important}
-.lawbox p.act-entry-direct.act-entry-alpha,.lawbox p.act-entry-direct.act-entry-compound{padding-left:0.3in!important}
-.lawbox p.act-entry-direct.act-entry-roman{padding-left:0.6in!important}
+ .lawbox p.act-entry{grid-template-columns:0.3in minmax(0,1fr)}
+ .lawbox p.act-entry-section,.lawbox p.act-entry-compound{grid-template-columns:0.3in 0.3in minmax(0,1fr)}
+ .lawbox p.act-entry-subsection{padding-left:0.3in!important}
+ .lawbox p.act-entry-alpha,.lawbox p.act-entry-compound{padding-left:0.6in!important}
+ .lawbox p.act-entry-roman{padding-left:0.9in!important}
+ .lawbox p.act-entry-direct.act-entry-alpha,.lawbox p.act-entry-direct.act-entry-compound{padding-left:0.3in!important}
+ .lawbox p.act-entry-direct.act-entry-roman{padding-left:0.6in!important}
 }
 </style></head>
 <body>
@@ -1242,7 +1238,7 @@ function formatLawText(txt){
   const remove=/^(BAHAGIAN\s+[IVX]+[A-Z]?|UNDANG-UNDANG MALAYSIA|Akta\s+172|AKTA PERANCANGAN BANDAR DAN DESA 1976|Perancangan Bandar dan Desa|Undang-Undang Malaysia\s+AKTA\s+172)$/i;
   let lines=txt.split('\n').map(l=>l.replace(/\s+/g,' ').trim()).filter(l=>l && !remove.test(l));
   let paras=[], cur='';
-  const newPara=/^(\d+[A-Z]?\.\s*|\(\d+[A-Z]?\)|\([a-z]{1,2}\)|\([ivxlcdm]+\))/i;
+  const newPara=/^(\d+[A-Z]?\.(?=\s|\(\d)|\(\d+[A-Z]?\)|\([a-z]{1,2}\)|\([ivxlcdm]+\))/i;
   for(const line of lines){
     if(newPara.test(line)){
       if(cur) paras.push(cur.trim());
