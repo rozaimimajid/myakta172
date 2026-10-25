@@ -922,6 +922,44 @@ try {
      assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
    }finally{await p.close();}
  });
+ await check('Repeated mode switches retain Section 19, Home and Case search',async()=>{
+   const p=await browser.newPage({viewport:{width:1440,height:900}});
+   try{
+     await p.goto(url,{waitUntil:'domcontentloaded'});
+     await p.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none';}});
+     await p.evaluate(()=>{
+       document.getElementById('desktopHomeButton').click();
+       show('19');
+       document.getElementById('desktopHome').classList.remove('open');
+       document.getElementById('actView').style.display='block';
+       for(let i=0;i<3;i++){document.getElementById('modeMobile').click();document.getElementById('modeDesktop').click();}
+     });
+     await p.waitForTimeout(400);
+     assert.equal(await p.locator('#secTitle').textContent(),'SEKSYEN 19');
+     assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false);
+     await p.evaluate(()=>{
+       document.getElementById('modeMobile').click();
+       document.querySelector('[data-mobile-nav="home"]').click();
+       document.getElementById('modeDesktop').click();
+       document.getElementById('modeMobile').click();
+       document.getElementById('modeDesktop').click();
+     });
+     await p.waitForTimeout(400);
+     assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),true,'Home lost after repeated switches');
+     await p.evaluate(()=>{
+       document.getElementById('caseOpen').click();
+       document.getElementById('caseInput').value='kebenaran merancang';
+       document.getElementById('modeMobile').click();
+       document.getElementById('modeDesktop').click();
+       document.getElementById('modeMobile').click();
+       document.getElementById('modeDesktop').click();
+     });
+     await p.waitForTimeout(400);
+     assert.equal(await p.locator('#caseView').evaluate(e=>e.classList.contains('open')),true,'Search view lost');
+     assert.equal(await p.locator('#caseInput').inputValue(),'kebenaran merancang');
+     assert.equal(await p.locator('#desktopHome').evaluate(e=>e.classList.contains('open')),false,'Home replaced Search');
+   }finally{await p.close();}
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
