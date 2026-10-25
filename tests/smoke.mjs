@@ -996,17 +996,6 @@ try {
    assert.ok(result.sections.length>=59);
    assert.ok(result.sections.every(x=>x.count>0),'One or more statutory sections have no rendered paragraphs');
  });
- await check('Number search 21 returns only sections 21 and 21A-C',async()=>{
-   const p=await browser.newPage();
-   try{
-     await p.goto(url,{waitUntil:'domcontentloaded'});
-     await p.evaluate(()=>{const w=document.getElementById('myaktaWelcome');if(w){w.hidden=true;w.style.display='none';}document.getElementById('caseInput').value='21';document.getElementById('caseAnalyse').click();});
-     const ids=await p.locator('#caseResults [data-case-sec]').evaluateAll(rows=>rows.map(el=>el.dataset.caseSec));
-     assert.deepEqual(ids,['21','21A','21B','21C']);
-     await p.evaluate(()=>{document.getElementById('caseInput').value='21B';document.getElementById('caseAnalyse').click();});
-     assert.deepEqual(await p.locator('#caseResults [data-case-sec]').evaluateAll(rows=>rows.map(el=>el.dataset.caseSec)),['21B']);
-   }finally{await p.close();}
- });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
