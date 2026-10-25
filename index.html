@@ -1242,7 +1242,7 @@ function formatLawText(txt){
   const remove=/^(BAHAGIAN\s+[IVX]+[A-Z]?|UNDANG-UNDANG MALAYSIA|Akta\s+172|AKTA PERANCANGAN BANDAR DAN DESA 1976|Perancangan Bandar dan Desa|Undang-Undang Malaysia\s+AKTA\s+172)$/i;
   let lines=txt.split('\n').map(l=>l.replace(/\s+/g,' ').trim()).filter(l=>l && !remove.test(l));
   let paras=[], cur='';
-  const newPara=/^(\d+[A-Z]?\.(?=\s|\(\d)|\(\d+[A-Z]?\)|\([a-z]{1,2}\)|\([ivxlcdm]+\))/i;
+  const newPara=/^(\*?\d+[A-Z]?\.(?=\s|\(\d)|\(\d+[A-Z]?\)|\([a-z]{1,2}\)|\([ivxlcdm]+\))/i;
   for(const line of lines){
     if(newPara.test(line)){
       if(cur) paras.push(cur.trim());
@@ -1255,7 +1255,7 @@ function formatLawText(txt){
   // Hierarki berpandukan urutan label; nombor Roman kekal Roman sehingga perenggan abjad berikutnya.
   let romanActive=false, lastAlpha='', hasSubsection=false;
   return paras.map(t=>{
-    const sectionStart=t.match(/^(\d+[A-Z]?\.)\s*(\(\d+[A-Z]?\))?\s*([\s\S]*)$/i);
+    const sectionStart=t.match(/^(\*?\d+[A-Z]?\.)\s*(\(\d+[A-Z]?\))?\s*([\s\S]*)$/i);
     const subsection=!sectionStart&&t.match(/^(\(\d+[A-Z]?\))\s*([\s\S]*)$/i);
     const compound=!sectionStart&&!subsection&&t.match(/^(\([a-z]{1,2}\))\s+(\([ivxlcdm]+\))\s*([\s\S]*)$/i);
     const nested=!sectionStart&&!subsection&&!compound&&t.match(/^(\((?:[a-z]{1,2}|iii|iv|viii|vii|vi|xiii|xiv|xii|xi|ix|xv)\))\s*([\s\S]*)$/i);
