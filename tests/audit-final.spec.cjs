@@ -12,10 +12,12 @@ for (const device of [{name:'desktop',width:1440,height:900},{name:'mobile',widt
    await page.locator('#myaktaWelcomeEnter').click();
    await expect(page.locator('#myaktaWelcome')).not.toBeVisible();
   });
-  test('24 previously damaged legal sections: no vertical column or right overflow',async({page})=>{
+  test('all Act sections: no vertical column or right overflow',async({page})=>{
    await page.goto('/');
    await page.locator('#myaktaWelcomeEnter').click();
-   for(const n of sections) {
+   const allSections=await page.evaluate(()=>DATA.sections.map(s=>s.num));
+   expect(allSections.length).toBe(83);
+   for(const n of allSections) {
     await page.evaluate(n=>{if(typeof show!=='function')throw new Error('show() unavailable');show(n)},n);
     const result=await page.locator('#lawText').evaluate(el=>{
      const panel=el.getBoundingClientRect(), rows=[...el.querySelectorAll('p.act-entry')];
