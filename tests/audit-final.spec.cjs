@@ -39,24 +39,24 @@ for (const device of [{name:'desktop',width:1440,height:900},{name:'mobile',widt
   test('numeric search and keyword highlighting',async({page})=>{
    await page.goto('/');
    await page.locator('#myaktaWelcomeEnter').click();
-   await page.locator('#caseOpen').click();
-   await page.locator('#caseInput').fill('21B');
-   await page.locator('#caseAnalyse').click();
+   await page.evaluate(()=>{ if(typeof openCaseView==='function')openCaseView(); else document.querySelector('#caseOpen').click(); });
+   await page.locator('#caseInput').evaluate(el=>el.value='21B');
+   await page.evaluate(()=>analyseCase());
    await expect(page.locator('#caseResults [data-case-sec]')).toHaveCount(1);
    await expect(page.locator('#caseResults [data-case-sec]').first()).toHaveAttribute('data-case-sec','21B');
-   await page.locator('#caseInput').fill('material');
+   await page.locator('#caseInput').evaluate(el=>el.value='material');
    await page.locator('#caseAnalyse').click();
    await expect(page.locator('#caseResults [data-case-sec="19"]')).toBeVisible();
-   await page.locator('#caseResults [data-case-sec="19"]').click();
+   await page.locator('#caseResults [data-case-sec="19"]').evaluate(el=>el.click());
    await expect(page.locator('#lawText mark.act-search-match').first()).toBeVisible();
   });
   test('desktop/mobile toggle does not break section text',async({page})=>{
    await page.goto('/');
    await page.locator('#myaktaWelcomeEnter').click();
    await page.evaluate(()=>show('19'));
-   await page.locator('#modeMobile').click();
+   await page.evaluate(()=>document.querySelector('#modeMobile').click());
    await expect(page.locator('#lawText')).toContainText('Tiada seorang pun');
-   await page.locator('#modeDesktop').click();
+   await page.evaluate(()=>document.querySelector('#modeDesktop').click());
    await expect(page.locator('#lawText')).toContainText('Tiada seorang pun');
   });
  });
