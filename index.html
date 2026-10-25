@@ -1482,8 +1482,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(previous==='mobile'){
      if($('mobileHome')?.style.display==='block')return 'home';
      // Seksyen yang sedang dibaca mengatasi panel/kawalan lama yang masih berstatus open.
-     if(activeView==='section' && $('mobileHome')?.style.display==='none' &&
-        document.querySelector('.main')?.classList.contains('mobile-open'))return 'section';
+     if($('mobileHome')?.style.display==='none' &&
+        /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
+        (activeView==='section'||$('actView')?.style.display==='block'))return 'section';
      if($('mobileSettings')?.classList.contains('open'))return 'settings';
      if($('caseView')?.classList.contains('open'))return 'case';
      if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
@@ -1692,6 +1693,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function isDesktop(){return document.body.classList.contains('mode-desktop')}
  function openHome(){
   if(!isDesktop())return;
+  document.body.dataset.activeView='home';
+  document.body.dataset.preserveModeReading='0';
   // Keadaan Utama dikawal terus dalam pengendali utama, termasuk mula aplikasi.
   const sidebarNav=document.getElementById('nav');
   const sidebar=document.querySelector('.sidebar');
@@ -1730,7 +1733,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  $('settingsMobile')?.addEventListener('click',leaveHome);
  // Show the new desktop landing page on every fresh opening of the app.
  // In-app navigation still opens sections normally.
- setTimeout(()=>{if(isDesktop() && document.body.dataset.preserveModeReading!=='1'){document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));openHome()}},250);
+ setTimeout(()=>{if(isDesktop() && document.body.dataset.activeView==='home' && document.body.dataset.preserveModeReading!=='1'){document.querySelectorAll('.sidebar .sections').forEach(el=>el.classList.remove('open'));document.querySelectorAll('.sidebar .part-head').forEach(el=>el.classList.remove('active'));openHome()}},250);
 })();
 </script>
 <script>
