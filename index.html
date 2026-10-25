@@ -1161,8 +1161,11 @@ body.dark #rkkV26Chart .km-finish,body.dark #rkkV26Chart .km-start{background:#1
 </style><style id="act-hierarchy-tab-04">
 .lawbox p.act-entry{display:grid!important;grid-template-columns:0.4in minmax(0,1fr);align-items:start;column-gap:0;padding:0!important;text-indent:0!important;margin:0 0 0.13in!important;width:auto;min-width:0;max-width:100%;box-sizing:border-box}
 .lawbox p.act-entry>.act-entry-marker{grid-column:1}
-.lawbox p.act-entry>.act-entry-body{grid-column:2;min-width:0;text-align:justify;overflow-wrap:break-word}
+.lawbox p.act-entry>.act-entry-body{grid-column:2;min-width:0;max-width:100%;width:auto;text-align:justify;overflow-wrap:anywhere;word-break:normal}
 .lawbox p.act-entry-section{grid-template-columns:0.4in 0.4in minmax(0,1fr)}
+.lawbox p.act-entry-plain>.act-entry-body{grid-column:1 / -1}
+.lawbox p.act-entry{min-width:0;overflow-wrap:anywhere}
+.lawbox{min-width:0;max-width:100%;box-sizing:border-box}
 .lawbox p.act-entry-section>.act-entry-section{grid-column:1;grid-row:1}
 .lawbox p.act-entry-section>.act-entry-marker{grid-column:2;grid-row:1}
 .lawbox p.act-entry-section>.act-entry-body{grid-column:3;grid-row:1}
@@ -1239,7 +1242,7 @@ function formatLawText(txt){
     const sectionStart=t.match(/^(\d+[A-Z]?\.)\s*(\(\d+[A-Z]?\))?\s*([\s\S]*)$/i);
     const subsection=!sectionStart&&t.match(/^(\(\d+[A-Z]?\))\s*([\s\S]*)$/i);
     const compound=!sectionStart&&!subsection&&t.match(/^(\([a-z]{1,2}\))\s+(\([ivxlcdm]+\))\s*([\s\S]*)$/i);
-    const nested=!sectionStart&&!subsection&&!compound&&t.match(/^(\([a-z]{1,2}\))\s*([\s\S]*)$/i);
+    const nested=!sectionStart&&!subsection&&!compound&&t.match(/^(\((?:[a-z]{1,2}|iii|iv|viii|vii|vi|xiii|xiv|xii|xi|ix|xv)\))\s*([\s\S]*)$/i);
     let level='plain', marker='', content=t, secLabel='', romanMarker='';
     if(sectionStart){
       level='section';secLabel=sectionStart[1];marker=sectionStart[2]||'';content=sectionStart[3];
