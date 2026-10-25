@@ -775,7 +775,7 @@ body:has(.km-return-bar:not([hidden])) #actView{padding-bottom:0!important}
 @media(max-width:480px){#kmReturnBar button{font-size:10px!important;padding:9px 5px!important;min-height:105px!important;letter-spacing:0!important}body:has(#kmReturnBar:not([hidden])) #actView{padding-right:29px!important;box-sizing:border-box!important}}
 
 .law-notes{margin-top:24px;padding:14px 16px;border-top:2px solid #c7d9ed;background:var(--soft);border-radius:10px;color:var(--muted);font-size:13px;line-height:1.6}.law-notes h3{margin:0 0 9px;color:var(--blue2);font-size:14px}.law-notes p{margin:7px 0;white-space:normal}
-</style>
+mark.act-search-match{background:#ffe066;color:#222;padding:0 2px;border-radius:2px;box-shadow:0 0 0 1px #e6ae00}\n</style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#003b88">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1455,6 +1455,36 @@ function expandCaseAbbr(q){
 }
 function openCaseView(){document.getElementById('actView').style.display='none';document.getElementById('caseView').classList.add('open');window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>document.getElementById('caseInput').focus(),150)}
 function closeCaseView(){document.getElementById('caseView').classList.remove('open');document.getElementById('actView').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
+// Sorotan sementara bagi hasil carian teks Akta; tidak mengubah sumber teks.
+function markActSearchMatches(phrase){
+ const root=document.getElementById('lawText');
+ if(!root || !phrase)return;
+ const needle=phrase.trim().toLocaleLowerCase('ms');
+ if(!needle)return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ let first=null;
+ nodes.forEach(node=>{
+  const original=node.nodeValue;
+  const lower=original.toLocaleLowerCase('ms');
+  let at=lower.indexOf(needle), cursor=0;
+  if(at<0)return;
+  const fragment=document.createDocumentFragment();
+  while(at>=0){
+   fragment.appendChild(document.createTextNode(original.slice(cursor,at)));
+   const mark=document.createElement('mark');
+   mark.className='act-search-match';
+   mark.textContent=original.slice(at,at+needle.length);
+   fragment.appendChild(mark);
+   if(!first)first=mark;
+   cursor=at+needle.length;
+   at=lower.indexOf(needle,cursor);
+  }
+  fragment.appendChild(document.createTextNode(original.slice(cursor)));
+  node.parentNode.replaceChild(fragment,node);
+ });
+ if(first)requestAnimationFrame(()=>first.scrollIntoView({behavior:'smooth',block:'center'}));
+}
 function analyseCase(){
  const raw=document.getElementById('caseInput').value.trim(), out=document.getElementById('caseResults');
  if(!raw){out.innerHTML='<div class="case-issue">Sila masukkan situasi atau kes terlebih dahulu.</div>';return}
@@ -1477,7 +1507,7 @@ function analyseCase(){
   out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-note">'+hits.length+' seksyen mengandungi padanan bagi “'+htmlEscape(raw)+'”.</div>'+
    hits.map(s=>'<div class="case-match" data-case-sec="'+s.num+'"><b>Seksyen '+s.num+'</b> – '+htmlEscape(s.title)+'</div>').join('')+
    '<div class="case-note">Padanan daripada tajuk atau teks penuh Akta 172. Klik seksyen untuk membaca kandungannya.</div>';
-  out.querySelectorAll('[data-case-sec]').forEach(el=>el.addEventListener('click',()=>{closeCaseView();show(el.dataset.caseSec)}));
+  out.querySelectorAll('[data-case-sec]').forEach(el=>el.addEventListener('click',()=>{closeCaseView();show(el.dataset.caseSec);markActSearchMatches(raw)}));
   return;
  }
  const q=expandCaseAbbr(normSearch(raw)), matches=CASE_RULES.map(r=>{let score=0;r.keys.forEach(k=>{const n=normSearch(k);if(caseHas(q,k))score+=n.length>8?4:2});return {r,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
