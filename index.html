@@ -1173,6 +1173,9 @@ body.dark #rkkV26Chart .km-finish,body.dark #rkkV26Chart .km-start{background:#1
  text-align:justify;overflow-wrap:anywhere;word-break:normal
 }
 .lawbox p.act-entry-section{grid-template-columns:0.4in 0.4in minmax(0,1fr)}
+/* Elak limpahan pada baris pembukaan seksyen; kekalkan susunan lain yang lulus. */
+.lawbox p.act-entry-section{width:calc(100% - 0.4in)!important;max-width:calc(100% - 0.4in)!important}
+.lawbox p.act-entry-section>.act-entry-body{min-width:0!important;overflow-wrap:anywhere!important}
 .lawbox p.act-entry-section>.act-entry-section{grid-column:1;grid-row:1}
 .lawbox p.act-entry-section>.act-entry-marker{grid-column:2;grid-row:1}
 .lawbox p.act-entry-section>.act-entry-body{grid-column:3;grid-row:1}
