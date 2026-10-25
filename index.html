@@ -1480,8 +1480,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function markView(view){activeView=view;document.body.dataset.activeView=view;}
  function viewNow(previous){
    if(previous==='mobile'){
-     if($('mobileHome')?.style.display==='block')return 'home';
-     if(activeView==='case' && $('caseView')?.classList.contains('open'))return 'case';
+     // Pilihan navigasi eksplisit lebih utama daripada hash dan panel lama.
+     if(activeView==='home'||$('mobileHome')?.style.display==='block')return 'home';
+     if(activeView==='case')return 'case';
      // Seksyen yang sedang dibaca mengatasi panel/kawalan lama yang masih berstatus open.
      if($('mobileHome')?.style.display==='none' &&
         /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
@@ -1491,8 +1492,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
      return activeView;
    }
-   if($('caseView')?.classList.contains('open'))return 'case';
+   if(activeView==='case' && $('caseView')?.classList.contains('open'))return 'case';
    if($('desktopHome')?.classList.contains('open'))return 'home';
+   if($('caseView')?.classList.contains('open'))return 'case';
    return activeView==='favorites'?'favorites':'section';
  }
  function setMode(mode,save){
@@ -1628,7 +1630,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  applyTheme(localStorage.getItem(THEME_KEY)==='dark',false);
  applyTextSize(localStorage.getItem(TEXT_KEY)||'normal',false);
 
- const oldCase=$('caseOpen'); if(oldCase)oldCase.addEventListener('click',()=>{if(document.body.classList.contains('mode-mobile'))mobileNavigate('case')});
+ const oldCase=$('caseOpen'); if(oldCase)oldCase.addEventListener('click',()=>{markView('case');$('desktopHome')?.classList.remove('open');if(document.body.classList.contains('mode-mobile'))mobileNavigate('case')});
  window.addEventListener('resize',()=>{document.querySelector('.top')?.style.removeProperty('transform');document.querySelector('.app')?.style.removeProperty('transform')});
  setMode(selectedMode(),false); renderMobileLists();
 })();
