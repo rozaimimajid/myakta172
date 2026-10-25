@@ -1,6 +1,6 @@
 module.exports = {
   testDir: './tests',
-  testMatch: 'audit-final.spec.cjs',
+  testMatch: ['audit-final.spec.cjs','audit-extended.spec.cjs'],
   timeout: 30000,
   expect: { timeout: 10000 },
   retries: 1,
