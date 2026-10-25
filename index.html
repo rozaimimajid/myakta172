@@ -1475,17 +1475,26 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  const $=id=>document.getElementById(id);
  function defaultMode(){return window.innerWidth<=700?'mobile':'desktop'}
  function selectedMode(){return localStorage.getItem(MODE_KEY)||defaultMode()}
+ // Satu sumber keadaan navigasi untuk kedua-dua susun atur.
+ let activeView='home';
+ function markView(view){activeView=view;document.body.dataset.activeView=view;}
+ function viewNow(previous){
+   if(previous==='mobile'){
+     if($('mobileHome')?.style.display==='block')return 'home';
+     if($('mobileSettings')?.classList.contains('open'))return 'settings';
+     if($('caseView')?.classList.contains('open'))return 'case';
+     if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
+     return activeView;
+   }
+   if($('desktopHome')?.classList.contains('open'))return 'home';
+   if($('caseView')?.classList.contains('open'))return 'case';
+   return activeView==='favorites'?'favorites':'section';
+ }
  function setMode(mode,save){
    const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
-   const atMobileHome=previous==='mobile' && document.getElementById('mobileHome')?.style.display==='block';
-   const reading=!!save && previous!==mode && !atMobileHome &&
-     (previous==='mobile'
-       ? /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
-         document.getElementById('mobileHome')?.style.display==='none' &&
-         document.getElementById('actView')?.style.display!=='none'
-       : !document.getElementById('desktopHome')?.classList.contains('open') &&
-         document.getElementById('actView')?.style.display!=='none');
-   document.body.dataset.preserveModeReading=reading?'1':'0';
+   const view=save&&previous!==mode?viewNow(previous):'home';
+   markView(view);
+   document.body.dataset.preserveModeReading=view==='section'?'1':'0';
    document.body.classList.remove('mode-desktop','mode-mobile');
    document.body.classList.add('mode-'+mode);
    document.querySelector('.top')?.style.removeProperty('transform');
@@ -1496,37 +1505,29 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    $('settingsMobile')?.classList.toggle('active',mode==='mobile');
    $('modeDesktop')?.classList.toggle('active',mode==='desktop');
    $('modeMobile')?.classList.toggle('active',mode==='mobile');
-   if(mode==='mobile') mobileNavigate(reading?'section':'home'); else {
+   if(mode==='mobile'){
+     mobileNavigate(view==='section'?'section':view==='case'?'case':view==='favorites'?'fav':view==='settings'?'settings':'home');
+     if(view==='section')markView('section');
+   }else{
      document.querySelector('.sidebar')?.classList.remove('mobile-open');
      document.querySelector('.main')?.classList.remove('mobile-open');
-     if(!reading && previous==='mobile'){
-       // Paksa Utama Desktop; hash menyimpan bacaan terakhir, bukan destinasi semasa.
-       const desktopHome=$('desktopHome'),act=$('actView'),cv=$('caseView');
-       const activateHome=()=>{
-         if(!document.body.classList.contains('mode-desktop') || document.body.dataset.preserveModeReading==='1')return;
-         desktopHome?.classList.add('open');
+     const home=$('desktopHome'),act=$('actView'),cv=$('caseView');
+     const applyView=()=>{
+       if(!document.body.classList.contains('mode-desktop'))return;
+       if(view==='home'||view==='settings'){
+         home?.classList.add('open');
          if(act)act.style.display='none';
          if(cv){cv.style.display='none';cv.classList.remove('open');}
-         document.querySelector('.sidebar')?.classList.remove('mobile-open');
-       };
-       activateHome();
-       setTimeout(()=>{document.getElementById('desktopHomeButton')?.click();activateHome();},0);
-     }
-     if(reading){
-       document.getElementById('desktopHome')?.classList.remove('open');
-       document.getElementById('actView').style.display='block';
-       const cv=document.getElementById('caseView');if(cv)cv.style.display='none';
-       document.getElementById('mobileHome').style.display='none';
-       window.scrollTo({top:0,behavior:'smooth'});
-       // Pastikan pengendali Utama lain tidak mengatasi pertukaran Mobile → Desktop.
-       setTimeout(()=>{
-         if(document.body.classList.contains('mode-desktop') && document.body.dataset.preserveModeReading==='1'){
-           document.getElementById('desktopHome')?.classList.remove('open');
-           document.getElementById('actView').style.display='block';
-           const caseView=document.getElementById('caseView');if(caseView)caseView.style.display='none';
-         }
-       },0);
-     }
+       }else{
+         home?.classList.remove('open');
+         if(act)act.style.display=view==='section'||view==='favorites'?'block':'none';
+         if(cv)cv.style.display=view==='case'?'block':'none';
+         if(cv)cv.classList.toggle('open',view==='case');
+       }
+     };
+     applyView();
+     // Pengendali Desktop lama menggunakan setTimeout(0); pastikan state yang sama kekal.
+     setTimeout(applyView,0);
    }
  }
  function arr(key){try{return JSON.parse(localStorage.getItem(key)||'[]')}catch(e){return []}}
@@ -1567,7 +1568,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(!document.body.classList.contains('mode-mobile'))return;
    const home=$('mobileHome'), settings=$('mobileSettings'), side=document.querySelector('.sidebar'), main=document.querySelector('.main');
    home.style.display=where==='home'?'block':'none';
-   if(where==='home')document.body.dataset.preserveModeReading='0';
+   markView(where==='akta'?'sections':where==='fav'?'favorites':where==='recent'?'history':where==='continue'?'section':where);
    if(settings)settings.classList.toggle('open',where==='settings');
    side.classList.toggle('mobile-open',where==='akta');
    main.classList.toggle('mobile-open',!['home','akta','settings'].includes(where));
@@ -1588,7 +1589,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    window.scrollTo({top:0,behavior:'smooth'});
  }
  const oldShow=typeof show==='function'?show:null;
- if(oldShow){show=function(num){oldShow(num);recordFrequent(num);if(document.body.classList.contains('mode-mobile')){document.querySelector('.sidebar')?.classList.remove('mobile-open');document.querySelector('.main')?.classList.add('mobile-open');$('mobileHome').style.display='none';}}}
+ if(oldShow){show=function(num){markView('section');oldShow(num);recordFrequent(num);if(document.body.classList.contains('mode-mobile')){document.querySelector('.sidebar')?.classList.remove('mobile-open');document.querySelector('.main')?.classList.add('mobile-open');$('mobileHome').style.display='none';}}}
  $('modeDesktop')?.addEventListener('click',()=>setMode('desktop',true));
  $('modeMobile')?.addEventListener('click',()=>setMode('mobile',true));
  document.querySelectorAll('[data-mobile-nav]').forEach(b=>b.addEventListener('click',()=>mobileNavigate(b.dataset.mobileNav)));
