@@ -1459,7 +1459,26 @@ function analyseCase(){
  const raw=document.getElementById('caseInput').value.trim(), out=document.getElementById('caseResults');
  if(!raw){out.innerHTML='<div class="case-issue">Sila masukkan situasi atau kes terlebih dahulu.</div>';return}
  const q=expandCaseAbbr(normSearch(raw)), matches=CASE_RULES.map(r=>{let score=0;r.keys.forEach(k=>{const n=normSearch(k);if(caseHas(q,k))score+=n.length>8?4:2});return {r,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
- if(!matches.length){out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-issue">Tiada padanan dalaman yang cukup jelas ditemui. Cuba gunakan istilah Akta seperti “kebenaran merancang”, “LCP”, “rancangan tempatan”, “rayuan”, “caj pemajuan”, “penguatkuasaan”, “pemeliharaan pokok”, “pendakwaan” atau “penyampaian dokumen”.</div><div class="case-note">Analisis Kes ini menggunakan peraturan padanan dalaman sahaja dan tidak menggunakan AI.</div>';return}
+ // Carian fleksibel pada tajuk dan teks Akta. "*" bermaksud wildcard.
+ // Kekalkan padanan peraturan khusus (contohnya KM) apabila wujud.
+ if(!matches.length){
+   const words=normSearch(raw).split(/\s+/).filter(Boolean);
+   const patterns=words.filter(w=>w.replace(/\*/g,'').length>=2).map(w=>{
+     const escaped=w.split('*').map(t=>t.replace(/[^a-z0-9]/g,'')).join('[a-z0-9]*');
+     return new RegExp(escaped,'i');
+   });
+   const found=patterns.length?DATA.sections.map(sec=>{
+     const title=normSearch(sec.title),body=normSearch(sec.text);
+     const titleHits=patterns.filter(p=>p.test(title)).length;
+     const bodyHits=patterns.filter(p=>p.test(body)).length;
+     return {sec,score:titleHits*8+bodyHits,all:patterns.every(p=>p.test(title)||p.test(body))};
+   }).filter(x=>x.all).sort((a,b)=>b.score-a.score||String(a.sec.num).localeCompare(String(b.sec.num),'ms',{numeric:true})).slice(0,30):[];
+   if(!found.length){out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-issue">Tiada seksyen ditemui. Cuba kata kunci lain atau wildcard seperti rancang*.</div>';return}
+   const rows=found.map(({sec})=>'<div class="case-match" data-case-sec="'+escapeHtml(String(sec.num))+'"><b>Seksyen '+escapeHtml(String(sec.num))+'</b> – '+escapeHtml(sec.title)+'</div>').join('');
+   out.innerHTML='<h3>HASIL PADANAN</h3><div class="case-issue"><b>'+found.length+' seksyen ditemui</b> berdasarkan tajuk dan kandungan Akta 172.'+(found.length===30?' Memaparkan sehingga 30 hasil teratas.':'')+'</div><h3>SEKSYEN BERKAITAN</h3>'+rows+'<div class="case-note">Klik seksyen untuk membaca teks Akta. Padanan dalaman tanpa AI.</div>';
+   out.querySelectorAll('[data-case-sec]').forEach(el=>el.addEventListener('click',()=>{closeCaseView();show(el.dataset.caseSec)}));
+   return;
+ }
  const issues=matches.slice(0,4).map(x=>x.r.issue);
  let ordered=[], primary=new Set();
  matches.slice(0,4).forEach(x=>{x.r.primary.forEach(n=>{primary.add(n);if(!ordered.includes(n))ordered.push(n)});x.r.related.forEach(n=>{if(!ordered.includes(n))ordered.push(n)})});
