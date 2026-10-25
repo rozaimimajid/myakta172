@@ -6,6 +6,7 @@ on:
       - audit/stabilization-v1
     paths:
       - 'tests/audit-final.spec.cjs'
+      - 'tests/audit-extended.spec.cjs'
       - '.github/workflows/final-audit.yml'
       - 'index.html'
 jobs:
@@ -29,7 +30,7 @@ jobs:
           for i in $(seq 1 30); do curl --fail --silent http://127.0.0.1:8000/ >/dev/null && exit 0; sleep 1; done
           exit 1
       - name: Run Desktop and Mobile audits
-        run: npx playwright test tests/audit-final.spec.cjs --reporter=line,html
+        run: npx playwright test --reporter=line,html
         env:
           PLAYWRIGHT_BASE_URL: http://127.0.0.1:8000
       - name: Save audit evidence
