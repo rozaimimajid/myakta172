@@ -404,3 +404,37 @@ Cubaan mendapatkan status GitHub Actions bagi commit akhir Kelompok VIII melalui
 - Laksanakan tinjauan keselamatan terakhir dan uji paparan sebenar desktop serta telefon; hanya kemudian buat keputusan merge berasingan dengan persetujuan pemilik.
 
 **Tiada perubahan ke `main`; tiada penggabungan dibuat. Audit berkelompok berakhir pada Kelompok X dan isu terbuka diserahkan sebagai senarai tindakan, bukan dibuka Kelompok XI secara automatik.**
+
+
+---
+
+## Audit akhir 1–4 — 26 Oktober 2026 (semakan bukti semasa)
+
+**Cabang:** `audit/stabilization-v1`  
+**Rujukan kod aplikasi:** commit muka depan `943ad065`, selepas pembetulan 24 seksyen `ceec747e`.  
+**Kaedah:** semakan sumber GitHub dan semakan padanan berstruktur, serta pengesahan visual pengguna yang terdahulu. **Bukan ujian pelayar automatik semasa.**
+
+### 1. Muka depan Mobile
+- Ditemui markup muka depan, grid ciri, logo DigitalHubb, footer dan peraturan responsif.
+- Ciri “Eksport Sandaran Penanda” telah dibuang daripada senarai ciri muka depan.
+- Pengesahan pengguna bagi paparan muka depan **Desktop** telah diberikan.
+- **Mobile: BELUM LULUS UJIAN VISUAL** — tiada bukti tangkapan skrin/uji viewport terbaru.
+
+### 2. Regresi fungsi terkunci
+- Ditemui komponen carian nombor seksyen, carian teks Akta, sorotan hasil carian, navigasi bacaan, penanda teks dan fail skrip highlight.
+- Dataset `DATA.sections`: **83 rekod**, tiada nombor duplikat; tiada teks seksyen kosong; semua rujukan seksyen pada senarai Bahagian mempunyai rekod.
+- Blok `<script>`: 27 buka/27 tutup; `<style>`: 76 buka/76 tutup. Ini **bukan** bukti sintaks atau fungsi runtime lulus.
+- Fungsi carian/format 24 seksyen pernah **disahkan pengguna** dalam sesi sebelumnya.
+- **Ujian regresi runtime penuh: BELUM DIUJI** pada audit ini.
+
+### 3. Navigasi dan keserasian Desktop/Mobile
+- Elemen `modeDesktop`, `modeMobile`, `desktopHomeButton`, `mobileBottomNav`, `nav`, `caseInput`, `caseAnalyse`, `caseResults` wujud.
+- CSS mod mobile, mod malam, serta hierarki inden responsif wujud.
+- Klik bahagian/sekysen, pertukaran mod ketika bacaan, konsol JavaScript, mod malam, carta alir, cetak dan offline **BELUM DIBUKTIKAN** dengan ujian pelayar semua aliran.
+- Tiada status/check automatik atau run PR dipulangkan untuk commit muka depan terkini oleh sambungan GitHub.
+
+### 4. Keputusan dan laporan
+- **LULUS PEMERIKSAAN STATIK TERHAD** bagi struktur data dan kewujudan komponen utama.
+- **BELUM LULUS AUDIT AKHIR 1–4** kerana ujian visual mobile dan regresi runtime/cross-mode belum dapat dijalankan/disahkan.
+- **JANGAN MERGE ke `main` / JANGAN KUNCI audit akhir** tanpa bukti ujian desktop+mobile.
+- Tiada fungsi aplikasi diubah oleh audit ini; kemas kini hanya pada fail laporan.
