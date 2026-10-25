@@ -1480,6 +1480,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  function markView(view){activeView=view;document.body.dataset.activeView=view;}
  function viewNow(previous){
    if(previous==='mobile'){
+     if(activeView==='home'||activeView==='case')return activeView;
      // Pilihan navigasi eksplisit lebih utama daripada hash dan panel lama.
      if(activeView==='home'||$('mobileHome')?.style.display==='block')return 'home';
      if(activeView==='case')return 'case';
@@ -1492,7 +1493,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
      return activeView;
    }
-   if(activeView==='case' && $('caseView')?.classList.contains('open'))return 'case';
+   if(activeView==='case')return 'case';
    if($('desktopHome')?.classList.contains('open'))return 'home';
    if($('caseView')?.classList.contains('open'))return 'case';
    return activeView==='favorites'?'favorites':'section';
@@ -1630,6 +1631,9 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  applyTheme(localStorage.getItem(THEME_KEY)==='dark',false);
  applyTextSize(localStorage.getItem(TEXT_KEY)||'normal',false);
 
+ // Ambil destinasi sebenar pada klik pengguna, sebelum pengendali paparan lain.
+ document.querySelectorAll('[data-mobile-nav="home"]').forEach(b=>b.addEventListener('click',()=>markView('home'),true));
+ document.querySelectorAll('[data-mobile-nav="case"]').forEach(b=>b.addEventListener('click',()=>markView('case'),true));
  const oldCase=$('caseOpen'); if(oldCase)oldCase.addEventListener('click',()=>{markView('case');$('desktopHome')?.classList.remove('open');if(document.body.classList.contains('mode-mobile'))mobileNavigate('case')});
  window.addEventListener('resize',()=>{document.querySelector('.top')?.style.removeProperty('transform');document.querySelector('.app')?.style.removeProperty('transform')});
  setMode(selectedMode(),false); renderMobileLists();
