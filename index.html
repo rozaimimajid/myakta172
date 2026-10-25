@@ -1489,7 +1489,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }
  function setMode(mode,save){
    const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
-   const view=save&&previous!==mode?viewNow(previous):'home';
+   const caseActive=$('caseView')?.classList.contains('open') && (previous==='desktop' || $('mobileHome')?.style.display==='none');
+   const view=save&&previous!==mode?(caseActive?'case':viewNow(previous)):'home';
    markView(view);
    document.body.dataset.preserveModeReading=view==='section'?'1':'0';
    document.body.classList.remove('mode-desktop','mode-mobile');
