@@ -1721,8 +1721,8 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  }));
  $('caseOpen')?.addEventListener('click',leaveHome,true);
  $('nav')?.addEventListener('click',e=>{if(e.target.closest('.sec-link'))leaveHome()},true);
- $('modeDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.preserveModeReading!=='1')openHome()},0));
- $('settingsDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.preserveModeReading!=='1')openHome()},0));
+ $('modeDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.activeView==='home')openHome()},0));
+ $('settingsDesktop')?.addEventListener('click',()=>setTimeout(()=>{if(document.body.dataset.activeView==='home')openHome()},0));
  $('modeMobile')?.addEventListener('click',leaveHome);
  $('settingsMobile')?.addEventListener('click',leaveHome);
  // Show the new desktop landing page on every fresh opening of the app.
