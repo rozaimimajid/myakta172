@@ -981,6 +981,21 @@ try {
      assert.equal(await p.locator('#caseInput').inputValue(),'kebenaran merancang');
    } finally {await p.close();}
  });
+ await check('All Act sections maintain nested letter and Roman hierarchy',async()=>{
+   const result=await page.evaluate(()=>{
+     const examples=[
+       {text:'35C. Mana-mana orang\\n(a) perintah;\\n(b) peruntukan;\\n(c) (i) penolakan;\\n(ii) syarat;\\n(d) suatu perintah;',classes:['','indent','indent','indent','subindent','indent']},
+       {text:'2A. (1) Majlis\\n(a) pengerusi;\\n(b) timbalan;\\n(c) Menteri;\\n(d) Menteri;\\n(e) Kewangan;',classes:['','indent','indent','indent','indent','indent']},
+       {text:'2B. (1) Ketua Pengarah\\n(a) penyelidikan;\\n(b) laporan;\\n(c) maklumat;\\n(d) nasihat;',classes:['','indent','indent','indent','indent']}
+     ];
+     const check=ex=>{const holder=document.createElement('div');holder.innerHTML=formatLawText(ex.text);return [...holder.querySelectorAll('p')].map(p=>p.className)};
+     const sections=DATA.sections.map(sec=>({num:sec.num,count:formatLawText(sec.text).match(/<p/g)?.length||0}));
+     return {examples:examples.map(ex=>({got:check(ex),expected:ex.classes})),sections};
+   });
+   for(const ex of result.examples)assert.deepEqual(ex.got,ex.expected);
+   assert.ok(result.sections.length>=59);
+   assert.ok(result.sections.every(x=>x.count>0),'One or more statutory sections have no rendered paragraphs');
+ });
  await check('No uncaught page errors on initial navigation',async()=>{
    assert.deepEqual(errors,[]);
  });
