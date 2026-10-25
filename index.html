@@ -1205,10 +1205,27 @@ function formatLawText(txt){
     }
   }
   if(cur) paras.push(cur.trim());
+  // Perenggan huruf (a)–(z) ialah aras kedua; roman (i), (ii) dan seterusnya aras ketiga.
+  // Huruf (c), (d), (i), (v) juga boleh menjadi nombor Roman:
+  // jangan kelaskan sebagai Roman tanpa mengambil kira turutan senarai.
+  let lastAlpha='', romanActive=false;
   return paras.map(t=>{
+    const alpha=t.match(/^\(([a-z])\)(?:\s|$)/i);
+    const roman=t.match(/^\((i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv)\)(?:\s|$)/i);
     let cls='';
-    if(/^\([a-z]\)/i.test(t)) cls=' class="indent"';
-    if(/^\([ivxlcdm]+\)/i.test(t)) cls=' class="subindent"';
+    if(/^\d+[A-Z]?\.\s/i.test(t)||/^\(\d+\)/.test(t)){
+      lastAlpha=''; romanActive=false;
+    }else if(alpha||roman){
+      const marker=(alpha||roman)[1].toLowerCase();
+      const alphaNext=lastAlpha && marker.length===1 &&
+        marker.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
+      const isRoman=!!roman && (romanActive || (marker==='i' && !alphaNext && !!lastAlpha));
+      if(isRoman){
+        cls=' class="subindent"';romanActive=true;
+      }else{
+        cls=' class="indent"';lastAlpha=marker;romanActive=false;
+      }
+    }
     return `<p${cls}>${escapeHtml(t)}</p>`;
   }).join('');
 }
