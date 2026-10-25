@@ -438,3 +438,14 @@ Cubaan mendapatkan status GitHub Actions bagi commit akhir Kelompok VIII melalui
 - **BELUM LULUS AUDIT AKHIR 1–4** kerana ujian visual mobile dan regresi runtime/cross-mode belum dapat dijalankan/disahkan.
 - **JANGAN MERGE ke `main` / JANGAN KUNCI audit akhir** tanpa bukti ujian desktop+mobile.
 - Tiada fungsi aplikasi diubah oleh audit ini; kemas kini hanya pada fail laporan.
+
+
+## Keputusan GitHub Actions Final Audit #6 — 26 Oktober 2026
+- Run: https://github.com/rozaimimajid/myakta172/actions/runs/40221730969
+- Commit diuji: `36b0f8a5` pada `audit/stabilization-v1`.
+- **LULUS: 8/8 ujian Playwright Chromium** (11.4 saat), merangkumi 4 kategori pada setiap viewport Desktop dan Mobile.
+- Semakan paparan dan margin automatik bagi semua **83 seksyen** diluluskan pada kedua-dua viewport.
+- Muka depan, struktur keputusan carian seksyen/kata kunci dan sorotan, serta peralihan mod melalui panggilan programatik diluluskan.
+- **Had bukti:** Sesetengah ujian menggunakan panggilan programatik ke fungsi/kawalan tersembunyi; kejayaan ini **bukan** bukti klik sebenar melalui UI Mobile atau Desktop untuk semua fungsi. Carta alir, PWA/offline, cetak, suara, bookmark, semua interaksi manual dan pengesahan visual rinci masih bukan liputan run #6.
+- Keputusan: **LULUS SUIT UJIAN AUTOMATIK FINAL AUDIT #6**; **audit regresi menyeluruh keseluruhan aplikasi belum boleh dianggap lulus atau dikunci sepenuhnya**.
+- Kod aplikasi dan cabang `main` tidak diubah untuk rekod ini.
