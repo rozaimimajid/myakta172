@@ -1159,22 +1159,26 @@ body.dark #rkkV26Chart .km-finish,body.dark #rkkV26Chart .km-start{background:#1
 #myaktaWelcome .wl-grid .wl-card{min-width:0}
 @media(max-width:700px){#myaktaWelcome .wl-brand-footer{gap:6px}#myaktaWelcome .wl-brand-footer img{width:116px;height:35px;max-width:34vw}}
 </style><style id="act-hierarchy-tab-04">
-/* Penanda dan isi dalam lajur berasingan; sela aras 0.4 inci. */
-.lawbox p.act-entry{display:grid!important;grid-template-columns:0.4in minmax(0,1fr);column-gap:0;align-items:start;padding:0!important;text-indent:0!important;margin:0 0 0.13in!important;max-width:100%;width:auto;min-width:0;box-sizing:border-box}
+.lawbox p.act-entry{display:grid!important;grid-template-columns:0.4in minmax(0,1fr);align-items:start;column-gap:0;padding:0!important;text-indent:0!important;margin:0 0 0.13in!important;width:auto;min-width:0;max-width:100%;box-sizing:border-box}
+.lawbox p.act-entry>.act-entry-marker{grid-column:1}
+.lawbox p.act-entry>.act-entry-body{grid-column:2;min-width:0;text-align:justify;overflow-wrap:break-word}
 .lawbox p.act-entry-section{grid-template-columns:0.4in 0.4in minmax(0,1fr)}
+.lawbox p.act-entry-section>.act-entry-section{grid-column:1;grid-row:1}
+.lawbox p.act-entry-section>.act-entry-marker{grid-column:2;grid-row:1}
+.lawbox p.act-entry-section>.act-entry-body{grid-column:3;grid-row:1}
+.lawbox p.act-entry-section:not(:has(>.act-entry-marker))>.act-entry-body{grid-column:2}
 .lawbox p.act-entry-subsection{margin-left:0.4in!important}
 .lawbox p.act-entry-alpha{margin-left:0.8in!important}
 .lawbox p.act-entry-roman{margin-left:1.2in!important}
-.lawbox span.act-entry-section,.lawbox .act-entry-marker{white-space:nowrap;text-align:left}
-.lawbox p.act-entry-section>.act-entry-section{grid-column:1}
-.lawbox p.act-entry-section>.act-entry-marker{grid-column:2}
-.lawbox p.act-entry-section>.act-entry-body{grid-column:3}
-.lawbox .act-entry-body{display:block;min-width:0;text-align:justify;overflow-wrap:break-word}
+.lawbox p.act-entry-compound{margin-left:0.8in!important;grid-template-columns:0.4in 0.4in minmax(0,1fr)}
+.lawbox p.act-entry-compound>.act-entry-roman-marker{grid-column:2;grid-row:1}
+.lawbox p.act-entry-compound>.act-entry-body{grid-column:3;grid-row:1}
+.lawbox .act-entry-marker,.lawbox .act-entry-section,.lawbox .act-entry-roman-marker{white-space:nowrap;text-align:left}
 @media(max-width:650px){
-.lawbox p.act-entry{grid-template-columns:0.3in minmax(0,1fr);max-width:100%}
-.lawbox p.act-entry-section{grid-template-columns:0.3in 0.3in minmax(0,1fr)}
+.lawbox p.act-entry{grid-template-columns:0.3in minmax(0,1fr)}
+.lawbox p.act-entry-section,.lawbox p.act-entry-compound{grid-template-columns:0.3in 0.3in minmax(0,1fr)}
 .lawbox p.act-entry-subsection{margin-left:0.3in!important}
-.lawbox p.act-entry-alpha{margin-left:0.6in!important}
+.lawbox p.act-entry-alpha,.lawbox p.act-entry-compound{margin-left:0.6in!important}
 .lawbox p.act-entry-roman{margin-left:0.9in!important}
 }
 </style></head>
@@ -1229,41 +1233,36 @@ function formatLawText(txt){
     }
   }
   if(cur) paras.push(cur.trim());
-  // Ikut struktur dokumen asal: (a)–(z) ialah aras kedua;
-  // (i), (ii), ... ialah aras ketiga hanya dalam senarai Roman sebenar.
-  // Contoh 35C: (c) (i) di aras kedua, (ii) di aras ketiga, (d) kembali ke kedua.
-  let lastAlpha='', romanActive=false;
+  // Hierarki berpandukan urutan label; nombor Roman kekal Roman sehingga perenggan abjad berikutnya.
+  let romanActive=false, lastAlpha='';
   return paras.map(t=>{
-    const alpha=t.match(/^\(([a-z]{1,2})\)(?:\s|$)/i);
-    const roman=t.match(/^\((i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv)\)(?:\s|$)/i);
-    let cls='';
-    if(/^\d+[A-Z]?\.\s/i.test(t)||/^\(\d+[A-Z]?\)/i.test(t)){
-      lastAlpha=''; romanActive=false;
-    }else if(alpha||roman){
-      const marker=(roman||alpha)[1].toLowerCase();
-      const letter=alpha?.[1].toLowerCase()||'';
-      const alphaNext=!!lastAlpha && !!letter &&
-        letter.length===1 && lastAlpha.length===1 && letter.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
-      const compound=/^\([a-z]\)\s*\(i\)(?:\s|$)/i.test(t);
-      const isRoman=!!roman && !alphaNext &&
-        (romanActive || (lastAlpha && (marker==='i'||marker.length>1)));
-      if(isRoman){
-        cls=' class="subindent"';romanActive=true;
-      }else{
-        cls=' class="indent"';lastAlpha=letter;romanActive=compound;
-      }
+    const sectionStart=t.match(/^(\d+[A-Z]?\.)\s*(\(\d+[A-Z]?\))?\s*([\s\S]*)$/i);
+    const subsection=!sectionStart&&t.match(/^(\(\d+[A-Z]?\))\s*([\s\S]*)$/i);
+    const compound=!sectionStart&&!subsection&&t.match(/^(\([a-z]{1,2}\))\s+(\([ivxlcdm]+\))\s*([\s\S]*)$/i);
+    const nested=!sectionStart&&!subsection&&!compound&&t.match(/^(\([a-z]{1,2}\))\s*([\s\S]*)$/i);
+    let level='plain', marker='', content=t, secLabel='', romanMarker='';
+    if(sectionStart){
+      level='section';secLabel=sectionStart[1];marker=sectionStart[2]||'';content=sectionStart[3];
+      romanActive=false;lastAlpha='';
+    }else if(subsection){
+      level='subsection';marker=subsection[1];content=subsection[2];
+      romanActive=false;lastAlpha='';
+    }else if(compound){
+      level='compound';marker=compound[1];romanMarker=compound[2];content=compound[3];
+      romanActive=true;lastAlpha=marker.slice(1,-1).toLowerCase();
+    }else if(nested){
+      marker=nested[1];content=nested[2];
+      const token=marker.slice(1,-1).toLowerCase();
+      const roman=/^(?:i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv)$/.test(token);
+      const nextAlpha=token.length===1&&lastAlpha.length===1&&token.charCodeAt(0)===lastAlpha.charCodeAt(0)+1;
+      const isRoman=roman&&!nextAlpha&&(romanActive||(lastAlpha&&token==='i'));
+      if(isRoman){level='roman';romanActive=true}
+      else{level='alpha';romanActive=false;lastAlpha=token}
     }
-    // Asingkan penanda perundangan daripada ayat untuk penjajaran lajur sebenar.
-    const sectionStart=t.match(/^(\d+[A-Z]?\.)\s*(\(\d+\))?\s*([\s\S]*)$/i);
-    const subsection=!sectionStart && t.match(/^(\(\d+[A-Z]?\))\s*([\s\S]*)$/i);
-    const nested=!sectionStart&&!subsection && t.match(/^(\([a-z]{1,2}\))\s*([\s\S]*)$/i);
-    let level='plain', marker='', content=t, secLabel='';
-    if(sectionStart){level='section';secLabel=sectionStart[1];marker=sectionStart[2]||'';content=sectionStart[3]}
-    else if(subsection){level='subsection';marker=subsection[1];content=subsection[2]}
-    else if(nested){level=cls.includes('subindent')?'roman':'alpha';marker=nested[1];content=nested[2]}
-    const markerHtml=marker?'<span class="act-entry-marker">'+escapeHtml(marker)+'</span>':'';
-    const sectionHtml=secLabel?'<span class="act-entry-section">'+escapeHtml(secLabel)+'</span>':'';
-    return '<p class="act-entry act-entry-'+level+'">'+sectionHtml+markerHtml+'<span class="act-entry-body">'+escapeHtml(content)+'</span></p>';
+    const mark=marker?'<span class="act-entry-marker">'+escapeHtml(marker)+'</span>':'';
+    const rmark=romanMarker?'<span class="act-entry-roman-marker">'+escapeHtml(romanMarker)+'</span>':'';
+    const section=secLabel?'<span class="act-entry-section">'+escapeHtml(secLabel)+'</span>':'';
+    return '<p class="act-entry act-entry-'+level+'">'+section+mark+rmark+'<span class="act-entry-body">'+escapeHtml(content)+'</span></p>';
   }).join('');
 }
 
