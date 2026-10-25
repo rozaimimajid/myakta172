@@ -1479,24 +1479,13 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
  let activeView='home';
  function markView(view){activeView=view;document.body.dataset.activeView=view;}
  function viewNow(previous){
-   if(previous==='mobile'){
-     if(activeView==='home'||activeView==='case')return activeView;
-     // Pilihan navigasi eksplisit lebih utama daripada hash dan panel lama.
-     if(activeView==='home'||$('mobileHome')?.style.display==='block')return 'home';
-     if(activeView==='case')return 'case';
-     // Seksyen yang sedang dibaca mengatasi panel/kawalan lama yang masih berstatus open.
-     if($('mobileHome')?.style.display==='none' &&
-        /^#seksyen-[0-9]+[A-H]?$/i.test(location.hash) &&
-        (activeView==='section'||$('actView')?.style.display==='block'))return 'section';
-     if($('mobileSettings')?.classList.contains('open'))return 'settings';
-     if($('caseView')?.classList.contains('open'))return 'case';
-     if(document.querySelector('.main')?.classList.contains('mobile-open'))return activeView==='favorites'?'favorites':'section';
-     return activeView;
-   }
-   if(activeView==='case')return 'case';
-   if($('desktopHome')?.classList.contains('open'))return 'home';
-   if($('caseView')?.classList.contains('open'))return 'case';
-   return activeView==='favorites'?'favorites':'section';
+   // Keadaan terakhir yang dipilih pengguna ialah sumber tunggal navigasi.
+   // Hash seksyen dan status panel lama bukan arahan berpindah halaman.
+   const explicit=document.body.dataset.activeView||activeView;
+   if(['home','section','case','favorites','history','settings','sections'].includes(explicit))return explicit;
+   return previous==='mobile'
+     ? ($('mobileHome')?.style.display==='block'?'home':'section')
+     : ($('desktopHome')?.classList.contains('open')?'home':'section');
  }
  function setMode(mode,save){
    const previous=document.body.classList.contains('mode-mobile')?'mobile':'desktop';
@@ -1576,6 +1565,10 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    if(!document.body.classList.contains('mode-mobile'))return;
    const home=$('mobileHome'), settings=$('mobileSettings'), side=document.querySelector('.sidebar'), main=document.querySelector('.main');
    home.style.display=where==='home'?'block':'none';
+   if(where==='home'){
+     if($('actView'))$('actView').style.display='none';
+     if($('caseView')){$('caseView').style.display='none';$('caseView').classList.remove('open');}
+   }
    markView(where==='akta'?'sections':where==='fav'?'favorites':where==='recent'?'history':where==='continue'?'section':where);
    if(settings)settings.classList.toggle('open',where==='settings');
    side.classList.toggle('mobile-open',where==='akta');
