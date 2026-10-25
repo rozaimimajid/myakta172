@@ -1254,9 +1254,9 @@ function formatLawText(txt){
       }
     }
     // Asingkan penanda perundangan daripada ayat untuk penjajaran lajur sebenar.
-    const sectionStart=t.match(/^(\\d+[A-Z]?\\.)\\s*(\\(\\d+\\))?\\s*([\\s\\S]*)$/i);
-    const subsection=!sectionStart && t.match(/^(\\(\\d+\\))\\s*([\\s\\S]*)$/);
-    const nested=!sectionStart&&!subsection && t.match(/^(\\([a-zivxlcdm]+\\))\\s*([\\s\\S]*)$/i);
+    const sectionStart=t.match(/^(\d+[A-Z]?\.)\s*(\(\d+\))?\s*([\s\S]*)$/i);
+    const subsection=!sectionStart && t.match(/^(\(\d+\))\s*([\s\S]*)$/);
+    const nested=!sectionStart&&!subsection && t.match(/^(\([a-zivxlcdm]+\))\s*([\s\S]*)$/i);
     let level='plain', marker='', content=t, secLabel='';
     if(sectionStart){level='section';secLabel=sectionStart[1];marker=sectionStart[2]||'';content=sectionStart[3]}
     else if(subsection){level='subsection';marker=subsection[1];content=subsection[2]}
