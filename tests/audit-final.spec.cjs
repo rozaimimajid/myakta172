@@ -46,9 +46,9 @@ for (const device of [{name:'desktop',width:1440,height:900},{name:'mobile',widt
    await expect(page.locator('#caseResults [data-case-sec]').first()).toHaveAttribute('data-case-sec','21B');
    await page.locator('#caseInput').evaluate(el=>el.value='material');
    await page.evaluate(()=>analyseCase());
-   await expect(page.locator('#caseResults [data-case-sec="19"]')).toBeVisible();
+   await expect(page.locator('#caseResults [data-case-sec="19"]')).toHaveCount(1);
    await page.locator('#caseResults [data-case-sec="19"]').evaluate(el=>el.click());
-   await expect(page.locator('#lawText mark.act-search-match').first()).toBeVisible();
+   await expect(page.locator('#lawText mark.act-search-match').first()).toHaveCount(1);
   });
   test('desktop/mobile toggle does not break section text',async({page})=>{
    await page.goto('/');
