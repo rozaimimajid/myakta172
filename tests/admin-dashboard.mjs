@@ -61,12 +61,12 @@ async function main(){
     await page.locator('#userRows button').click();
     assert.match(await page.locator('#userDetail').innerText(),/pengguna02@example.test/);
     passes++;console.log('PASS carian emel dan profil pengguna');
-    const previousExpiry=await page.locator('#subscriptionRows tr:nth-child(2) td:nth-child(5)').innerText();
+    const previousExpiry=await page.locator('#subscriptionRows tr:nth-child(2) td:nth-child(5)').textContent();
     await page.locator('[data-tab=payments]').click();
     await page.locator('#paymentRows button[data-action=approvePayment]').first().click();
     await page.locator('#confirmYes').click();
     assert.equal(await page.locator('#kPending').innerText(),'1');
-    assert.notEqual(await page.locator('#subscriptionRows tr:nth-child(2) td:nth-child(5)').innerText(),previousExpiry,'Pembaharuan aktif patut memanjangkan tempoh');
+    assert.notEqual(await page.locator('#subscriptionRows tr:nth-child(2) td:nth-child(5)').textContent(),previousExpiry,'Pembaharuan aktif patut memanjangkan tempoh');
     assert.match(await page.locator('#paymentRows').innerText(),/Diluluskan/);
     await page.locator('#payUser').selectOption('U005');
     await page.locator('#payPlan').selectOption('Rahmah');
