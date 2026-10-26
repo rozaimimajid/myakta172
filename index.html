@@ -1231,7 +1231,7 @@ body.dark #desktopHome .dh-reader-stats small{color:#b7cce0}
 </div>
 <div class="reader-list"><div class="reader-list-head"><h3>Sering Dibuka</h3><button type="button" data-mobile-go="frequent">Lihat semua ›</button></div><div id="mobileFrequent"></div></div>
 <div class="reader-list"><div class="reader-list-head"><h3>Terbaharu Dibaca</h3><button type="button" data-mobile-go="recent">Lihat semua ›</button></div><div id="mobileRecent"></div></div>
-<div id="mobileFav" style="display:none"></div>
+<div class="reader-list"><div class="reader-list-head"><h3>Seksyen Kegemaran</h3><button type="button" data-mobile-go="fav">Lihat semua ›</button></div><div id="mobileFav"></div></div>
 <div class="akta-pelengkap-links akta-pelengkap-mobile" aria-label="Bahan Pelengkap Akta 172"><a class="akta-pelengkap-card" href="./mukadimah.html"><b>📜 Mukadimah</b><small>Teks pengenalan rasmi</small></a><a class="akta-pelengkap-card" href="./lampiran.html"><b>📋 Lampiran</b><small>Jadual pemakaian dan tarikh kuat kuasa</small></a></div>
 </section><section id="mobileSettings" class="mobile-settings">
 <div class="settings-head"><h2>⚙️ Tetapan</h2><p>Sesuaikan paparan MyAKTA172 mengikut keselesaan anda.</p></div>
@@ -1686,7 +1686,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
    const fav=arr('myakta172_favourites_v1');
    const hist=arr('myakta172_history_v1');
    const f=freq();
-   const frequent=Object.keys(f).sort((a,b)=>f[b]-f[a]).slice(0,5);
+   const frequent=Object.keys(f).filter(n=>Object.hasOwn(byNum,n)).sort((a,b)=>f[b]-f[a]).slice(0,5);
    if($('mobileFav')) $('mobileFav').innerHTML=fav.length?fav.map(n=>row(n)).join(''):'<div class="reader-empty">Belum ada seksyen kegemaran.</div>';
    if($('mobileFrequent')) $('mobileFrequent').innerHTML=frequent.length?frequent.map(n=>row(n,'Dibuka '+f[n]+' kali')).join(''):'<div class="reader-empty">Belum ada rekod seksyen sering dibuka.</div>';
    let recent=[];
@@ -1695,7 +1695,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
      hist.forEach(x=>{const n=String(x.num||x.section||x);if(n&& !seen.has(n)){seen.add(n);recent.push(n)}});
      $('mobileRecent').innerHTML=recent.length?recent.slice(0,5).map(n=>row(n)).join(''):'<div class="reader-empty">Belum ada sejarah bacaan.</div>';
    }
-   if($('favCount')) $('favCount').textContent=fav.length+' seksyen';
+   if($('favCount')) $('favCount').textContent=fav.filter(n=>Object.hasOwn(byNum,String(n))).length+' seksyen';
    if($('freqCount')) $('freqCount').textContent=frequent.length?(frequent.length+' seksyen'):'Belum ada';
    if($('recentCount')) $('recentCount').textContent=recent.length?(recent.length+' seksyen'):'Belum ada';
    const last=recent[0];
@@ -1823,22 +1823,25 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   }
  }
  function refreshRecent(){
-  const history=getHistory().map(x=>String(typeof x==='string'?x:(x.num||x.sec||x.section||'')));
+  const history=getHistory().map(x=>String(typeof x==='string'?x:(x.num||x.sec||x.section||''))).filter(n=>Object.hasOwn(byNum,n));
   renderRows('desktopHomeRecent',history,'Belum ada sejarah bacaan. Mulakan dengan Buka Akta 172.');
   const last=history.find(n=>/^\d+[A-H]?$/.test(n));
   const continueButton=$('desktopContinue');
   if(continueButton){continueButton.dataset.sec=last||'';$('desktopContinueSection').textContent=last?'Seksyen '+last:'Belum ada bacaan';$('desktopContinueTitle').textContent=last?(titleFor(last)||'Sambung membaca seksyen ini'):'Buka Akta untuk memulakan rujukan';}
 
   let freq={};try{freq=JSON.parse(localStorage.getItem('myakta172_frequent_v1')||'{}')||{}}catch(e){}
-  const ordered=Object.keys(freq).sort((a,b)=>(Number(freq[b])||0)-(Number(freq[a])||0));
+  const ordered=Object.keys(freq).filter(n=>Object.hasOwn(byNum,n)).sort((a,b)=>(Number(freq[b])||0)-(Number(freq[a])||0)).slice(0,5);
   renderRows('desktopHomeFrequent',ordered,'Belum ada seksyen yang kerap dibuka.');
   let fav=[];try{fav=JSON.parse(localStorage.getItem('myakta172_favourites_v1')||'[]');if(!Array.isArray(fav))fav=[]}catch(e){}
   renderRows('desktopHomeFavorites',fav.map(x=>typeof x==='string'?x:(x.num||x.sec||'')),'Belum ada seksyen kegemaran.');
   const setCount=(id,value)=>{const el=$(id);if(el)el.textContent=value+' seksyen'};
   setCount('dhFavCount',fav.length);
   setCount('dhFreqCount',ordered.length);
-  setCount('dhRecentCount',new Set(history.filter(n=>Object.hasOwn(byNum,n))).size);
+  setCount('dhRecentCount',new Set(history).size);
  }
+ // Segarkan kad Desktop selepas perubahan mod atau data bacaan, tanpa mengubah rekod asal.
+ window.addEventListener('focus',()=>{if(document.body.classList.contains('mode-desktop'))refreshRecent()});
+ document.addEventListener('click',()=>{if(document.body.classList.contains('mode-desktop'))setTimeout(refreshRecent,60)},true);
  function isDesktop(){return document.body.classList.contains('mode-desktop')}
  function openHome(){
   if(!isDesktop())return;
