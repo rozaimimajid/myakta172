@@ -1,0 +1,37 @@
+name: MyAKTA172 Admin Preview Tests
+on:
+  push:
+    branches:
+      - audit/stabilization-v1
+    paths:
+      - 'admin-preview.html'
+      - 'admin-preview.css'
+      - 'admin-preview.js'
+      - 'admin-package-policy.js'
+      - 'tests/admin-dashboard.mjs'
+      - '.github/workflows/admin-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  admin-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Start isolated test server
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 > /tmp/myakta-admin.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8000/admin-preview.html > /dev/null && exit 0; sleep 1; done
+          exit 1
+      - name: Admin package and browser regression
+        run: node tests/admin-dashboard.mjs
+        env:
+          ADMIN_TEST_URL: http://127.0.0.1:8000
