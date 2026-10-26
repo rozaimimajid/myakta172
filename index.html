@@ -2978,7 +2978,7 @@ function digitalHubbPrintWhenReady(popup){
  ['desktopHome','mobileHome'].forEach(id=>{
    const host=document.getElementById(id);if(!host||host.querySelector('.dh-identity'))return;
    const box=document.createElement('div');box.className='dh-identity';
-   const image=document.createElement('img');image.src=img;image.alt='DigitalHubb';box.appendChild(image);host.appendChild(box);
+   const image=document.createElement('img');image.src=img;image.alt='DigitalHubb.my';box.appendChild(image);host.appendChild(box);
  });
  const dialog=document.getElementById('myaktaAboutDialog');
  function openAbout(){if(dialog && !dialog.open)dialog.showModal();}
