@@ -1,42 +1,112 @@
-<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard Admin — MyAKTA172 (Prototaip)</title><style>
-:root{font-family:Arial,Helvetica,sans-serif;color:#193354;background:#f2f6fc}*{box-sizing:border-box}body{margin:0}header{background:#073977;color:white;padding:20px clamp(16px,4vw,42px);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}header h1{font-size:25px;margin:2px 0}header small{color:#c4e2ff}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ebbb36;outline-offset:2px}.flag{border:1px solid #91b7df;color:#fff;border-radius:20px;padding:6px 12px;font-size:12px}.wrap{max-width:1280px;margin:auto;padding:24px 18px 50px}nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}nav button{background:#fff;border:1px solid #c7d9ee;color:#145396;padding:10px 15px;border-radius:8px}nav button.active{color:#fff;background:#09519e}section[hidden]{display:none!important}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card,.panel{background:#fff;border:1px solid #dae5f4;border-radius:12px;padding:18px}.card strong{display:block;font-size:27px;color:#064b92;margin:10px 0}.panel{margin-top:18px}h2{font-size:20px;margin:0 0 12px}p{line-height:1.6}.muted{color:#59708e;font-size:13px}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}input,select{background:#fff;border:1px solid #b7cee9;border-radius:8px;padding:10px;color:#183a63}table{border-collapse:collapse;width:100%;min-width:740px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #e1e9f4;font-size:13px}th{background:#edf5ff;color:#15599e}td button{background:#e9f3ff;color:#064b92;border:1px solid #a8caee;border-radius:7px;padding:7px 10px}td button:disabled{opacity:.45;cursor:not-allowed}.tablewrap{overflow:auto}.pill{display:inline-block;border-radius:99px;background:#e4efff;color:#164d82;padding:5px 9px;font-size:12px}.pill.wait{background:#fff1d8;color:#7c4b00}.pill.ok{background:#e1f5e9;color:#11613b}.pill.no{background:#fce7e7;color:#923535}.plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.plan{background:#f8fbff;border:1px solid #d4e3f2;border-radius:10px;padding:16px}.plan h3{margin:0;color:#0c5297}.price{font-size:27px;font-weight:800;color:#082f65;margin:10px 0}.plan ul{padding-left:18px;line-height:1.8;font-size:13px}footer{margin-top:22px;font-size:12px;color:#657b95}.warning{border-left:4px solid #c78218;padding:10px 14px;background:#fff8ea;margin-bottom:18px}dialog{border:0;border-radius:12px;max-width:460px;width:calc(100% - 32px);padding:24px;box-shadow:0 20px 70px #071b3550}dialog::backdrop{background:#061d3880}.actions{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap}.primary{background:#07509a;color:#fff;border:0;border-radius:8px;padding:10px 14px}.secondary{background:#fff;color:#164778;border:1px solid #adc8e7;border-radius:8px;padding:10px 14px}@media(max-width:850px){.grid,.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.grid,.plans{grid-template-columns:1fr}header h1{font-size:21px}}
-</style></head><body><header><div><small>DigitalHubb.my · INOVASI DIGITAL</small><h1>MyAKTA172 — Dashboard Admin</h1><small>Simulasi kawalan pengguna dan pakej</small></div><span class="flag">PROTOTAIP · DATA REKAAN</span></header><main class="wrap"><div class="warning"><b>Paparan demonstrasi sahaja.</b> Tiada akaun sebenar, pembayaran, rekod pelanggan atau kawalan akses aktif. Semua perubahan simulasi hilang apabila halaman dimuat semula.</div><nav aria-label="Modul Dashboard"><button class="active" data-tab="overview">Ringkasan</button><button data-tab="users">Pengguna</button><button data-tab="payments">Pembayaran</button><button data-tab="plans">Kawalan Pakej</button></nav>
-<section id="overview"><div class="grid"><div class="card"><span>Jumlah Pengguna</span><strong id="kUsers">—</strong><small class="muted">Data rekaan</small></div><div class="card"><span>Langganan Aktif</span><strong id="kActive">—</strong><small class="muted">Simulasi</small></div><div class="card"><span>Bayaran Menunggu</span><strong id="kPending">—</strong><small class="muted">Untuk semakan</small></div><div class="card"><span>Pakej Berbayar</span><strong id="kPaid">—</strong><small class="muted">Basic / Rahmah / Premium</small></div></div><div class="panel"><h2>Agihan Pengguna mengikut Pakej</h2><div id="breakdown"></div></div></section>
-<section id="users" hidden><div class="panel"><h2>Senarai Pengguna (Simulasi)</h2><div class="toolbar"><input id="userSearch" placeholder="Cari emel / ID pengguna" aria-label="Cari pengguna"><select id="userPlan" aria-label="Tapis pakej"><option value="">Semua pakej</option><option>Free</option><option>Basic</option><option>Rahmah</option><option>Premium</option></select></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Pakej</th><th>Status</th><th>Tamat</th><th>Peranti</th></tr></thead><tbody id="userRows"></tbody></table></div></div></section>
-<section id="payments" hidden><div class="panel"><h2>Rekod Pembayaran (Simulasi)</h2><p class="muted">Butang Lulus/Tolak mengubah data rekaan dalam tab ini sahaja. Tiada transaksi sebenar berlaku.</p><div class="tablewrap"><table><thead><tr><th>ID</th><th>Pengguna</th><th>Pakej</th><th>Amaun</th><th>Status</th><th>Tindakan</th></tr></thead><tbody id="paymentRows"></tbody></table></div></div></section>
-<section id="plans" hidden><div class="panel"><h2>Pakej Langganan — Matriks Pilihan Pemilik</h2><p class="muted">Harga dan akses berdasarkan pilihan pemilik. Paparan ini simulasi; kawalan sebenar belum diaktifkan. *Hubungan Seksyen masih perlu disahkan.</p><div class="plans" id="planGrid"></div><p class="muted"><b>Peraturan carta alir:</b> akses dan cetakan hanya bagi seksyen yang dibenarkan dalam pakej. Contoh: Rahmah boleh akses KM (Bahagian IV), tetapi Caj Pemajuan (Bahagian V) khusus Premium.</p><p class="muted">Modul admin sebenar akan meliputi rekod emel pengguna, pengesahan resit bank, naik taraf, tamat tempoh, satu sesi/peranti, audit log serta laporan. Kupon/promosi hanya cadangan.</p></div></section><footer>DigitalHubb.my · MyAKTA172 · Dashboard prototaip bukan sistem produksi. Jangan masukkan data sebenar.</footer></main>
-<dialog id="confirmation"><h2 id="confirmTitle">Sahkan tindakan</h2><p id="confirmText"></p><div class="actions"><button class="primary" id="confirmYes">Sahkan simulasi</button><button class="secondary" id="confirmNo">Batal</button></div></dialog>
-<script>
-'use strict';
-const users=[
-{id:'U001',email:'pelajar01@example.test',plan:'Free',status:'Aktif',end:'—',device:'Tiada'},
-{id:'U002',email:'pelajar02@example.test',plan:'Basic',status:'Aktif',end:'2026-11-25',device:'1 aktif'},
-{id:'U003',email:'pelajar03@example.test',plan:'Rahmah',status:'Aktif',end:'2026-11-20',device:'1 aktif'},
-{id:'U004',email:'pelajar04@example.test',plan:'Premium',status:'Aktif',end:'2026-11-17',device:'1 aktif'},
-{id:'U005',email:'pelajar05@example.test',plan:'Free',status:'Aktif',end:'—',device:'Tiada'},
-{id:'U006',email:'pelajar06@example.test',plan:'Basic',status:'Tamat',end:'2026-10-14',device:'Tiada'}];
-const payments=[
-{id:'PAY001',user:'U003',plan:'Rahmah',amount:25,status:'Pending'},
-{id:'PAY002',user:'U004',plan:'Premium',amount:50,status:'Approved'},
-{id:'PAY003',user:'U002',plan:'Basic',amount:15,status:'Pending'},
-{id:'PAY004',user:'U006',plan:'Basic',amount:15,status:'Rejected'}];
-const plans=[
-{name:'Free',price:0,features:['Bahagian I & II','Kegemaran dan Sejarah Bacaan']},
-{name:'Basic',price:15,features:['Bahagian I, II, IIA, IIB & III','Carian (wildcard & Analisis Kes)','Glosari & Hubungan Seksyen*']},
-{name:'Rahmah',price:25,features:['Semua Basic + Bahagian IV','Carta alir & cetakan hanya seksyen layak','Penanda warna & Bacaan suara']},
-{name:'Premium',price:50,features:['Semua Bahagian I–IX termasuk VA','Carta alir & cetakan mengikut seksyen layak','Semua ciri dalam matriks']}];
-const byId=id=>document.getElementById(id);
-document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('main section').forEach(x=>x.hidden=x.id!==btn.dataset.tab)}));
-const cell=(tr,v)=>{const td=document.createElement('td');td.textContent=String(v);tr.append(td);return td};
-function render(){
-byId('kUsers').textContent=users.length;byId('kActive').textContent=users.filter(u=>u.status==='Aktif').length;byId('kPending').textContent=payments.filter(p=>p.status==='Pending').length;byId('kPaid').textContent=users.filter(u=>u.plan!=='Free').length;
-byId('breakdown').textContent=plans.map(p=>p.name+': '+users.filter(u=>u.plan===p.name).length).join('　·　');
-const tb=byId('userRows');tb.replaceChildren();const search=byId('userSearch').value.toLowerCase(),filter=byId('userPlan').value;users.filter(u=>(u.email.toLowerCase().includes(search)||u.id.toLowerCase().includes(search))&&(!filter||u.plan===filter)).forEach(u=>{const tr=document.createElement('tr');[u.id,u.email,u.plan,u.status,u.end,u.device].forEach(t=>cell(tr,t));tb.append(tr)});
-const pay=byId('paymentRows');pay.replaceChildren();payments.forEach(p=>{const tr=document.createElement('tr');[p.id,p.user,p.plan,'RM'+p.amount].forEach(x=>cell(tr,x));const status=cell(tr,p.status);status.className=p.status==='Pending'?'pill wait':p.status==='Approved'?'pill ok':'pill no';const td=document.createElement('td');if(p.status==='Pending'){['Approved','Rejected'].forEach(action=>{const b=document.createElement('button');b.textContent=action==='Approved'?'Lulus':'Tolak';b.style.marginRight='6px';b.addEventListener('click',()=>confirmPayment(p.id,action));td.append(b)})}else td.textContent='—';tr.append(td);pay.append(tr)});
-}
-let pending=null;function confirmPayment(id,action){pending={id,action};byId('confirmTitle').textContent=action==='Approved'?'Luluskan rekod simulasi?':'Tolak rekod simulasi?';byId('confirmText').textContent='Rekod '+id+' akan ditanda '+action+'. Tiada hak langganan sebenar diaktifkan.';byId('confirmation').showModal()}
-byId('confirmNo').addEventListener('click',()=>{pending=null;byId('confirmation').close()});byId('confirmYes').addEventListener('click',()=>{if(pending){const p=payments.find(x=>x.id===pending.id);if(p&&p.status==='Pending')p.status=pending.action;}pending=null;byId('confirmation').close();render()});
-byId('userSearch').addEventListener('input',render);byId('userPlan').addEventListener('change',render);
-plans.forEach(p=>{const card=document.createElement('article');card.className='plan';const title=document.createElement('h3');title.textContent=p.name;const price=document.createElement('div');price.className='price';price.textContent='RM'+p.price+'/bulan';const ul=document.createElement('ul');p.features.forEach(feature=>{const li=document.createElement('li');li.textContent=feature;ul.append(li)});card.append(title,price,ul);byId('planGrid').append(card)});
-render();
-</script></body></html>
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>MyAKTA172 — Dashboard Admin (Prototaip V2)</title>
+<link rel="stylesheet" href="./admin-preview.css">
+<script defer src="./admin-package-policy.js"></script>
+<script defer src="./admin-preview.js"></script>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <div class="brand"><img src="./01_DigitalHubb.my_Rasmi_Transparent_6500px.png" alt="Logo rasmi DigitalHubb.my"><div><strong>MyAKTA172</strong><small>DIGITALHUBB.MY · ADMIN</small></div></div>
+  <nav class="side-nav" aria-label="Modul pentadbir">
+    <button type="button" class="active" data-tab="overview">▦ Ringkasan</button>
+    <button type="button" data-tab="users">♙ Pengguna & Emel</button>
+    <button type="button" data-tab="payments">▣ Resit & Pembayaran</button>
+    <button type="button" data-tab="subscriptions">◷ Langganan</button>
+    <button type="button" data-tab="plans">▤ Kawalan Pakej</button>
+    <button type="button" data-tab="devices">▣ Peranti</button>
+    <button type="button" data-tab="reports">▥ Laporan</button>
+    <button type="button" data-tab="audit">≡ Log Admin</button>
+    <button type="button" data-tab="settings">⚙ Tetapan</button>
+  </nav>
+  <div class="side-foot"><strong>Dashboard berasingan</strong><div>Hanya cabang audit/stabilization-v1. Tiada integrasi dengan aplikasi pengguna.</div></div>
+</aside>
+<div class="content">
+<header class="top"><div><h1>Dashboard Admin MyAKTA172</h1><p>Rekod emel, pembayaran, langganan 30 hari dan kawalan hak akses</p></div><span class="demo">● DATA SIMULASI · BUKAN PRODUKSI</span></header>
+<main class="main">
+<div class="notice"><b>Persekitaran ujian sahaja.</b> Data, emel, resit dan pembayaran di sini rekaan. Tiada maklumat disimpan ke pangkalan data; perubahan hilang selepas halaman dimuat semula. Jangan masukkan emel atau resit sebenar. Kawalan satu peranti dan sekatan pakej dalam prototaip ini bukan perlindungan keselamatan sebenar.</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<section id="overview" class="panel">
+<h2>Ringkasan Pengurusan</h2><p class="muted">Angka di bawah hanyalah data demonstrasi.</p>
+<div class="kpis"><div class="kpi">Jumlah Pengguna<strong id="kUsers">—</strong><span class="muted">Emel rekaan</span></div><div class="kpi">Langganan Aktif<strong id="kActive">—</strong><span class="muted">Semua pakej</span></div><div class="kpi">Bayaran Menunggu<strong id="kPending">—</strong><span class="muted">Perlu kelulusan Admin</span></div><div class="kpi">Kutipan Diluluskan<strong id="kRevenue">—</strong><span class="muted">Simulasi RM</span></div></div>
+<div class="grid2" style="margin-top:18px"><article class="tile"><h3>Pengguna Mengikut Pakej</h3><div id="distribution"></div></article><article class="tile"><h3>Tindakan Terkini</h3><div id="recentActivity" class="muted"></div></article></div>
+</section>
+
+<section id="users" class="panel" hidden>
+<h2>Direktori Pengguna dan Emel</h2><p class="muted">Carian, penapis pakej/status, profil, peranti serta riwayat pembayaran pengguna.</p>
+<div class="toolbar">
+<label class="field">Carian emel atau ID<input id="userSearch" type="search" placeholder="Contoh: pengguna02@example.test"></label>
+<label class="field">Pakej<select id="userFilterPlan"><option value="">Semua pakej</option><option>Free</option><option>Basic</option><option>Rahmah</option><option>Premium</option></select></label>
+<label class="field">Status<select id="userFilterStatus"><option value="">Semua status</option><option>Aktif</option><option>Tamat</option><option>Digantung</option></select></label>
+</div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Pakej</th><th>Status</th><th>Tarikh Tamat</th><th>Peranti</th><th>Tindakan</th></tr></thead><tbody id="userRows"></tbody></table></div>
+<div id="userDetail" class="profile" hidden></div>
+</section>
+
+<section id="payments" class="panel" hidden>
+<h2>Pengesahan Pembayaran & Resit Bank</h2><p class="muted">Kelulusan/tolakan menukar rekod simulasi. Fail resit tidak dihantar atau disimpan. Admin sebenar mesti menyimpan resit secara sulit dan mengesahkan bayaran sebelum mengaktifkan akses.</p>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Pakej</th><th>RM</th><th>Resit (nama sahaja)</th><th>Status</th><th>Keputusan</th></tr></thead><tbody id="paymentRows"></tbody></table></div>
+<hr class="divider"><h3>Simulasikan Permohonan Pembayaran Baharu</h3>
+<form id="receiptForm" class="toolbar">
+<label class="field">Pengguna<select id="payUser" required></select></label>
+<label class="field">Pakej Dipohon<select id="payPlan" required><option>Basic</option><option>Rahmah</option><option>Premium</option></select></label>
+<label class="field">Fail resit ujian (PDF/JPG/PNG, maksimum 5MB)<input id="payFile" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required></label>
+<button class="btn primary" type="submit">Tambah Permohonan Simulasi</button>
+</form><div class="help">Tiada muat naik sebenar. Hanya nama, jenis dan saiz fail ujian dipaparkan sementara dalam memori pelayar. Jangan gunakan fail sebenar pelanggan.</div>
+</section>
+
+<section id="subscriptions" class="panel" hidden>
+<h2>Pengaktifan, Pembaharuan dan Naik Taraf</h2><p class="muted">Tempoh 30 hari setiap langganan yang diluluskan. Pembaharuan menambah 30 hari selepas tarikh tamat sedia ada jika masih aktif. Fungsi override manual ini hanya simulasi dan merekod sebab dalam log.</p>
+<div class="toolbar">
+<label class="field">Akaun pengguna<select id="subUser"></select></label>
+<label class="field">Pakej sasaran<select id="subPlan"><option>Free</option><option>Basic</option><option>Rahmah</option><option>Premium</option></select></label>
+<label class="field">Sebab tindakan Admin<input id="subReason" placeholder="Wajib untuk perubahan manual" maxlength="160"></label>
+<button type="button" class="btn primary" id="subUpgrade">Tukar Pakej (Simulasi)</button>
+<button type="button" class="btn" id="subRenew">Tambah 30 Hari (Simulasi)</button>
+</div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Pakej</th><th>Tarikh Mula</th><th>Tamat</th><th>Status</th></tr></thead><tbody id="subscriptionRows"></tbody></table></div>
+</section>
+
+<section id="plans" class="panel" hidden>
+<h2>Kawalan Pakej dan Hak Akses</h2><p class="muted">Matriks muktamad pemilik. Akses seksyen dihasilkan daripada 12 Bahagian / 83 ID seksyen dalam DATA.parts asal (tanpa mengubah fail Akta). Harga dan kebenaran belum mempunyai backend.</p>
+<div id="planCards" class="grid4"></div>
+<h3 style="margin-top:24px">Matriks Bahagian dan Fungsi</h3>
+<div class="tablewrap"><table class="matrix"><thead><tr><th>Bahagian / Fungsi</th><th>FREE</th><th>BASIC</th><th>RAHMAH</th><th>PREMIUM</th></tr></thead><tbody id="matrixRows"></tbody></table></div>
+<hr class="divider"><h3>Semakan Akses Mengikut Seksyen</h3>
+<div class="toolbar"><label class="field">Pilih Pakej<select id="sectionPlan"><option>Free</option><option selected>Basic</option><option>Rahmah</option><option>Premium</option></select></label>
+<label class="field">Pilih Bahagian<select id="sectionPart"><option value="">Semua Bahagian</option></select></label></div>
+<div class="tablewrap"><table><thead><tr><th>Bahagian</th><th>Seksyen</th><th>Keputusan Akses</th></tr></thead><tbody id="sectionRows"></tbody></table></div>
+<p class="help"><b>Peraturan 8 carta alir & cetakan:</b> tersedia sebagai ciri Rahmah/Premium sahaja, tetapi setiap carta WAJIB dipadankan dengan semua seksyen rujukannya dan setiap seksyen itu mesti dibenarkan. Pemetaan lapan carta belum disahkan, maka tiada carta diluluskan secara automatik dalam demonstrasi ini. <b>Hubungan Seksyen Berkaitan</b> disenaraikan untuk Basic/Rahmah/Premium tetapi belum diaktifkan sehingga audit fungsi selesai.</p>
+</section>
+
+<section id="devices" class="panel" hidden>
+<h2>Kawalan Satu Akaun, Satu Peranti Aktif</h2><p class="muted">Rekod sesi/peranti di sini rekaan. Tetap semula peranti memerlukan alasan dan merekod log; pengesahan peranti sebenar mesti dibuat pada backend.</p>
+<div class="toolbar">
+<label class="field">Akaun<select id="deviceUser"></select></label>
+<label class="field">Alasan reset peranti<input id="deviceReason" maxlength="160" placeholder="Sebab yang boleh diaudit"></label>
+<button type="button" class="btn danger" id="resetDevice">Tetapkan Semula Peranti</button>
+</div>
+<div class="tablewrap"><table><thead><tr><th>Emel</th><th>Pakej</th><th>Sesi Aktif</th><th>Peranti Semasa (rekaan)</th></tr></thead><tbody id="deviceRows"></tbody></table></div>
+</section>
+
+<section id="reports" class="panel" hidden><h2>Laporan & Statistik</h2><p class="muted">Eksport CSV data simulasi sahaja. Data pelanggan sebenar memerlukan penapisan peranan, dasar retensi dan kawalan eksport.</p>
+<div id="reportSummary" class="grid4"></div><div class="toolbar"><button type="button" id="exportUsers" class="btn primary">Eksport CSV Pengguna (Demo)</button><button type="button" id="exportPayments" class="btn">Eksport CSV Pembayaran (Demo)</button></div></section>
+
+<section id="audit" class="panel" hidden><h2>Rekod Aktiviti Admin</h2><p class="muted">Log simulasi untuk kelulusan bayaran, pertukaran pakej, pembaharuan dan reset peranti. Hilang selepas muat semula.</p>
+<div class="tablewrap"><table><thead><tr><th>Masa</th><th>Tindakan</th><th>Akaun / Rekod</th><th>Butiran</th></tr></thead><tbody id="auditRows"></tbody></table></div></section>
+
+<section id="settings" class="panel" hidden><h2>Tetapan & Keselamatan</h2>
+<div class="grid2"><div class="tile"><h3>Tempoh Pakej</h3><strong>30 hari</strong><p class="muted">Pakej Free tiada tamat tempoh berbayar.</p></div>
+<div class="tile"><h3>Had Sesi</h3><strong>1 peranti</strong><p class="muted">Penguatkuasaan sebenar wajib melalui backend.</p></div>
+<div class="tile"><h3>Kupon & Promosi</h3><span class="pill warn">Cadangan sahaja</span><p class="muted">Belum diaktifkan dan belum ditentukan polisinya.</p></div>
+<div class="tile"><h3>Integrasi</h3><span class="pill bad">Belum disambung</span><p class="muted">Belum ada auth, API, database, storan resit sulit atau payment gateway.</p></div></div>
+<p class="help">Penerbitan kepada pelanggan memerlukan: pengesahan Admin berasingan dengan MFA, storan resit persendirian, semakan hak akses pada pelayan, penguatkuasaan sesi/peranti, log audit tahan ubah, kawalan tamat tempoh, dan kandungan premium tidak tersedia melalui fail awam atau cache GitHub Pages.</p>
+</section>
+<p class="endnote">DigitalHubb.my · MyAKTA172 · Prototaip Admin V2. Hanya untuk ujian cabang audit. Kandungan Akta, carta alir dan aplikasi utama tidak diubah.</p>
+</main></div></div>
+<dialog id="confirmation"><h2 id="confirmTitle">Sahkan tindakan simulasi</h2><p id="confirmText" class="audit-note"></p><div class="row"><button type="button" class="btn primary" id="confirmYes">Sahkan Simulasi</button><button type="button" class="btn subtle" id="confirmNo">Batal</button></div></dialog>
+</body></html>
