@@ -74,3 +74,10 @@ Tidak ada pengguna Free yang boleh mendapat kandungan premium melalui mod develo
 2. Pemilik semak susun atur Desktop/Mobile dan aliran simulasi.
 3. Langkah seterusnya ialah backend selamat dalam cabang audit selepas reka bentuk disahkan.
 4. Dilarang menggabungkan ke `main`, menerbitkan dashboard Admin atau mengubah aplikasi utama tanpa arahan khusus.
+
+## Hasil Ujian Automatik Dashboard V2
+- **27 Oktober 2026 (MYT): 9/9 kumpulan ujian LULUS** melalui GitHub Actions `MyAKTA172 Admin Preview Tests`, run #4.
+- Polisi: 12 Bahagian / 83 seksyen, semua empat pakej dan harga, peraturan carta fail-closed, ciri Hubungan Seksyen belum aktif, tempoh 30 hari.
+- Pelayar: desktop, matriks seksyen, carian emel, rekod bayaran serta resit fail ujian, kelulusan, pembaharuan bayaran sama pakej, tukar pakej, reset peranti, log tindakan, mod mobile dan reset data selepas refresh.
+- Laporan ujian: https://github.com/rozaimimajid/myakta172/actions/runs/40367284492
+- Pengesahan ini **hanya untuk prototaip Admin**, bukan audit keselamatan sistem produksi atau integrasi kepada aplikasi pengguna.
