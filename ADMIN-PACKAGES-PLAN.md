@@ -81,3 +81,10 @@ Tidak ada pengguna Free yang boleh mendapat kandungan premium melalui mod develo
 - Pelayar: desktop, matriks seksyen, carian emel, rekod bayaran serta resit fail ujian, kelulusan, pembaharuan bayaran sama pakej, tukar pakej, reset peranti, log tindakan, mod mobile dan reset data selepas refresh.
 - Laporan ujian: https://github.com/rozaimimajid/myakta172/actions/runs/40367284492
 - Pengesahan ini **hanya untuk prototaip Admin**, bukan audit keselamatan sistem produksi atau integrasi kepada aplikasi pengguna.
+
+## Pembaikan Modul Resit & Pembayaran — 27 Oktober 2026
+- Tambah `kategori` kepada setiap transaksi: **Langganan Baharu**, **Pembaharuan**, **Naik Taraf**; direkod dalam direktori profil, jadual pembayaran dan CSV.
+- Dalam borang permohonan simulasi, kategori dikira secara automatik: Free → berbayar = Baharu; pakej sama = Pembaharuan; pakej lebih tinggi = Naik Taraf. Turun taraf melalui borang ini disekat, dan permohonan yang tidak lagi sepadan dengan pakej semasa tidak boleh diluluskan dalam simulasi.
+- Butang **Lihat Resit**: B001–B004 menunjukkan kad resit **rekaan** bertanda bukan resit bank; fail ujian PDF/JPG/PNG yang baharu dipilih disimpan hanya dalam memori halaman dan boleh dibuka sementara melalui dialog pratonton. Fail tidak dihantar ke rangkaian/backend atau disimpan dalam storan kekal; semua data hilang apabila refresh.
+- Tiada resit pelanggan sebenar, nombor akaun, rekod bayaran bank atau akses kewangan dimuat naik. **Pratonton fail ujian tidak membuktikan transaksi telah dibayar.**
+- Keperluan versi sebenar: ruang simpanan resit tertutup di backend; pengesahan admin+MFA; URL resit sementara selepas semakan role; semakan bank manual; bukti, timestamp dan audit keputusan; mekanisme pengesahan jenis fail pada pelayan. `main` dan fail aplikasi utama tidak diubah.
