@@ -48,6 +48,11 @@ async function main(){
     await assert.equal(await page.locator('#kPending').innerText(),'2');
     assert.equal(errors.length,0,errors.join('\n')); passes++;console.log('PASS halaman desktop dan KPI data demo');
     await page.locator('[data-tab=plans]').click();
+    assert.match(await page.locator('#planCards article').first().innerText(),/Percuma · Tiada tamat tempoh/);
+    for (const card of await page.locator('#planCards article').all()) {
+      const label = await card.innerText();
+      if (!label.includes('FREE')) assert.match(label,/Langganan 30 hari/);
+    }
     assert.equal(await page.locator('#matrixRows tr').count(),20);
     assert.equal(await page.locator('#sectionRows tr').count(),83);
     await page.locator('#sectionPlan').selectOption('Rahmah');
