@@ -2105,57 +2105,7 @@ body.dark #kmFlowChart .km-finish,body.dark #kmFlowChart .km-start{background:#1
    });
    const style="@page{size:A4 portrait;margin:10mm 11mm}\n*{box-sizing:border-box}\nhtml,body{margin:0;padding:0;background:#fff;color:#172c43;font-family:Arial,Helvetica,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}\n.km-window{width:100%;max-width:none;margin:0;overflow:visible;background:#fff}\n.km-head{padding:10px 15px;background:linear-gradient(105deg,#0a3470,#1266a7)!important;color:#fff!important;border-radius:10px 10px 0 0}\n.km-head small{display:block;color:#fbd24a;font-size:10px;font-weight:700;letter-spacing:.05em}\n.km-head h2{font-size:21px;line-height:1.2;margin:5px 0 1px;color:#fff}\n.km-intro{font-size:11px;line-height:1.35;margin:8px 4px 10px;color:#425a75}\n.km-chart{display:block;width:100%;font-size:12px;line-height:1.35}\n.km-start,.km-finish{width:75%;margin:3px auto;padding:6px 13px;border-radius:28px;text-align:center;background:#176445!important;color:#fff!important;font-size:14px;font-weight:700}\n.km-finish,.km-finish.km-start{background:#176445!important;color:#fff!important}\n.km-step{width:92%;margin:3px auto;padding:6px 11px;border:2px solid #a3c8fa;background:#eaf3ff!important;border-radius:12px;text-align:center;break-inside:avoid;page-break-inside:avoid}\n.km-step strong,.km-step h3,.km-step h4{display:block;color:#0954ad;font-size:13px;margin:0 0 6px}\n.km-step p{margin:3px 0;line-height:1.3}\n.km-decision-block{width:100%;display:block;margin:4px auto;break-inside:auto;page-break-inside:auto}\n.km-decision{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;width:68%;min-height:76px;margin:4px auto;padding:13px 35px;border:0!important;background:transparent!important;clip-path:none!important;color:#674918;font-weight:700;font-size:13px}\n.km-decision .flow-diamond-outline{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:0}\n.km-decision .flow-diamond-outline polygon{fill:#fff5de!important;stroke:#ca831b!important;stroke-width:1.6!important;vector-effect:non-scaling-stroke}\n.km-decision .flow-diamond-label{position:relative;z-index:1;width:100%}\n .km-branches{display:flex;align-items:stretch;gap:9px;width:100%;margin:5px auto;break-inside:avoid;page-break-inside:avoid}\n.km-branch{flex:1 1 0;min-width:0;padding:6px 9px;border:1px solid #d2dff0;border-top:3px solid #21966a;border-radius:10px;background:#fbfdff!important;text-align:center}\n.km-branch:last-child{border-top-color:#c57939}\n.km-branch b,.km-branch strong{color:#0b59ad;font-size:13px}\n.km-branch p{margin:3px 0;font-size:11px;line-height:1.3}\n.km-arrow{display:block;width:100%;text-align:center;color:#1166cc;font-size:17px;line-height:1;margin:2px auto}\n.km-route-note{display:none}\n.km-ref-links{display:block;margin:7px 0 0;font-size:10px;color:#336192;line-height:1.25}\n.km-foot,button{display:none!important}\n.km-step,.km-decision,.km-branches,.km-finish{break-inside:avoid;page-break-inside:avoid}\n@media screen{body{padding:12px;max-width:850px;margin:auto}}\n\n/* Pagination: avoid fragmenting individual decisions, allow page breaks between process groups. */\n.km-chart,.km-decision-block{overflow:visible!important;break-inside:auto!important}\n.km-branches{break-inside:avoid!important;page-break-inside:avoid!important}\n.km-decision{break-inside:avoid!important;page-break-inside:avoid!important}\n.km-step,.km-finish{break-inside:avoid!important;page-break-inside:avoid!important}\n@media print{.km-chart{display:block!important}.km-decision-block{display:block!important}.km-branches{display:flex!important}.km-step,.km-decision,.km-branch,.km-finish{box-shadow:none!important}}\n/* Let Chromium paginate naturally; keep each box intact. */\n@media print{.km-chart,.km-decision-block{break-inside:auto!important;page-break-inside:auto!important}.km-step,.km-decision,.km-branches,.km-finish{break-inside:avoid!important;page-break-inside:avoid!important}}\n";
    popup.document.open();
-   popup.document.write('<!doctype html><html lang="ms"><head><meta charset="utf-8"><title>Carta Alir KM - MyAKTA172</title><style>'+style+DIGITALHUBB_PRINT_CSS+MYAKTA_UNIFIED_PRINT_GEOMETRY+'</style></head><body>'+digitalHubbPrintHtml(clean)+'<style id="dh-home-shared-records-v1">
-body.mode-desktop #desktopHome .dh-columns button.dh-record-row{display:flex;align-items:center;gap:12px;justify-content:flex-start;width:100%;text-align:left}
-#desktopHome .dh-record-num{font-size:20px;font-weight:800;color:#0758bb;min-width:42px}
-#desktopHome .dh-record-detail{display:flex;flex-direction:column;gap:3px;min-width:0}
-#desktopHome .dh-record-detail strong{font-size:13px}
-#desktopHome .dh-record-detail small{color:#65809d;font-size:11px}
-#desktopHome .dh-record-chevron{margin-left:auto}
-</style>
-<script id="dh-home-shared-records-v1-js">
-(function(){
- const ids={recent:'desktopHomeRecent',frequent:'desktopHomeFrequent',fav:'desktopHomeFavorites'};
- function read(key,fallback){try{const x=JSON.parse(localStorage.getItem(key)||'null');return x==null?fallback:x}catch(e){return fallback}}
- function num(x){return String(typeof x==='object'&&x!==null?(x.num||x.sec||x.section||''):x)}
- function draw(id,entries,empty,kind){
-  const target=document.getElementById(id);if(!target)return;
-  target.replaceChildren();
-  if(!entries.length){const p=document.createElement('p');p.className='dh-empty';p.textContent=empty;target.append(p);return}
-  entries.slice(0,5).forEach(item=>{
-   const n=item.n,section=(typeof byNum!=='undefined'&&byNum[n])||null;
-   if(!section)return;
-   const btn=document.createElement('button');btn.type='button';btn.className='dh-record-row';
-   const number=document.createElement('b');number.className='dh-record-num';number.textContent=n;
-   const detail=document.createElement('span');detail.className='dh-record-detail';
-   const title=document.createElement('strong');title.textContent=section.title;
-   detail.append(title);
-   if(kind==='frequent'){const count=document.createElement('small');count.textContent='Dibuka '+item.count+' kali';detail.append(count)}
-   const chev=document.createElement('span');chev.className='dh-record-chevron';chev.textContent='›';
-   btn.append(number,detail,chev);
-   btn.addEventListener('click',()=>{document.getElementById('desktopHome')?.classList.remove('open');document.body.dataset.activeView='section';if(typeof show==='function')show(n);document.getElementById('actView').style.display='block';});
-   target.append(btn);
-  });
- }
- function refresh(){
-  if(typeof byNum==='undefined')return;
-  const valid=n=>Object.hasOwn(byNum,n);
-  const favorites=read('myakta172_favourites_v1',[]),hist=read('myakta172_history_v1',[]),freq=read('myakta172_frequent_v1',{});
-  const fav=Array.isArray(favorites)?[...new Set(favorites.map(num))].filter(valid):[];
-  const recent=Array.isArray(hist)?[...new Set(hist.map(num))].filter(valid):[];
-  const frequent=Object.keys(freq&&typeof freq==='object'?freq:{}).filter(valid).sort((a,b)=>(+freq[b]||0)-(+freq[a]||0)).slice(0,5);
-  draw(ids.recent,recent.map(n=>({n})),'Belum ada sejarah bacaan.','recent');
-  draw(ids.frequent,frequent.map(n=>({n,count:freq[n]})),'Belum ada seksyen yang kerap dibuka.','frequent');
-  draw(ids.fav,fav.map(n=>({n})),'Belum ada seksyen kegemaran.','fav');
-  [['dhFavCount',fav.length],['dhFreqCount',frequent.length],['dhRecentCount',recent.length]].forEach(([id,count])=>{const el=document.getElementById(id);if(el)el.textContent=count+' seksyen'});
- }
- window.addEventListener('load',refresh);
- window.addEventListener('focus',refresh);
- document.addEventListener('click',()=>{if(document.body.classList.contains('mode-desktop'))setTimeout(refresh,120)},true);
- window.addEventListener('storage',refresh);
- setTimeout(refresh,400);
-})();
-</script>
+   popup.document.write('<!doctype html><html lang="ms"><head><meta charset="utf-8"><title>Carta Alir KM - MyAKTA172</title><style>'+style+DIGITALHUBB_PRINT_CSS+MYAKTA_UNIFIED_PRINT_GEOMETRY+'</style></head><body>'+digitalHubbPrintHtml(clean)+'
 </body></html>');
    popup.document.close();
    popup.focus();
@@ -3072,4 +3022,55 @@ function digitalHubbPrintWhenReady(popup){
 })();
 </script>
 <script src="./highlight-v1.js" defer></script>
+<style id="dh-home-shared-records-v1">
+body.mode-desktop #desktopHome .dh-columns button.dh-record-row{display:flex;align-items:center;gap:12px;justify-content:flex-start;width:100%;text-align:left}
+#desktopHome .dh-record-num{font-size:20px;font-weight:800;color:#0758bb;min-width:42px}
+#desktopHome .dh-record-detail{display:flex;flex-direction:column;gap:3px;min-width:0}
+#desktopHome .dh-record-detail strong{font-size:13px}
+#desktopHome .dh-record-detail small{color:#65809d;font-size:11px}
+#desktopHome .dh-record-chevron{margin-left:auto}
+</style>
+<script id="dh-home-shared-records-v1-js">
+(function(){
+ const ids={recent:'desktopHomeRecent',frequent:'desktopHomeFrequent',fav:'desktopHomeFavorites'};
+ function read(key,fallback){try{const x=JSON.parse(localStorage.getItem(key)||'null');return x==null?fallback:x}catch(e){return fallback}}
+ function num(x){return String(typeof x==='object'&&x!==null?(x.num||x.sec||x.section||''):x)}
+ function draw(id,entries,empty,kind){
+  const target=document.getElementById(id);if(!target)return;
+  target.replaceChildren();
+  if(!entries.length){const p=document.createElement('p');p.className='dh-empty';p.textContent=empty;target.append(p);return}
+  entries.slice(0,5).forEach(item=>{
+   const n=item.n,section=(typeof byNum!=='undefined'&&byNum[n])||null;
+   if(!section)return;
+   const btn=document.createElement('button');btn.type='button';btn.className='dh-record-row';
+   const number=document.createElement('b');number.className='dh-record-num';number.textContent=n;
+   const detail=document.createElement('span');detail.className='dh-record-detail';
+   const title=document.createElement('strong');title.textContent=section.title;
+   detail.append(title);
+   if(kind==='frequent'){const count=document.createElement('small');count.textContent='Dibuka '+item.count+' kali';detail.append(count)}
+   const chev=document.createElement('span');chev.className='dh-record-chevron';chev.textContent='›';
+   btn.append(number,detail,chev);
+   btn.addEventListener('click',()=>{document.getElementById('desktopHome')?.classList.remove('open');document.body.dataset.activeView='section';if(typeof show==='function')show(n);document.getElementById('actView').style.display='block';});
+   target.append(btn);
+  });
+ }
+ function refresh(){
+  if(typeof byNum==='undefined')return;
+  const valid=n=>Object.hasOwn(byNum,n);
+  const favorites=read('myakta172_favourites_v1',[]),hist=read('myakta172_history_v1',[]),freq=read('myakta172_frequent_v1',{});
+  const fav=Array.isArray(favorites)?[...new Set(favorites.map(num))].filter(valid):[];
+  const recent=Array.isArray(hist)?[...new Set(hist.map(num))].filter(valid):[];
+  const frequent=Object.keys(freq&&typeof freq==='object'?freq:{}).filter(valid).sort((a,b)=>(+freq[b]||0)-(+freq[a]||0)).slice(0,5);
+  draw(ids.recent,recent.map(n=>({n})),'Belum ada sejarah bacaan.','recent');
+  draw(ids.frequent,frequent.map(n=>({n,count:freq[n]})),'Belum ada seksyen yang kerap dibuka.','frequent');
+  draw(ids.fav,fav.map(n=>({n})),'Belum ada seksyen kegemaran.','fav');
+  [['dhFavCount',fav.length],['dhFreqCount',frequent.length],['dhRecentCount',recent.length]].forEach(([id,count])=>{const el=document.getElementById(id);if(el)el.textContent=count+' seksyen'});
+ }
+ window.addEventListener('load',refresh);
+ window.addEventListener('focus',refresh);
+ document.addEventListener('click',()=>{if(document.body.classList.contains('mode-desktop'))setTimeout(refresh,120)},true);
+ window.addEventListener('storage',refresh);
+ setTimeout(refresh,400);
+})();
+</script>
 </body></html>
