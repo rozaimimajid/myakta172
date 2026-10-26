@@ -1,31 +1,50 @@
-# MyAKTA172 — Peringkat 1: Matriks Pakej (DRAF UNTUK KELULUSAN)
-Tarikh: 26 Oktober 2026
-Status: Cadangan sahaja; belum menjadi tawaran jualan atau kawalan akses sebenar.
-Cabang: audit/stabilization-v1. Main serta kod terkunci tidak disentuh.
+# MyAKTA172 — Matriks Pakej dan Dashboard Admin (Keputusan Gabungan)
+Tarikh: 27 Oktober 2026
+Status: Matriks ditetapkan oleh pemilik; prototaip Admin untuk simulasi sahaja. Hubungan seksyen dan mekanisme kawalan sebenar belum disahkan.
+Cabang: audit/stabilization-v1; JANGAN ubah atau merge main.
 
-| Fungsi | Free | Basic | Rahmah | Premium |
-|---|---|---|---|---|
-| Harga bulanan cadangan | RM0 | RM19 | RM29 | RM59 |
-| Bacaan Bahagian Akta | I–II (cadangan) | I–IV | I–VI | I–IX |
-| Carian seksyen/kata kunci | Terhad | Ya | Ya | Ya |
-| Carta alir proses | Pratonton | 3 carta terpilih | Semua 8 | Semua 8 |
-| Bookmark & Sejarah Bacaan | 5 rekod | 30 rekod | 100 rekod | Tiada had produk |
-| Suara bacaan | Tidak | Tidak | Ya | Ya |
-| Analisis kes | Tidak | Asas | Ya | Ya |
-| Tempoh | Tiada tamat untuk Free | 30 hari | 30 hari | 30 hari |
+## Harga bulanan
+Free RM0 | Basic RM15 | Rahmah RM25 | Premium RM50.
 
-NOTA: Harga, hak Bahagian, fungsi, had rekod dan tempoh adalah hipotesis produk, semuanya perlu kelulusan pemilik sebelum penguatkuasaan. Pembatasan fungsi melalui JavaScript pelayar bukan perlindungan selamat.
+## Matriks hak akses yang dipilih pemilik
+| Ciri / kemudahan | Free | Basic | Rahmah | Premium |
+|---|:---:|:---:|:---:|:---:|
+| Bahagian I — Permulaan | ✓ | ✓ | ✓ | ✓ |
+| Bahagian II — Dasar dan Pentadbiran | ✓ | ✓ | ✓ | ✓ |
+| Bahagian IIA — Jawatankuasa Perancang Wilayah | — | ✓ | ✓ | ✓ |
+| Bahagian IIB — Rancangan Fizikal Negara | — | ✓ | ✓ | ✓ |
+| Bahagian III — Rancangan Pemajuan | — | ✓ | ✓ | ✓ |
+| Bahagian IV — Kawalan Perancangan | — | — | ✓ | ✓ |
+| Bahagian V — Caj Pemajuan | — | — | — | ✓ |
+| Bahagian VA — Perintah Pemeliharaan Pokok | — | — | — | ✓ |
+| Bahagian VI — Lembaga Rayuan | — | — | — | ✓ |
+| Bahagian VII — Notis Pembelian dan Pengambilan Tanah | — | — | — | ✓ |
+| Bahagian VIII — Kawasan Pemajuan | — | — | — | ✓ |
+| Bahagian IX — Peruntukan Pelbagai | — | — | — | ✓ |
+| Carian Seksyen dan Kata Kunci termasuk wildcard & Analisis Kes | — | ✓ | ✓ | ✓ |
+| Carta Alir Proses Perancangan termasuk cetakan | — | — | ✓* | ✓* |
+| Kegemaran / Penanda Buku | ✓ | ✓ | ✓ | ✓ |
+| Sejarah Bacaan | ✓ | ✓ | ✓ | ✓ |
+| Penanda Warna Teks | — | — | ✓ | ✓ |
+| Bacaan Suara | — | — | ✓ | ✓ |
+| Glosari Istilah | — | ✓ | ✓ | ✓ |
+| Hubungan Seksyen Berkaitan (perlu pengesahan pelaksanaan) | — | ✓ | ✓ | ✓ |
 
-## Dashboard Admin (peringkat 2)
-- Prototaip statik: admin-preview.html, data rekaan dan tiada pengguna sebenar, tiada simpanan wang atau resit.
-- Modul: ringkasan KPI, jadual pengguna, status langganan, simulasi kelulusan pembayaran, matriks pakej.
-- Tindakan pada dashboard hanyalah demonstrasi dalam memori tab; muat semula memulihkan data simulasi.
-- Belum ada login, backend, pangkalan data, entitlement server-side, pembayaran atau kawalan satu peranti.
-- Jangan siarkan prototaip sebagai sistem pengurusan sebenar atau masukkan rekod pelanggan sebenar.
+* PERATURAN WAJIB: Kebenaran membuka DAN mencetak sesuatu carta alir mengikut hak akses Bahagian/Seksyen yang berkaitan dalam pakej pengguna, bukan akses automatik kepada semua lapan carta. Apabila satu carta merujuk beberapa seksyen daripada Bahagian berlainan, pemetaan seksyen wajib ditentukan sebelum membuka carta tersebut. Contoh: KM Bahagian IV untuk Rahmah; Caj Pemajuan Bahagian V Premium sahaja. Jangan mengubah carta sedia ada; kawalan dibuat pada lapisan entitlement berasingan.
 
-## Keputusan belum dimuktamadkan
-1. Harga Free/Basic/Rahmah/Premium.
-2. Hak Bahagian/Seksyen untuk setiap pakej (perlu konsisten dengan kandungan 83 seksyen sebenar).
-3. Polisi percubaan, diskaun dan status pelajar.
-4. Peraturan tamat tempoh, refund, bil dan reset peranti.
-5. Pilihan backend/auth/storan serta polisi privasi dan akses admin.
+## Keperluan Dashboard Admin yang digabungkan daripada perbincangan terdahulu
+1. Ringkasan: bilangan pengguna, agihan pakej, langganan aktif/tamat, bayaran pending, ringkasan kutipan dan penukaran pakej.
+2. Direktori pengguna: ID, emel, nama (jika tersedia), pakej, tarikh mula/tamat, status, peranti/sesi aktif, carian dan penapis.
+3. Pembayaran manual bank: pengguna menghantar resit melalui storan persendirian; admin menyemak Lulus/Tolak; lampiran resit bukan URL awam; audit trail diperlukan. Hanya backend boleh mengaktifkan entitlement.
+4. Langganan: Free/Basic/Rahmah/Premium, naik taraf/turun taraf, pembaharuan, luput dan kembali ke Free mengikut polisi, rekod sebab tindakan.
+5. Kawalan pakej: matriks di atas, pemetaan semua Bahagian kepada ID seksyen sebenar, pemetaan lapan carta kepada seksyen rujukan, had carian dan ciri tambahan; jangan anggap semakan JavaScript sahaja selamat.
+6. Kawalan satu peranti: satu sesi aktif setiap akaun melalui backend, rekod pertukaran dan reset terkawal.
+7. Laporan dan audit log: eksport ringkasan, tindakan admin, semakan pembayaran, perubahan pakej.
+8. Kupon/promosi: cadangan daripada reka bentuk lama, bukan ciri wajib atau diaktifkan sehingga keputusan lanjut.
+9. Akses Admin: peranan admin/user, pengesahan selamat, MFA jika tersedia, peraturan database/storage.
+
+## Pelaksanaan dan batasan
+- Peringkat 1 = dokumen matriks hak akses; Peringkat 2 = prototaip Admin dengan data simulasi, tanpa transaksi sebenar.
+- Peringkat berikutnya: model data, backend pengesahan server-side, storan resit tertutup, peraturan peranti, ujian dan semakan pelan kos sifar.
+- Produk GitHub Pages statik tidak memberi kawalan akses terlindung kepada kandungan premium jika semua teks dihantar ke pelayar. Pertimbangkan hosting/backend sesuai sebelum menjual.
+- Jangan mengubah kod Akta 172, reka bentuk lapan carta, mod Desktop/Mobile, simpanan, atau logo DigitalHubb.my yang dikunci.
