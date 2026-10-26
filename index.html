@@ -2902,8 +2902,8 @@ function digitalHubbPrintHtml(original){
   const head=copy.querySelector('.km-head');
   if(head){
     const box=document.createElement('span');box.className='digitalhubb-print-logo';
-    const img=document.createElement('img');img.alt='DigitalHubb';
-    img.src=new URL('CLEAR - DigitalHubb Logo + Wordmark 3.png',location.href).href;
+    const img=document.createElement('img');img.alt='DigitalHubb.my';
+    img.src=new URL('01_DigitalHubb.my_Rasmi_Transparent_6500px.png',location.href).href;
     box.appendChild(img);head.appendChild(box);
   }
   return copy.outerHTML;
@@ -2950,7 +2950,7 @@ function digitalHubbPrintWhenReady(popup){
 })();
 </script>
 
-<!-- Identiti DigitalHubb: paparan Utama dan maklumat pemilik hanya dalam Tentang -->
+<!-- Identiti DigitalHubb.my: paparan Utama dan maklumat pemilik hanya dalam Tentang -->
 <style id="digitalhubb-home-about">
 .dh-identity{display:flex;justify-content:flex-end;align-items:center;margin:18px 18px 22px;padding:8px 0}
 .dh-identity img{display:block;width:240px;height:75px;object-fit:contain;background:#fff;border-radius:7px;padding:4px}
@@ -2968,13 +2968,13 @@ function digitalHubbPrintWhenReady(popup){
 <div class="about-header"><h2>Tentang MyAKTA172</h2><button type="button" id="myaktaAboutClose" aria-label="Tutup Tentang">✕ Tutup</button></div>
 <p><strong>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</strong></p>
 <h3>Maklumat Aplikasi</h3><p>MyAKTA172 merupakan aplikasi digital bagi memudahkan pembacaan, pencarian, pembelajaran dan rujukan proses perancangan bandar berasaskan Akta 172.</p>
-<h3>Identiti Pembangun</h3><img src="./CLEAR - DigitalHubb Logo + Wordmark 3.png" alt="DigitalHubb"><p>DigitalHubb ialah jenama inovasi digital untuk aplikasi rujukan, pembelajaran dan analisis.</p>
+<h3>Identiti Pembangun</h3><img src="./01_DigitalHubb.my_Rasmi_Transparent_6500px.png" alt="DigitalHubb.my"><p>DigitalHubb.my ialah jenama inovasi digital untuk aplikasi rujukan, pembelajaran dan analisis.</p>
 <h3>Maklumat Pemilik / Pembangun</h3><p>TPr. Gs. Rozaimi bin Majid</p>
 <h3>Penafian</h3><p>MyAKTA172 ialah aplikasi rujukan dan pembelajaran. Ia bukan penerbitan rasmi kerajaan atau pengganti nasihat dan rujukan perundangan daripada pihak berkuasa berkaitan.</p>
 </div></dialog>
 <script id="digitalhubb-home-about-script">
 (function(){
- const img='./CLEAR - DigitalHubb Logo + Wordmark 3.png';
+ const img='./01_DigitalHubb.my_Rasmi_Transparent_6500px.png';
  ['desktopHome','mobileHome'].forEach(id=>{
    const host=document.getElementById(id);if(!host||host.querySelector('.dh-identity'))return;
    const box=document.createElement('div');box.className='dh-identity';
