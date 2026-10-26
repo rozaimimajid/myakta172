@@ -4,7 +4,7 @@
 <section id="overview"><div class="grid"><div class="card"><span>Jumlah Pengguna</span><strong id="kUsers">—</strong><small class="muted">Data rekaan</small></div><div class="card"><span>Langganan Aktif</span><strong id="kActive">—</strong><small class="muted">Simulasi</small></div><div class="card"><span>Bayaran Menunggu</span><strong id="kPending">—</strong><small class="muted">Untuk semakan</small></div><div class="card"><span>Pakej Berbayar</span><strong id="kPaid">—</strong><small class="muted">Basic / Rahmah / Premium</small></div></div><div class="panel"><h2>Agihan Pengguna mengikut Pakej</h2><div id="breakdown"></div></div></section>
 <section id="users" hidden><div class="panel"><h2>Senarai Pengguna (Simulasi)</h2><div class="toolbar"><input id="userSearch" placeholder="Cari emel / ID pengguna" aria-label="Cari pengguna"><select id="userPlan" aria-label="Tapis pakej"><option value="">Semua pakej</option><option>Free</option><option>Basic</option><option>Rahmah</option><option>Premium</option></select></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Pakej</th><th>Status</th><th>Tamat</th><th>Peranti</th></tr></thead><tbody id="userRows"></tbody></table></div></div></section>
 <section id="payments" hidden><div class="panel"><h2>Rekod Pembayaran (Simulasi)</h2><p class="muted">Butang Lulus/Tolak mengubah data rekaan dalam tab ini sahaja. Tiada transaksi sebenar berlaku.</p><div class="tablewrap"><table><thead><tr><th>ID</th><th>Pengguna</th><th>Pakej</th><th>Amaun</th><th>Status</th><th>Tindakan</th></tr></thead><tbody id="paymentRows"></tbody></table></div></div></section>
-<section id="plans" hidden><div class="panel"><h2>Matriks Pakej — Draf</h2><p class="muted">Harga dan ciri berikut ialah cadangan awal, belum diluluskan atau dikuatkuasakan.</p><div class="plans" id="planGrid"></div></div></section><footer>DigitalHubb.my · MyAKTA172 · Dashboard prototaip bukan sistem produksi. Jangan masukkan data sebenar.</footer></main>
+<section id="plans" hidden><div class="panel"><h2>Pakej Langganan — Matriks Pilihan Pemilik</h2><p class="muted">Harga dan akses berdasarkan pilihan pemilik. Paparan ini simulasi; kawalan sebenar belum diaktifkan. *Hubungan Seksyen masih perlu disahkan.</p><div class="plans" id="planGrid"></div><p class="muted"><b>Peraturan carta alir:</b> akses dan cetakan hanya bagi seksyen yang dibenarkan dalam pakej. Contoh: Rahmah boleh akses KM (Bahagian IV), tetapi Caj Pemajuan (Bahagian V) khusus Premium.</p><p class="muted">Modul admin sebenar akan meliputi rekod emel pengguna, pengesahan resit bank, naik taraf, tamat tempoh, satu sesi/peranti, audit log serta laporan. Kupon/promosi hanya cadangan.</p></div></section><footer>DigitalHubb.my · MyAKTA172 · Dashboard prototaip bukan sistem produksi. Jangan masukkan data sebenar.</footer></main>
 <dialog id="confirmation"><h2 id="confirmTitle">Sahkan tindakan</h2><p id="confirmText"></p><div class="actions"><button class="primary" id="confirmYes">Sahkan simulasi</button><button class="secondary" id="confirmNo">Batal</button></div></dialog>
 <script>
 'use strict';
@@ -16,15 +16,15 @@ const users=[
 {id:'U005',email:'pelajar05@example.test',plan:'Free',status:'Aktif',end:'—',device:'Tiada'},
 {id:'U006',email:'pelajar06@example.test',plan:'Basic',status:'Tamat',end:'2026-10-14',device:'Tiada'}];
 const payments=[
-{id:'PAY001',user:'U003',plan:'Rahmah',amount:29,status:'Pending'},
-{id:'PAY002',user:'U004',plan:'Premium',amount:59,status:'Approved'},
-{id:'PAY003',user:'U002',plan:'Basic',amount:19,status:'Pending'},
-{id:'PAY004',user:'U006',plan:'Basic',amount:19,status:'Rejected'}];
+{id:'PAY001',user:'U003',plan:'Rahmah',amount:25,status:'Pending'},
+{id:'PAY002',user:'U004',plan:'Premium',amount:50,status:'Approved'},
+{id:'PAY003',user:'U002',plan:'Basic',amount:15,status:'Pending'},
+{id:'PAY004',user:'U006',plan:'Basic',amount:15,status:'Rejected'}];
 const plans=[
-{name:'Free',price:0,features:['Bahagian I–II (cadangan)','Carian terhad','Pratonton carta','5 rekod simpanan']},
-{name:'Basic',price:19,features:['Bahagian I–IV','Carian seksyen dan kata kunci','3 carta alir terpilih','30 rekod simpanan']},
-{name:'Rahmah',price:29,features:['Bahagian I–VI','Semua 8 carta alir','100 rekod simpanan','Bacaan suara']},
-{name:'Premium',price:59,features:['Bahagian I–IX','Semua 8 carta alir','Simpanan tanpa had produk','Bacaan suara dan analisis kes']}];
+{name:'Free',price:0,features:['Bahagian I & II','Kegemaran dan Sejarah Bacaan']},
+{name:'Basic',price:15,features:['Bahagian I, II, IIA, IIB & III','Carian (wildcard & Analisis Kes)','Glosari & Hubungan Seksyen*']},
+{name:'Rahmah',price:25,features:['Semua Basic + Bahagian IV','Carta alir & cetakan hanya seksyen layak','Penanda warna & Bacaan suara']},
+{name:'Premium',price:50,features:['Semua Bahagian I–IX termasuk VA','Carta alir & cetakan mengikut seksyen layak','Semua ciri dalam matriks']}];
 const byId=id=>document.getElementById(id);
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('main section').forEach(x=>x.hidden=x.id!==btn.dataset.tab)}));
 const cell=(tr,v)=>{const td=document.createElement('td');td.textContent=String(v);tr.append(td);return td};
