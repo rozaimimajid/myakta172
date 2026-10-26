@@ -165,7 +165,7 @@
   function renderPlans(){
     const cards=$('planCards');cards.replaceChildren();
     for(const name of P.order){
-      const plan=P.packages[name];const card=element('article',undefined,'tile'+($('sectionPlan').value===name?' active':''));card.append(element('h3',name.toUpperCase()),element('strong',money(plan.price)+' / bulan'),element('p',plan.parts.length+' daripada 12 Bahagian · '+P.subscriptionDays+' hari untuk pakej berbayar','muted'));
+      const plan=P.packages[name];const card=element('article',undefined,'tile'+($('sectionPlan').value===name?' active':''));card.append(element('h3',name.toUpperCase()),element('strong',money(plan.price)+' / bulan'),element('p',plan.parts.length+' daripada 12 Bahagian · '+(name==='Free'?'Percuma · Tiada tamat tempoh':'Langganan '+P.subscriptionDays+' hari'),'muted'));
       card.append(btn('Lihat Seksyen','choosePlan',name));cards.append(card);
     }
     const matrix=$('matrixRows');matrix.replaceChildren();
