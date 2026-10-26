@@ -45,7 +45,12 @@
     pendingAction=action; $('confirmTitle').textContent=title;$('confirmText').textContent=message;
     $('confirmation').showModal();
   }
+  function syncSelectedSubscription() {
+    const user=getUser($('subUser').value);
+    if(user) $('subPlan').value=user.plan;
+  }
   function switchTab(tab) {
+    if(tab==='subscriptions') syncSelectedSubscription();
     document.querySelectorAll('[data-tab]').forEach(b=>{const yes=b.dataset.tab===tab;b.classList.toggle('active',yes);b.setAttribute('aria-current',yes?'page':'false');});
     document.querySelectorAll('main > section.panel').forEach(s=>{s.hidden=s.id!==tab;});
     window.scrollTo({top:0,behavior:'instant'});
@@ -196,6 +201,7 @@
   }
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
   $('userSearch').addEventListener('input',renderUsers);$('userFilterPlan').addEventListener('change',renderUsers);$('userFilterStatus').addEventListener('change',renderUsers);
+  $('subUser').addEventListener('change',syncSelectedSubscription);
   $('sectionPlan').addEventListener('change',renderPlans);$('sectionPart').addEventListener('change',renderSections);
   $('receiptForm').addEventListener('submit',addReceipt);$('subUpgrade').addEventListener('click',upgrade);$('subRenew').addEventListener('click',renew);$('resetDevice').addEventListener('click',resetDevice);
   $('exportUsers').addEventListener('click',()=>exportCsv('myakta172-pengguna-demo.csv',['ID','Emel','Pakej','Status','Mula','Tamat','Peranti'],users.map(u=>[u.id,u.email,u.plan,getStatus(u),dateLabel(u.start),dateLabel(u.end),u.device||''])));
@@ -204,7 +210,7 @@
     const b=e.target.closest('button[data-action]');if(!b)return;
     const action=b.dataset.action,id=b.dataset.id;
     if(action==='profile'){selectedUser=id;renderUserProfile();$('userDetail').scrollIntoView({block:'nearest'});}
-    if(action==='subscriptionUser'){switchTab('subscriptions');$('subUser').value=id;}
+    if(action==='subscriptionUser'){$('subUser').value=id;syncSelectedSubscription();switchTab('subscriptions');}
     if(action==='approvePayment')approve(id,true);
     if(action==='rejectPayment')approve(id,false);
     if(action==='choosePlan'){$('sectionPlan').value=id;renderPlans();$('sectionRows').closest('.tablewrap').scrollIntoView({block:'nearest'});}
