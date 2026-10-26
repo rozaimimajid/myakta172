@@ -984,9 +984,9 @@ try {
  await check('All Act sections maintain nested letter and Roman hierarchy',async()=>{
    const result=await page.evaluate(()=>{
      const examples=[
-       {text:'35C. Mana-mana orang\\n(a) perintah;\\n(b) peruntukan;\\n(c) (i) penolakan;\\n(ii) syarat;\\n(d) suatu perintah;',classes:['','indent','indent','indent','subindent','indent']},
-       {text:'2A. (1) Majlis\\n(a) pengerusi;\\n(b) timbalan;\\n(c) Menteri;\\n(d) Menteri;\\n(e) Kewangan;',classes:['','indent','indent','indent','indent','indent']},
-       {text:'2B. (1) Ketua Pengarah\\n(a) penyelidikan;\\n(b) laporan;\\n(c) maklumat;\\n(d) nasihat;',classes:['','indent','indent','indent','indent']}
+       {text:'35C. Mana-mana orang\\n(a) perintah;\\n(b) peruntukan;\\n(c) (i) penolakan;\\n(ii) syarat;\\n(d) suatu perintah;',classes:['act-entry act-entry-section','act-entry act-entry-alpha act-entry-direct','act-entry act-entry-alpha act-entry-direct','act-entry act-entry-compound act-entry-direct','act-entry act-entry-roman act-entry-direct','act-entry act-entry-alpha act-entry-direct']},
+       {text:'2A. (1) Majlis\\n(a) pengerusi;\\n(b) timbalan;\\n(c) Menteri;\\n(d) Menteri;\\n(e) Kewangan;',classes:['act-entry act-entry-section','act-entry act-entry-alpha','act-entry act-entry-alpha','act-entry act-entry-alpha','act-entry act-entry-alpha','act-entry act-entry-alpha']},
+       {text:'2B. (1) Ketua Pengarah\\n(a) penyelidikan;\\n(b) laporan;\\n(c) maklumat;\\n(d) nasihat;',classes:['act-entry act-entry-section','act-entry act-entry-alpha','act-entry act-entry-alpha','act-entry act-entry-alpha','act-entry act-entry-alpha']}
      ];
      const check=ex=>{const holder=document.createElement('div');holder.innerHTML=formatLawText(ex.text);return [...holder.querySelectorAll('p')].map(p=>p.className)};
      const sections=DATA.sections.map(sec=>({num:sec.num,count:formatLawText(sec.text).match(/<p/g)?.length||0}));
