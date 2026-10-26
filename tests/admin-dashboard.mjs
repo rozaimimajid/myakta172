@@ -60,7 +60,17 @@ async function main(){
     assert.equal(await page.locator('#userRows tr').count(),1);
     await page.locator('#userRows button').click();
     assert.match(await page.locator('#userDetail').innerText(),/pengguna02@example.test/);
-    passes++;console.log('PASS carian emel dan profil pengguna');
+    await page.locator('#userDetail button[data-action="subscriptionUser"]').click();
+    assert.equal(await page.locator('#subUser').inputValue(),'U002','Navigasi profil wajib memilih U002');
+    assert.equal(await page.locator('#subPlan').inputValue(),'Basic','Pakej sasaran asal mesti sama dengan pakej semasa');
+    await page.locator('#subUser').selectOption('U004');
+    assert.equal(await page.locator('#subPlan').inputValue(),'Premium','Menukar pengguna mesti selaraskan pakej asal');
+    await page.locator('#subPlan').selectOption('Rahmah');
+    await page.locator('[data-tab=users]').click();
+    await page.locator('[data-tab=subscriptions]').click();
+    assert.equal(await page.locator('#subPlan').inputValue(),'Premium','Buka semula menu harus reset pilihan sasaran yang belum diluluskan');
+    assert.equal((await page.locator('#subscriptionRows tr:nth-child(4) td:nth-child(3)').textContent()).trim(),'Premium','Pilih pakej sasaran tidak boleh mengubah langganan sebelum disahkan');
+    passes++;console.log('PASS carian emel, profil dan sinkronisasi pakej sasaran langganan');
     const previousExpiry=await page.locator('#subscriptionRows tr:nth-child(2) td:nth-child(5)').textContent();
     await page.locator('[data-tab=payments]').click();
     await page.locator('#paymentRows button[data-action=approvePayment]').first().click();
