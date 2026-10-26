@@ -1,0 +1,41 @@
+/* MyAKTA172 Dashboard Admin (simulasi) — halaman berasingan, tiada sentuhan index.html */
+:root{font-family:Inter,Arial,Helvetica,sans-serif;color:#102b4e;background:#f3f6fb;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ffc43d;outline-offset:2px}
+.shell{min-height:100vh;display:grid;grid-template-columns:240px minmax(0,1fr)}
+.sidebar{background:linear-gradient(165deg,#082c5b,#061d3c);color:#fff;padding:25px 14px;display:flex;flex-direction:column;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 10px}.brand img{width:43px;height:43px;object-fit:contain}.brand strong{font-size:19px}.brand small{display:block;color:#a8d2fc;font-size:10px;letter-spacing:1px}
+.side-nav{display:grid;gap:4px}.side-nav button{display:block;width:100%;text-align:left;background:transparent;border:0;border-radius:9px;color:#cfdef1;padding:12px 14px;font-size:14px}
+.side-nav button.active{background:#1365c5;color:#fff;font-weight:700}.side-nav button:hover:not(.active){background:#ffffff15}
+.side-foot{margin-top:auto;border-top:1px solid #ffffff25;padding:16px 10px 0;font-size:12px;color:#bed3e9;line-height:1.6}
+.content{min-width:0}.top{background:#fff;border-bottom:1px solid #dbe5f1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:21px 28px;flex-wrap:wrap}
+.top h1{margin:0;font-size:25px}.top p{margin:5px 0 0;color:#60758c;font-size:13px}.demo{background:#fff5de;color:#775112;border:1px solid #f0d491;padding:7px 12px;border-radius:50px;font-size:12px;font-weight:700}
+.main{max-width:1550px;padding:24px 28px 50px;margin:auto}.notice{padding:15px 17px;border-left:4px solid #cd8e14;background:#fff9eb;color:#6c4e1d;border-radius:8px;margin-bottom:18px;font-size:13px;line-height:1.6}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.kpi{background:#fff;border:1px solid #dbe5f0;border-radius:13px;padding:17px}
+.kpi strong{display:block;margin:9px 0;font-size:29px;color:#0756a6}.muted{color:#637b96;font-size:13px;line-height:1.6}
+.panel{background:#fff;border:1px solid #dce7f2;border-radius:14px;margin:17px 0;padding:22px;box-shadow:0 2px 7px #1a41610a}
+.panel[hidden]{display:none!important}.panel h2{font-size:20px;margin:0 0 7px}.panel h3{font-size:16px;margin:0 0 9px}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.row.space{justify-content:space-between}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.tile{border:1px solid #dce6f1;border-radius:11px;padding:16px;background:#f9fbfe}
+.tile strong{font-size:22px;display:block;margin:7px 0}.tile b{font-size:15px}.tile.active{border:2px solid #216fd1;background:#edf5ff}
+input,select,textarea{background:#fff;color:#143559;border:1px solid #b9cbe2;border-radius:8px;padding:10px;max-width:100%}
+textarea{width:100%;resize:vertical}input[type=file]{font-size:12px}.field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#284862;min-width:150px;flex:1}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:17px 0}
+.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #e5edf6;font-size:12px;vertical-align:middle}
+th{background:#f1f6fc;color:#245179;font-weight:700}tr:hover td{background:#f9fbfe}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.small{font-size:12px}
+.pill{display:inline-block;border-radius:20px;padding:5px 9px;background:#e6efff;color:#135395;font-size:11px;font-weight:700}
+.pill.ok{background:#def7e7;color:#167045}.pill.warn{background:#fff1ce;color:#936000}.pill.bad{background:#ffe5e8;color:#a33348}
+.btn{border:1px solid #bdd3ed;border-radius:8px;padding:9px 12px;color:#0c5199;background:#ecf5ff;font-weight:600;font-size:12px}
+.btn.primary{color:#fff;border-color:#0c5fc0;background:#0c5fc0}.btn.danger{color:#a02f43;background:#fff0f2;border-color:#eec5cc}
+.btn.subtle{color:#3c5a78;background:#fff}.btn:hover:not(:disabled){filter:brightness(.96)}.btn+.btn{margin-left:5px}
+.stat-row{display:flex;gap:11px;align-items:center;margin:12px 0}.stat-row>span:first-child{width:82px;font-size:13px}.bar{height:10px;background:#eaf1fa;border-radius:9px;flex:1;overflow:hidden}.bar>span{display:block;height:100%;background:#186bce;border-radius:9px}.stat-row b{min-width:24px;text-align:right}
+.divider{border:0;border-top:1px solid #e1ebf6;margin:18px 0}.help{background:#edf5ff;color:#264f77;border-radius:9px;padding:12px;font-size:12px;line-height:1.6}
+.matrix th,.matrix td{text-align:center;min-width:73px}.matrix th:first-child,.matrix td:first-child{text-align:left;min-width:270px}.check{color:#167b4a;font-weight:800}.cross{color:#a5b3c4}
+#toast{margin:0 0 16px;min-height:0}#toast:not(:empty){background:#e9f6ee;color:#185b38;border:1px solid #b7dfc7;border-radius:10px;padding:11px}
+.profile{margin-top:16px;padding:16px;background:#f4f8fd;border:1px solid #dce6f1;border-radius:10px}
+.audit-note{max-width:700px;line-height:1.6}.endnote{font-size:12px;color:#647c98;margin-top:20px}
+dialog{max-width:530px;width:calc(100% - 28px);border:0;border-radius:15px;padding:25px;box-shadow:0 22px 70px #001b3b70}
+dialog::backdrop{background:#041a378a}
+@media(max-width:1050px){.kpis,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{grid-template-columns:195px minmax(0,1fr)}}
+@media(max-width:700px){.shell{display:block}.sidebar{position:relative;padding:14px;gap:12px}.side-nav{display:flex;overflow:auto;gap:5px;scrollbar-width:thin}.side-nav button{white-space:nowrap;padding:9px 12px}.side-foot{display:none}.top{padding:16px}.top h1{font-size:20px}.main{padding:15px}.grid2{grid-template-columns:1fr}.panel{padding:15px}.matrix th:first-child,.matrix td:first-child{min-width:180px}}
+@media(max-width:430px){.kpis,.grid4{grid-template-columns:1fr}}
