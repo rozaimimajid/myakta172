@@ -3025,10 +3025,11 @@ function digitalHubbPrintWhenReady(popup){
 <style id="dh-home-shared-records-v1">
 body.mode-desktop #desktopHome .dh-columns button.dh-record-row{display:flex;align-items:center;gap:12px;justify-content:flex-start;width:100%;text-align:left}
 #desktopHome .dh-record-num{font-size:20px;font-weight:800;color:#0758bb;min-width:42px}
-#desktopHome .dh-record-detail{display:flex;flex-direction:column;gap:3px;min-width:0}
+#desktopHome .dh-record-detail{display:flex;flex:1 1 auto;width:0;flex-direction:column;gap:3px;min-width:0;text-align:left;align-items:flex-start}
 #desktopHome .dh-record-detail strong{font-size:13px}
 #desktopHome .dh-record-detail small{color:#65809d;font-size:11px}
-#desktopHome .dh-record-chevron{margin-left:auto}
+#desktopHome .dh-record-chevron{margin-left:auto;flex:0 0 auto}
+#desktopHome .dh-columns button.dh-record-row>.dh-record-detail strong,#desktopHome .dh-columns button.dh-record-row>.dh-record-detail small{display:block;width:100%;text-align:left;overflow-wrap:normal}
 </style>
 <script id="dh-home-shared-records-v1-js">
 (function(){
