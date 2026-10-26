@@ -39,3 +39,18 @@ dialog::backdrop{background:#041a378a}
 @media(max-width:1050px){.kpis,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.shell{grid-template-columns:195px minmax(0,1fr)}}
 @media(max-width:700px){.shell{display:block}.sidebar{position:relative;padding:14px;gap:12px}.side-nav{display:flex;overflow:auto;gap:5px;scrollbar-width:thin}.side-nav button{white-space:nowrap;padding:9px 12px}.side-foot{display:none}.top{padding:16px}.top h1{font-size:20px}.main{padding:15px}.grid2{grid-template-columns:1fr}.panel{padding:15px}.matrix th:first-child,.matrix td:first-child{min-width:180px}}
 @media(max-width:430px){.kpis,.grid4{grid-template-columns:1fr}}
+
+/* Pembayaran V2: kategori automatik + pembuka resit ujian sahaja */
+.auto-category{min-height:39px;display:flex;align-items:center;padding:9px 11px;background:#edf5ff;color:#154d83;border:1px solid #bdd3ed;border-radius:8px;font-weight:700}
+.auto-category.invalid{color:#9b3241;background:#fff0f2;border-color:#f0c5cf}
+.receipt-dialog{width:min(690px,calc(100% - 24px));max-width:690px;max-height:90vh;overflow:auto}
+.receipt-details{border:1px solid #dce7f2;border-radius:9px;background:#f5f9ff;padding:13px;margin:14px 0;font-size:13px;line-height:1.8}
+.receipt-viewport{border:1px solid #cbdcf0;border-radius:9px;background:#f1f5fa;padding:12px;margin:14px 0;min-height:100px;overflow:auto}
+.receipt-viewport img{display:block;max-width:100%;max-height:56vh;margin:auto;object-fit:contain}
+.receipt-viewport iframe{display:block;width:100%;height:49vh;border:0;background:#fff}
+.demo-receipt{background:#fff;border:2px dashed #a4c0e6;border-radius:10px;padding:22px;color:#1e456e;max-width:480px;margin:auto}
+.demo-receipt h3{color:#0d56a4;font-size:18px;margin:0 0 10px}
+.demo-receipt .stamp{background:#ffebba;color:#734e02;font-weight:800;text-align:center;border-radius:6px;padding:8px;margin:13px 0;letter-spacing:.06em}
+.demo-receipt p{margin:8px 0;font-size:13px}
+.receipt-viewport a{display:inline-block;margin:6px 0;color:#0b57a6}
+@media(max-width:700px){.receipt-dialog{padding:16px}.receipt-viewport iframe{height:43vh}}
