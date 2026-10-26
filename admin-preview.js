@@ -19,15 +19,29 @@
     { id:'U007', email:'pengguna07@example.test', plan:'Rahmah', start:offset(-4), end:offset(26), status:'Digantung', device:null }
   ];
   const payments = [
-    { id:'B001', user:'U002', plan:'Basic', amount:15, status:'Menunggu', receipt:'contoh-basic.pdf' },
-    { id:'B002', user:'U003', plan:'Rahmah', amount:25, status:'Menunggu', receipt:'contoh-rahmah.png' },
-    { id:'B003', user:'U004', plan:'Premium', amount:50, status:'Diluluskan', receipt:'contoh-premium.jpg' },
-    { id:'B004', user:'U006', plan:'Basic', amount:15, status:'Ditolak', receipt:'contoh-tolak.pdf' }
+    { id:'B001', user:'U002', plan:'Basic', category:'Pembaharuan', amount:15, status:'Menunggu', receipt:'contoh-basic.pdf' },
+    { id:'B002', user:'U003', plan:'Rahmah', category:'Pembaharuan', amount:25, status:'Menunggu', receipt:'contoh-rahmah.png' },
+    { id:'B003', user:'U004', plan:'Premium', category:'Langganan Baharu', amount:50, status:'Diluluskan', receipt:'contoh-premium.jpg' },
+    { id:'B004', user:'U006', plan:'Basic', category:'Pembaharuan', amount:15, status:'Ditolak', receipt:'contoh-tolak.pdf' }
   ];
   let seq = 5;
   const logs = [];
   let selectedUser = null;
   let pendingAction = null;
+  let receiptUrl = null;
+  function paymentCategory(user, target) {
+    if (!user || !P.packages[target] || target === 'Free') return null;
+    if (user.plan === 'Free') return 'Langganan Baharu';
+    if (user.plan === target) return 'Pembaharuan';
+    if (P.order.indexOf(target) > P.order.indexOf(user.plan)) return 'Naik Taraf';
+    return null; // penurunan pakej memerlukan proses khusus, bukan pembayaran ini
+  }
+  function updatePaymentCategory() {
+    const category = paymentCategory(getUser($('payUser').value), $('payPlan').value);
+    $('payCategory').textContent = category || 'Turun taraf tidak disokong melalui borang ini';
+    $('payCategory').classList.toggle('invalid', !category);
+    $('receiptForm').querySelector('button[type="submit"]').disabled = !category;
+  }
   const getUser = id => users.find(u => u.id === id);
   const getStatus = u => u.status === 'Digantung' ? 'Digantung' : (u.plan !== 'Free' && u.end && new Date(u.end) <= now() ? 'Tamat' : 'Aktif');
   function notify(text) { $('toast').textContent = text; }
@@ -90,19 +104,59 @@
     box.append(element('h3','Sejarah Pembayaran (Simulasi)'));
     const related=payments.filter(p=>p.user===u.id);
     if(!related.length)box.append(element('p','Belum ada rekod pembayaran.','muted'));
-    for(const p of related)box.append(element('p',p.id+' · '+p.plan+' · '+money(p.amount)+' · '+p.status+' · '+p.receipt,'small'));
+    for(const p of related){
+      const line=element('div',undefined,'row');line.append(element('span',p.id+' · '+p.category+' · '+p.plan+' · '+money(p.amount)+' · '+p.status,'small'));
+      line.append(btn('Lihat Resit','viewReceipt',p.id));box.append(line);
+    }
     const b=btn('Pergi ke Langganan','subscriptionUser',u.id,'primary');box.append(b);
   }
   function renderPayments(){
     const body=$('paymentRows');body.replaceChildren();
     for(const p of payments){const tr=element('tr');const u=getUser(p.user);
-      [p.id,u?u.email:'—',p.plan,money(p.amount),p.receipt].forEach(x=>td(tr,x));
+      [p.id,u?u.email:'—',p.category,p.plan,money(p.amount)].forEach(x=>td(tr,x));
+      const receiptCell=td(tr);
+      receiptCell.append(element('span',p.receipt,'small'));
+      receiptCell.append(document.createTextNode(' '),btn('Lihat Resit','viewReceipt',p.id));
       const s=td(tr);s.append(pill(p.status,p.status));
       const actions=td(tr);
       if(p.status==='Menunggu'){actions.append(btn('Lulus','approvePayment',p.id,'primary'),btn('Tolak','rejectPayment',p.id,'danger'));}
       else actions.textContent='Selesai';
       body.append(tr);
     }
+  }
+  function clearReceiptUrl(){
+    if (receiptUrl) { URL.revokeObjectURL(receiptUrl);receiptUrl=null; }
+  }
+  function showReceipt(id){
+    const p=payments.find(x=>x.id===id);if(!p)return notify('Rekod resit simulasi tidak ditemui.');
+    const user=getUser(p.user);
+    clearReceiptUrl();
+    $('receiptTitle').textContent='Pratonton Resit — '+p.id;
+    const details=$('receiptDetails'),view=$('receiptViewport');details.replaceChildren();view.replaceChildren();
+    for(const line of ['Rekod: '+p.id,'Emel: '+(user?.email||'—'),
+      'Kategori: '+p.category+' · Pakej: '+p.plan,
+      'Jumlah: '+money(p.amount)+' · Status: '+p.status,
+      'Nama fail: '+p.receipt])details.append(element('div',line));
+    if (p.file) {
+      receiptUrl=URL.createObjectURL(p.file);
+      if (p.file.type==='image/png'||p.file.type==='image/jpeg') {
+        const img=element('img');img.src=receiptUrl;img.alt='Pratonton imej resit ujian '+p.id;view.append(img);
+      } else if (p.file.type==='application/pdf') {
+        const iframe=element('iframe');iframe.src=receiptUrl;iframe.title='Dokumen PDF ujian '+p.id;iframe.setAttribute('sandbox','');view.append(iframe);
+        const link=element('a','Buka PDF ujian dalam tab baharu');link.href=receiptUrl;link.target='_blank';link.rel='noopener noreferrer';view.append(link);
+      } else {view.append(element('p','Jenis fail ini tidak disokong untuk pratonton.')); }
+      view.append(element('p','Fail ini hanya berada dalam memori pelayar sehingga halaman dimuat semula. Jangan gunakan resit pelanggan sebenar.','muted'));
+    } else {
+      const card=element('article',undefined,'demo-receipt');
+      card.append(element('h3','REKOD RESIT SIMULASI'));
+      card.append(element('div','BUKAN RESIT BANK SEBENAR','stamp'));
+      for(const line of ['No. rujukan DEMO: '+p.id,
+        'Pengguna ujian: '+(user?.email||'—'),
+        'Tujuan: '+p.category+' — '+p.plan,
+        'Nilai: '+money(p.amount),'Status rekod: '+p.status])card.append(element('p',line));
+      card.append(element('p','Rekod ini dijana untuk ujian paparan. Tiada imej atau PDF bank sebenar tersedia.','muted'));view.append(card);
+    }
+    $('receiptDialog').showModal();
   }
   function renderSubscriptions(){
     const body=$('subscriptionRows');body.replaceChildren();
@@ -145,11 +199,16 @@
   function approve(id,yes){
     const p=payments.find(x=>x.id===id);if(!p||p.status!=='Menunggu')return notify('Rekod tidak lagi menunggu keputusan.');
     if(yes&&!P.validatePayment(p))return notify('Jumlah bayaran tidak menepati harga pakej.');
+    if(yes && p.category!=='Pembaharuan' && p.category!=='Langganan Baharu' && p.category!=='Naik Taraf')return notify('Kategori transaksi tidak sah.');
+    if(yes && p.status==='Menunggu' && p.id!=='B003'){
+      const expected=paymentCategory(getUser(p.user),p.plan);
+      if(expected!==p.category)return notify('Pakej pengguna telah berubah. Permohonan perlu disemak semula sebelum diluluskan.');
+    }
     confirmation(yes?'Luluskan pembayaran (demo)?':'Tolak pembayaran (demo)?',
       'Rekod '+p.id+' untuk '+getUser(p.user).email+'. '+(yes?'Simulasi kelulusan akan mengaktifkan akses selama 30 hari.':'Simulasi penolakan tidak akan mengaktifkan akses.'),
       ()=>{p.status=yes?'Diluluskan':'Ditolak';
         if(yes){const u=getUser(p.user),at=now(),renewSamePlan=u.plan===p.plan&&u.end&&new Date(u.end)>at;const base=renewSamePlan?new Date(u.end):at;const dates=P.period30Days(base);u.plan=p.plan;u.start=renewSamePlan?u.start:at.toISOString();u.end=dates.end;u.status='Aktif';}
-        log(yes?'Lulus bayaran':'Tolak bayaran',p.user,p.id+' '+p.plan+' '+money(p.amount));notify('Keputusan '+p.id+' disimpan dalam memori simulasi.');renderAll();}
+        log(yes?'Lulus bayaran':'Tolak bayaran',p.user,p.id+' '+p.category+' '+p.plan+' '+money(p.amount));notify('Keputusan '+p.id+' disimpan dalam memori simulasi.');renderAll();}
     );
   }
   function upgrade(){
@@ -182,12 +241,16 @@
   }
   function addReceipt(e){
     e.preventDefault();const u=getUser($('payUser').value),plan=$('payPlan').value,f=$('payFile').files[0];
-    if(!u||!P.packages[plan]||plan==='Free'||!f)return notify('Pilih akaun, pakej berbayar dan fail ujian.');
+    const category=paymentCategory(u,plan);
+    if(!u||!category||!f)return notify('Pilih akaun dan pakej yang layak serta fail resit ujian.');
     const ext=f.name.toLowerCase().split('.').pop();
-    if(!['pdf','jpg','jpeg','png'].includes(ext)||f.size<=0||f.size>5*1024*1024)return notify('Fail ujian mestilah PDF/JPG/PNG sah berukuran 1 bait hingga 5MB.');
+    const accepted={pdf:'application/pdf',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png'};
+    if(!accepted[ext]||f.type!==accepted[ext]||f.size<=0||f.size>5*1024*1024)
+      return notify('Fail ujian mesti PDF/JPG/PNG dengan jenis fail yang sepadan, 1 bait hingga 5MB.');
     const id='B'+String(seq++).padStart(3,'0');
-    payments.unshift({id,user:u.id,plan,amount:P.packages[plan].price,status:'Menunggu',receipt:f.name.slice(0,100)});
-    log('Permohonan demo',u.id,id+' '+plan+' ('+f.size+' bait)');$('payFile').value='';notify('Resit ujian '+id+' ditambah sebagai nama fail sahaja. Tiada fail dimuat naik.');renderAll();
+    payments.unshift({id,user:u.id,plan,category,amount:P.packages[plan].price,status:'Menunggu',receipt:f.name.slice(0,100),file:f});
+    log('Permohonan demo',u.id,id+' '+category+' · '+plan+' ('+f.size+' bait)');
+    $('payFile').value='';notify('Permohonan '+category+' ('+id+') ditambah. Fail ujian hanya tersedia sementara untuk pratonton, tanpa muat naik.');renderAll();
   }
   function safeCsvValue(value){
     let t=String(value??'');if(/^[\s]*[=+@\-]/.test(t))t="'"+t;
@@ -203,12 +266,17 @@
   $('userSearch').addEventListener('input',renderUsers);$('userFilterPlan').addEventListener('change',renderUsers);$('userFilterStatus').addEventListener('change',renderUsers);
   $('subUser').addEventListener('change',syncSelectedSubscription);
   $('sectionPlan').addEventListener('change',renderPlans);$('sectionPart').addEventListener('change',renderSections);
+  $('payUser').addEventListener('change',updatePaymentCategory);
+  $('payPlan').addEventListener('change',updatePaymentCategory);
+  $('receiptDialog').addEventListener('close',()=>{clearReceiptUrl();$('receiptViewport').replaceChildren();});
+  $('receiptClose').addEventListener('click',()=>$('receiptDialog').close());
   $('receiptForm').addEventListener('submit',addReceipt);$('subUpgrade').addEventListener('click',upgrade);$('subRenew').addEventListener('click',renew);$('resetDevice').addEventListener('click',resetDevice);
   $('exportUsers').addEventListener('click',()=>exportCsv('myakta172-pengguna-demo.csv',['ID','Emel','Pakej','Status','Mula','Tamat','Peranti'],users.map(u=>[u.id,u.email,u.plan,getStatus(u),dateLabel(u.start),dateLabel(u.end),u.device||''])));
-  $('exportPayments').addEventListener('click',()=>exportCsv('myakta172-bayaran-demo.csv',['ID','Emel','Pakej','RM','Status','Nama Fail Resit'],payments.map(p=>[p.id,getUser(p.user)?.email||'',p.plan,p.amount,p.status,p.receipt])));
+  $('exportPayments').addEventListener('click',()=>exportCsv('myakta172-bayaran-demo.csv',['ID','Emel','Kategori','Pakej','RM','Status','Nama Fail Resit'],payments.map(p=>[p.id,getUser(p.user)?.email||'',p.category,p.plan,p.amount,p.status,p.receipt])));
   document.body.addEventListener('click',e=>{
     const b=e.target.closest('button[data-action]');if(!b)return;
     const action=b.dataset.action,id=b.dataset.id;
+    if(action==='viewReceipt')showReceipt(id);
     if(action==='profile'){selectedUser=id;renderUserProfile();$('userDetail').scrollIntoView({block:'nearest'});}
     if(action==='subscriptionUser'){$('subUser').value=id;syncSelectedSubscription();switchTab('subscriptions');}
     if(action==='approvePayment')approve(id,true);
@@ -221,5 +289,5 @@
   const choices=users.map(u=>({value:u.id,label:u.id+' · '+u.email}));
   for(const id of ['payUser','subUser','deviceUser'])selectFill(id,choices);
   selectFill('sectionPart',[{value:'',label:'Semua Bahagian'},...P.parts.map(p=>({value:p.num,label:'Bahagian '+p.num+' — '+p.title}))]);
-  renderAll();switchTab('overview');
+  updatePaymentCategory();renderAll();switchTab('overview');
 })();
