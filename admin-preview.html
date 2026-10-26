@@ -49,14 +49,15 @@
 
 <section id="payments" class="panel" hidden>
 <h2>Pengesahan Pembayaran & Resit Bank</h2><p class="muted">Kelulusan/tolakan menukar rekod simulasi. Fail resit tidak dihantar atau disimpan. Admin sebenar mesti menyimpan resit secara sulit dan mengesahkan bayaran sebelum mengaktifkan akses.</p>
-<div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Pakej</th><th>RM</th><th>Resit (nama sahaja)</th><th>Status</th><th>Keputusan</th></tr></thead><tbody id="paymentRows"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Emel</th><th>Kategori</th><th>Pakej</th><th>RM</th><th>Resit / Lihat</th><th>Status</th><th>Keputusan</th></tr></thead><tbody id="paymentRows"></tbody></table></div>
 <hr class="divider"><h3>Simulasikan Permohonan Pembayaran Baharu</h3>
 <form id="receiptForm" class="toolbar">
 <label class="field">Pengguna<select id="payUser" required></select></label>
 <label class="field">Pakej Dipohon<select id="payPlan" required><option>Basic</option><option>Rahmah</option><option>Premium</option></select></label>
+<label class="field">Kategori transaksi automatik<output id="payCategory" class="auto-category" aria-live="polite">—</output></label>
 <label class="field">Fail resit ujian (PDF/JPG/PNG, maksimum 5MB)<input id="payFile" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required></label>
 <button class="btn primary" type="submit">Tambah Permohonan Simulasi</button>
-</form><div class="help">Tiada muat naik sebenar. Hanya nama, jenis dan saiz fail ujian dipaparkan sementara dalam memori pelayar. Jangan gunakan fail sebenar pelanggan.</div>
+</form><div class="help">Tiada muat naik sebenar atau simpanan ke pelayan. Fail resit ujian (PDF/JPG/PNG) hanya boleh dibuka sementara dalam pelayar ini dan hilang apabila halaman dimuat semula. Resit contoh B001–B004 ialah dokumen simulasi, bukan resit bank. Jangan gunakan fail sebenar pelanggan.</div>
 </section>
 
 <section id="subscriptions" class="panel" hidden>
@@ -109,4 +110,5 @@
 <p class="endnote">DigitalHubb.my · MyAKTA172 · Prototaip Admin V2. Hanya untuk ujian cabang audit. Kandungan Akta, carta alir dan aplikasi utama tidak diubah.</p>
 </main></div></div>
 <dialog id="confirmation"><h2 id="confirmTitle">Sahkan tindakan simulasi</h2><p id="confirmText" class="audit-note"></p><div class="row"><button type="button" class="btn primary" id="confirmYes">Sahkan Simulasi</button><button type="button" class="btn subtle" id="confirmNo">Batal</button></div></dialog>
+<dialog id="receiptDialog" aria-labelledby="receiptTitle" class="receipt-dialog"><h2 id="receiptTitle">Pratonton Resit — Simulasi</h2><div id="receiptDetails" class="receipt-details"></div><div id="receiptViewport" class="receipt-viewport"></div><div class="row"><button type="button" class="btn primary" id="receiptClose">Tutup Pratonton</button></div></dialog>
 </body></html>
