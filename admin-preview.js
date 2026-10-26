@@ -143,7 +143,7 @@
     confirmation(yes?'Luluskan pembayaran (demo)?':'Tolak pembayaran (demo)?',
       'Rekod '+p.id+' untuk '+getUser(p.user).email+'. '+(yes?'Simulasi kelulusan akan mengaktifkan akses selama 30 hari.':'Simulasi penolakan tidak akan mengaktifkan akses.'),
       ()=>{p.status=yes?'Diluluskan':'Ditolak';
-        if(yes){const u=getUser(p.user),dates=P.period30Days(now());u.plan=p.plan;u.start=dates.start;u.end=dates.end;u.status='Aktif';}
+        if(yes){const u=getUser(p.user),at=now(),renewSamePlan=u.plan===p.plan&&u.end&&new Date(u.end)>at;const base=renewSamePlan?new Date(u.end):at;const dates=P.period30Days(base);u.plan=p.plan;u.start=renewSamePlan?u.start:at.toISOString();u.end=dates.end;u.status='Aktif';}
         log(yes?'Lulus bayaran':'Tolak bayaran',p.user,p.id+' '+p.plan+' '+money(p.amount));notify('Keputusan '+p.id+' disimpan dalam memori simulasi.');renderAll();}
     );
   }
