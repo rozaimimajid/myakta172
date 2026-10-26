@@ -3031,6 +3031,7 @@ body.mode-desktop #desktopHome .dh-columns button.dh-record-row{display:flex;ali
 #desktopHome .dh-record-chevron{margin-left:auto;flex:0 0 auto}
 #desktopHome .dh-columns button.dh-record-row>.dh-record-detail strong,#desktopHome .dh-columns button.dh-record-row>.dh-record-detail small{display:block;width:100%;text-align:left;overflow-wrap:normal}
 </style>
+<style id="dh-home-shared-records-v2-style">#desktopHome .dh-columns section>h3{display:flex;align-items:center;justify-content:space-between;gap:8px}#desktopHome .dh-view-all{background:transparent!important;border:0!important;padding:2px!important;width:auto!important;font-size:12px!important;font-weight:700!important;color:#0758bb!important;cursor:pointer}#desktopHome .dh-view-all:disabled{opacity:.4;cursor:default}#desktopHome .dh-record-row{cursor:pointer}#desktopHome .dh-record-row:hover{background:#f0f6ff}</style>
 <script id="dh-home-shared-records-v1-js">
 (function(){
  const ids={recent:'desktopHomeRecent',frequent:'desktopHomeFrequent',fav:'desktopHomeFavorites'};
@@ -3051,7 +3052,7 @@ body.mode-desktop #desktopHome .dh-columns button.dh-record-row{display:flex;ali
    if(kind==='frequent'){const count=document.createElement('small');count.textContent='Dibuka '+item.count+' kali';detail.append(count)}
    const chev=document.createElement('span');chev.className='dh-record-chevron';chev.textContent='›';
    btn.append(number,detail,chev);
-   btn.addEventListener('click',()=>{document.getElementById('desktopHome')?.classList.remove('open');document.body.dataset.activeView='section';if(typeof show==='function')show(n);document.getElementById('actView').style.display='block';});
+   btn.addEventListener('click',()=>{const home=document.getElementById('desktopHome'),act=document.getElementById('actView'),cv=document.getElementById('caseView');home?.classList.remove('open');document.body.dataset.activeView='section';if(typeof show==='function')show(n);if(act)act.style.display='block';if(cv)cv.style.display='none';});
    target.append(btn);
   });
  }
@@ -3065,6 +3066,13 @@ body.mode-desktop #desktopHome .dh-columns button.dh-record-row{display:flex;ali
   draw(ids.recent,recent.map(n=>({n})),'Belum ada sejarah bacaan.','recent');
   draw(ids.frequent,frequent.map(n=>({n,count:freq[n]})),'Belum ada seksyen yang kerap dibuka.','frequent');
   draw(ids.fav,fav.map(n=>({n})),'Belum ada seksyen kegemaran.','fav');
+  // Kad Desktop mengikuti logik senarai Mobile, termasuk tindakan Lihat semua.
+  for(const [id,items,label] of [[ids.frequent,frequent,'Sering Dibuka'],[ids.recent,recent,'Terbaharu Dibaca'],[ids.fav,fav,'Seksyen Kegemaran']]){
+   const section=document.getElementById(id)?.closest('section');const title=section?.querySelector('h3');if(!title)continue;
+   let more=title.querySelector('.dh-view-all');if(!more){more=document.createElement('button');more.type='button';more.className='dh-view-all';more.textContent='Lihat semua ›';title.appendChild(more)}
+   more.disabled=items.length===0;
+   more.onclick=()=>{if(id===ids.fav){document.querySelector('[data-dh="favorites"]')?.click();return} const first=section.querySelector('.dh-record-row');if(first)first.focus();section.scrollIntoView({behavior:'smooth',block:'center'})};
+  }
   [['dhFavCount',fav.length],['dhFreqCount',frequent.length],['dhRecentCount',recent.length]].forEach(([id,count])=>{const el=document.getElementById(id);if(el)el.textContent=count+' seksyen'});
  }
  window.addEventListener('load',refresh);
