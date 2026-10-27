@@ -5,10 +5,14 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS accounts (
   account_id TEXT PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
+  auth_issuer TEXT,
+  auth_subject TEXT,
   role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user','admin')),
   status TEXT NOT NULL DEFAULT 'Aktif' CHECK (status IN ('Aktif','Digantung')),
   created_at TEXT NOT NULL
 ) STRICT;
+CREATE UNIQUE INDEX IF NOT EXISTS account_verified_provider_subject
+  ON accounts(auth_issuer,auth_subject) WHERE auth_subject IS NOT NULL AND auth_issuer IS NOT NULL;
 
 CREATE TABLE IF NOT EXISTS subscriptions (
   account_id TEXT PRIMARY KEY REFERENCES accounts(account_id) ON DELETE RESTRICT,
