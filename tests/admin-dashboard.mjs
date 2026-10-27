@@ -56,7 +56,7 @@ async function main(){
     const sidePos=await page.locator('.sidebar').boundingBox();
     const copyrightPos=await page.locator('.side-foot').boundingBox();
     assert.ok(sidePos && copyrightPos && Math.abs(sidePos.y+sidePos.height-(copyrightPos.y+copyrightPos.height))<20,'Hak milik DigitalHubb.my perlu berada di dasar sidebar');
-    assert.match(await page.locator('.header-search').getAttribute('href'),/index\.html/);
+    assert.equal(await page.locator('.header-search').count(),0,'Carian tidak perlu muncul dalam header Admin');
     assert.equal(await page.locator('#viewDesktop').getAttribute('aria-pressed'),'true');
     await page.locator('#themeToggle').click();
     assert.equal(await page.locator('body.theme-dark').count(),1);
@@ -70,6 +70,9 @@ async function main(){
     await page.locator('#viewMobile').click();
     assert.equal(await page.locator('body.preview-mobile').count(),1);
     assert.equal(await page.locator('#viewMobile').getAttribute('aria-pressed'),'true');
+    const previewFooter=await page.locator('.admin-footer').boundingBox();
+    const previewLogo=await page.locator('.admin-footer img').boundingBox();
+    assert.ok(previewFooter&&previewLogo&&Math.abs(previewLogo.x+previewLogo.width/2-(previewFooter.x+previewFooter.width/2))<4,'Logo mesti di tengah pratonton Mobile');
     await page.locator('#viewDesktop').click();
     assert.equal(await page.locator('body.preview-mobile').count(),0);
     await page.locator('#aboutAdmin').click();
@@ -180,6 +183,9 @@ async function main(){
     const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
     await mobile.goto(origin+'/admin-preview.html',{waitUntil:'load'});
     assert.equal(await mobile.locator('#kUsers').innerText(),'7');
+    const mobileFooter=await mobile.locator('.admin-footer').boundingBox();
+    const mobileLogo=await mobile.locator('.admin-footer img').boundingBox();
+    assert.ok(mobileFooter&&mobileLogo&&Math.abs(mobileLogo.x+mobileLogo.width/2-(mobileFooter.x+mobileFooter.width/2))<4,'Logo mesti di tengah skrin mobile sebenar');
     const overflow=await mobile.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);
     assert.equal(overflow,false,'Halaman tidak patut overflow secara global pada mobile');
     passes++;console.log('PASS mod mobile + tiada overflow global');
