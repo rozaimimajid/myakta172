@@ -334,3 +334,72 @@ body.admin-royal.preview-mobile .preview-exit{
 }
 body.admin-royal.preview-mobile .preview-exit svg{width:19px;height:19px;flex:none}
 body.admin-royal.preview-mobile .preview-exit:focus-visible{outline:3px solid #ffca24;outline-offset:2px}
+
+/* Dashboard Admin: Tetapan peribadi terasing daripada Tetapan Pakej */
+body.admin-royal .setting-options{display:grid;gap:0;border:1px solid #d7e5fb;border-radius:12px;overflow:hidden;background:#fff}
+body.admin-royal .setting-option{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:17px 16px;border-bottom:1px solid #d7e5fb}
+body.admin-royal .setting-option:last-child{border-bottom:0}
+body.admin-royal .setting-label{flex:1 1 auto;min-width:0}
+body.admin-royal .setting-label h3{margin:0 0 5px;color:#0c3798}
+body.admin-royal .setting-label p{margin:0}
+body.admin-royal .setting-controls{display:flex;align-items:center;gap:7px;flex:none}
+body.admin-royal .setting-controls .btn{min-width:40px;min-height:41px}
+body.admin-royal .setting-install{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;max-width:330px;text-align:right}
+body.admin-royal .setting-install .btn{min-width:74px}
+body.admin-royal .setting-install .muted{font-size:11px}
+body.admin-royal.theme-dark .setting-options{background:#142746;border-color:#385581}
+body.admin-royal.theme-dark .setting-option{border-color:#385581}
+body.admin-royal.theme-dark .setting-label h3{color:#dceaff}
+
+/* Butang Ke Atas: gaya terapung seperti aplikasi Akta, biru royal */
+body.admin-royal #adminBackToTop{
+  position:fixed;right:24px;bottom:24px;z-index:105;
+  border:2px solid #fff;border-radius:999px;padding:12px 17px;
+  background:#104cce;color:#fff;font-weight:750;font-size:13px;
+  box-shadow:0 4px 18px rgba(0,0,0,.28);cursor:pointer;
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px);
+  transition:opacity .2s ease,transform .2s ease,visibility .2s
+}
+body.admin-royal #adminBackToTop.show{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+body.admin-royal #adminBackToTop:hover{filter:brightness(.94)}
+body.admin-royal #adminBackToTop:focus-visible{outline:3px solid #ffcb33;outline-offset:2px}
+
+@media(max-width:760px){
+  /* Header mobile kini menggunakan gradasi dan garisan emas footer rasmi */
+  body.admin-royal .site-header{
+    background:linear-gradient(105deg,#073dbf,#092f9f);
+    border-bottom:2px solid #f1c239;
+    box-shadow:0 5px 15px #051c6431;
+    padding:12px 16px;gap:12px;min-height:76px
+  }
+  body.admin-royal .site-identity h1{font-size:clamp(16px,4vw,21px);line-height:1.16}
+  body.admin-royal .site-identity p{font-size:10px;line-height:1.35}
+  body.admin-royal .admin-menu-toggle{
+    background:#ffffff20;border-color:#ffffff48;box-shadow:none;
+    border-radius:11px;height:47px;width:47px;min-width:47px;min-height:47px
+  }
+  body.admin-royal #adminBackToTop{
+    right:12px;bottom:calc(82px + env(safe-area-inset-bottom,0px));
+    padding:10px 13px;font-size:12px
+  }
+  body.admin-royal .setting-option{padding:16px 12px;gap:10px;flex-wrap:wrap}
+  body.admin-royal .setting-controls{margin-left:auto}
+  body.admin-royal .setting-install{margin-left:auto;max-width:100%;align-items:flex-end}
+}
+@media(min-width:761px){
+  body.admin-royal.preview-mobile .site-header{
+    background:linear-gradient(105deg,#073dbf,#092f9f);
+    border-bottom:2px solid #f1c239;
+    box-shadow:0 5px 15px #051c6431
+  }
+  body.admin-royal.preview-mobile #adminBackToTop{
+    right:max(14px,calc((100vw - 470px)/2 + 18px));
+    bottom:90px;padding:10px 13px
+  }
+  body.admin-royal.preview-mobile .setting-option{flex-wrap:wrap}
+  body.admin-royal.preview-mobile .setting-controls,
+  body.admin-royal.preview-mobile .setting-install{margin-left:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  body.admin-royal #adminBackToTop{transition:none}
+}
