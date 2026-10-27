@@ -232,7 +232,7 @@ body.admin-royal .admin-drawer-backdrop[hidden]{display:none!important}
     z-index:151;overflow-y:auto;overscroll-behavior:contain;
     margin:0;padding:18px 12px 12px;border-radius:0 15px 15px 0;
     transform:translateX(-110%);visibility:hidden;pointer-events:none;
-    transition:transform .18s ease,visibility .18s ease;
+    transition:transform .18s ease;
   }
   body.admin-royal.admin-menu-open .sidebar{transform:translateX(0);visibility:visible;pointer-events:auto}
   body.admin-royal .side-heading{display:block;margin:0 37px 3px 0}
@@ -251,7 +251,7 @@ body.admin-royal .admin-drawer-backdrop[hidden]{display:none!important}
     overflow-y:auto;overscroll-behavior:contain;
     padding:18px 12px 12px;margin:0;border-radius:14px;
     transform:translateX(-115%);visibility:hidden;pointer-events:none;
-    transition:transform .18s ease,visibility .18s ease;
+    transition:transform .18s ease;
   }
   body.admin-royal.preview-mobile.admin-menu-open .sidebar{transform:translateX(0);visibility:visible;pointer-events:auto}
   body.admin-royal.preview-mobile .side-heading{display:block;margin:0 37px 3px 0}
