@@ -403,3 +403,83 @@ body.admin-royal #adminBackToTop:focus-visible{outline:3px solid #ffcb33;outline
 @media(prefers-reduced-motion:reduce){
   body.admin-royal #adminBackToTop{transition:none}
 }
+
+/* Tentang Dashboard Admin — susun atur seragam Desktop/Mobile seperti MyAKTA172 */
+body.admin-royal #adminAboutDialog{
+  box-sizing:border-box;
+  width:min(610px,calc(100vw - 26px));max-width:610px;
+  max-height:min(88dvh,850px);
+  margin:auto;padding:0;overflow:hidden;
+  background:#fff;color:#1b3358;
+  border:1px solid #dce8f7;border-radius:15px;
+  box-shadow:0 24px 68px #00153766;
+}
+body.admin-royal #adminAboutDialog::backdrop{background:rgba(5,23,55,.70)}
+body.admin-royal #adminAboutDialog .admin-about-heading{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:24px 24px 14px;border-bottom:1px solid #e7eef8;
+}
+body.admin-royal #adminAboutDialog #adminAboutTitle{
+  margin:0;line-height:1.22;letter-spacing:-.02em;color:#0b58bd;
+  font-size:clamp(20px,2.2vw,25px);font-weight:800
+}
+body.admin-royal #adminAboutDialog .admin-about-close{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:none;
+  background:#fff;border:1px solid #b3cff3;border-radius:8px;
+  padding:8px 11px;color:#0b55bd;font-weight:700;font-size:13px;min-height:37px;
+}
+body.admin-royal #adminAboutDialog .admin-about-close:hover{background:#eff6ff}
+body.admin-royal #adminAboutDialog .admin-about-close:focus-visible{outline:3px solid #f0c136;outline-offset:2px}
+body.admin-royal #adminAboutDialog .admin-about-body{
+  padding:15px 24px 26px;
+  max-height:calc(min(88dvh,850px) - 90px);
+  overflow-y:auto;overscroll-behavior:contain;
+}
+body.admin-royal #adminAboutDialog p{font-size:14px;line-height:1.65;margin:0;color:#193355}
+body.admin-royal #adminAboutDialog .admin-about-subtitle{font-size:14px;font-weight:700;margin:0 0 21px}
+body.admin-royal #adminAboutDialog .admin-about-section{margin:0 0 19px}
+body.admin-royal #adminAboutDialog .admin-about-section:last-child{margin-bottom:0}
+body.admin-royal #adminAboutDialog .admin-about-section h3{
+  color:#0659bd;font-size:15px;font-weight:800;margin:0 0 7px
+}
+body.admin-royal #adminAboutDialog .admin-about-logo{
+  display:block;max-width:210px;width:50%;height:auto;max-height:85px;
+  object-fit:contain;object-position:left center;margin:13px 0 13px
+}
+body.admin-royal.theme-dark #adminAboutDialog{
+  background:#112342;border-color:#3d5785;color:#e5efff
+}
+body.admin-royal.theme-dark #adminAboutDialog .admin-about-heading{border-color:#314a73}
+body.admin-royal.theme-dark #adminAboutDialog #adminAboutTitle,
+body.admin-royal.theme-dark #adminAboutDialog .admin-about-section h3{color:#8ab8ff}
+body.admin-royal.theme-dark #adminAboutDialog p{color:#e0eaff}
+body.admin-royal.theme-dark #adminAboutDialog .admin-about-close{
+  background:#1b325b;border-color:#5475ac;color:#e7efff
+}
+@media(max-width:760px){
+  body.admin-royal #adminAboutDialog{
+    width:calc(100vw - 24px);max-height:calc(100dvh - 36px);
+    border-radius:13px;
+  }
+  body.admin-royal #adminAboutDialog .admin-about-heading{
+    padding:18px 17px 12px;align-items:start
+  }
+  body.admin-royal #adminAboutDialog #adminAboutTitle{font-size:21px}
+  body.admin-royal #adminAboutDialog .admin-about-close{padding:7px 9px;font-size:12px}
+  body.admin-royal #adminAboutDialog .admin-about-body{
+    padding:14px 17px 22px;
+    max-height:calc(100dvh - 122px)
+  }
+  body.admin-royal #adminAboutDialog p{font-size:13px}
+  body.admin-royal #adminAboutDialog .admin-about-logo{max-width:195px;width:55%}
+}
+@media(min-width:761px){
+  body.admin-royal.preview-mobile #adminAboutDialog{
+    width:min(440px,calc(100vw - 28px));max-height:calc(100dvh - 45px)
+  }
+  body.admin-royal.preview-mobile #adminAboutDialog .admin-about-heading{padding:18px 18px 12px}
+  body.admin-royal.preview-mobile #adminAboutDialog .admin-about-body{
+    padding:14px 18px 22px;max-height:calc(100dvh - 140px)
+  }
+  body.admin-royal.preview-mobile #adminAboutDialog #adminAboutTitle{font-size:21px}
+}
