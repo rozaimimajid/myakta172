@@ -105,3 +105,6 @@ Tidak ada pengguna Free yang boleh mendapat kandungan premium melalui mod develo
 Rujukan muktamad: [`AUTO-DOWNGRADE-DESIGN-LOCK.md`](AUTO-DOWNGRADE-DESIGN-LOCK.md).
 
 Apabila langganan Basic/Rahmah/Premium tamat tanpa pembaharuan diluluskan, **pakej efektif pengguna menjadi Free secara automatik** tanpa Admin klik Tukar Pakej. Backend wajib menyekat kandungan/ciri berbayar pada setiap permintaan tepat selepas tamat, sementara identiti pengguna, Kegemaran, Sejarah Bacaan dan rekod pakej/pembayaran lama dikekalkan. Pembaharuan berbayar mengaktifkan semula hak selepas kelulusan. **Status semasa: dasar disahkan, backend auto-downgrade belum dibangunkan; jangan anggap prototaip melaksanakannya.** Jangan ubah `main`.
+
+### Kemajuan Fasa 3 — Asas automasi telah dikodkan
+Dokumentasi integrasi: [ADMIN-BACKEND-FASE3-STATUS.md](ADMIN-BACKEND-FASE3-STATUS.md). Modul `admin-subscription-engine.cjs` dan ujiannya disediakan sebagai asas backend bagi auto-downgrade. **Pelaksanaan pada pelanggan sebenar belum berlaku**; Dashboard prototaip tidak diubah. Penguatkuasaan produksi memerlukan penyambung DB/auth/peranti dan perlindungan kandungan premium pada server.
