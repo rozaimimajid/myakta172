@@ -1944,7 +1944,7 @@ document.getElementById('caseClear').addEventListener('click',()=>{document.getE
   const title=document.getElementById('secTitle'),law=document.getElementById('lawText'),rel=document.getElementById('v22RelatedList'),gl=document.getElementById('v22GlossaryList'),detail=document.getElementById('v22GlossaryDetail');
   if(!title||!law||!rel||!gl||!detail)return;
   const current=(title.textContent.match(/SEKSYEN\s+(\d+[A-Z]?)/i)||[])[1];if(!current)return;
-  const raw=law.textContent||'';rel.replaceChildren();gl.replaceChildren();detail.replaceChildren();
+  const raw=[...law.querySelectorAll('p.act-entry')].map(p=>p.textContent).join(' ');rel.replaceChildren();gl.replaceChildren();detail.replaceChildren();
   // Only explicit section citations in current legal text; never infer legal dependency.
   const refs=new Set();const re=/\bseksyen\s+(\d+[A-H]?)(?![\dA-Z])/gi;let m;
   while((m=re.exec(raw))!==null){if(m[1]!==current&&refs.size<20)refs.add(m[1].toUpperCase())}
