@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const P=require('../admin-package-policy.js');
 const {authorizeRelatedRequest,createRelatedHandler}=require('../admin-related-access-guard.cjs');
 const fixed=Date.parse('2026-10-27T12:00:00Z');
-const goodIdentity={accountId:'U002',sessionId:'SESSION_VERIFIED_BY_BACKEND',role:'user'};
+const goodIdentity={accountId:'U002',sessionId:'SESSION_VERIFIED_BY_BACKEND',role:'user',status:'Aktif'};
 const sub=(plan='Basic',overrides={})=>({accountId:'U002',plan,status:'Aktif',expiresAt:'2026-11-18T12:00:00Z',...overrides});
 function dependencies(plan='Basic',overrides={}){
   return {
@@ -41,11 +41,13 @@ async function run(){
   const denialCases=[
     dependencies('Basic',{authenticate:async()=>null}),
     dependencies('Basic',{authenticate:async()=>({...goodIdentity,sessionId:''})}),
+    dependencies('Basic',{authenticate:async()=>({...goodIdentity,status:'Digantung'})}),
     dependencies('Basic',{loadSubscription:async()=>null}),
     dependencies('Basic',{loadSubscription:async()=>sub('Basic',{accountId:'U999'})}),
     dependencies('Basic',{loadSubscription:async()=>sub('Basic',{status:'Digantung'})}),
     dependencies('Basic',{loadSubscription:async()=>sub('Basic',{expiresAt:'2026-10-01T00:00:00Z'})}),
     dependencies('Basic',{loadSubscription:async()=>sub('Basic',{expiresAt:'bad'})}),
+    dependencies('Basic',{loadSubscription:async()=>sub('Basic',{startsAt:'2026-11-01T00:00:00Z'})}),
     dependencies('Basic',{checkSingleActiveSession:async()=>({authorized:false,activeCount:1})}),
     dependencies('Basic',{checkSingleActiveSession:async()=>({authorized:true,activeCount:2})}),
     dependencies('Basic',{authenticate:async()=>{throw Error('auth service down')}})
