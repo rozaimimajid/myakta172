@@ -1,6 +1,6 @@
 # MyAKTA172 — Matriks Pakej dan Dashboard Admin (Keputusan Gabungan)
 Tarikh: 27 Oktober 2026
-Status: Matriks ditetapkan oleh pemilik; prototaip Admin untuk simulasi sahaja. Hubungan seksyen dan mekanisme kawalan sebenar belum disahkan.
+Status: Matriks ditetapkan oleh pemilik. Hubungan Antara Seksyen telah LULUS audit rasmi dan DIKUNCI 27 Oktober 2026 (run #40500647354); kelayakan Basic/Rahmah/Premium AKTIF dalam dasar pakej. Penguatkuasaan akses pelanggan sebenar masih belum diintegrasi dengan backend.
 Cabang: audit/stabilization-v1; JANGAN ubah atau merge main.
 
 ## Harga bulanan
@@ -28,7 +28,7 @@ Free RM0 | Basic RM15 | Rahmah RM25 | Premium RM50.
 | Penanda Warna Teks | — | — | ✓ | ✓ |
 | Bacaan Suara | — | — | ✓ | ✓ |
 | Glosari Istilah | — | ✓ | ✓ | ✓ |
-| Hubungan Seksyen Berkaitan (perlu pengesahan pelaksanaan) | — | ✓ | ✓ | ✓ |
+| Hubungan Seksyen Berkaitan (Aktif — audit disahkan; backend belum disambung) | — | ✓ | ✓ | ✓ |
 
 * PERATURAN WAJIB: Kebenaran membuka DAN mencetak sesuatu carta alir mengikut hak akses Bahagian/Seksyen yang berkaitan dalam pakej pengguna, bukan akses automatik kepada semua lapan carta. Apabila satu carta merujuk beberapa seksyen daripada Bahagian berlainan, pemetaan seksyen wajib ditentukan sebelum membuka carta tersebut. Contoh: KM Bahagian IV untuk Rahmah; Caj Pemajuan Bahagian V Premium sahaja. Jangan mengubah carta sedia ada; kawalan dibuat pada lapisan entitlement berasingan.
 
