@@ -43,7 +43,7 @@ async function verifyAccessToken({token,issuer,audience,resolvePublicKey,clock=(
     throw fail('UNSUPPORTED_TOKEN_HEADER');
   const key=await resolvePublicKey(header.kid);
   if(!key)throw fail('UNKNOWN_SIGNING_KEY');
-  const publicKey=crypto.createPublicKey(key);
+  const publicKey=key instanceof crypto.KeyObject && key.type==='public' ? key : crypto.createPublicKey(key);
   if(publicKey.asymmetricKeyType!=='rsa')throw fail('INVALID_SIGNING_KEY');
   if(!crypto.verify('RSA-SHA256',Buffer.from(head+'.'+payload,'ascii'),
       publicKey,safeBase64url(signature)))throw fail('INVALID_TOKEN_SIGNATURE');
