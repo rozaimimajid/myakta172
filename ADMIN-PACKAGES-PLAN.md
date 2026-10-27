@@ -88,3 +88,14 @@ Tidak ada pengguna Free yang boleh mendapat kandungan premium melalui mod develo
 - Butang **Lihat Resit**: B001–B004 menunjukkan kad resit **rekaan** bertanda bukan resit bank; fail ujian PDF/JPG/PNG yang baharu dipilih disimpan hanya dalam memori halaman dan boleh dibuka sementara melalui dialog pratonton. Fail tidak dihantar ke rangkaian/backend atau disimpan dalam storan kekal; semua data hilang apabila refresh.
 - Tiada resit pelanggan sebenar, nombor akaun, rekod bayaran bank atau akses kewangan dimuat naik. **Pratonton fail ujian tidak membuktikan transaksi telah dibayar.**
 - Keperluan versi sebenar: ruang simpanan resit tertutup di backend; pengesahan admin+MFA; URL resit sementara selepas semakan role; semakan bank manual; bukti, timestamp dan audit keputusan; mekanisme pengesahan jenis fail pada pelayan. `main` dan fail aplikasi utama tidak diubah.
+
+## Keputusan rasmi terkini — Hubungan Seksyen Berkaitan (27 Oktober 2026)
+
+> **Nota kemas kini:** Pernyataan "tertangguh"/"belum aktif sehingga audit" dalam catatan sejarah di atas telah **digantikan** oleh keputusan rasmi berikut, bukan arahan untuk mengaudit semula fungsi terkunci.
+
+- Audit fungsi aplikasi utama LULUS dan DIKUNCI: GitHub Actions #40500647354 (**203 pemeriksaan, tiada kegagalan**), 83 seksyen diperiksa, 83 pautan unik (53 asal + 30 tambahan), 43 seksyen dengan hubungan. Seksyen 56 dan rujukan Akta 119 dikekalkan, seperti `HUBUNGAN-ANTARA-SEKSYEN-DESIGN-LOCK.md`.
+- Polisi pakej untuk fungsi `related`: **Free — Tidak; Basic/Rahmah/Premium — Ya**. Status polisi/matriks **AKTIF — audit lulus**.
+- **Integrasi sebenar BELUM siap.** `admin-related-access-guard.cjs` ialah gerbang kebenaran untuk backend kelak; apabila identiti, langganan, sesi tunggal, seksyen sumber/destinasi atau penyedia backend tidak disahkan, ia **menolak permintaan**. Modul ini bukan login/backend yang sudah diterbitkan.
+- Ujian `tests/admin-related-guard.cjs` dilaksanakan dalam aliran kerja Admin GitHub Actions bersama ujian paparan. Modul backend perlu dipasang pada API dilindungi dan membaca kandungan hubungan daripada sumber bukan awam sebelum meluluskan akses pelanggan berbayar.
+- Jangan membenarkan klien menganggap tanda ✓ di Dashboard sebagai keizinan sebenar. Kandungan premium yang masih diterbitkan dalam fail awam/`index.html`/cache tidak boleh dilindungi secara kukuh hanya dengan JS browser. **Jangan aktifkan penguatkuasaan produksi sebelum pengesahan integrasi dan audit keselamatan.**
+- Hanya fail Dashboard/gerbang Admin dan ujian pada `audit/stabilization-v1` yang diselaraskan; jangan ubah `main` atau teks/fungsi hubungan yang telah dikunci.
