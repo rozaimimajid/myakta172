@@ -47,6 +47,37 @@ async function main(){
     await assert.equal(await page.locator('#kUsers').innerText(),'7');
     await assert.equal(await page.locator('#kPending').innerText(),'2');
     assert.equal(errors.length,0,errors.join('\n')); passes++;console.log('PASS halaman desktop dan KPI data demo');
+    // Audit antaramuka rasmi biru royal tanpa menjejaskan modul sedia ada
+    assert.equal(await page.locator('.site-header').count(),1);
+    assert.match(await page.locator('.site-identity h1').innerText(),/Dashboard Admin/);
+    assert.equal(await page.locator('.side-nav button[data-tab]').count(),9);
+    assert.equal(await page.locator('.kpi-icon').count(),4);
+    assert.equal(await page.locator('.admin-footer img').count(),1);
+    assert.match(await page.locator('.header-search').getAttribute('href'),/index\.html/);
+    assert.equal(await page.locator('#viewDesktop').getAttribute('aria-pressed'),'true');
+    await page.locator('#themeToggle').click();
+    assert.equal(await page.locator('body.theme-dark').count(),1);
+    assert.equal(await page.locator('#themeToggle').getAttribute('aria-pressed'),'true');
+    await page.locator('#themeToggle').click();
+    assert.equal(await page.locator('body.theme-dark').count(),0);
+    await page.locator('#fontIncrease').click();
+    assert.equal(await page.locator('.main').evaluate(el => Number.parseFloat(getComputedStyle(el).zoom)) > 1,true);
+    await page.locator('#fontDecrease').click();
+    assert.equal(await page.locator('.main').evaluate(el => Number.parseFloat(getComputedStyle(el).zoom)),1);
+    await page.locator('#viewMobile').click();
+    assert.equal(await page.locator('body.preview-mobile').count(),1);
+    assert.equal(await page.locator('#viewMobile').getAttribute('aria-pressed'),'true');
+    await page.locator('#viewDesktop').click();
+    assert.equal(await page.locator('body.preview-mobile').count(),0);
+    await page.locator('#aboutAdmin').click();
+    assert.equal(await page.locator('#adminAboutDialog').isVisible(),true);
+    await page.locator('#adminAboutClose').click();
+    assert.equal(await page.locator('#adminAboutDialog').isVisible(),false);
+    await page.locator('[data-tab=users]').click();
+    await page.locator('#navHome').click();
+    assert.equal(await page.locator('#overview').isVisible(),true);
+    assert.equal(await page.locator('.side-nav button[data-tab=overview]').getAttribute('aria-current'),'page');
+    passes++;console.log('PASS tema royal blue, navigasi header, skala font, malam, desktop/mobile, Tentang dan logo');
     await page.locator('[data-tab=plans]').click();
     assert.match(await page.locator('#planCards article').first().innerText(),/Percuma · Tiada tamat tempoh/);
     for (const card of await page.locator('#planCards article').all()) {
