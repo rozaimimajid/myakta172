@@ -45,8 +45,8 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
     history:db.prepare("INSERT INTO subscription_history(event_id,account_id,old_plan,new_plan,previous_expiry,changed_at) VALUES(?,?,?,?,?,?)"),
     events:db.prepare('SELECT * FROM audit_events WHERE account_id=? ORDER BY processed_at,event_id'),
     historyAll:db.prepare('SELECT * FROM subscription_history WHERE account_id=? ORDER BY changed_at,event_id'),
-    activeSessions:db.prepare("SELECT COUNT(*) n FROM device_sessions WHERE account_id=? AND revoked_at IS NULL AND expires_at>?"),
-    session:db.prepare("SELECT 1 present FROM device_sessions WHERE account_id=? AND session_hash=? AND revoked_at IS NULL AND expires_at>?")
+    activeSessions:db.prepare("SELECT COUNT(*) n FROM device_sessions WHERE account_id=? AND revoked_at IS NULL AND expires_at_ms>?"),
+    session:db.prepare("SELECT 1 present FROM device_sessions WHERE account_id=? AND session_hash=? AND revoked_at IS NULL AND expires_at_ms>?")
   };
   let queue=Promise.resolve();
   let closed=false;
@@ -72,7 +72,7 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
     ensureOpen();
     if(!accountIdOK(accountId)||!sessionHash(token)||!Number.isFinite(Number(at)))
       return {authorized:false,activeCount:0};
-    const now=new Date(Number(at)).toISOString();
+    const now=Number(at);
     const n=Number(statements.activeSessions.get(accountId,now).n);
     const active=!!statements.session.get(accountId,sessionHash(token),now);
     return {authorized:active&&n===1,activeCount:n};
@@ -155,8 +155,8 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
     ensureOpen();
     if(!allowTestSeed)throw Error('TEST_SEED_DISABLED');
     if(!accountIdOK(accountId)||!sessionHash(token)||!iso(expiresAt))throw Error('SESSION_INVALID');
-    db.prepare("INSERT INTO device_sessions(session_hash,account_id,expires_at) VALUES(?,?,?)")
-      .run(sessionHash(token),accountId,expiresAt);
+    db.prepare("INSERT INTO device_sessions(session_hash,account_id,expires_at_ms) VALUES(?,?,?)")
+      .run(sessionHash(token),accountId,Date.parse(expiresAt));
   };
   const revokeSessionForTest=(accountId,token)=>{
     ensureOpen();
