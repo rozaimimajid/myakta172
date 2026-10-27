@@ -133,10 +133,40 @@ async function reconcileExpiredAccount({
   });
 }
 
+// Template laluan API kandungan berbayar: semak hak SEBELUM baca sumber.
+// readContent wajib mengambil daripada storan protected, bukan fail statik awam.
+function createProtectedContentHandler({
+  authenticate,loadSubscription,checkSingleActiveSession,readContent,clock
+}={}) {
+  const headers=Object.freeze({'Cache-Control':'private, no-store'});
+  return async function handle(request,{section=null,feature=null,chartSections=null}={}) {
+    if(typeof readContent!=='function')
+      return {status:503,headers,body:{error:'BACKEND_NOT_CONNECTED'}};
+    const verdict=await authorizeEntitlement({
+      request,authenticate,loadSubscription,checkSingleActiveSession,
+      section,feature,chartSections,clock
+    });
+    if(!verdict.allowed)return {status:verdict.status,headers,body:{error:verdict.code}};
+    try {
+      // Servis kandungan mesti membenarkan tepat resource yang diminta sahaja.
+      const result=await readContent({
+        accountId:verdict.accountId,effectivePlan:verdict.effectivePlan,
+        section,feature,chartSections
+      });
+      if(result===null || result===undefined)
+        return {status:404,headers,body:{error:'CONTENT_NOT_FOUND'}};
+      return {status:200,headers,body:result};
+    } catch {
+      return {status:503,headers,body:{error:'CONTENT_UNAVAILABLE'}};
+    }
+  };
+}
+
 // Backend adapter expected:
 // store.transaction(accountId, callback) mesti ACID, terkunci/serializable,
 // rollback kedua-dua tulisan jika gagal, UNIQUE audit.eventId, tiada akses awam.
 // Jangan guna fungsi ini dengan storan JS browser/localStorage.
 module.exports=Object.freeze({
-  effectiveSubscription,authorizeEntitlement,reconcileExpiredAccount
+  effectiveSubscription,authorizeEntitlement,reconcileExpiredAccount,
+  createProtectedContentHandler
 });
