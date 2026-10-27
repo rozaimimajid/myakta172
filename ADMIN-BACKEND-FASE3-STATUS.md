@@ -42,3 +42,15 @@
 7. Jalankan audit integrasi, keselamatan, mobile/desktop dan ujian manual pengguna sebelum publisiti/produksi.
 
 **Perlindungan:** Jangan ubah polisi, harga, teks Akta, lapan carta alir, logo, navigasi terkunci, reka bentuk Dashboard atau cabang `main` tanpa arahan pemilik.
+
+## Kemajuan tambahan — Pangkalan data SQLite setempat untuk ujian (27 Oktober 2026)
+
+- `admin-backend-sqlite.sql`: jadual akaun, langganan, sesi peranti (token dihash), transaksi pembayaran metadata, favorites, sejarah bacaan, highlight, audit dan sejarah pakej dengan constraints/foreign keys.
+- `admin-backend-sqlite.cjs`: sambungan sebenar enjin `reconcileExpiredAccount()` ke SQLite melalui transaksi `BEGIN IMMEDIATE`, `COMMIT`/`ROLLBACK`, event id unik, sejarah pakej dan semakan satu sesi peranti.
+- `tests/admin-sqlite-integration.cjs`: ujian pangkalan data sementara di luar repositori; menyemak lapan tugasan serentak, satu rekod AUTO_EXPIRED, hak Free tepat selepas luput, pemeliharaan sejarah, sesi, rollback dan **data kekal selepas SQLite ditutup/dibuka semula**.
+- `.gitignore` menolak fail SQLite, DB, persekitaran rahsia dan dependencies daripada GitHub. `admin-backend-sqlite.cjs` juga **menolak lokasi DB di dalam repositori** agar tidak terdedah melalui pelayan web statik.
+- Pelaksanaan Node.js dalam aliran kerja ujian menggunakan `node --experimental-sqlite` (Node 22). Ini tidak memerlukan langganan atau akaun pelayan pangkalan data, tetapi hanya pembuktian konsep setempat.
+
+**AMARAN PENTING:** SQLite setempat ialah contoh penyambung penyimpanan, bukan pangkalan data berpusat/produksi. Tiada login Admin/pengguna sebenar, token login yang disahkan, MFA, API pelanggan, sistem resit/pembayaran sebenar atau deployment dipasang. Tanpa sistem auth dan kandungan premium pada storan peribadi, jangan benarkan pelanggan sebenar menggunakan sistem. Jangan letakkan fail `.sqlite` dalam root web GitHub Pages atau pautan Codespaces awam.
+
+Langkah seterusnya: skema SQL/polisi transaksi untuk pangkalan data berpusat, autentikasi selamat, kawalan satu peranti pada pelayan, API kandungan berbayar terlindung, integrasi kelulusan pembayaran dan scheduler audit.
