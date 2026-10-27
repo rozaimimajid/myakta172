@@ -82,7 +82,15 @@
       row.append(bar,element('b',count));$('distribution').append(row);
     }
     $('recentActivity').replaceChildren();
-    if(!logs.length)$('recentActivity').append(element('p','Tiada perubahan Admin dalam sesi simulasi ini.'));
+    if(!logs.length){
+      const empty=element('div',undefined,'recent-empty');
+      const icon=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      icon.setAttribute('viewBox','0 0 24 24');icon.setAttribute('fill','none');icon.setAttribute('stroke','currentColor');
+      icon.setAttribute('stroke-width','1.8');icon.setAttribute('aria-hidden','true');
+      const ring=document.createElementNS('http://www.w3.org/2000/svg','circle');ring.setAttribute('cx','12');ring.setAttribute('cy','12');ring.setAttribute('r','9');
+      const line=document.createElementNS('http://www.w3.org/2000/svg','path');line.setAttribute('d','M12 11v5m0-8h.01');line.setAttribute('stroke-linecap','round');
+      icon.append(ring,line);empty.append(icon,element('p','Tiada perubahan Admin dalam sesi simulasi ini.'));$('recentActivity').append(empty);
+    }
     for(const item of logs.slice(0,5))$('recentActivity').append(element('p',dateLabel(item.at)+' · '+item.action+' · '+item.target));
   }
   function renderUsers() {
@@ -262,6 +270,32 @@
     const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     log('Eksport CSV demo','Admin',filename+' · '+records.length+' rekod');notify('Fail CSV simulasi dijana.');renderAll();
   }
+  // Kawalan header rasmi: fungsi UI lokal prototaip, tiada perubahan kepada aplikasi utama.
+  let adminScale=1;
+  function changeScale(delta){
+    adminScale=Math.max(.9,Math.min(1.2,Math.round((adminScale+delta)*10)/10));
+    document.documentElement.style.setProperty('--admin-zoom',String(adminScale));
+  }
+  function setView(mode){
+    const mobile=mode==='mobile';
+    document.body.classList.toggle('preview-mobile',mobile);
+    $('viewDesktop').classList.toggle('active',!mobile);
+    $('viewMobile').classList.toggle('active',mobile);
+    $('viewDesktop').setAttribute('aria-pressed',String(!mobile));
+    $('viewMobile').setAttribute('aria-pressed',String(mobile));
+  }
+  $('navHome').addEventListener('click',()=>switchTab('overview'));
+  $('fontDecrease').addEventListener('click',()=>changeScale(-.1));
+  $('fontIncrease').addEventListener('click',()=>changeScale(.1));
+  $('themeToggle').addEventListener('click',()=>{
+    const dark=document.body.classList.toggle('theme-dark');
+    $('themeToggle').setAttribute('aria-pressed',String(dark));
+    $('themeToggle').querySelector('span').textContent=dark?'Siang':'Malam';
+  });
+  $('viewDesktop').addEventListener('click',()=>setView('desktop'));
+  $('viewMobile').addEventListener('click',()=>setView('mobile'));
+  $('aboutAdmin').addEventListener('click',()=>$('adminAboutDialog').showModal());
+  $('adminAboutClose').addEventListener('click',()=>$('adminAboutDialog').close());
   document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
   $('userSearch').addEventListener('input',renderUsers);$('userFilterPlan').addEventListener('change',renderUsers);$('userFilterStatus').addEventListener('change',renderUsers);
   $('subUser').addEventListener('change',syncSelectedSubscription);
