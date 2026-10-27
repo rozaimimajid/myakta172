@@ -323,3 +323,14 @@ body.admin-royal .mobile-action:hover{background:#ffffff1c}
   body.admin-royal .site-identity p{font-size:9px}
   body.admin-royal .mobile-action{font-size:10px}
 }
+
+/* Laluan kembali ke Desktop hanya dalam drawer pratonton mobile komputer */
+body.admin-royal .preview-exit{display:none}
+body.admin-royal.preview-mobile .preview-exit{
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+  margin:6px 0 10px;padding:12px 13px;border-radius:10px;
+  border:1px solid #aecbff80;background:#ffffff21;color:#fff;
+  font-size:13px;font-weight:750;cursor:pointer
+}
+body.admin-royal.preview-mobile .preview-exit svg{width:19px;height:19px;flex:none}
+body.admin-royal.preview-mobile .preview-exit:focus-visible{outline:3px solid #ffca24;outline-offset:2px}
