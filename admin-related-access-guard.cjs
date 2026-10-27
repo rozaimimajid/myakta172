@@ -27,6 +27,7 @@ async function authorizeRelatedRequest({
     if (!identity || typeof identity.accountId!=='string' || !identity.accountId.trim() ||
         typeof identity.sessionId!=='string' || !identity.sessionId.trim() ||
         identity.role!=='user') return deny(401,'NOT_AUTHENTICATED');
+    if (identity.status!=='Aktif') return deny(403,'ACCOUNT_INACTIVE');
 
     const sub=await loadSubscription(identity.accountId);
     if (!sub || sub.accountId!==identity.accountId ||
@@ -34,6 +35,8 @@ async function authorizeRelatedRequest({
     if (sub.status!=='Aktif') return deny(403,'SUBSCRIPTION_INACTIVE');
     const t=Number(clock());
     if (!Number.isFinite(t)) return deny(503,'SERVER_CLOCK_INVALID');
+    if (sub.startsAt && (!Number.isFinite(Date.parse(sub.startsAt)) ||
+         Date.parse(sub.startsAt)>t)) return deny(403,'SUBSCRIPTION_NOT_STARTED');
     if (sub.plan!=='Free' && (!sub.expiresAt || !Number.isFinite(Date.parse(sub.expiresAt)) ||
          Date.parse(sub.expiresAt)<=t)) return deny(403,'SUBSCRIPTION_EXPIRED');
     if (!policy.canRead(sub.plan,source) ||
