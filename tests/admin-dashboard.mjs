@@ -175,6 +175,7 @@ async function main(){
     assert.match(await page.locator('#payCategory').innerText(),/Turun taraf tidak disokong/);
     assert.equal(await page.locator('#receiptForm button[type=submit]').isDisabled(),true);
     await page.locator('#paymentRows button[data-action=approvePayment]').first().click();
+    assert.equal(await page.locator('#confirmation').evaluate(e=>e.open),true,'Tetingkap pengesahan bayaran tidak terbuka: '+(await page.locator('#toast').innerText()));
     await page.locator('#confirmYes').click();
     assert.equal(await page.locator('#kPending').innerText(),'1');
     assert.notEqual(await page.locator('#subscriptionRows tr:nth-child(2) td:nth-child(5)').textContent(),previousExpiry,'Pembaharuan aktif patut memanjangkan tempoh');
