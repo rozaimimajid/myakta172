@@ -60,7 +60,8 @@ async function verifyAccessToken({token,issuer,audience,resolvePublicKey,clock=(
   // MFA is required for Admin operations by the deployment layer, not by this verifier.
   return Object.freeze({subject:claims.sub,issuer:claims.iss,audience,
     expiresAt:claims.exp,issuedAt:claims.iat,
-    emailVerified:claims.email_verified===true});
+    emailVerified:claims.email_verified===true,
+    mfaVerified:Array.isArray(claims.amr)&&claims.amr.includes('mfa')});
 }
 
 function newSessionToken(){
