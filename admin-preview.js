@@ -330,6 +330,7 @@
   $('bottomHome').addEventListener('click',()=>switchTab('overview'));
   $('bottomSettings').addEventListener('click',()=>switchTab('settings'));
   $('bottomAbout').addEventListener('click',()=>$('adminAboutDialog').showModal());
+  $('exitMobilePreview').addEventListener('click',()=>setView('desktop'));
   $('viewDesktop').addEventListener('click',()=>setView('desktop'));
   $('viewMobile').addEventListener('click',()=>setView('mobile'));
   $('aboutAdmin').addEventListener('click',()=>$('adminAboutDialog').showModal());
