@@ -291,10 +291,11 @@
   }
   // Kawalan header rasmi: fungsi UI lokal prototaip, tiada perubahan kepada aplikasi utama.
   let adminScale=1;
-  function changeScale(delta){
-    adminScale=Math.max(.9,Math.min(1.2,Math.round((adminScale+delta)*10)/10));
+  function setAdminScale(value){
+    adminScale=Math.max(.9,Math.min(1.2,Math.round(value*10)/10));
     document.documentElement.style.setProperty('--admin-zoom',String(adminScale));
   }
+  function changeScale(delta){setAdminScale(adminScale+delta);}
   function setView(mode){
     const mobile=mode==='mobile';
     document.body.classList.toggle('preview-mobile',mobile);
@@ -316,6 +317,20 @@
   $('navHome').addEventListener('click',()=>switchTab('overview'));
   $('fontDecrease').addEventListener('click',()=>changeScale(-.1));
   $('fontIncrease').addEventListener('click',()=>changeScale(.1));
+  // Tetapan paparan khusus Dashboard, tiada perubahan saiz teks aplikasi Akta.
+  $('settingTextMinus').addEventListener('click',()=>changeScale(-.1));
+  $('settingTextNormal').addEventListener('click',()=>setAdminScale(1));
+  $('settingTextPlus').addEventListener('click',()=>changeScale(.1));
+  // 'Pasang' kekal dimatikan sehingga PWA Admin dipasang dan dinilai selamat.
+  const backToTop=$('adminBackToTop');
+  function updateBackToTop(){
+    const y=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;
+    backToTop.classList.toggle('show',y>300);
+  }
+  backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  window.addEventListener('scroll',updateBackToTop,{passive:true});
+  window.addEventListener('load',updateBackToTop);
+  updateBackToTop();
   function toggleAdminTheme() {
     const dark=document.body.classList.toggle('theme-dark');
     $('themeToggle').setAttribute('aria-pressed',String(dark));
