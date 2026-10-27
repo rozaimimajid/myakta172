@@ -168,5 +168,39 @@
 <button type="button" id="adminBackToTop" aria-label="Ke Atas" title="Ke Atas">↑ Ke Atas</button>
 <dialog id="confirmation"><h2 id="confirmTitle">Sahkan tindakan simulasi</h2><p id="confirmText" class="audit-note"></p><div class="row"><button type="button" class="btn primary" id="confirmYes">Sahkan Simulasi</button><button type="button" class="btn subtle" id="confirmNo">Batal</button></div></dialog>
 <dialog id="receiptDialog" aria-labelledby="receiptTitle" class="receipt-dialog"><h2 id="receiptTitle">Pratonton Resit — Simulasi</h2><div id="receiptDetails" class="receipt-details"></div><div id="receiptViewport" class="receipt-viewport"></div><div class="row"><button type="button" class="btn primary" id="receiptClose">Tutup Pratonton</button></div></dialog>
-<dialog id="adminAboutDialog" aria-labelledby="adminAboutTitle"><h2 id="adminAboutTitle">Tentang Dashboard Admin MyAKTA172</h2><p>Prototaip pengurusan pakej MyAKTA172 oleh DigitalHubb.my. Semua rekod pengguna, resit dan kutipan adalah data simulasi. Belum ada integrasi pangkalan data, pengesahan Admin atau pembayaran sebenar.</p><p class="muted">Aplikasi utama MyAKTA172, lapan carta alir, teks Akta 172 dan cabang main tidak diubah oleh paparan ini.</p><button type="button" id="adminAboutClose" class="btn primary">Tutup</button></dialog>
+<dialog id="adminAboutDialog" class="admin-about-dialog" aria-labelledby="adminAboutTitle">
+  <div class="admin-about-heading">
+    <h2 id="adminAboutTitle">Tentang Dashboard Admin MyAKTA172</h2>
+    <button type="button" id="adminAboutClose" class="admin-about-close" aria-label="Tutup maklumat Tentang">× <span>Tutup</span></button>
+  </div>
+  <div class="admin-about-body">
+    <p class="admin-about-subtitle"><strong>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</strong></p>
+
+    <section class="admin-about-section">
+      <h3>Maklumat Aplikasi</h3>
+      <p>Dashboard Admin MyAKTA172 ialah panel pengurusan bagi aplikasi MyAKTA172 untuk menyelaras rekod pengguna dan emel, pakej langganan, pembayaran, peranti, kawalan akses mengikut Bahagian dan Seksyen serta laporan pengurusan.</p>
+    </section>
+
+    <section class="admin-about-section">
+      <h3>Identiti Pembangun</h3>
+      <img class="admin-about-logo" src="./01_DigitalHubb.my_Rasmi_Transparent_6500px.png" alt="Logo rasmi DigitalHubb.my">
+      <p>DigitalHubb.my ialah jenama inovasi digital untuk aplikasi rujukan, pembelajaran dan analisis.</p>
+    </section>
+
+    <section class="admin-about-section">
+      <h3>Maklumat Pemilik / Pembangun</h3>
+      <p>TPr. Gs. Rozaimi bin Majid</p>
+    </section>
+
+    <section class="admin-about-section">
+      <h3>Status Pembangunan</h3>
+      <p>Dashboard ini masih <strong>prototaip dengan data simulasi</strong>. Rekod pengguna, resit bank, langganan dan transaksi yang dipaparkan bukan data pelanggan sebenar. Integrasi pengesahan Admin, pangkalan data, pembayaran dan penguatkuasaan akses sebenar belum diaktifkan.</p>
+    </section>
+
+    <section class="admin-about-section">
+      <h3>Penafian</h3>
+      <p>MyAKTA172 ialah aplikasi rujukan dan pembelajaran, bukan portal rasmi kerajaan atau pengganti nasihat perundangan pihak berkuasa. Dashboard Admin ini bukan sistem pembayaran atau pengurusan pelanggan yang telah beroperasi. Jangan masukkan maklumat pengguna atau resit bank sebenar ke dalam prototaip.</p>
+    </section>
+  </div>
+</dialog>
 </body></html>
