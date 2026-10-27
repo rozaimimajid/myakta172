@@ -74,11 +74,18 @@
     $('adminMenuBackdrop').hidden=!expanded;
     $('adminSidebar').inert=drawerMode() && !expanded;
   }
+  function syncMobileNav(tab) {
+    for(const [name,active] of [['bottomHome',tab==='overview'],['bottomSettings',tab==='settings']]) {
+      const b=$(name);b.classList.toggle('active',active);
+      if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+    }
+  }
   function switchTab(tab) {
     setAdminMenu(false);
     if(tab==='subscriptions') syncSelectedSubscription();
     document.querySelectorAll('[data-tab]').forEach(b=>{const yes=b.dataset.tab===tab;b.classList.toggle('active',yes);b.setAttribute('aria-current',yes?'page':'false');});
     document.querySelectorAll('main > section.panel').forEach(s=>{s.hidden=s.id!==tab;});
+    syncMobileNav(tab);
     window.scrollTo({top:0,behavior:'instant'});
   }
   function renderOverview() {
@@ -309,11 +316,20 @@
   $('navHome').addEventListener('click',()=>switchTab('overview'));
   $('fontDecrease').addEventListener('click',()=>changeScale(-.1));
   $('fontIncrease').addEventListener('click',()=>changeScale(.1));
-  $('themeToggle').addEventListener('click',()=>{
+  function toggleAdminTheme() {
     const dark=document.body.classList.toggle('theme-dark');
     $('themeToggle').setAttribute('aria-pressed',String(dark));
     $('themeToggle').querySelector('span').textContent=dark?'Siang':'Malam';
-  });
+    $('bottomTheme').setAttribute('aria-pressed',String(dark));
+    $('bottomThemeLabel').textContent=dark?'Siang':'Malam';
+    $('bottomMoonIcon').hidden=dark;
+    $('bottomSunIcon').hidden=!dark;
+  }
+  $('themeToggle').addEventListener('click',toggleAdminTheme);
+  $('bottomTheme').addEventListener('click',toggleAdminTheme);
+  $('bottomHome').addEventListener('click',()=>switchTab('overview'));
+  $('bottomSettings').addEventListener('click',()=>switchTab('settings'));
+  $('bottomAbout').addEventListener('click',()=>$('adminAboutDialog').showModal());
   $('viewDesktop').addEventListener('click',()=>setView('desktop'));
   $('viewMobile').addEventListener('click',()=>setView('mobile'));
   $('aboutAdmin').addEventListener('click',()=>$('adminAboutDialog').showModal());
