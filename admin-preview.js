@@ -63,7 +63,19 @@
     const user=getUser($('subUser').value);
     if(user) $('subPlan').value=user.plan;
   }
+  function drawerMode() {
+    return document.body.classList.contains('preview-mobile') || window.matchMedia('(max-width:760px)').matches;
+  }
+  function setAdminMenu(open) {
+    const expanded=drawerMode() && !!open;
+    document.body.classList.toggle('admin-menu-open',expanded);
+    $('adminMenuToggle').setAttribute('aria-expanded',String(expanded));
+    $('adminMenuToggle').setAttribute('aria-label',expanded?'Tutup menu Admin':'Buka menu Admin');
+    $('adminMenuBackdrop').hidden=!expanded;
+    $('adminSidebar').inert=drawerMode() && !expanded;
+  }
   function switchTab(tab) {
+    setAdminMenu(false);
     if(tab==='subscriptions') syncSelectedSubscription();
     document.querySelectorAll('[data-tab]').forEach(b=>{const yes=b.dataset.tab===tab;b.classList.toggle('active',yes);b.setAttribute('aria-current',yes?'page':'false');});
     document.querySelectorAll('main > section.panel').forEach(s=>{s.hidden=s.id!==tab;});
@@ -283,7 +295,17 @@
     $('viewMobile').classList.toggle('active',mobile);
     $('viewDesktop').setAttribute('aria-pressed',String(!mobile));
     $('viewMobile').setAttribute('aria-pressed',String(mobile));
+    setAdminMenu(false);
   }
+  $('adminMenuToggle').addEventListener('click',()=>setAdminMenu(!document.body.classList.contains('admin-menu-open')));
+  $('adminMenuBackdrop').addEventListener('click',()=>setAdminMenu(false));
+  $('adminMenuClose').addEventListener('click',()=>{$('adminMenuToggle').focus();setAdminMenu(false);});
+  window.addEventListener('keydown',e=>{
+    if(e.key==='Escape' && document.body.classList.contains('admin-menu-open')) {
+      setAdminMenu(false);$('adminMenuToggle').focus();
+    }
+  });
+  window.addEventListener('resize',()=>setAdminMenu(false));
   $('navHome').addEventListener('click',()=>switchTab('overview'));
   $('fontDecrease').addEventListener('click',()=>changeScale(-.1));
   $('fontIncrease').addEventListener('click',()=>changeScale(.1));
@@ -323,5 +345,5 @@
   const choices=users.map(u=>({value:u.id,label:u.id+' · '+u.email}));
   for(const id of ['payUser','subUser','deviceUser'])selectFill(id,choices);
   selectFill('sectionPart',[{value:'',label:'Semua Bahagian'},...P.parts.map(p=>({value:p.num,label:'Bahagian '+p.num+' — '+p.title}))]);
-  updatePaymentCategory();renderAll();switchTab('overview');
+  updatePaymentCategory();renderAll();switchTab('overview');setAdminMenu(false);
 })();
