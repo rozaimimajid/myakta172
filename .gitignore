@@ -1,0 +1,13 @@
+# Data sementara backend Fasa 3 - JANGAN commit maklumat sebenar
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+*.db-wal
+*.db-shm
+.env
+.env.*
+!.env.example
+node_modules/
+coverage/
