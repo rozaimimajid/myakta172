@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS device_sessions (
   session_hash TEXT PRIMARY KEY,
   account_id TEXT NOT NULL REFERENCES accounts(account_id) ON DELETE RESTRICT,
   device_label TEXT,
-  expires_at TEXT NOT NULL,
+  expires_at_ms INTEGER NOT NULL,
   revoked_at TEXT
 ) STRICT;
 CREATE UNIQUE INDEX IF NOT EXISTS device_sessions_one_active
