@@ -28,7 +28,12 @@ function verifyPolicy(){
   assert.equal(P.canUseFeature('Basic','flow'),false);
   assert.equal(P.canUseFeature('Rahmah','flow'),true);
   assert.equal(P.listedFeature('Basic','related'),true);
-  assert.equal(P.canUseFeature('Basic','related'),false);
+  assert.equal(P.canUseFeature('Free','related'),false);
+  assert.equal(P.canUseFeature('Basic','related'),true);
+  assert.equal(P.canUseFeature('Rahmah','related'),true);
+  assert.equal(P.canUseFeature('Premium','related'),true);
+  assert.equal(P.relatedAuditPassed,true);
+  assert.equal(P.relatedEnforcementIntegrated,false);
   assert.equal(P.canUseChart('Rahmah',[]),false); // gagal tertutup jika tiada pemetaan seksyen disahkan
   assert.equal(P.canPrintChart('Rahmah',['18','32']),false); // Bahagian V terlarang
   assert.equal(P.canUseChart('Premium',[]),false);
@@ -131,6 +136,11 @@ async function main(){
       if (!label.includes('FREE')) assert.match(label,/Langganan 30 hari/);
     }
     assert.equal(await page.locator('#matrixRows tr').count(),20);
+    const relationshipRow=page.locator('#matrixRows tr').filter({hasText:'Hubungan Seksyen Berkaitan'});
+    assert.match(await relationshipRow.innerText(),/Aktif/);
+    assert.match(await page.locator('#plans .help').innerText(),/Integrasi pengguna sebenar BELUM disambung/);
+    assert.equal(await relationshipRow.locator('td').nth(1).innerText(),'—');
+    for(const col of [2,3,4])assert.equal(await relationshipRow.locator('td').nth(col).innerText(),'✓');
     assert.equal(await page.locator('#sectionRows tr').count(),83);
     await page.locator('#sectionPlan').selectOption('Rahmah');
     await page.locator('#sectionPart').selectOption('V');
