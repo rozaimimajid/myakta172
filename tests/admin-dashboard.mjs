@@ -111,7 +111,9 @@ async function main(){
     const previewFooter=await page.locator('.admin-footer').boundingBox();
     const previewLogo=await page.locator('.admin-footer img').boundingBox();
     assert.ok(previewFooter&&previewLogo&&Math.abs(previewLogo.x+previewLogo.width/2-(previewFooter.x+previewFooter.width/2))<4,'Logo mesti di tengah pratonton Mobile');
-    await page.locator('#viewDesktop').click();
+    await page.locator('#adminMenuToggle').click();
+    assert.equal(await page.locator('#exitMobilePreview').isVisible(),true,'Boleh kembali ke Desktop melalui menu hamburger');
+    await page.locator('#exitMobilePreview').click();
     assert.equal(await page.locator('body.preview-mobile').count(),0);
     await page.locator('#aboutAdmin').click();
     assert.equal(await page.locator('#adminAboutDialog').isVisible(),true);
