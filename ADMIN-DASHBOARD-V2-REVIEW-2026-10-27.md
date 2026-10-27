@@ -62,3 +62,12 @@ Komponen berikut **belum dibangunkan atau diintegrasikan**:
 **Keputusan:** Peringkat **Dashboard Admin V2 — prototaip dan semakan visual** boleh ditutup sebagai lulus dalam skopnya. **Belum boleh digunakan oleh pelanggan atau disambungkan kepada aplikasi produksi.** Keutamaan kerja berikutnya ialah reka bentuk backend/auth/storan, peraturan capaian seksyen dan carta fail-closed, serta ujian keselamatan menyeluruh di cabang audit sahaja. Kupon/promosi kekal cadangan tanpa pengaktifan.
 
 Tiada arahan merge ke `main` atau penerbitan pelanggan diberikan oleh pemilik.
+
+## Addendum keputusan audit Hubungan Seksyen (27 Oktober 2026)
+Pernyataan "belum aktif sehingga disemak" dalam laporan semakan V2 di atas ialah status **pada masa laporan asal**. Keputusan rasmi terkini mengatasinya:
+
+- **Audit LULUS dan DIKUNCI**, run #40500647354: 203 pemeriksaan tanpa kegagalan; 83 seksyen, 83 pautan unik (53 asal + 30 tambahan), 43 seksyen dengan hubungan.
+- Status fungsi **Aktif dalam matriks/polisi Admin**: Free tidak layak; Basic, Rahmah dan Premium layak.
+- Gerbang `admin-related-access-guard.cjs` dibina untuk penguatkuasaan backend (sesi satu peranti, status/langganan 30 hari, seksyen dibenarkan dan penapisan sasaran), **gagal-tertutup** apabila backend tiada/tidak disahkan.
+- **Belum ada backend bersepadu dengan aplikasi pelanggan dan kandungan premium masih awam pada hosting statik.** Oleh itu penguatkuasaan pengguna sebenar dan pelancaran berbayar masih **BELUM LULUS**.
+- Tiada perubahan pada fungsi/teks/navigasi hubungan seksyen terkunci, reka bentuk Dashboard terkunci, lapan carta alir atau cabang `main`.
