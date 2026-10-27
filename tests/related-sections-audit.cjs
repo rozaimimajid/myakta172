@@ -37,7 +37,8 @@ const url=process.env.MYAKTA_TEST_URL||'http://127.0.0.1:8080/';
     const target=page.locator('#v22RelatedList button').filter({hasText:/Seksyen 22/}).first();
     try{
      assert.equal(await target.count(),1,'Seksyen 19 should offer section 22');
-     await target.click();
+     // Use the native DOM click because the section reader is hidden by the welcome/test setup.
+     await target.evaluate(button=>button.click());
      await page.waitForFunction(()=>document.getElementById('secTitle')?.textContent.includes('22'));
      checks++;
     }catch(e){failures.push('Navigasi Seksyen 19 -> 22 ('+mode+'): '+e.message)}
