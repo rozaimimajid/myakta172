@@ -183,8 +183,10 @@
   const partOf = section => sectionToPart[String(section).trim().toUpperCase()] || null;
   const canRead = (name, section) => !!(getPlan(name) && partOf(section) && getPlan(name).parts.includes(partOf(section)));
   const listedFeature = (name, feature) => !!(getPlan(name) && getPlan(name).features.includes(feature));
-  // Hubungan seksyen disenaraikan sebagai hak pakej, tetapi dikunci sehingga audit hubungan lulus.
-  const canUseFeature = (name, feature) => feature !== 'related' && listedFeature(name, feature);
+  // Audit Hubungan Antara Seksyen diluluskan/dikunci pada 27 Okt 2026.
+  // Kelayakan pakej aktif dalam POLISI. Ini BUKAN integrasi penguatkuasaan kepada aplikasi pengguna.
+  // Penguatkuasaan sebenar mesti diproses pada backend yang disahkan (gagal-tertutup).
+  const canUseFeature = (name, feature) => listedFeature(name, feature);
   // Fail-closed: carta dan cetakan MESTI mempunyai senarai seksyen rujukan yang telah disahkan.
   // Tiada senarai disahkan => tidak layak ditayangkan, walaupun pakej mempunyai ciri flow.
   const canUseChart = (name, requiredSections) => !!(
@@ -203,5 +205,7 @@
   }
   return Object.freeze({ parts, order, features, packages, knownSections, partOf,
     canRead, listedFeature, canUseFeature, canUseChart, canPrintChart,
-    period30Days, validatePayment, subscriptionDays: 30, relatedPendingAudit: true });
+    period30Days, validatePayment, subscriptionDays: 30,
+    relatedPendingAudit: false, relatedAuditPassed: true,
+    relatedAuditRun: 40500647354, relatedEnforcementIntegrated: false });
 });
