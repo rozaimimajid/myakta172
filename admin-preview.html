@@ -3,37 +3,60 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>MyAKTA172 — Dashboard Admin (Prototaip V2)</title>
+<title>MyAKTA172 — Dashboard Admin · Royal Blue (Prototaip)</title>
 <link rel="stylesheet" href="./admin-preview.css">
 <script defer src="./admin-package-policy.js"></script>
 <script defer src="./admin-preview.js"></script>
 </head>
-<body>
+<body class="admin-royal">
+<header class="site-header" role="banner">
+  <div class="site-identity">
+    <h1>My<span class="gold">AKTA</span>172 <span class="title-dash">-</span> Dashboard Admin</h1>
+    <p>Akta Perancangan Bandar dan Desa 1976 [Akta 172]</p>
+  </div>
+  <nav class="top-actions" aria-label="Navigasi dan kawalan paparan Admin">
+    <button type="button" class="header-btn" id="navHome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Utama</span></button>
+    <a class="header-btn header-search" href="./index.html" target="_blank" rel="noopener noreferrer" title="Buka aplikasi MyAKTA172 di tab baharu untuk carian seksyen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 5 5"/></svg><span>Carian Seksyen dan Kata Kunci</span></a>
+    <button type="button" class="header-btn text-scale" id="fontDecrease" title="Kecilkan tulisan Dashboard">A−</button>
+    <button type="button" class="header-btn text-scale" id="fontIncrease" title="Besarkan tulisan Dashboard">A+</button>
+    <button type="button" class="header-btn" id="themeToggle" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14z"/></svg><span>Malam</span></button>
+    <button type="button" class="header-btn" id="aboutAdmin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><span>Tentang</span></button>
+    <div class="view-switch" role="group" aria-label="Pratonton paparan"><span>Paparan</span>
+      <button type="button" class="view-btn active" id="viewDesktop" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.7" y="4" width="18.6" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg><span>Desktop</span></button>
+      <button type="button" class="view-btn" id="viewMobile" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><span>Mobile</span></button>
+    </div>
+  </nav>
+</header>
 <div class="shell">
 <aside class="sidebar">
-  <div class="brand"><img src="./01_DigitalHubb.my_Rasmi_Transparent_6500px.png" alt="Logo rasmi DigitalHubb.my"><div><strong>MyAKTA172</strong><small>DIGITALHUBB.MY · ADMIN</small></div></div>
+  <div class="side-heading">PANEL PENTADBIR</div>
   <nav class="side-nav" aria-label="Modul pentadbir">
-    <button type="button" class="active" data-tab="overview">▦ Ringkasan</button>
-    <button type="button" data-tab="users">♙ Pengguna & Emel</button>
-    <button type="button" data-tab="payments">▣ Resit & Pembayaran</button>
-    <button type="button" data-tab="subscriptions">◷ Langganan</button>
-    <button type="button" data-tab="plans">▤ Kawalan Pakej</button>
-    <button type="button" data-tab="devices">▣ Peranti</button>
-    <button type="button" data-tab="reports">▥ Laporan</button>
-    <button type="button" data-tab="audit">≡ Log Admin</button>
-    <button type="button" data-tab="settings">⚙ Tetapan</button>
+    <button type="button" class="active" data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg><span>Ringkasan</span></button>
+    <button type="button" data-tab="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/></svg><span>Pengguna & Emel</span></button>
+    <button type="button" data-tab="payments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20m-16 5h4"/></svg><span>Resit & Pembayaran</span></button>
+    <button type="button" data-tab="subscriptions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5zm-9 5v10l9 5 9-5V7M12 12v10"/></svg><span>Langganan</span></button>
+    <button type="button" data-tab="plans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2-9 5 9 5 9-5-9-5zm-9 10 9 5 9-5m-18 5 9 5 9-5"/></svg><span>Kawalan Pakej</span></button>
+    <button type="button" data-tab="devices"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg><span>Peranti</span></button>
+    <button type="button" data-tab="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="12" width="3" height="9" rx="1"/><rect x="10.5" y="7" width="3" height="14" rx="1"/><rect x="17" y="3" width="3" height="18" rx="1"/></svg><span>Laporan</span></button>
+    <button type="button" data-tab="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12M3 6h.01M3 12h.01M3 18h.01"/></svg><span>Log Admin</span></button>
+    <button type="button" data-tab="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3h4l.8 2.3 2 .9 2.2-1 2 3.4-1.8 1.6v2.4l1.8 1.6-2 3.4-2.2-1-2 .9L14 21h-4l-.8-2.3-2-.9-2.2 1-2-3.4 1.8-1.6v-2.4L3 9.8l2-3.4 2.2 1 2-.9z"/><circle cx="12" cy="12" r="2.5"/></svg><span>Tetapan</span></button>
   </nav>
-  <div class="side-foot"><strong>Dashboard berasingan</strong><div>Hanya cabang audit/stabilization-v1. Tiada integrasi dengan aplikasi pengguna.</div></div>
+  <div class="side-foot"><div>Hak Milik Terpelihara © 2026</div><strong>DigitalHubb.my</strong><small>Prototaip Admin · Cabang audit sahaja</small></div>
 </aside>
 <div class="content">
-<header class="top"><div><h1>Dashboard Admin MyAKTA172</h1><p>Rekod emel, pembayaran, langganan 30 hari dan kawalan hak akses</p></div><span class="demo">● DATA SIMULASI · BUKAN PRODUKSI</span></header>
+
 <main class="main">
-<div class="notice"><b>Persekitaran ujian sahaja.</b> Data, emel, resit dan pembayaran di sini rekaan. Tiada maklumat disimpan ke pangkalan data; perubahan hilang selepas halaman dimuat semula. Jangan masukkan emel atau resit sebenar. Kawalan satu peranti dan sekatan pakej dalam prototaip ini bukan perlindungan keselamatan sebenar.</div>
+<div class="notice"><span class="demo-pill">● DATA SIMULASI · BUKAN PRODUKSI</span><span><b>Pratonton Dashboard Admin.</b> Data, resit dan transaksi adalah rekaan; belum ada backend atau kawalan keselamatan pengguna sebenar. Jangan gunakan maklumat pelanggan sebenar.</span></div>
 <div id="toast" role="status" aria-live="polite"></div>
 <section id="overview" class="panel">
-<h2>Ringkasan Pengurusan</h2><p class="muted">Angka di bawah hanyalah data demonstrasi.</p>
-<div class="kpis"><div class="kpi">Jumlah Pengguna<strong id="kUsers">—</strong><span class="muted">Emel rekaan</span></div><div class="kpi">Langganan Aktif<strong id="kActive">—</strong><span class="muted">Semua pakej</span></div><div class="kpi">Bayaran Menunggu<strong id="kPending">—</strong><span class="muted">Perlu kelulusan Admin</span></div><div class="kpi">Kutipan Diluluskan<strong id="kRevenue">—</strong><span class="muted">Simulasi RM</span></div></div>
-<div class="grid2" style="margin-top:18px"><article class="tile"><h3>Pengguna Mengikut Pakej</h3><div id="distribution"></div></article><article class="tile"><h3>Tindakan Terkini</h3><div id="recentActivity" class="muted"></div></article></div>
+<div class="section-title"><div><h2>Ringkasan Pengurusan</h2><p class="muted">Angka di bawah hanyalah data demonstrasi.</p></div></div>
+<div class="kpis">
+  <div class="kpi kpi-blue"><span class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17.5" cy="9.2" r="2.2"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M17 15a5 5 0 0 1 5 5"/></svg></span><div class="kpi-content"><span class="kpi-label">Jumlah Pengguna</span><strong id="kUsers">—</strong><span class="muted">Emel rekaan</span></div></div>
+  <div class="kpi kpi-green"><span class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5zm-9 10 9 5 9-5m-18 5 9 5 9-5"/></svg></span><div class="kpi-content"><span class="kpi-label">Langganan Aktif</span><strong id="kActive">—</strong><span class="muted">Semua pakej</span></div></div>
+  <div class="kpi kpi-amber"><span class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></span><div class="kpi-content"><span class="kpi-label">Bayaran Menunggu</span><strong id="kPending">—</strong><span class="muted">Perlu kelulusan Admin</span></div></div>
+  <div class="kpi kpi-purple"><span class="kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 7h8M8 17h8m-4-11v12"/></svg></span><div class="kpi-content"><span class="kpi-label">Kutipan Diluluskan</span><strong id="kRevenue">—</strong><span class="muted">Simulasi RM</span></div></div>
+</div>
+<div class="grid2" style="margin-top:18px"><article class="tile overview-tile"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="12" width="3" height="9" rx="1"/><rect x="10.5" y="7" width="3" height="14" rx="1"/><rect x="17" y="3" width="3" height="18" rx="1"/></svg> Pengguna Mengikut Pakej</h3><div id="distribution"></div></article><article class="tile overview-tile"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg> Tindakan Terkini</h3><div id="recentActivity" class="muted"></div></article></div>
 </section>
 
 <section id="users" class="panel" hidden>
@@ -107,8 +130,9 @@
 <div class="tile"><h3>Integrasi</h3><span class="pill bad">Belum disambung</span><p class="muted">Belum ada auth, API, database, storan resit sulit atau payment gateway.</p></div></div>
 <p class="help">Penerbitan kepada pelanggan memerlukan: pengesahan Admin berasingan dengan MFA, storan resit persendirian, semakan hak akses pada pelayan, penguatkuasaan sesi/peranti, log audit tahan ubah, kawalan tamat tempoh, dan kandungan premium tidak tersedia melalui fail awam atau cache GitHub Pages.</p>
 </section>
-<p class="endnote">DigitalHubb.my · MyAKTA172 · Prototaip Admin V2. Hanya untuk ujian cabang audit. Kandungan Akta, carta alir dan aplikasi utama tidak diubah.</p>
+<footer class="admin-footer"><span>Dashboard Admin · Prototaip data simulasi · Cabang audit/stabilization-v1</span><img src="./01_DigitalHubb.my_Rasmi_Transparent_6500px.png" alt="DigitalHubb.my — Logo rasmi"></footer>
 </main></div></div>
 <dialog id="confirmation"><h2 id="confirmTitle">Sahkan tindakan simulasi</h2><p id="confirmText" class="audit-note"></p><div class="row"><button type="button" class="btn primary" id="confirmYes">Sahkan Simulasi</button><button type="button" class="btn subtle" id="confirmNo">Batal</button></div></dialog>
 <dialog id="receiptDialog" aria-labelledby="receiptTitle" class="receipt-dialog"><h2 id="receiptTitle">Pratonton Resit — Simulasi</h2><div id="receiptDetails" class="receipt-details"></div><div id="receiptViewport" class="receipt-viewport"></div><div class="row"><button type="button" class="btn primary" id="receiptClose">Tutup Pratonton</button></div></dialog>
+<dialog id="adminAboutDialog" aria-labelledby="adminAboutTitle"><h2 id="adminAboutTitle">Tentang Dashboard Admin MyAKTA172</h2><p>Prototaip pengurusan pakej MyAKTA172 oleh DigitalHubb.my. Semua rekod pengguna, resit dan kutipan adalah data simulasi. Belum ada integrasi pangkalan data, pengesahan Admin atau pembayaran sebenar.</p><p class="muted">Aplikasi utama MyAKTA172, lapan carta alir, teks Akta 172 dan cabang main tidak diubah oleh paparan ini.</p><button type="button" id="adminAboutClose" class="btn primary">Tutup</button></dialog>
 </body></html>
