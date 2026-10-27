@@ -198,7 +198,7 @@
     const matrix=$('matrixRows');matrix.replaceChildren();
     const addRow=(label,check)=>{const tr=element('tr');td(tr,label);for(const name of P.order){const yes=check(name);const c=td(tr,yes?'✓':'—',yes?'check':'cross');c.setAttribute('aria-label',yes?'Dibenarkan':'Tidak dibenarkan');}matrix.append(tr)};
     for(const part of P.parts)addRow('Bahagian '+part.num+' — '+part.title,n=>P.packages[n].parts.includes(part.num));
-    for(const [key,title] of [['search','Carian Seksyen & Kata Kunci, wildcard, Analisis Kes'],['flow','Carta Alir & Cetakan*'],['bookmarks','Kegemaran'],['history','Sejarah Bacaan'],['highlight','Penanda Warna Teks'],['voice','Bacaan Suara'],['glossary','Glosari Istilah'],['related','Hubungan Seksyen Berkaitan (belum aktif)']])addRow(title,n=>P.listedFeature(n,key));
+    for(const [key,title] of [['search','Carian Seksyen & Kata Kunci, wildcard, Analisis Kes'],['flow','Carta Alir & Cetakan*'],['bookmarks','Kegemaran'],['history','Sejarah Bacaan'],['highlight','Penanda Warna Teks'],['voice','Bacaan Suara'],['glossary','Glosari Istilah'],['related','Hubungan Seksyen Berkaitan (Aktif — audit lulus)']])addRow(title,n=>P.listedFeature(n,key));
     renderSections();
   }
   function renderSections(){
