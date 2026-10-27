@@ -10,6 +10,9 @@ on:
       - 'admin-package-policy.js'
       - 'admin-related-access-guard.cjs'
       - 'admin-subscription-engine.cjs'
+      - 'admin-backend-sqlite.cjs'
+      - 'admin-backend-sqlite.sql'
+      - 'tests/admin-sqlite-integration.cjs'
       - 'tests/admin-auto-downgrade.cjs'
       - 'tests/admin-related-guard.cjs'
       - 'tests/admin-dashboard.mjs'
@@ -30,6 +33,8 @@ jobs:
         run: node tests/admin-related-guard.cjs
       - name: Backend subscription expiry auto-downgrade regression
         run: node tests/admin-auto-downgrade.cjs
+      - name: Isolated SQLite backend storage and auto-downgrade tests
+        run: node --experimental-sqlite tests/admin-sqlite-integration.cjs
       - name: Install Playwright Chromium
         run: |
           npm install --no-save playwright@1.56.1
