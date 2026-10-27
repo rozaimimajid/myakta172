@@ -83,7 +83,7 @@ body.admin-royal .side-nav button{width:100%;display:flex;gap:12px;align-items:c
 body.admin-royal .side-nav button svg{height:19px;width:19px;flex-shrink:0}
 body.admin-royal .side-nav button.active{background:#1465f9;box-shadow:inset 0 1px 0 #7daeff5e,0 3px 12px #051b7530;color:#fff;font-weight:750}
 body.admin-royal .side-nav button:hover:not(.active){background:#ffffff1b;color:#fff}
-body.admin-royal .side-foot{position:relative;border:1px solid #82aeff42;border-radius:10px;background:#1042b082;padding:15px 6px;margin:0 0 2px;color:#dbe6ff;text-align:center;font-size:11px}
+body.admin-royal .side-foot{position:relative;border:1px solid #82aeff42;border-radius:10px;background:#1042b082;padding:15px 6px;margin:auto 0 2px;color:#dbe6ff;text-align:center;font-size:11px}
 body.admin-royal .side-foot strong{display:block;color:#ffca31;font-size:12px;margin:4px 0 0}
 body.admin-royal .side-foot small{display:block;color:#c3d6ff;font-size:9px;margin-top:7px}
 body.admin-royal .content{min-width:0;display:flex;flex-direction:column}
