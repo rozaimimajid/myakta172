@@ -1,0 +1,32 @@
+name: MyAKTA172 Audit Hubungan Seksyen A
+on:
+  workflow_dispatch:
+  push:
+    branches: [audit/stabilization-v1]
+    paths:
+      - 'tests/related-sections-audit.cjs'
+      - '.github/workflows/related-sections-audit.yml'
+permissions:
+  contents: read
+jobs:
+  related-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start audit preview
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/related-server.log 2>&1 &
+          sleep 2
+          curl --fail http://127.0.0.1:8080/index.html -o /dev/null
+      - name: Run audit of all 83 sections and desktop/mobile navigation
+        env:
+          MYAKTA_TEST_URL: http://127.0.0.1:8080/
+        run: node tests/related-sections-audit.cjs
