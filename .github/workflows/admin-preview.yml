@@ -9,6 +9,8 @@ on:
       - 'admin-preview.js'
       - 'admin-package-policy.js'
       - 'admin-related-access-guard.cjs'
+      - 'admin-subscription-engine.cjs'
+      - 'tests/admin-auto-downgrade.cjs'
       - 'tests/admin-related-guard.cjs'
       - 'tests/admin-dashboard.mjs'
       - '.github/workflows/admin-preview.yml'
@@ -26,6 +28,8 @@ jobs:
           node-version: '22'
       - name: Server-side related-sections entitlement and fail-closed regression
         run: node tests/admin-related-guard.cjs
+      - name: Backend subscription expiry auto-downgrade regression
+        run: node tests/admin-auto-downgrade.cjs
       - name: Install Playwright Chromium
         run: |
           npm install --no-save playwright@1.56.1
