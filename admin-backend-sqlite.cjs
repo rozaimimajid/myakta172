@@ -39,6 +39,7 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
 
   const statements={
     account:db.prepare('SELECT account_id,email,role,status FROM accounts WHERE account_id=?'),
+    accountBySubject:db.prepare('SELECT account_id,email,role,status FROM accounts WHERE auth_subject=? AND auth_issuer=?'),
     subscription:db.prepare('SELECT account_id,plan,status,starts_at,expires_at,revision FROM subscriptions WHERE account_id=?'),
     update:db.prepare("UPDATE subscriptions SET plan=?,status=?,starts_at=?,expires_at=?,revision=revision+1,updated_at=? WHERE account_id=?"),
     audit:db.prepare("INSERT OR IGNORE INTO audit_events(event_id,account_id,action,previous_plan,new_plan,expired_at,processed_at) VALUES(?,?,?,?,?,?,?)"),
@@ -66,16 +67,27 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
     const r=statements.account.get(accountId);
     return r?{accountId:r.account_id,email:r.email,role:r.role,status:r.status}:null;
   };
+  const findAccountBySubject=async(subject,issuer)=>{
+    ensureOpen();
+    if(typeof subject!=='string'||!subject||typeof issuer!=='string'||!issuer)return null;
+    const row=statements.accountBySubject.get(subject,issuer);
+    return row?{accountId:row.account_id,email:row.email,role:row.role,status:row.status}:null;
+  };
+  const verifySessionHash=async(accountId,hash,at=Date.now())=>{
+    ensureOpen();
+    if(!accountIdOK(accountId)||typeof hash!=='string'||!/^[0-9a-f]{64}$/.test(hash)||
+       !Number.isFinite(Number(at)))return {authorized:false,activeCount:0};
+    const n=Number(statements.activeSessions.get(accountId,Number(at)).n);
+    const active=!!statements.session.get(accountId,hash,Number(at));
+    return {authorized:active&&n===1,activeCount:n};
+  };
   // Backend auth verifier must create a trusted identity. This only verifies
   // hashed session ownership; it does NOT authenticate a client on its own.
   const checkSingleActiveSession=async(accountId,token,at=Date.now())=>{
     ensureOpen();
     if(!accountIdOK(accountId)||!sessionHash(token)||!Number.isFinite(Number(at)))
       return {authorized:false,activeCount:0};
-    const now=Number(at);
-    const n=Number(statements.activeSessions.get(accountId,now).n);
-    const active=!!statements.session.get(accountId,sessionHash(token),now);
-    return {authorized:active&&n===1,activeCount:n};
+    return verifySessionHash(accountId,sessionHash(token),at);
   };
 
   // Async callback serialized on a single connection. BEGIN IMMEDIATE
@@ -143,8 +155,9 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
     if(subscription.plan!=='Free'&&!iso(subscription.expiresAt))throw Error('SEED_EXPIRY_INVALID');
     db.exec('BEGIN IMMEDIATE');
     try{
-      db.prepare('INSERT INTO accounts(account_id,email,role,status,created_at) VALUES(?,?,?,?,?)')
-        .run(account.accountId,account.email,'user',account.status||'Aktif',new Date().toISOString());
+      db.prepare('INSERT INTO accounts(account_id,email,auth_issuer,auth_subject,role,status,created_at) VALUES(?,?,?,?,?,?,?)')
+        .run(account.accountId,account.email,account.authIssuer??null,account.authSubject??null,
+          'user',account.status||'Aktif',new Date().toISOString());
       db.prepare('INSERT INTO subscriptions(account_id,plan,status,starts_at,expires_at,updated_at) VALUES(?,?,?,?,?,?)')
         .run(account.accountId,subscription.plan,subscription.status,subscription.startsAt??null,
           subscription.expiresAt??null,new Date().toISOString());
@@ -168,7 +181,8 @@ function createDevSQLiteStore({filename=':memory:',allowTestSeed=false}={}) {
   const selectForTest=(sql,...args)=>{ensureOpen();if(!allowTestSeed)throw Error('TEST_SEED_DISABLED');return db.prepare(sql).all(...args)};
   const close=async()=>{await queue;if(!closed){db.close();closed=true}};
   return Object.freeze({
-    readAccount,getSubscription,getEffective,checkSingleActiveSession,
+    readAccount,findAccountBySubject,getSubscription,getEffective,
+    verifySessionHash,checkSingleActiveSession,
     transaction,getAuditEvents,getPlanHistory,
     seedForTest,seedSessionForTest,revokeSessionForTest,execForTest,selectForTest,close
   });
