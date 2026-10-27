@@ -73,6 +73,24 @@ async function main(){
     assert.equal(await page.locator('body.preview-mobile').count(),1);
     assert.equal(await page.locator('#viewMobile').getAttribute('aria-pressed'),'true');
     assert.equal(await page.locator('#adminMenuToggle').isVisible(),true,'Hamburger wajib muncul dalam preview Mobile');
+    for(const id of ['navHome','fontDecrease','fontIncrease','themeToggle','aboutAdmin','viewDesktop','viewMobile']) {
+      assert.equal(await page.locator('#'+id).isVisible(),false,'Hanya hamburger dalam header mobile: '+id);
+    }
+    assert.equal(await page.locator('#mobileActionBar').isVisible(),true);
+    assert.equal(await page.locator('#mobileActionBar button').count(),4);
+    await page.locator('#bottomTheme').click();
+    assert.equal(await page.locator('body.theme-dark').count(),1,'Footer Malam perlu berfungsi');
+    assert.equal(await page.locator('#bottomThemeLabel').innerText(),'Siang');
+    await page.locator('#bottomTheme').click();
+    assert.equal(await page.locator('body.theme-dark').count(),0,'Footer Siang perlu berfungsi');
+    await page.locator('#bottomAbout').click();
+    assert.equal(await page.locator('#adminAboutDialog').isVisible(),true,'Footer Tentang membuka dialog');
+    await page.locator('#adminAboutClose').click();
+    await page.locator('#bottomSettings').click();
+    assert.equal(await page.locator('#settings').isVisible(),true,'Footer Tetapan membuka modul');
+    assert.equal(await page.locator('#bottomSettings').getAttribute('aria-current'),'page');
+    await page.locator('#bottomHome').click();
+    assert.equal(await page.locator('#overview').isVisible(),true,'Footer Utama kembali ke ringkasan');
     assert.equal(await page.locator('#adminSidebar').isVisible(),false,'Sidebar tersembunyi apabila mod mobile dibuka');
     await page.locator('#adminMenuToggle').click();
     assert.equal(await page.locator('#adminMenuToggle').getAttribute('aria-expanded'),'true');
@@ -204,12 +222,23 @@ async function main(){
     await mobile.goto(origin+'/admin-preview.html',{waitUntil:'load'});
     assert.equal(await mobile.locator('#kUsers').innerText(),'7');
     assert.equal(await mobile.locator('#adminMenuToggle').isVisible(),true,'Hamburger turut tersedia pada telefon sebenar');
+    assert.equal(await mobile.locator('#navHome').isVisible(),false);
+    assert.equal(await mobile.locator('#viewMobile').isVisible(),false);
+    assert.equal(await mobile.locator('#mobileActionBar').isVisible(),true,'Footer 4 ikon pada telefon');
+    assert.equal(await mobile.locator('#mobileActionBar button').count(),4);
+    assert.equal(await mobile.locator('#mobileActionBar').evaluate(e=>getComputedStyle(e).position),'fixed');
+    const navBox=await mobile.locator('#mobileActionBar').boundingBox();
+    assert.ok(navBox&&Math.abs(navBox.y+navBox.height-844)<3,'Footer mesti melekat pada dasar viewport telefon');
     assert.equal(await mobile.locator('#adminSidebar').isVisible(),false,'Tiada menu mendatar pada telefon');
     await mobile.locator('#adminMenuToggle').click();
     assert.equal(await mobile.locator('#adminSidebar').isVisible(),true);
     await mobile.locator('[data-tab=payments]').click();
     assert.equal(await mobile.locator('#payments').isVisible(),true);
     assert.equal(await mobile.locator('#adminSidebar').isVisible(),false);
+    await mobile.locator('#bottomHome').click();
+    assert.equal(await mobile.locator('#overview').isVisible(),true);
+    await mobile.locator('#bottomSettings').click();
+    assert.equal(await mobile.locator('#settings').isVisible(),true);
     const mobileFooter=await mobile.locator('.admin-footer').boundingBox();
     const mobileLogo=await mobile.locator('.admin-footer img').boundingBox();
     assert.ok(mobileFooter&&mobileLogo&&Math.abs(mobileLogo.x+mobileLogo.width/2-(mobileFooter.x+mobileFooter.width/2))<4,'Logo mesti di tengah skrin mobile sebenar');
