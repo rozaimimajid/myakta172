@@ -174,8 +174,8 @@ body.admin-royal dialog{border-radius:14px}
   body.admin-royal .kpis,body.admin-royal .grid4{grid-template-columns:1fr}
   body.admin-royal .kpi{min-height:95px}
   body.admin-royal .notice{font-size:11px}
-  body.admin-royal .admin-footer{align-items:start;flex-direction:column}
-  body.admin-royal .admin-footer img{align-self:flex-end}
+  body.admin-royal .admin-footer{align-items:center;flex-direction:column;text-align:center}
+  body.admin-royal .admin-footer img{align-self:center;margin-inline:auto;object-position:center bottom}
 }
 /* Optional genuine mobile-view preview on larger screens */
 @media (min-width:761px){
@@ -189,7 +189,7 @@ body.admin-royal dialog{border-radius:14px}
   body.admin-royal.preview-mobile .main{padding:0}
   body.admin-royal.preview-mobile .notice{font-size:11px}
   body.admin-royal.preview-mobile .panel{padding:16px}
-  body.admin-royal.preview-mobile .admin-footer{flex-direction:column;align-items:end}
+  body.admin-royal.preview-mobile .admin-footer{flex-direction:column;align-items:center;text-align:center}
 }
 /* Dark preview: all panels remain usable */
 body.admin-royal.theme-dark{background:#08142d;color:#e7eeff;--ink:#e7eeff;--royal-bg:#111e38;--line:#2b4270}
@@ -215,3 +215,5 @@ body.admin-royal.theme-dark .receipt-details,body.admin-royal.theme-dark .receip
 body.admin-royal.theme-dark dialog{background:#102445;color:#f5f8ff}
 body.admin-royal.theme-dark .demo-receipt{color:#14366b}
 @media (prefers-reduced-motion:reduce){body.admin-royal *{scroll-behavior:auto!important;transition:none!important}}
+
+@media (min-width:761px){body.admin-royal.preview-mobile .admin-footer img{align-self:center;margin-inline:auto;object-position:center bottom}}
