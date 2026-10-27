@@ -53,6 +53,9 @@ async function main(){
     assert.equal(await page.locator('.side-nav button[data-tab]').count(),9);
     assert.equal(await page.locator('.kpi-icon').count(),4);
     assert.equal(await page.locator('.admin-footer img').count(),1);
+    const sidePos=await page.locator('.sidebar').boundingBox();
+    const copyrightPos=await page.locator('.side-foot').boundingBox();
+    assert.ok(sidePos && copyrightPos && Math.abs(sidePos.y+sidePos.height-(copyrightPos.y+copyrightPos.height))<20,'Hak milik DigitalHubb.my perlu berada di dasar sidebar');
     assert.match(await page.locator('.header-search').getAttribute('href'),/index\.html/);
     assert.equal(await page.locator('#viewDesktop').getAttribute('aria-pressed'),'true');
     await page.locator('#themeToggle').click();
