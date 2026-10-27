@@ -2,7 +2,8 @@
 const assert=require('node:assert/strict');
 const P=require('../admin-package-policy.js');
 const {
-  effectiveSubscription,authorizeEntitlement,reconcileExpiredAccount
+  effectiveSubscription,authorizeEntitlement,reconcileExpiredAccount,
+  createProtectedContentHandler
 }=require('../admin-subscription-engine.cjs');
 
 const expiry='2026-10-27T12:00:00+08:00';
@@ -130,6 +131,27 @@ async function main(){
   eq(r.code,'BACKEND_NOT_CONNECTED');
   r=await authorizeEntitlement(authDeps(base(),before));
   eq(r.code,'ENTITLEMENT_NOT_SPECIFIED');
+
+  // Gerbang API: JANGAN baca kandungan berkunci sebelum pengguna disahkan.
+  let readCount=0;
+  const protectedBefore=createProtectedContentHandler({
+    ...authDeps(base(),before),
+    readContent:async resource=>{readCount++;return {section:resource.section,text:'TEST_ONLY'};}
+  });
+  const protectedExpired=createProtectedContentHandler({
+    ...authDeps(base(),end),
+    readContent:async resource=>{readCount++;return {section:resource.section,text:'TEST_ONLY'};}
+  });
+  eq((await protectedBefore({}, {section:'18'})).status,200);
+  eq(readCount,1);
+  eq((await protectedExpired({}, {section:'18'})).status,403);
+  eq(readCount,1);
+  const freeContent=await protectedExpired({}, {section:'1'});
+  eq(freeContent.status,200);
+  eq(freeContent.headers['Cache-Control'],'private, no-store');
+  eq(readCount,2);
+  const unavailable=createProtectedContentHandler({...authDeps(base(),before)});
+  eq((await unavailable({}, {section:'1'})).status,503);
 
   // Rekonsiliasi atomik mengubah hanya langganan; data kekal dan audit idempotent
   const store=atomicFixture(base('Rahmah',{pendingPayment:'Menunggu',receiptId:'B002'}));
