@@ -217,3 +217,57 @@ body.admin-royal.theme-dark .demo-receipt{color:#14366b}
 @media (prefers-reduced-motion:reduce){body.admin-royal *{scroll-behavior:auto!important;transition:none!important}}
 
 @media (min-width:761px){body.admin-royal.preview-mobile .admin-footer img{align-self:center;margin-inline:auto;object-position:center bottom}}
+
+/* Sidebar mudah alih: ikon tiga garisan, menggantikan navigasi scroll mendatar.
+   Kedua-dua mod Mobile sebenar dan preview Desktop→Mobile menggunakan menu tersembunyi. */
+body.admin-royal .admin-menu-toggle,
+body.admin-royal .admin-menu-close{display:none}
+body.admin-royal .admin-drawer-backdrop{position:fixed;inset:0;z-index:140;background:rgba(4,15,45,.58);border:0;padding:0;cursor:pointer}
+body.admin-royal .admin-drawer-backdrop[hidden]{display:none!important}
+@media (max-width:760px){
+  body.admin-royal .admin-menu-toggle{display:inline-flex;flex-shrink:0;background:#fff1;border-color:#ffffff94}
+  body.admin-royal .sidebar{
+    display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;
+    width:min(300px,86vw);height:100dvh;max-height:100dvh;min-height:0;
+    z-index:151;overflow-y:auto;overscroll-behavior:contain;
+    margin:0;padding:18px 12px 12px;border-radius:0 15px 15px 0;
+    transform:translateX(-110%);visibility:hidden;pointer-events:none;
+    transition:transform .18s ease,visibility .18s ease;
+  }
+  body.admin-royal.admin-menu-open .sidebar{transform:translateX(0);visibility:visible;pointer-events:auto}
+  body.admin-royal .side-heading{display:block;margin:0 37px 3px 0}
+  body.admin-royal .side-nav{display:grid;overflow:visible;gap:5px;flex-shrink:0}
+  body.admin-royal .side-nav button{width:100%;white-space:normal;flex-shrink:1;min-height:43px;padding:11px 12px}
+  body.admin-royal .side-nav button svg{width:18px;height:18px}
+  body.admin-royal .side-foot{display:block;margin:auto 0 0}
+  body.admin-royal .admin-menu-close{display:flex}
+}
+@media (min-width:761px){
+  body.admin-royal.preview-mobile .admin-menu-toggle{display:inline-flex}
+  body.admin-royal.preview-mobile .sidebar{
+    display:flex;flex-direction:column;position:fixed;left:max(12px,calc((100vw - 470px)/2 + 12px));
+    top:12px;bottom:12px;max-height:calc(100vh - 24px);height:auto;min-height:0;
+    width:min(300px,calc(100vw - 24px));z-index:151;
+    overflow-y:auto;overscroll-behavior:contain;
+    padding:18px 12px 12px;margin:0;border-radius:14px;
+    transform:translateX(-115%);visibility:hidden;pointer-events:none;
+    transition:transform .18s ease,visibility .18s ease;
+  }
+  body.admin-royal.preview-mobile.admin-menu-open .sidebar{transform:translateX(0);visibility:visible;pointer-events:auto}
+  body.admin-royal.preview-mobile .side-heading{display:block;margin:0 37px 3px 0}
+  body.admin-royal.preview-mobile .side-nav{display:grid;overflow:visible;gap:5px;flex-shrink:0}
+  body.admin-royal.preview-mobile .side-nav button{width:100%;white-space:normal;flex-shrink:1;min-height:43px;padding:11px 12px}
+  body.admin-royal.preview-mobile .side-nav button svg{width:18px;height:18px}
+  body.admin-royal.preview-mobile .side-foot{display:block;margin:auto 0 0}
+  body.admin-royal.preview-mobile .admin-menu-close{display:flex}
+}
+body.admin-royal .admin-menu-close{
+  position:absolute;top:12px;right:12px;align-items:center;justify-content:center;
+  width:34px;height:34px;border:1px solid #ffffff73;border-radius:8px;
+  background:#ffffff16;color:white;font-size:27px;line-height:1;cursor:pointer
+}
+body.admin-royal .admin-menu-close:focus-visible,
+body.admin-royal .admin-menu-toggle:focus-visible{outline:3px solid #ffca24;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  body.admin-royal .sidebar{transition:none!important}
+}
