@@ -8,6 +8,8 @@ on:
       - 'admin-preview.css'
       - 'admin-preview.js'
       - 'admin-package-policy.js'
+      - 'admin-related-access-guard.cjs'
+      - 'tests/admin-related-guard.cjs'
       - 'tests/admin-dashboard.mjs'
       - '.github/workflows/admin-preview.yml'
   workflow_dispatch:
@@ -22,6 +24,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Server-side related-sections entitlement and fail-closed regression
+        run: node tests/admin-related-guard.cjs
       - name: Install Playwright Chromium
         run: |
           npm install --no-save playwright@1.56.1
