@@ -54,3 +54,21 @@
 **AMARAN PENTING:** SQLite setempat ialah contoh penyambung penyimpanan, bukan pangkalan data berpusat/produksi. Tiada login Admin/pengguna sebenar, token login yang disahkan, MFA, API pelanggan, sistem resit/pembayaran sebenar atau deployment dipasang. Tanpa sistem auth dan kandungan premium pada storan peribadi, jangan benarkan pelanggan sebenar menggunakan sistem. Jangan letakkan fail `.sqlite` dalam root web GitHub Pages atau pautan Codespaces awam.
 
 Langkah seterusnya: skema SQL/polisi transaksi untuk pangkalan data berpusat, autentikasi selamat, kawalan satu peranti pada pelayan, API kandungan berbayar terlindung, integrasi kelulusan pembayaran dan scheduler audit.
+
+## Kemajuan Fasa 3 — Identiti OIDC dan pangkalan data berpusat (27 Oktober 2026)
+
+- `admin-auth-foundation.cjs`: pengesahan kriptografi token **akses API** OIDC RS256 melalui kunci awam dipercayai (dipin pada pelayan), issuer/audience, expiry, `iat`, `nbf`; tidak membenarkan `alg:none`, `jku` atau pemilihan kunci arbitrari. Hanya `auth_subject` token yang disahkan boleh dipadankan dengan pengguna tersimpan. Pakej/peranan dalam token pelanggan tidak dipercayai; peranan diperoleh daripada rekod server.
+- Sesi ialah token rawak 256-bit dalam kuki `__Host-myaktasession` dengan atribut HttpOnly, Secure dan SameSite=Strict; hanya SHA-256 sesi disimpan. Pemeriksaan sesi aktif dan satu peranti perlu dibuat terhadap DB pada setiap permintaan. Pengesahan MFA wajib bagi Admin sebelum operasi berprivilej, bergantung tuntutan `amr=mfa` yang ditandatangani penerbit dan disahkan.
+- `admin-backend-sqlite.sql` serta `admin-backend-sqlite.cjs` dikembangkan untuk pemetaan identiti `auth_issuer/auth_subject` dan pengesahan hash sesi dalam DB ujian. Data contoh masih `example.test` sahaja.
+- `admin-backend-postgresql.sql`: migrasi **PostgreSQL staging** termasuk akaun, pakej, pembayaran, sesi, favorites/sejarah/penanda warna, RLS di semua jadual privasi, gerbang tertutup tanpa grant pengguna awam dan fungsi penurunan pakej atomik. Fungsi tidak diberikan `EXECUTE` kepada `PUBLIC`.
+- `tests/admin-auth-foundation.cjs`, `tests/admin-auth-sqlite-integration.cjs` dan `tests/admin-postgresql-integration.cjs` ditambah kepada GitHub Actions; PostgreSQL diuji di dalam kontena sementara. Ujian PostgreSQL hanya mengesahkan skema dan fungsi transaksi, **bukan penyambungan kepada perkhidmatan pangkalan data yang telah diterbitkan**.
+
+### Batasan keselamatan dan integrasi
+
+1. **Tiada penyedia identiti OIDC sebenar**, konfigurasi kunci rotasi, domain HTTPS, proses daftar/pengesahan emel atau login Admin yang diaktifkan. Sampel JWT dalam ujian menggunakan kunci ujian sementara.
+2. **Tiada pangkalan data PostgreSQL awan** disambung. Nama, pengguna dan kata laluan PostgreSQL dalam aliran kerja adalah palsu dan hanya untuk kontena GitHub Actions. Jangan digunakan semula pada produksi.
+3. **Tiada API HTTP pelanggan sebenar** dan tiada sesi yang diterbitkan pada `index.html`. Jangan menyalin token sebenar ke Codespaces/log/ChatGPT.
+4. **Belum diaudit untuk penggunaan produksi:** MFA Admin, rate limiting, pengesahan emel, reset akaun, pengekalan data, privasi, perlindungan kandungan berbayar daripada fail awam dan cache PWA, pengesahan resit bank, audit pentadbir, disaster recovery, pemantauan dan kos operasi.
+5. Jangan dedahkan peranan akses (role/grant) PostgreSQL atau simpan password/token, fail `.sqlite`, resit atau emel sebenar di repo. Hanya gunakan backend HTTPS dengan DB private apabila bersedia.
+
+**Status:** asas kriptografi identiti, pangkalan data staging dan ujian kini disediakan. Integrasi pengguna sebenar **BELUM AKTIF** dan hanya boleh dibuat selepas pemilihan penyedia/konfigurasi oleh pemilik, kemudian ujian keselamatan serta pengesahan penerbitan khusus.
