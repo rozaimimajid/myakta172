@@ -21,6 +21,8 @@ const url=process.env.MYAKTA_TEST_URL||'http://127.0.0.1:8080/';
       const nums=new Set(DATA.sections.map(x=>x.num));
       const references=[...section.text.matchAll(/\bseksyen\s+(\d+[A-H]?)(?![\dA-Z])/gi)].map(m=>m[1].toUpperCase()).filter(x=>x!==n);
       const expected=[...new Set(references)].slice(0,20).filter(x=>nums.has(x));
+      const approved=["2:38","2:21A","2:10","2:15","13:15","18:19","19:24","21A:21","21B:21A","21C:58","22:34","23:22","23:21","24:22","25:22","27:24","35B:22","35C:35A","35D:35C","35D:35A","35E:35A","35F:35E","35G:22","37:22","40:38","41:38","43:38","44:41","49:48","57:27"];
+      if(n!=='56') for(const pair of approved){const [from,to]=pair.split(':');if(from===n&&!expected.includes(to))expected.push(to)}
       return {expected,actual:[...document.querySelectorAll('#v22RelatedList button')].map(x=>(x.textContent.match(/Seksyen\s+(\d+[A-H]?)/i)||[])[1]).filter(Boolean)};
      },n);
      // Render updates via MutationObserver microtask; wait for next animation frame.
@@ -28,6 +30,10 @@ const url=process.env.MYAKTA_TEST_URL||'http://127.0.0.1:8080/';
      const actual=await page.locator('#v22RelatedList button').allTextContents();
      const targets=actual.map(x=>(x.match(/Seksyen\s+(\d+[A-H]?)/i)||[])[1]).filter(Boolean);
      try{assert.deepEqual(targets,v.expected,'Hubungan seksyen '+n+' ['+mode+']')}catch(e){failures.push(e.message)}
+     const forbidden={'29':['2'],'35E':['1'],'37':['3'],'39':['3']};
+     for(const t of forbidden[n]||[])if(targets.includes(t))failures.push('Forbidden '+n+' -> '+t+' ['+mode+']');
+     if(n==='56'&&targets.join(',')!=='8')failures.push('Section 56 links changed ['+mode+']: '+targets);
+     if(mode==='desktop'&&n==='19'&&!targets.includes('24'))failures.push('Missing added link 19 -> 24');
      if(mode==='desktop'){links+=targets.length;if(targets.length)withRefs++}
      checks++;
     }
