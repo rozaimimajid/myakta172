@@ -94,12 +94,12 @@ async function main(){
     assert.equal(await page.locator('body.theme-dark').count(),0,'Footer Siang perlu berfungsi');
     await page.locator('#bottomAbout').click();
     assert.equal(await page.locator('#adminAboutDialog').isVisible(),true,'Footer Tentang membuka dialog');
-    assert.equal(await page.locator('#adminAboutDialog .admin-about-section').count(),5,'Maklumat Tentang mesti lengkap');
+    assert.equal(await page.locator('#adminAboutDialog .admin-about-section').count(),4,'Tentang mempunyai empat seksyen kekal');
     assert.match(await page.locator('#adminAboutDialog').innerText(),/Maklumat Aplikasi/);
     assert.match(await page.locator('#adminAboutDialog').innerText(),/Identiti Pembangun/);
     assert.match(await page.locator('#adminAboutDialog').innerText(),/TPr\. Gs\. Rozaimi bin Majid/);
     assert.match(await page.locator('#adminAboutDialog').innerText(),/Penafian/);
-    assert.match(await page.locator('#adminAboutDialog').innerText(),/data simulasi/i);
+    assert.doesNotMatch(await page.locator('#adminAboutDialog').innerText(),/prototaip|simulasi|Status Pembangunan/i,'Tentang mesti menggunakan kandungan kekal');
     const logoInMobileAbout=page.locator('#adminAboutDialog .admin-about-logo');
     assert.equal(await logoInMobileAbout.isVisible(),true);
     assert.equal(await logoInMobileAbout.evaluate(img=>img.complete && img.naturalWidth>0),true);
@@ -149,7 +149,7 @@ async function main(){
     assert.equal(await page.locator('body.preview-mobile').count(),0);
     await page.locator('#aboutAdmin').click();
     assert.equal(await page.locator('#adminAboutDialog').isVisible(),true);
-    assert.equal(await page.locator('#adminAboutDialog .admin-about-section').count(),5);
+    assert.equal(await page.locator('#adminAboutDialog .admin-about-section').count(),4);
     assert.equal(await page.locator('#adminAboutDialog .admin-about-logo').evaluate(img=>img.complete&&img.naturalWidth>0),true);
     assert.match(await page.locator('#adminAboutDialog').innerText(),/Dashboard Admin MyAKTA172/);
     const aboutDesktopWidth=await page.locator('#adminAboutDialog').evaluate(e=>e.getBoundingClientRect().width);
@@ -286,7 +286,7 @@ async function main(){
     assert.equal(await mobile.locator('#adminAboutDialog').isVisible(),true);
     const mobileAboutBounds=await mobile.locator('#adminAboutDialog').boundingBox();
     assert.ok(mobileAboutBounds&&mobileAboutBounds.x>=0&&mobileAboutBounds.x+mobileAboutBounds.width<=390,'Modal Tentang tidak boleh melimpah keluar skrin');
-    assert.equal(await mobile.locator('#adminAboutDialog .admin-about-section').count(),5);
+    assert.equal(await mobile.locator('#adminAboutDialog .admin-about-section').count(),4);
     await mobile.locator('#adminAboutClose').click();
     assert.equal(await mobile.locator('#adminAboutDialog').isVisible(),false);
     assert.equal(await mobile.locator('#mobileActionBar').evaluate(e=>getComputedStyle(e).position),'fixed');
