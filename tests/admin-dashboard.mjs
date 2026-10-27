@@ -56,6 +56,10 @@ async function main(){
     assert.equal(await page.locator('.site-header').count(),1);
     assert.match(await page.locator('.site-identity h1').innerText(),/Dashboard Admin/);
     assert.equal(await page.locator('.side-nav button[data-tab]').count(),9);
+    assert.match(await page.locator('[data-tab=packageSettings]').innerText(),/Tetapan Pakej/);
+    assert.equal(await page.locator('#packageSettings').count(),1);
+    assert.equal(await page.locator('#adminBackToTop').count(),1);
+    assert.equal(await page.locator('#adminBackToTop').isVisible(),false);
     assert.equal(await page.locator('.kpi-icon').count(),4);
     assert.equal(await page.locator('.admin-footer img').count(),1);
     const sidePos=await page.locator('.sidebar').boundingBox();
@@ -93,6 +97,17 @@ async function main(){
     await page.locator('#adminAboutClose').click();
     await page.locator('#bottomSettings').click();
     assert.equal(await page.locator('#settings').isVisible(),true,'Footer Tetapan membuka modul');
+    assert.equal(await page.locator('#settings .setting-option').count(),2,'Hanya dua menu Tetapan Paparan');
+    assert.match(await page.locator('#settings').innerText(),/Saiz Teks/);
+    assert.match(await page.locator('#settings').innerText(),/Pasang Aplikasi/);
+    assert.equal(await page.locator('#installAdminApp').isDisabled(),true,'PWA Admin belum siap; jangan dakwa boleh dipasang');
+    await page.locator('#settingTextPlus').click();
+    assert.equal(await page.locator('.main').evaluate(el=>Number.parseFloat(getComputedStyle(el).zoom)),1.1);
+    await page.locator('#settingTextMinus').click();
+    assert.equal(await page.locator('.main').evaluate(el=>Number.parseFloat(getComputedStyle(el).zoom)),1);
+    await page.locator('#settingTextPlus').click();
+    await page.locator('#settingTextNormal').click();
+    assert.equal(await page.locator('.main').evaluate(el=>Number.parseFloat(getComputedStyle(el).zoom)),1);
     assert.equal(await page.locator('#bottomSettings').getAttribute('aria-current'),'page');
     await page.locator('#bottomHome').click();
     assert.equal(await page.locator('#overview').isVisible(),true,'Footer Utama kembali ke ringkasan');
@@ -100,6 +115,7 @@ async function main(){
     await page.locator('#adminMenuToggle').click();
     assert.equal(await page.locator('#adminMenuToggle').getAttribute('aria-expanded'),'true');
     assert.equal(await page.locator('#adminSidebar').isVisible(),true,'Menu sembilan modul terpapar selepas klik');
+    assert.match(await page.locator('[data-tab=packageSettings]').innerText(),/Tetapan Pakej/);
     assert.equal(await page.locator('#adminSidebar').evaluate(el=>getComputedStyle(el.querySelector('.side-nav')).display),'grid');
     await page.locator('#adminMenuClose').click();
     assert.equal(await page.locator('#adminSidebar').isVisible(),false,'Tutup drawer menyembunyikan sidebar');
@@ -129,7 +145,17 @@ async function main(){
     assert.equal(await page.locator('#overview').isVisible(),true);
     assert.equal(await page.locator('.side-nav button[data-tab=overview]').getAttribute('aria-current'),'page');
     passes++;console.log('PASS tema royal blue, navigasi header, skala font, malam, desktop/mobile, Tentang dan logo');
+    await page.locator('[data-tab=packageSettings]').click();
+    assert.equal(await page.locator('#packageSettings').isVisible(),true);
+    assert.match(await page.locator('#packageSettings').innerText(),/Had Sesi/);
     await page.locator('[data-tab=plans]').click();
+    await page.evaluate(()=>window.scrollTo(0,650));
+    await page.waitForFunction(()=>document.querySelector('#adminBackToTop').classList.contains('show'));
+    assert.equal(await page.locator('#adminBackToTop').isVisible(),true);
+    const btnBg=await page.locator('#adminBackToTop').evaluate(el=>getComputedStyle(el).backgroundColor);
+    assert.equal(btnBg,'rgb(16, 76, 206)','Ke Atas mesti berlatar royal blue');
+    await page.locator('#adminBackToTop').click();
+    await page.waitForFunction(()=>window.scrollY<10);
     assert.match(await page.locator('#planCards article').first().innerText(),/Percuma · Tiada tamat tempoh/);
     for (const card of await page.locator('#planCards article').all()) {
       const label = await card.innerText();
@@ -251,6 +277,8 @@ async function main(){
     await mobile.locator('#bottomHome').click();
     assert.equal(await mobile.locator('#overview').isVisible(),true);
     await mobile.locator('#bottomSettings').click();
+    assert.equal(await mobile.locator('#settings .setting-option').count(),2);
+    assert.equal(await mobile.locator('#installAdminApp').isDisabled(),true);
     assert.equal(await mobile.locator('#settings').isVisible(),true);
     const mobileFooter=await mobile.locator('.admin-footer').boundingBox();
     const mobileLogo=await mobile.locator('.admin-footer img').boundingBox();
