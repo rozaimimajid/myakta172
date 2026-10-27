@@ -271,3 +271,55 @@ body.admin-royal .admin-menu-toggle:focus-visible{outline:3px solid #ffca24;outl
 @media (prefers-reduced-motion:reduce){
   body.admin-royal .sidebar{transition:none!important}
 }
+
+/* Mobile rasmi V3: hanya hamburger pada header dan empat tindakan di footer.
+   Desktop kekal seperti versi yang dikunci. */
+body.admin-royal .mobile-action-bar{display:none}
+@media (max-width:760px){
+  body.admin-royal .site-header{display:flex;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:9px;padding:13px 14px;min-height:80px}
+  body.admin-royal .site-identity{flex:1 1 auto;min-width:0}
+  body.admin-royal .site-identity h1{font-size:clamp(16px,4.1vw,22px);line-height:1.2;letter-spacing:-.02em}
+  body.admin-royal .site-identity p{font-size:10px;line-height:1.4;margin-top:4px}
+  body.admin-royal .top-actions{display:flex;flex:0 0 auto;width:auto;overflow:visible;flex-wrap:nowrap;padding:0;margin:0;gap:0}
+  body.admin-royal .top-actions>:not(#adminMenuToggle){display:none!important}
+  body.admin-royal .admin-menu-toggle{display:flex;align-items:center;justify-content:center;min-height:45px;min-width:45px;width:45px;height:45px;padding:9px;border:1px solid #9fbefb;border-radius:12px;background:linear-gradient(155deg,#2367fa,#0950d1);box-shadow:0 3px 9px #052e9129}
+  body.admin-royal .admin-menu-toggle svg{width:24px;height:24px}
+  body.admin-royal .admin-menu-toggle span{display:none}
+  body.admin-royal .main{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  body.admin-royal .mobile-action-bar{display:grid}
+}
+@media (min-width:761px){
+  body.admin-royal.preview-mobile .site-header{flex-direction:row;align-items:center;flex-wrap:nowrap;gap:14px}
+  body.admin-royal.preview-mobile .site-identity{flex:1 1 auto;min-width:0}
+  body.admin-royal.preview-mobile .top-actions{display:flex;flex:0 0 auto;width:auto;flex-wrap:nowrap;overflow:visible;padding:0}
+  body.admin-royal.preview-mobile .top-actions>:not(#adminMenuToggle){display:none!important}
+  body.admin-royal.preview-mobile .admin-menu-toggle{display:flex;align-items:center;justify-content:center;width:46px;height:46px;min-height:46px;min-width:46px;padding:9px;background:#195ef0;border:1px solid #96b7fa;border-radius:12px}
+  body.admin-royal.preview-mobile .admin-menu-toggle svg{width:25px;height:25px}
+  body.admin-royal.preview-mobile .admin-menu-toggle span{display:none}
+  body.admin-royal.preview-mobile .main{padding-bottom:96px}
+  body.admin-royal.preview-mobile .mobile-action-bar{display:grid;width:min(470px,calc(100% - 24px));left:50%;right:auto;transform:translateX(-50%);border-radius:14px 14px 0 0}
+}
+body.admin-royal .mobile-action-bar{
+  position:fixed;left:0;bottom:0;right:0;z-index:100;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  padding:7px max(9px,env(safe-area-inset-left,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(9px,env(safe-area-inset-right,0px));
+  gap:4px;min-height:66px;
+  background:linear-gradient(105deg,#073dbf,#092f9f);
+  border-top:2px solid #f1c239;
+  box-shadow:0 -6px 22px #051c6431;
+}
+body.admin-royal .mobile-action{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+  color:#eaf1ff;background:transparent;border:1px solid transparent;border-radius:10px;
+  padding:6px 4px;font-size:11px;font-weight:650;line-height:1.2;min-height:52px
+}
+body.admin-royal .mobile-action svg{width:22px;height:22px;flex:none}
+body.admin-royal .mobile-action svg[hidden]{display:none!important}
+body.admin-royal .mobile-action.active{background:#ffffff22;border-color:#ffffff29;color:#fff}
+body.admin-royal .mobile-action:focus-visible{outline:3px solid #ffda64;outline-offset:1px}
+body.admin-royal .mobile-action:hover{background:#ffffff1c}
+@media(max-width:360px){
+  body.admin-royal .site-identity h1{font-size:16px}
+  body.admin-royal .site-identity p{font-size:9px}
+  body.admin-royal .mobile-action{font-size:10px}
+}
