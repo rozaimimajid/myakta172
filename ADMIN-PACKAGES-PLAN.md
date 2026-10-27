@@ -99,3 +99,9 @@ Tidak ada pengguna Free yang boleh mendapat kandungan premium melalui mod develo
 - Ujian `tests/admin-related-guard.cjs` dilaksanakan dalam aliran kerja Admin GitHub Actions bersama ujian paparan. Modul backend perlu dipasang pada API dilindungi dan membaca kandungan hubungan daripada sumber bukan awam sebelum meluluskan akses pelanggan berbayar.
 - Jangan membenarkan klien menganggap tanda ✓ di Dashboard sebagai keizinan sebenar. Kandungan premium yang masih diterbitkan dalam fail awam/`index.html`/cache tidak boleh dilindungi secara kukuh hanya dengan JS browser. **Jangan aktifkan penguatkuasaan produksi sebelum pengesahan integrasi dan audit keselamatan.**
 - Hanya fail Dashboard/gerbang Admin dan ujian pada `audit/stabilization-v1` yang diselaraskan; jangan ubah `main` atau teks/fungsi hubungan yang telah dikunci.
+
+## DASAR DIKUNCI — AUTO-DOWNGRADE 30 HARI → FREE (27 Oktober 2026)
+
+Rujukan muktamad: [`AUTO-DOWNGRADE-DESIGN-LOCK.md`](AUTO-DOWNGRADE-DESIGN-LOCK.md).
+
+Apabila langganan Basic/Rahmah/Premium tamat tanpa pembaharuan diluluskan, **pakej efektif pengguna menjadi Free secara automatik** tanpa Admin klik Tukar Pakej. Backend wajib menyekat kandungan/ciri berbayar pada setiap permintaan tepat selepas tamat, sementara identiti pengguna, Kegemaran, Sejarah Bacaan dan rekod pakej/pembayaran lama dikekalkan. Pembaharuan berbayar mengaktifkan semula hak selepas kelulusan. **Status semasa: dasar disahkan, backend auto-downgrade belum dibangunkan; jangan anggap prototaip melaksanakannya.** Jangan ubah `main`.
