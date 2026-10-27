@@ -16,6 +16,7 @@ on:
       - 'admin-auth-foundation.cjs'
       - 'tests/admin-auth-foundation.cjs'
       - 'tests/admin-auth-sqlite-integration.cjs'
+      - 'tests/admin-postgresql-integration.cjs'
       - 'tests/admin-sqlite-integration.cjs'
       - 'tests/admin-auto-downgrade.cjs'
       - 'tests/admin-related-guard.cjs'
@@ -56,3 +57,36 @@ jobs:
         run: node tests/admin-dashboard.mjs
         env:
           ADMIN_TEST_URL: http://127.0.0.1:8000
+
+  postgres-staging-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: myakta_ci
+          POSTGRES_PASSWORD: CI_EPHEMERAL_ONLY_NEVER_REAL
+          POSTGRES_DB: myakta_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U myakta_ci -d myakta_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated PostgreSQL client for CI
+        run: npm install --no-save pg@8.16.3
+      - name: Migration and concurrency on ephemeral PostgreSQL
+        run: node tests/admin-postgresql-integration.cjs
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGUSER: myakta_ci
+          PGPASSWORD: CI_EPHEMERAL_ONLY_NEVER_REAL
+          PGDATABASE: myakta_ci
