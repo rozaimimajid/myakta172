@@ -76,7 +76,7 @@ async function run(){
     eq(store.selectForTest("SELECT COUNT(*) n FROM favorites WHERE account_id='U003'")[0].n,1);
     eq(store.selectForTest("SELECT COUNT(*) n FROM reading_history WHERE account_id='U003'")[0].n,1);
     eq(store.selectForTest("SELECT COUNT(*) n FROM highlights WHERE account_id='U003'")[0].n,1);
-    eq(store.selectForTest("SELECT status,amount_cents,receipt_storage_key FROM payments WHERE payment_id='B001'")[0],
+    eq({...store.selectForTest("SELECT status,amount_cents,receipt_storage_key FROM payments WHERE payment_id='B001'")[0]},
       {status:'Menunggu',amount_cents:2500,receipt_storage_key:'private-only-reference'});
     eq((await store.checkSingleActiveSession('U003',token,fixed)).authorized,true);
     eq((await store.checkSingleActiveSession('U003','other-session-123456',fixed)).authorized,false);
