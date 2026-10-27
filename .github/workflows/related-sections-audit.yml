@@ -5,6 +5,7 @@ on:
     branches: [audit/stabilization-v1]
     paths:
       - 'tests/related-sections-audit.cjs'
+      - 'tests/related-sections-phase-b.cjs'
       - '.github/workflows/related-sections-audit.yml'
 permissions:
   contents: read
@@ -29,4 +30,7 @@ jobs:
       - name: Run audit of all 83 sections and desktop/mobile navigation
         env:
           MYAKTA_TEST_URL: http://127.0.0.1:8080/
-        run: node tests/related-sections-audit.cjs
+        run: |
+          node tests/related-sections-audit.cjs
+          node tests/related-sections-phase-b.cjs
+
