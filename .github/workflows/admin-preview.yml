@@ -12,6 +12,10 @@ on:
       - 'admin-subscription-engine.cjs'
       - 'admin-backend-sqlite.cjs'
       - 'admin-backend-sqlite.sql'
+      - 'admin-backend-postgresql.sql'
+      - 'admin-auth-foundation.cjs'
+      - 'tests/admin-auth-foundation.cjs'
+      - 'tests/admin-auth-sqlite-integration.cjs'
       - 'tests/admin-sqlite-integration.cjs'
       - 'tests/admin-auto-downgrade.cjs'
       - 'tests/admin-related-guard.cjs'
@@ -35,6 +39,10 @@ jobs:
         run: node tests/admin-auto-downgrade.cjs
       - name: Isolated SQLite backend storage and auto-downgrade tests
         run: node --experimental-sqlite tests/admin-sqlite-integration.cjs
+      - name: Signed identity and single-device authentication regression
+        run: node tests/admin-auth-foundation.cjs
+      - name: Trusted OIDC to private SQLite integration regression
+        run: node --experimental-sqlite tests/admin-auth-sqlite-integration.cjs
       - name: Install Playwright Chromium
         run: |
           npm install --no-save playwright@1.56.1
