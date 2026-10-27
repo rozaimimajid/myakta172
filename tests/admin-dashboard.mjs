@@ -151,6 +151,11 @@ async function main(){
     await page.locator('[data-tab=plans]').click();
     await page.evaluate(()=>window.scrollTo(0,650));
     await page.waitForFunction(()=>document.querySelector('#adminBackToTop').classList.contains('show'));
+    console.log('DEBUG backTop',await page.locator('#adminBackToTop').evaluate(el=>({
+      visibleStyle:getComputedStyle(el).visibility,display:getComputedStyle(el).display,
+      rect:el.getBoundingClientRect().toJSON(),parent:el.parentElement?.className,
+      scrollY:window.scrollY,top:getComputedStyle(el).top,bottom:getComputedStyle(el).bottom
+    })));
     assert.equal(await page.locator('#adminBackToTop').isVisible(),true);
     const btnBg=await page.locator('#adminBackToTop').evaluate(el=>getComputedStyle(el).backgroundColor);
     assert.equal(btnBg,'rgb(16, 76, 206)','Ke Atas mesti berlatar royal blue');
