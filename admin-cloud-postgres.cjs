@@ -75,8 +75,13 @@ function createPostgresRepository({pool,clock=()=>Date.now()}={}) {
     const client=await pool.connect();
     try{
       await client.query('BEGIN');
+      // Lock subscription (runtime has UPDATE privilege there), never elevate
+      // runtime permissions on the private accounts table just for row locking.
+      await client.query(
+        'SELECT account_id FROM myakta_private.subscriptions WHERE account_id=$1 FOR UPDATE',
+        [accountId]);
       const r=await client.query(
-        'SELECT status FROM myakta_private.accounts WHERE account_id=$1 FOR UPDATE',[accountId]);
+        'SELECT status FROM myakta_private.accounts WHERE account_id=$1',[accountId]);
       if(r.rows[0]?.status!=='Aktif')throw Error('ACCOUNT_NOT_ACTIVE');
       await client.query(
         'UPDATE myakta_private.device_sessions SET revoked_at=$2::timestamptz '+
