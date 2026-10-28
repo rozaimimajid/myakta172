@@ -13,6 +13,12 @@ on:
       - 'admin-backend-sqlite.cjs'
       - 'admin-backend-sqlite.sql'
       - 'admin-backend-postgresql.sql'
+      - 'admin-backend-cloud-roles.sql'
+      - 'admin-cloud-postgres.cjs'
+      - 'admin-cloud-config.cjs'
+      - 'admin-cloud-backend.cjs'
+      - 'tests/admin-cloud-config.cjs'
+      - 'tests/admin-cloud-backend-integration.cjs'
       - 'admin-auth-foundation.cjs'
       - 'tests/admin-auth-foundation.cjs'
       - 'tests/admin-auth-sqlite-integration.cjs'
@@ -44,6 +50,8 @@ jobs:
         run: node tests/admin-auth-foundation.cjs
       - name: Trusted OIDC to private SQLite integration regression
         run: node --experimental-sqlite tests/admin-auth-sqlite-integration.cjs
+      - name: Cloud backend TLS and nonowner role configuration
+        run: node tests/admin-cloud-config.cjs
       - name: Install Playwright Chromium
         run: |
           npm install --no-save playwright@1.56.1
@@ -84,6 +92,14 @@ jobs:
         run: npm install --no-save pg@8.16.3
       - name: Migration and concurrency on ephemeral PostgreSQL
         run: node tests/admin-postgresql-integration.cjs
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: '5432'
+          PGUSER: myakta_ci
+          PGPASSWORD: CI_EPHEMERAL_ONLY_NEVER_REAL
+          PGDATABASE: myakta_ci
+      - name: Private backend role + signed sessions + protected premium gate
+        run: node tests/admin-cloud-backend-integration.cjs
         env:
           PGHOST: 127.0.0.1
           PGPORT: '5432'
