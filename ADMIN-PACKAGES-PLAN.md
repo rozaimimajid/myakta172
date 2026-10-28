@@ -108,3 +108,13 @@ Apabila langganan Basic/Rahmah/Premium tamat tanpa pembaharuan diluluskan, **pak
 
 ### Kemajuan Fasa 3 — Asas automasi telah dikodkan
 Dokumentasi integrasi: [ADMIN-BACKEND-FASE3-STATUS.md](ADMIN-BACKEND-FASE3-STATUS.md). Modul `admin-subscription-engine.cjs` dan ujiannya disediakan sebagai asas backend bagi auto-downgrade. **Pelaksanaan pada pelanggan sebenar belum berlaku**; Dashboard prototaip tidak diubah. Penguatkuasaan produksi memerlukan penyambung DB/auth/peranti dan perlindungan kandungan premium pada server.
+
+## KEPUTUSAN RASMI DIKUNCI — UPGRADE & DOWNGRADE (28 Oktober 2026)
+
+**Dokumen reka bentuk muktamad:** [`PAKEJ-UPGRADE-DOWNGRADE-DESIGN-LOCK.md`](PAKEJ-UPGRADE-DOWNGRADE-DESIGN-LOCK.md).
+
+- **UPGRADE — Kaedah B:** Pengguna memohon dan membayar ketika memilih naik taraf. Sistem memaparkan harga pakej baharu ditolak **kredit baki masa pakej lama**, serta amaun sebenar yang perlu dibayar. Sebut harga sah 24 jam. Bayaran yang dikemukakan dalam tempoh sah mengunci kredit/amaun sepanjang semakan. Pakej asal kekal selagi aktif; pakej baharu **30 hari penuh bermula selepas Admin mengesahkan/meluluskan bayaran**. Tiada caj tambahan kerana kelulusan lewat. Jika pakej asal luput ketika menunggu, hak beralih sementara kepada Free.
+- **DOWNGRADE — Berjadual:** Pakej berbayar sedia ada kekal hingga tamat. Pakej rendah dibayar pada **harga penuh 30 hari**, tanpa kredit/refund kerana baki pakej asal tetap dinikmati. Jika pembayaran pakej rendah diluluskan lebih awal, aktifkan pakej rendah pada saat pakej lama tamat selama **30 hari penuh**. Jika belum diluluskan pada masa tamat, sistem beralih ke Free sementara; selepas kelulusan, aktifkan pakej rendah selama **30 hari penuh mulai kelulusan**. Turun ke Free tidak memerlukan pembayaran.
+- **Larangan:** Tiada auto-debit; jangan aktifkan dua pakej berbayar serentak; Pending/Tolak bukan akses berbayar; tarikh dan harga disahkan backend; kekalkan sejarah. Dasar auto-downgrade ke Free yang telah dikunci kekal berkuat kuasa.
+- **Status teknikal:** Keputusan ini ialah dasar reka bentuk yang diluluskan, **belum dibina ke dalam aliran transaksi sebenar**. Rekod simulasi dan backend sedia ada tidak membuktikan fungsi upgrade/downgrade muktamad telah beroperasi. Rujukan kepada polisi prorata "belum dipersetujui" dalam catatan sejarah di atas **digantikan** oleh keputusan rasmi ini.
+- **Perlindungan:** Jangan ubah `main` atau ciri/carta alir/tulisan perundangan dan UI terkunci.
