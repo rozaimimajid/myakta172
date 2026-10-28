@@ -118,3 +118,11 @@ Dokumentasi integrasi: [ADMIN-BACKEND-FASE3-STATUS.md](ADMIN-BACKEND-FASE3-STATU
 - **Larangan:** Tiada auto-debit; jangan aktifkan dua pakej berbayar serentak; Pending/Tolak bukan akses berbayar; tarikh dan harga disahkan backend; kekalkan sejarah. Dasar auto-downgrade ke Free yang telah dikunci kekal berkuat kuasa.
 - **Status teknikal:** Keputusan ini ialah dasar reka bentuk yang diluluskan, **belum dibina ke dalam aliran transaksi sebenar**. Rekod simulasi dan backend sedia ada tidak membuktikan fungsi upgrade/downgrade muktamad telah beroperasi. Rujukan kepada polisi prorata "belum dipersetujui" dalam catatan sejarah di atas **digantikan** oleh keputusan rasmi ini.
 - **Perlindungan:** Jangan ubah `main` atau ciri/carta alir/tulisan perundangan dan UI terkunci.
+
+## KEPERLUAN RASMI — DUA SALURAN NOTIFIKASI ADMIN (28 Oktober 2026)
+
+Rujukan: [`ADMIN-NOTIFICATION-REQUIREMENT.md`](ADMIN-NOTIFICATION-REQUIREMENT.md).
+
+Pemilik menghendaki Admin menerima **notifikasi push pada aplikasi MyAKTA172 Admin di telefon** serta **notifikasi emel kepada alamat rasmi DigitalHubb.my**. Kedua-dua saluran wajib disediakan apabila sistem operasi sebenar dibangunkan. Pencetus utama yang dicadangkan: resit/permohonan baharu, upgrade Kaedah B, downgrade berjadual, pembaharuan dan perkara memerlukan keputusan Admin; perkara auto-downgrade/status rutin boleh diringkaskan bagi mengelak notifikasi berlebihan.
+
+Notifikasi memerlukan backend, penyedia email, push service worker/kebenaran telefon, outbox/retry, Pusat Notifikasi dalam aplikasi, serta kawalan login Admin/MFA untuk pautan tindakan. **Alamat emel tepat belum disahkan** dan mesti ditetapkan melalui konfigurasi server, bukan diandaikan. **Status belum dilaksanakan / belum menghantar notifikasi.** Jangan mengubah Dashboard yang telah dikunci atau `main` tanpa arahan khusus.
