@@ -72,3 +72,15 @@ Langkah seterusnya: skema SQL/polisi transaksi untuk pangkalan data berpusat, au
 5. Jangan dedahkan peranan akses (role/grant) PostgreSQL atau simpan password/token, fail `.sqlite`, resit atau emel sebenar di repo. Hanya gunakan backend HTTPS dengan DB private apabila bersedia.
 
 **Status:** asas kriptografi identiti, pangkalan data staging dan ujian kini disediakan. Integrasi pengguna sebenar **BELUM AKTIF** dan hanya boleh dibuat selepas pemilihan penyedia/konfigurasi oleh pemilik, kemudian ujian keselamatan serta pengesahan penerbitan khusus.
+
+## Kemajuan Fasa 3B — Backend PostgreSQL awan (28 Oktober 2026)
+
+**Dokumen serahan:** [`ADMIN-FASE3B-CLOUD-INTEGRATION.md`](ADMIN-FASE3B-CLOUD-INTEGRATION.md).
+
+- `admin-cloud-postgres.cjs` telah disiapkan sebagai adapter backend sebenar untuk PostgreSQL: transaksi `AUTO_EXPIRED` atomik, audit unik, pengesahan sesi peranti berhash, pemetaan subjek identiti dan pengambilan langganan terkawal.
+- `admin-backend-cloud-roles.sql` membina role aplikasi berasingan, polisi Row-Level Security (RLS), dan tidak memberikan keizinan akses kepada jadual pembayaran/rekod sensitif yang belum dipakai dalam peringkat ini.
+- `admin-cloud-config.cjs` mengurus sambungan TLS dengan sijil disahkan serta semakan risiko akaun pemilik/superuser/BYPASSRLS. `admin-cloud-readiness.cjs` membolehkan semakan read-only apabila server awan disediakan.
+- `admin-cloud-backend.cjs` menghubungkan PostgreSQL kepada pengesahan identiti OIDC/sesi dan kebenaran pakej serta perlindungan data. Ia modul server-side, **bukan pelayan HTTP awam yang sudah diterbitkan**.
+- Ujian `tests/admin-cloud-config.cjs` dan `tests/admin-cloud-backend-integration.cjs` meliputi pakej tamat tepat masa, 8 transaksi serentak, pemeliharaan data dan sekatan akses. GitHub Actions menjalankan ujian ini pada PostgreSQL sementara bersama semua ujian Dashboard terdahulu.
+
+**Sempadan kemajuan:** Penyedia pangkalan data awan, URL/credential rahsia sebenar, peranan SQL pengguna production, pelayan Node HTTPS, identiti OIDC sebenar, storan perundangan premium terlindung, pembayaran dan notifikasi belum disambungkan. Jangan menggambarkan kejayaan PostgreSQL CI sebagai deployment awan sebenar. Semua fail baharu sahaja pada `audit/stabilization-v1`; `main` dan UI berkunci tidak berubah.
